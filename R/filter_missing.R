@@ -5,18 +5,20 @@
 #'
 #' @inheritParams step_center
 #' @param threshold A value for the threshold of missing values in column. The
-#'  step will remove the columns where the proportion of missing values
-#'  exceeds the threshold.
-#' @param removals A character string that contains the names of
-#'  columns that should be removed. These values are not determined
-#'  until [prep()] is called.
+#'   step will remove the columns where the proportion of missing values exceeds
+#'   the threshold.
+#' @param removals A character string that contains the names of columns that
+#'   should be removed. These values are not determined until [prep()] is
+#'   called.
 #' @template step-return
 #' @template filter-steps
 #' @family variable filter steps
 #' @export
 #'
-#' @details This step will remove variables if the proportion of missing
-#'  values exceeds the `threshold`.
+#' @details
+#'
+#' This step will remove variables if the proportion of missing values exceeds
+#' the `threshold`.
 #'
 #' All variables with missing values will be removed for `threshold = 0`.
 #'

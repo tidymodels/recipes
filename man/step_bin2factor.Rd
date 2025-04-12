@@ -17,34 +17,31 @@ step_bin2factor(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{levels}{A length 2 character string that indicates the
-factor levels for the 1's (in the first position) and the zeros
-(second)}
+\item{levels}{A length 2 character string that indicates the factor levels
+for the 1's (in the first position) and the zeros (second)}
 
-\item{ref_first}{Logical. Should the first level, which replaces
-1's, be the factor reference level?}
+\item{ref_first}{Logical. Should the first level, which replaces 1's, be the
+factor reference level?}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -57,13 +54,12 @@ sequence of any existing operations.
 create a two-level factor from a single dummy variable.
 }
 \details{
-This operation may be useful for situations where a
-binary piece of information may need to be represented as
-categorical instead of numeric. For example, naive Bayes models
-would do better to have factor predictors so that the binomial
-distribution is modeled instead of a Gaussian probability
-density of numeric binary data. Note that the numeric data is
-only verified to be numeric (and does not count levels).
+This operation may be useful for situations where a binary piece of
+information may need to be represented as categorical instead of numeric. For
+example, naive Bayes models would do better to have factor predictors so that
+the binomial distribution is modeled instead of a Gaussian probability
+density of numeric binary data. Note that the numeric data is only verified
+to be numeric (and does not count levels).
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

@@ -16,30 +16,28 @@ step_unknown(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{new_level}{A single character value that will be assigned
-to new factor levels.}
+\item{new_level}{A single character value that will be assigned to new factor
+levels.}
 
-\item{objects}{A list of objects that contain the information
-on factor levels that will be determined by \code{\link[=prep]{prep()}}.}
+\item{objects}{A list of objects that contain the information on factor
+levels that will be determined by \code{\link[=prep]{prep()}}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -52,15 +50,13 @@ sequence of any existing operations.
 a missing value in a factor level to \code{"unknown"}.
 }
 \details{
-The selected variables are adjusted to have a new
-level (given by \code{new_level}) that is placed in the last
-position.
+The selected variables are adjusted to have a new level (given by
+\code{new_level}) that is placed in the last position.
 
-Note that if the original columns are character, they will be
-converted to factors by this step.
+Note that if the original columns are character, they will be converted to
+factors by this step.
 
-If \code{new_level} is already in the data given to \code{prep}, an error
-is thrown.
+If \code{new_level} is already in the data given to \code{\link[=prep]{prep()}}, an error is thrown.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

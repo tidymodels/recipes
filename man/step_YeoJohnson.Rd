@@ -18,36 +18,34 @@ step_YeoJohnson(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{lambdas}{A numeric vector of transformation values. This
-is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{lambdas}{A numeric vector of transformation values. This is \code{NULL}
+until computed by \code{\link[=prep]{prep()}}.}
 
-\item{limits}{A length 2 numeric vector defining the range to
-compute the transformation parameter lambda.}
+\item{limits}{A length 2 numeric vector defining the range to compute the
+transformation parameter lambda.}
 
-\item{num_unique}{An integer where data that have less possible
-values will not be evaluated for a transformation.}
+\item{num_unique}{An integer where data that have less possible values will
+not be evaluated for a transformation.}
 
-\item{na_rm}{A logical value indicating whether \code{NA}
-values should be removed during computations.}
+\item{na_rm}{A logical value indicating whether \code{NA} values should be removed
+during computations.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -60,22 +58,20 @@ sequence of any existing operations.
 transform data using a Yeo-Johnson transformation.
 }
 \details{
-The Yeo-Johnson transformation is very similar to the
-Box-Cox but does not require the input variables to be strictly
-positive. In the package, the partial log-likelihood function is
-directly optimized within a reasonable set of transformation
-values (which can be changed by the user).
+The Yeo-Johnson transformation is very similar to the Box-Cox but does not
+require the input variables to be strictly positive. In the package, the
+partial log-likelihood function is directly optimized within a reasonable set
+of transformation values (which can be changed by the user).
 
-This transformation is typically done on the outcome variable
-using the residuals for a statistical model (such as ordinary
-least squares). Here, a simple null model (intercept only) is
-used to apply the transformation to the \emph{predictor}
-variables individually. This can have the effect of making the
+This transformation is typically done on the outcome variable using the
+residuals for a statistical model (such as ordinary least squares). Here, a
+simple null model (intercept only) is used to apply the transformation to the
+\emph{predictor} variables individually. This can have the effect of making the
 variable distributions more symmetric.
 
-If the transformation parameters are estimated to be very
-closed to the bounds, or if the optimization fails, a value of
-\code{NA} is used and no transformation is applied.
+If the transformation parameters are estimated to be very closed to the
+bounds, or if the optimization fails, a value of \code{NA} is used and no
+transformation is applied.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

@@ -6,19 +6,20 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
-#' @param .pkgs Character vector, package names of functions used in
-#'   expressions `...`. Should be specified if using non-base functions.
+#' @param .pkgs Character vector, package names of functions used in expressions
+#'   `...`. Should be specified if using non-base functions.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
 #' @template mutate-leakage
-#' @details When an object in the user's global environment is
-#'  referenced in the expression defining the new variable(s),
-#'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
-#'  the value of the object in the expression (to be portable
-#'  between sessions). See the examples.
+#' @details
 #'
-#'  If a preceding step removes a column that is selected by name in
-#'  `step_mutate()`, the recipe will error when being estimated with [prep()].
+#' When an object in the user's global environment is referenced in the
+#' expression defining the new variable(s), it is a good idea to use
+#' quasiquotation (e.g. `!!`) to embed the value of the object in the expression
+#' (to be portable between sessions). See the examples.
+#'
+#' If a preceding step removes a column that is selected by name in
+#' `step_mutate()`, the recipe will error when being estimated with [prep()].
 #'
 #' # Tidying
 #'

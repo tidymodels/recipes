@@ -21,31 +21,29 @@ step_isomap(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{num_terms}{The number of isomap dimensions to retain as new
-predictors. If \code{num_terms} is greater than the number of columns
-or the number of possible dimensions, a smaller value will be
-used.}
+\item{num_terms}{The number of isomap dimensions to retain as new predictors.
+If \code{num_terms} is greater than the number of columns or the number of
+possible dimensions, a smaller value will be used.}
 
 \item{neighbors}{The number of neighbors.}
 
 \item{options}{A list of options to `dimRed::Isomap()``.}
 
-\item{res}{The `dimRed::Isomap()`` object is stored
-here once this preprocessing step has be trained by
-\code{\link[=prep]{prep()}}.}
+\item{res}{The `dimRed::Isomap()`` object is stored here once this
+preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -56,12 +54,11 @@ variables. See notes below.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -75,29 +72,25 @@ multidimensional scaling to convert numeric data into one or more new
 dimensions.
 }
 \details{
-Isomap is a form of multidimensional scaling (MDS).
-MDS methods try to find a reduced set of dimensions such that
-the geometric distances between the original data points are
-preserved. This version of MDS uses nearest neighbors in the
-data as a method for increasing the fidelity of the new
+Isomap is a form of multidimensional scaling (MDS). MDS methods try to find a
+reduced set of dimensions such that the geometric distances between the
+original data points are preserved. This version of MDS uses nearest
+neighbors in the data as a method for increasing the fidelity of the new
 dimensions to the original data values.
 
-This step requires the \pkg{dimRed}, \pkg{RSpectra},
-\pkg{igraph}, and \pkg{RANN} packages. If not installed, the
-step will stop with a note about installing these packages.
+This step requires the \pkg{dimRed}, \pkg{RSpectra}, \pkg{igraph}, and
+\pkg{RANN} packages. If not installed, the step will stop with a note about
+installing these packages.
 
-It is advisable to center and scale the variables prior to
-running Isomap (\code{step_center} and \code{step_scale} can be
-used for this purpose).
+It is advisable to center and scale the variables prior to running Isomap
+(\code{step_center} and \code{step_scale} can be used for this purpose).
 
-The argument \code{num_terms} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_terms < 10}, their names will be \code{Isomap1} -
-\code{Isomap9}. If \code{num_terms = 101}, the names would be
-\code{Isomap001} - \code{Isomap101}.
+The argument \code{num_terms} controls the number of components that will be
+retained (the original variables that are used to derive the components are
+removed from the data). The new components will have names that begin with
+\code{prefix} and a sequence of numbers. The variable names are padded with zeros.
+For example, if \code{num_terms < 10}, their names will be \code{Isomap1} - \code{Isomap9}.
+If \code{num_terms = 101}, the names would be \code{Isomap001} - \code{Isomap101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

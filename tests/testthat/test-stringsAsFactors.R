@@ -50,7 +50,6 @@ test_that("strings_as_factors = TRUE", {
   expect_equal(as_fact$num, rec2_as_str$num)
 })
 
-
 test_that("strings_as_factors = FALSE and zero row input", {
   as_fact <- as_fact[0, ]
   as_str <- as_str[0, ]

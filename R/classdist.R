@@ -7,41 +7,41 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param class A bare name that specifies a single categorical variable to be
-#'  used as the class. Can also be a string or tidyselect for backwards
-#'  compatibility.
-#' @param mean_func A function to compute the center of the
-#'  distribution.
+#'   used as the class. Can also be a string or tidyselect for backwards
+#'   compatibility.
+#' @param mean_func A function to compute the center of the distribution.
 #' @param cov_func A function that computes the covariance matrix
-#' @param pool A logical: should the covariance matrix be computed
-#'  by pooling the data for all of the classes?
-#' @param log A logical: should the distances be transformed by
-#'  the natural log function?
-#' @param objects Statistics are stored here once this step has
-#'  been trained by [prep()].
+#' @param pool A logical: should the covariance matrix be computed by pooling
+#'   the data for all of the classes?
+#' @param log A logical: should the distances be transformed by the natural log
+#'   function?
+#' @param objects Statistics are stored here once this step has been trained by
+#'   [prep()].
 #' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
+#'   output. Defaults to `TRUE`.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details `step_classdist` will create a new column for every unique value of
-#' the `class` variable. The resulting variables will not replace the original
+#' @details
+#'
+#' `step_classdist()` will create a new column for every unique value of the
+#' `class` variable. The resulting variables will not replace the original
 #' values and, by default, have the prefix `classdist_`. The naming format can
 #' be changed using the `prefix` argument.
 #'
 #' Class-specific centroids are the multivariate averages of each predictor
-#' using the data from each class in the training set. When pre-processing a
-#' new data point, this step computes the distance from the new point to each
-#' of the class centroids. These distance features can be very effective at
-#' capturing linear class boundaries. For this reason, they can be useful to
-#' add to an existing predictor set used within a nonlinear model. If the true
-#' boundary is actually linear, the model will have an easier time learning the
-#' training data patterns.
+#' using the data from each class in the training set. When pre-processing a new
+#' data point, this step computes the distance from the new point to each of the
+#' class centroids. These distance features can be very effective at capturing
+#' linear class boundaries. For this reason, they can be useful to add to an
+#' existing predictor set used within a nonlinear model. If the true boundary is
+#' actually linear, the model will have an easier time learning the training
+#' data patterns.
 #'
-#' Note that, by default, the default covariance function requires
-#'  that each class should have at least as many rows as variables
-#'  listed in the `terms` argument. If `pool = TRUE`,
-#'  there must be at least as many data points are variables
-#'  overall.
+#' Note that, by default, the default covariance function requires that each
+#' class should have at least as many rows as variables listed in the `terms`
+#' argument. If `pool = TRUE`, there must be at least as many data points are
+#' variables overall.
 #'
 #' # Tidying
 #'

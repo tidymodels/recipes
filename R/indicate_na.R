@@ -8,8 +8,8 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @inheritParams step_dummy
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. Defaults to "na_ind".
+#' @param prefix A character string that will be the prefix to the resulting new
+#'   variables. Defaults to "na_ind".
 #' @template step-return
 #' @details
 #'
@@ -145,7 +145,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
   }
 
   cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
-  cols <- dplyr::rename_with(cols, ~ vec_paste0(object$prefix, "_", .x))
+  cols <- dplyr::rename_with(cols, ~vec_paste0(object$prefix, "_", .x))
 
   cols <- check_name(cols, new_data, object, names(cols))
 

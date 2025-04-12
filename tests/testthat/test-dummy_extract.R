@@ -268,7 +268,7 @@ test_that("case weights", {
   mini_tate_cw <- mini_tate %>%
     mutate(wts = frequency_weights(c(1, 1, 1, 5)))
 
-  dummy <- recipe(~ medium + wts, data = mini_tate_cw) %>%
+  dummy <- recipe(~medium + wts, data = mini_tate_cw) %>%
     step_dummy_extract(medium, sep = "( and )|( on )", id = "", threshold = 6)
 
   dummy_prepped <- prep(dummy)
@@ -295,7 +295,7 @@ test_that("case weights", {
   mini_tate_cw <- mini_tate %>%
     mutate(wts = importance_weights(c(1, 1, 1, 5)))
 
-  dummy <- recipe(~ medium + wts, data = mini_tate_cw) %>%
+  dummy <- recipe(~medium + wts, data = mini_tate_cw) %>%
     step_dummy_extract(medium, sep = "( and )|( on )", id = "", threshold = 6)
 
   dummy_prepped <- prep(dummy)

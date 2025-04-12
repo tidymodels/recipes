@@ -17,34 +17,32 @@ check_class(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The check will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The check will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this check. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this check.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this check since no new variables are
-created.}
+\item{role}{Not used by this check since no new variables are created.}
 
-\item{trained}{A logical for whether the selectors in \code{...}
-have been resolved by \code{\link[=prep]{prep()}}.}
+\item{trained}{A logical for whether the selectors in \code{...} have been
+resolved by \code{\link[=prep]{prep()}}.}
 
-\item{class_nm}{A character vector that will be used in \code{inherits} to
-check the class. If \code{NULL} the classes will be learned in \code{prep}.
-Can contain more than one class.}
+\item{class_nm}{A character vector that will be used in \code{inherits} to check
+the class. If \code{NULL} the classes will be learned in \code{prep}. Can contain
+more than one class.}
 
-\item{allow_additional}{If \code{TRUE} a variable is allowed to
-have additional classes to the one(s) that are checked.}
+\item{allow_additional}{If \code{TRUE} a variable is allowed to have additional
+classes to the one(s) that are checked.}
 
-\item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the check be skipped when the recipe is baked
+by \code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
-\item{class_list}{A named list of column classes. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{class_list}{A named list of column classes. This is \code{NULL} until
+computed by \code{\link[=prep]{prep()}}.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -53,22 +51,19 @@ An updated version of \code{recipe} with the new check added to the
 sequence of any existing operations.
 }
 \description{
-\code{check_class} creates a \emph{specification} of a recipe
-check that will check if a variable is of a designated class.
+\code{check_class} creates a \emph{specification} of a recipe check that will check if
+a variable is of a designated class.
 }
 \details{
-This function can check the classes of the variables
-in two ways. When the \code{class} argument is provided
-it will check if all the variables specified are of the
-given class. If this argument is \code{NULL}, the check will
-learn the classes of each of the specified variables in \code{prep}.
-Both ways will break \code{bake} if the variables are not of
-the requested class. If a variable has multiple
-classes in \code{prep}, all the classes are checked. Please note
-that in \code{prep} the argument \code{strings_as_factors} defaults to
-\code{TRUE}. If the train set contains character variables
-the check will be break \code{bake} when \code{strings_as_factors} is
-\code{TRUE}.
+This function can check the classes of the variables in two ways. When the
+\code{class} argument is provided it will check if all the variables specified are
+of the given class. If this argument is \code{NULL}, the check will learn the
+classes of each of the specified variables in \code{\link[=prep]{prep()}}. Both ways will break
+\code{\link[=bake]{bake()}} if the variables are not of the requested class. If a variable has
+multiple classes in \code{\link[=prep]{prep()}}, all the classes are checked. Please note that
+in \code{\link[=prep]{prep()}} the argument \code{strings_as_factors} defaults to \code{TRUE}. If the
+train set contains character variables the check will be break \code{\link[=bake]{bake()}} when
+\code{strings_as_factors} is \code{TRUE}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns

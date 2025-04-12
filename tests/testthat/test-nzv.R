@@ -79,7 +79,7 @@ test_that("Deprecation warning", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_nzv(all_predictors())
+      step_nzv(all_predictors())
   rec_param <- tunable.step_nzv(rec$steps[[1]])
   expect_equal(rec_param$name, c("freq_cut", "unique_cut"))
   expect_true(all(rec_param$source == "recipe"))

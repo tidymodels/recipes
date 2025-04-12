@@ -10,7 +10,7 @@ in_test <- 1:200
 sacr_tr <- Sacramento[-in_test, ]
 sacr_te <- Sacramento[in_test, ]
 
-rec <- recipe(~ city + zip, data = sacr_tr)
+rec <- recipe(~city + zip, data = sacr_tr)
 
 # assume no novel levels here but test later:
 # all(sort(unique(sacr_tr$zip)) == sort(unique(Sacramento$zip)))
@@ -105,7 +105,7 @@ test_that("high threshold - much removals", {
 test_that("low threshold - no removals", {
   sacr_te_chr <- sacr_te
 
-  others <- recipe(~ city + zip, data = sacr_tr, strings_as_factors = FALSE) %>%
+  others <- recipe(~city + zip, data = sacr_tr, strings_as_factors = FALSE) %>%
     step_other(city, zip, threshold = 10^-30, other = "another")
   others <- prep(others, training = sacr_te_chr)
   others_te <- bake(others, new_data = sacr_te_chr)
@@ -120,7 +120,7 @@ test_that("low threshold - no removals", {
 test_that("zero threshold - no removals", {
   sacr_te_chr <- sacr_te
 
-  others <- recipe(~ city + zip, data = sacr_tr, strings_as_factors = FALSE) %>%
+  others <- recipe(~city + zip, data = sacr_tr, strings_as_factors = FALSE) %>%
     step_other(city, zip, threshold = 0, other = "another")
   others <- prep(others, training = sacr_te_chr)
   others_te <- bake(others, new_data = sacr_te_chr)
@@ -139,7 +139,7 @@ test_that("factor inputs", {
   sacr_tr <- Sacramento[-in_test, ]
   sacr_te <- Sacramento[in_test, ]
 
-  rec <- recipe(~ city + zip, data = sacr_tr)
+  rec <- recipe(~city + zip, data = sacr_tr)
 
   others <- rec %>% step_other(city, zip)
   others <- prep(others, training = sacr_tr)
@@ -247,7 +247,7 @@ test_that("'other' already in use", {
 
   sacr_tr_chr$city[1] <- "other"
 
-  rec <- recipe(~ city + zip, data = sacr_tr_chr, strings_as_factors = FALSE)
+  rec <- recipe(~city + zip, data = sacr_tr_chr, strings_as_factors = FALSE)
 
   others <- rec %>% step_other(city, zip, threshold = 10^-10)
   expect_snapshot(
@@ -315,7 +315,7 @@ test_that(desc = "if threshold is equal to 1 then the function removes every fac
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_other(all_predictors())
+      step_other(all_predictors())
   rec_param <- tunable.step_other(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -351,7 +351,7 @@ test_that("othering with case weights", {
     mutate(sqft = frequency_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+    others <- recipe(~city + sqft, data = sacr_tr_caseweights) %>%
       step_other(
         city,
         other = "another",
@@ -374,7 +374,7 @@ test_that("othering with case weights", {
     mutate(sqft = importance_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+    others <- recipe(~city + sqft, data = sacr_tr_caseweights) %>%
       step_other(
         city,
         other = "another",
@@ -450,7 +450,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ city + zip, data = sacr_tr) %>%
+  rec <- recipe(~city + zip, data = sacr_tr) %>%
     step_other(city, zip)
 
   expect_snapshot(print(rec))

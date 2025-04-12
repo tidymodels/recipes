@@ -9,16 +9,16 @@
 #'   details for more. Defaults to `"prep"`.
 #'
 #' @details
+#'
 #' The returned ptype is a tibble of the data set that the recipe object is
 #' expecting. The specifics of which columns depend on the `stage`.
 #'
-#' At `prep()` time, when `stage = "prep"`, the ptype is the data passed to
-#' `recipe()`. The following code chunk represents a possible recipe scenario.
-#' `recipes_ptype(rec_spec, stage = "prep")` and
-#' `recipes_ptype(rec_prep, stage = "prep")` both return a ptype tibble
-#' corresponding to `data_ptype`. This information is used internally in
-#' `prep()` to verify that `data_training` has the right columns with the right
-#' types.
+#' At [prep()] time, when `stage = "prep"`, the ptype is the data passed to
+#' [recipe()]. The following code chunk represents a possible recipe scenario.
+#' `recipes_ptype(rec_spec, stage = "prep")` and `recipes_ptype(rec_prep, stage
+#' = "prep")` both return a ptype tibble corresponding to `data_ptype`. This
+#' information is used internally in [prep()] to verify that `data_training` has
+#' the right columns with the right types.
 #'
 #' ```r
 #' rec_spec <- recipe(outcome ~ ., data = data_ptype) %>%
@@ -28,8 +28,8 @@
 #' rec_prep <- prep(rec_spec, training = data_training)
 #' ```
 #'
-#' At `bake()` time, when `stage = "bake"`, the ptype represents the data
-#' that are required for `bake()` to run.
+#' At [bake()] time, when `stage = "bake"`, the ptype represents the data that
+#' are required for [bake()] to run.
 #'
 #' ```r
 #' data_bake <- bake(rec_prep, new_data = data_testing)
@@ -37,7 +37,7 @@
 #'
 #' What this means in practice is that unless otherwise specified, everything
 #' but outcomes and case weights are required. These requirements can be changed
-#' with `update_role_requirements()`, and `recipes_ptype()` respects those
+#' with [update_role_requirements()], and `recipes_ptype()` respects those
 #' changes.
 #'
 #' `recipes_ptype()` returns `NULL` on recipes created prior to version 1.1.0.

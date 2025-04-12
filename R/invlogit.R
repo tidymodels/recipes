@@ -8,9 +8,10 @@
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details The inverse logit transformation takes values on the
-#'  real line and translates them to be between zero and one using
-#'  the function `f(x) = 1/(1+exp(-x))`.
+#' @details
+#'
+#' The inverse logit transformation takes values on the real line and translates
+#' them to be between zero and one using the function `f(x) = 1/(1+exp(-x))`.
 #'
 #' # Tidying
 #'

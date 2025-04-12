@@ -6,26 +6,19 @@
 #' @inheritParams step_date
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables will be used in the *numerator* of the ratio.
-#'  When used with `denom_vars`, the dots indicate which
-#'  variables are used in the *denominator*. See
-#'  [selections()] for more details.
-#' @param denom Bare names that specifies which
-#'  variables are used in the denominator that can include specific
-#'  variable names separated by commas or different selectors (see
-#'  [selections()]). Can also be a strings or tidyselect for backwards
-#'  compatibility If a column is included in both lists to be numerator and
-#'  denominator, it will be removed from the listing.
-#' @param naming A function that defines the naming convention for
-#'  new ratio columns.
+#' @param ... One or more selector functions to choose which variables will be
+#'   used in the *numerator* of the ratio. When used with `denom_vars`, the dots
+#'   indicate which variables are used in the *denominator*. See [selections()]
+#'   for more details.
+#' @param denom Bare names that specifies which variables are used in the
+#'   denominator that can include specific variable names separated by commas or
+#'   different selectors (see [selections()]). Can also be a strings or
+#'   tidyselect for backwards compatibility If a column is included in both
+#'   lists to be numerator and denominator, it will be removed from the listing.
+#' @param naming A function that defines the naming convention for new ratio
+#'   columns.
 #' @template step-return
 #' @details
-#'
-#' # Tidying
-#'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `denom` is returned.
 #'
 #' # Tidying
 #'

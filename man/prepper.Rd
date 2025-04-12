@@ -14,16 +14,13 @@ prepper(split_obj, recipe, ...)
 \item{...}{Arguments to pass to \code{prep} such as \code{verbose} or \code{retain}.}
 }
 \description{
-When working with the \pkg{rsample} package, a simple recipe
-must be \emph{prepared} using the \code{prep}
-function first. When using recipes with \pkg{rsample} it
-is helpful to have a function that can prepare a recipe
-across a series of \code{split} objects that are produced
-in this package. \code{prepper} is a wrapper function
-around \code{prep} that can be used to do
-this. See the vignette on "Recipes and rsample" for an
-example.
+When working with the \pkg{rsample} package, a simple recipe must be
+\emph{prepared} using the \code{prep} function first. When using recipes with
+\pkg{rsample} it is helpful to have a function that can prepare a recipe
+across a series of \code{split} objects that are produced in this package.
+\code{prepper} is a wrapper function around \code{\link[=prep]{prep()}} that can be used to do this.
+See the vignette on "Recipes and rsample" for an example.
 }
 \details{
-\code{prepper()} sets the underlying \code{prep()} argument \code{fresh} to \code{TRUE}.
+\code{prepper()} sets the underlying \code{\link[=prep]{prep()}} argument \code{fresh} to \code{TRUE}.
 }

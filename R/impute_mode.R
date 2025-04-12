@@ -1,25 +1,26 @@
 #' Impute nominal data using the most common value
 #'
-#'  `step_impute_mode()` creates a *specification* of a recipe step that will
-#'  substitute missing values of nominal variables by the training set mode of
-#'  those variables.
+#' `step_impute_mode()` creates a *specification* of a recipe step that will
+#' substitute missing values of nominal variables by the training set mode of
+#' those variables.
 #'
 #' @inheritParams step_center
-#' @param modes A named character vector of modes. This is
-#'  `NULL` until computed by [prep()].
+#' @param modes A named character vector of modes. This is `NULL` until computed
+#'   by [prep()].
 #' @param ptype A data frame prototype to cast new data sets to. This is
-#'  commonly a 0-row slice of the training set.
+#'   commonly a 0-row slice of the training set.
 #' @template step-return
 #' @family imputation steps
 #' @export
-#' @details `step_impute_mode` estimates the variable modes
-#'  from the data used in the `training` argument of
-#'  `prep.recipe`. `bake.recipe` then applies the new
-#'  values to new data sets using these values. If the training set
-#'  data has more than one mode, one is selected at random.
+#' @details
 #'
-#'  As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
-#'    to `step_impute_mode()`.
+#' `step_impute_mode()` estimates the variable modes from the data used in the
+#' `training` argument of [prep()]. [bake()] then applies the new values to new
+#' data sets using these values. If the training set data has more than one
+#' mode, one is selected at random.
+#'
+#' As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
+#' to `step_impute_mode()`.
 #'
 #' # Tidying
 #'

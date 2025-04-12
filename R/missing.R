@@ -1,35 +1,35 @@
 #' Check for missing values
 #'
-#' `check_missing` creates a *specification* of a recipe
-#'  operation that will check if variables contain missing values.
+#' `check_missing()` creates a *specification* of a recipe operation that will
+#' check if variables contain missing values.
 #'
 #' @inheritParams step_pca
-#' @param recipe A recipe object. The check will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose variables
-#'  for this check. See [selections()] for more details.
-#' @param role Not used by this check since no new variables are
-#'  created.
-#' @param trained A logical for whether the selectors in `...`
-#' have been resolved by [prep()].
+#' @param recipe A recipe object. The check will be added to the sequence of
+#'   operations for this recipe.
+#' @param ... One or more selector functions to choose variables for this check.
+#'   See [selections()] for more details.
+#' @param role Not used by this check since no new variables are created.
+#' @param trained A logical for whether the selectors in `...` have been
+#'   resolved by [prep()].
 #' @param id A character string that is unique to this check to identify it.
-#' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake()]? While all operations are baked
-#'  when [prep()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations.
+#' @param skip A logical. Should the check be skipped when the recipe is baked
+#'   by [bake()]? While all operations are baked when [prep()] is run, some
+#'   operations may not be able to be conducted on new data (e.g. processing the
+#'   outcome variable(s)). Care should be taken when using `skip = TRUE` as it
+#'   may affect the computations for subsequent operations.
 #' @template check-return
 #' @family checks
 #' @export
-#' @details This check will break the `bake` function if any of the checked
-#'  columns does contain `NA` values. If the check passes, nothing is changed
-#'  to the data.
+#' @details
 #'
-#'  # tidy() results
+#' This check will break the [bake()] function if any of the checked columns
+#' does contain `NA` values. If the check passes, nothing is changed to the
+#' data.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with column
-#'  `terms` (the selectors or variables selected) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this check, a tibble with column `terms`
+#' (the selectors or variables selected) is returned.
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(credit_data, package = "modeldata")

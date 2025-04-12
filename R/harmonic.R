@@ -7,56 +7,57 @@
 #' @inheritParams step_date
 #' @inheritParams step_center
 #'
-#' @param ... One or more selector functions to choose variables
-#'  for this step. See [selections()] for more details. This will
-#'  typically be a single variable.
-#' @param frequency A numeric vector with at least one value.
-#'   The value(s) must be greater than zero and finite.
-#' @param cycle_size A numeric vector with at least one value that indicates
-#'   the size of a single cycle. `cycle_size` should have the same units as the
+#' @param ... One or more selector functions to choose variables for this step.
+#'   See [selections()] for more details. This will typically be a single
+#'   variable.
+#' @param frequency A numeric vector with at least one value. The value(s) must
+#'   be greater than zero and finite.
+#' @param cycle_size A numeric vector with at least one value that indicates the
+#'   size of a single cycle. `cycle_size` should have the same units as the
 #'   input variable(s).
-#' @param starting_val either `NA`, numeric, Date or POSIXt value(s) that indicates
-#'   the reference point for the sin and cos curves for each input variable.
-#'   If the value is a `Date` or `POISXt` the value is converted to numeric
-#'   using `as.numeric`. This parameter may be specified to increase control
-#'   over the signal phase.  If `starting_val` is not specified the default
-#'   is 0.
+#' @param starting_val either `NA`, numeric, Date or POSIXt value(s) that
+#'   indicates the reference point for the sin and cos curves for each input
+#'   variable. If the value is a `Date` or `POISXt` the value is converted to
+#'   numeric using [as.numeric()]. This parameter may be specified to increase
+#'   control over the signal phase.  If `starting_val` is not specified the
+#'   default is 0.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details This step seeks to describe periodic components of observational
-#'  data using a combination of sin and cos waves. To do this, each wave of a
-#'  specified frequency is modeled using one sin and one cos term. The two
-#'  terms for each frequency can then be used to estimate the amplitude and
-#'  phase shift of a periodic signal in observational data. The equation
-#'  relating cos waves of known frequency but unknown phase and amplitude to a
-#'  sum of sin and cos terms is below:
+#' @details
 #'
-#'  \deqn{A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j sin(\sigma_j t_i)}
+#' This step seeks to describe periodic components of observational data using a
+#' combination of sin and cos waves. To do this, each wave of a specified
+#' frequency is modeled using one sin and one cos term. The two terms for each
+#' frequency can then be used to estimate the amplitude and phase shift of a
+#' periodic signal in observational data. The equation relating cos waves of
+#' known frequency but unknown phase and amplitude to a sum of sin and cos terms
+#' is below:
 #'
-#'  Solving the equation yields \eqn{C_j} and \eqn{S_j}. the
-#'  amplitude can then be obtained with:
+#' \deqn{A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j
+#' sin(\sigma_j t_i)}
 #'
-#'  \deqn{A_j = \sqrt{C^2_j + S^2_j}}
+#' Solving the equation yields \eqn{C_j} and \eqn{S_j}. the amplitude can then
+#' be obtained with:
 #'
-#'  And the phase can be obtained with:
-#'  \deqn{\Phi_j = \arctan{(S_j / C_j)}}
+#' \deqn{A_j = \sqrt{C^2_j + S^2_j}}
 #'
-#'  where:
+#' And the phase can be obtained with: \deqn{\Phi_j = \arctan{(S_j / C_j)}}
 #'
-#'  * \eqn{\sigma_j = 2 \pi (frequency / cycle\_size))}
-#'  * \eqn{A_j} is the amplitude of the \eqn{j^{th}} frequency
-#'  * \eqn{\Phi_j} is the phase of the \eqn{j^{th}} frequency
-#'  * \eqn{C_j} is the coefficient of the cos term for the \eqn{j^{th}} frequency
-#'  * \eqn{S_j} is the coefficient of the sin term for the \eqn{j^{th}} frequency
+#' where:
 #'
+#' * \eqn{\sigma_j = 2 \pi (frequency / cycle\_size))}
+#' * \eqn{A_j} is the amplitude of the \eqn{j^{th}} frequency
+#' * \eqn{\Phi_j} is the phase of the \eqn{j^{th}} frequency
+#' * \eqn{C_j} is the coefficient of the cos term for the \eqn{j^{th}} frequency
+#' * \eqn{S_j} is the coefficient of the sin term for the \eqn{j^{th}} frequency
 #'
-#'  The periodic component is specified by `frequency` and `cycle_size`
-#'  parameters. The cycle size relates the specified frequency to the
-#'  input column(s) units. There are multiple ways to specify a wave of given
-#'  frequency, for example, a `POSIXct` input column given a `frequency` of
-#'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
-#'  1.0 with `cycle_size` equal to 3600.
+#' The periodic component is specified by `frequency` and `cycle_size`
+#' parameters. The cycle size relates the specified frequency to the input
+#' column(s) units. There are multiple ways to specify a wave of given
+#' frequency, for example, a `POSIXct` input column given a `frequency` of 24
+#' and a `cycle_size` equal to 86400 is equivalent to a `frequency` of 1.0 with
+#' `cycle_size` equal to 3600.
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_harmonic"

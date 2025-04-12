@@ -6,9 +6,9 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ref_dist The computed percentiles is stored here once this
-#'  preprocessing step has be trained by [prep()].
-#' @param options A named list of options to pass to [stats::quantile()].
-#'   See Details for more information.
+#'   preprocessing step has be trained by [prep()].
+#' @param options A named list of options to pass to [stats::quantile()]. See
+#'   Details for more information.
 #' @param outside A character, describing how interpolation is to take place
 #'   outside the interval `[min(x), max(x)]`. `none` means nothing will happen
 #'   and values outside the range will be `NA`. `lower` means that new values
@@ -173,7 +173,7 @@ wrighted_quantile <- function(x, wts, probs, ...) {
   wts <- wts[order_x]
 
   wts_norm <- cumsum(wts) / sum(wts)
-  res <- purrr::map_dbl(probs, ~ x[min(which(wts_norm >= .x))])
+  res <- purrr::map_dbl(probs, ~x[min(which(wts_norm >= .x))])
 
   names(res) <- paste0(probs * 100, "%")
   res

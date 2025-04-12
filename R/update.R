@@ -7,10 +7,9 @@
 #' conflicting information can arise between the data returned from
 #' `bake(object, new_data = NULL)` and the information in the step.
 #'
-#'
 #' @param object A recipe `step`.
-#' @param ... Key-value pairs where the keys match up with names of elements
-#' in the step, and the values are the new values to update the step with.
+#' @param ... Key-value pairs where the keys match up with names of elements in
+#'   the step, and the values are the new values to update the step with.
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(biomass, package = "modeldata")

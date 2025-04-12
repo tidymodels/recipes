@@ -5,20 +5,20 @@
 #'
 #' @inheritParams step_center
 #' @param min,max Single numeric values for the smallest (or largest) value in
-#' the transformed data.
-#' @param clipping A single logical value for determining whether
-#'  application of transformation onto new data should be forced
-#'  to be inside `min` and `max`. Defaults to TRUE.
-#' @param ranges A character vector of variables that will be
-#'  normalized. Note that this is ignored until the values are
-#'  determined by [prep()]. Setting this value will
-#'  be ineffective.
+#'   the transformed data.
+#' @param clipping A single logical value for determining whether application of
+#'   transformation onto new data should be forced to be inside `min` and `max`.
+#'   Defaults to TRUE.
+#' @param ranges A character vector of variables that will be normalized. Note
+#'   that this is ignored until the values are determined by [prep()]. Setting
+#'   this value will be ineffective.
 #' @template step-return
 #' @family normalization steps
 #' @export
-#' @details When a new data point is outside of the ranges seen in
-#'  the training set, the new values are truncated at `min` or
-#'  `max`.
+#' @details
+#'
+#' When a new data point is outside of the ranges seen in the training set, the
+#' new values are truncated at `min` or `max`.
 #'
 #' # Tidying
 #'

@@ -1,15 +1,14 @@
 #' Update role specific requirements
 #'
-#' @description
-#' `update_role_requirements()` allows you to fine tune requirements of the
-#' various roles you might come across in recipes (see [update_role()] for
-#' general information about roles). Role requirements can only be altered for
-#' roles that exist in the _original_ data supplied to [recipe()], they are not
-#' applied to columns computed by steps.
+#' @description `update_role_requirements()` allows you to fine tune
+#' requirements of the various roles you might come across in recipes (see
+#' [update_role()] for general information about roles). Role requirements can
+#' only be altered for roles that exist in the _original_ data supplied to
+#' [recipe()], they are not applied to columns computed by steps.
 #'
 #' Like `update_role()`, `update_role_requirements()` is applied to the recipe
-#' _immediately_, unlike the `step_*()` functions which do most of their work
-#' at [prep()] time.
+#' _immediately_, unlike the `step_*()` functions which do most of their work at
+#' [prep()] time.
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
@@ -19,11 +18,11 @@
 #'   requirements of. This must be a role that already exists in the recipe.
 #'
 #' @param bake At `bake()` time, should a check be done to ensure that all
-#'   columns of this role that were supplied to `recipe()` also be present
-#'   in the `new_data` supplied to `bake()`?
+#'   columns of this role that were supplied to `recipe()` also be present in
+#'   the `new_data` supplied to `bake()`?
 #'
-#'   Must be a single `TRUE` or `FALSE`. The default, `NULL`, won't modify
-#'   this requirement.
+#'   Must be a single `TRUE` or `FALSE`. The default, `NULL`, won't modify this
+#'   requirement.
 #'
 #'   The following represents the default bake time requirements of specific
 #'   types of roles:

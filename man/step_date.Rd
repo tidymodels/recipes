@@ -21,45 +21,41 @@ step_date(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. The selected variables should have class \code{Date} or
-\code{POSIXct}. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+The selected variables should have class \code{Date} or \code{POSIXct}. See
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{features}{A character string that includes at least one
-of the following values: \code{month}, \code{dow} (day of week), \code{mday} (day of month),
-\code{doy} (day of year), \code{week}, \code{month},
-\code{decimal} (decimal date, e.g. 2002.197), \code{quarter},
-\code{semester}, \code{year}.}
+\item{features}{A character string that includes at least one of the
+following values: \code{month}, \code{dow} (day of week), \code{mday} (day of month),
+\code{doy} (day of year), \code{week}, \code{month}, \code{decimal} (decimal date, e.g.
+2002.197), \code{quarter}, \code{semester}, \code{year}.}
 
-\item{abbr}{A logical. Only available for features \code{month}
-or \code{dow}. \code{FALSE} will display the day of the week as
-an ordered factor of character strings, such as "Sunday".
-\code{TRUE} will display an abbreviated version of the label,
+\item{abbr}{A logical. Only available for features \code{month} or \code{dow}. \code{FALSE}
+will display the day of the week as an ordered factor of character strings,
+such as "Sunday". \code{TRUE} will display an abbreviated version of the label,
 such as "Sun". \code{abbr} is disregarded if \code{label = FALSE}.}
 
-\item{label}{A logical. Only available for features
-\code{month} or \code{dow}. \code{TRUE} will display the day of
-the week as an ordered factor of character strings, such as
-"Sunday." \code{FALSE} will display the day of the week as a
-number.}
+\item{label}{A logical. Only available for features \code{month} or \code{dow}. \code{TRUE}
+will display the day of the week as an ordered factor of character strings,
+such as "Sunday." \code{FALSE} will display the day of the week as a number.}
 
-\item{ordinal}{A logical: should factors be ordered? Only
-available for features \code{month} or \code{dow}.}
+\item{ordinal}{A logical: should factors be ordered? Only available for
+features \code{month} or \code{dow}.}
 
-\item{locale}{Locale to be used for \code{month} and \code{dow}, see \link{locales}.
-On Linux systems you can use \code{system("locale -a")} to list all the
-installed locales. Can be a locales string, or a \code{\link[clock:clock_labels]{clock::clock_labels()}}
-object. Defaults to \code{clock::clock_locale()$labels}.}
+\item{locale}{Locale to be used for \code{month} and \code{dow}, see \link{locales}. On
+Linux systems you can use \code{system("locale -a")} to list all the installed
+locales. Can be a locales string, or a \code{\link[clock:clock_labels]{clock::clock_labels()}} object.
+Defaults to \code{clock::clock_locale()$labels}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -67,12 +63,11 @@ is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -85,18 +80,13 @@ sequence of any existing operations.
 date data into one or more factor or numeric variables.
 }
 \details{
-Unlike some other steps, \code{step_date} does \emph{not}
-remove the original date variables by default. Set \code{keep_original_cols}
-to \code{FALSE} to remove them.
+Unlike some other steps, \code{step_date()} does \emph{not} remove the original date
+variables by default. Set \code{keep_original_cols} to \code{FALSE} to remove them.
 
 See \code{\link[=step_time]{step_time()}} if you want to calculate features that are smaller than
 days.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{value} (the feature
-names), and \code{ordinal} (a logical) is returned.
-
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value}, \code{ordinal} , and \code{id}:
 

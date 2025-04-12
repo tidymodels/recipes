@@ -160,7 +160,6 @@ test_that("printing", {
   expect_snapshot(prep(rec))
 })
 
-
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
   rec <- recipe(~., data) %>%

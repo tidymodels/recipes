@@ -5,26 +5,26 @@
 #'
 #' @inheritParams step_spline_b
 #' @param degree The degree of C-spline defined to be the degree of the
-#'  associated M-spline instead of actual polynomial degree. For example,
-#'  C-spline basis of degree 2 is defined as the scaled double integral of
-#'  associated M-spline basis of degree 2.
-#' @param options A list of options for [splines2::cSpline()]
-#'  which should not include `x`, `df`, `degree`, or `intercept`.
+#'   associated M-spline instead of actual polynomial degree. For example,
+#'   C-spline basis of degree 2 is defined as the scaled double integral of
+#'   associated M-spline basis of degree 2.
+#' @param options A list of options for [splines2::cSpline()] which should not
+#'   include `x`, `df`, `degree`, or `intercept`.
 #' @return An object with classes `"step_spline_convex"` and `"step"`.
 #' @export
 #' @details
 #'
 #' Spline transformations take a numeric column and create multiple features
 #' that, when used in a model, can estimate nonlinear trends between the column
-#' and some outcome. The degrees of freedom determines how many new features
-#' are added to the data.
+#' and some outcome. The degrees of freedom determines how many new features are
+#' added to the data.
 #'
 #' These particular spline functions have forms that are guaranteed to be
 #' convex.
 #'
-#' If the spline expansion fails for a selected column, the step will
-#' remove that column's results (but will retain the original data). Use the
-#' `tidy()` method to determine which columns were used.
+#' If the spline expansion fails for a selected column, the step will remove
+#' that column's results (but will retain the original data). Use the `tidy()`
+#' method to determine which columns were used.
 #'
 #' # Tidying
 #'

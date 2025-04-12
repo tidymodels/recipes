@@ -1,8 +1,7 @@
 #' Create a formula from a prepared recipe
 #'
-#' In case a model formula is required, the formula method can
-#'  be used on a recipe to show what predictors and outcome(s)
-#'  could be used.
+#' In case a model formula is required, the formula method can be used on a
+#' recipe to show what predictors and outcome(s) could be used.
 #'
 #' @param x A recipe object that has been prepared.
 #' @param ... Note currently used.

@@ -16,31 +16,28 @@ step_string2factor(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{levels}{An optional specification of the levels to be used
-for the new factor. If left \code{NULL}, the sorted unique
-values present when \code{bake} is called will be used.}
+\item{levels}{An optional specification of the levels to be used for the new
+factor. If left \code{NULL}, the sorted unique values present when \code{bake} is
+called will be used.}
 
-\item{ordered}{A single logical value; should the factor(s) be
-ordered?}
+\item{ordered}{A single logical value; should the factor(s) be ordered?}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -49,8 +46,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_string2factor()} will convert one or more character vectors to factors
-(ordered or unordered).
+\code{step_string2factor()} will convert one or more character
+vectors to factors (ordered or unordered).
 
 \emph{Use this step only in special cases} (see Details) and instead convert
 strings to factors before using any tidymodels functions.
@@ -58,28 +55,27 @@ strings to factors before using any tidymodels functions.
 \details{
 \subsection{When should you use this step?}{
 
-In most cases, if you are planning to use \code{step_string2factor()}
-without setting \code{levels}, you will be better off converting
-those character variables to factor variables \strong{before using a recipe}.
+In most cases, if you are planning to use \code{step_string2factor()} without
+setting \code{levels}, you will be better off converting those character variables
+to factor variables \strong{before using a recipe}.
 
 This can be done using \pkg{dplyr} with the following code
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{df <- mutate(df, across(where(is.character), as.factor))
 }\if{html}{\out{</div>}}
 
-During resampling, the complete set of values might
-not be in the character data. Converting them to factors with
-\code{step_string2factor()}  then will misconfigure the levels.
+During resampling, the complete set of values might not be in the character
+data. Converting them to factors with \code{step_string2factor()}  then will
+misconfigure the levels.
 
-If the \code{levels} argument to \code{step_string2factor()}is used, it will
-convert all variables affected by this step to have the same
-levels. Because of this, you will need to know the full set of level
-when you define the recipe.
+If the \code{levels} argument to \code{step_string2factor()}is used, it will convert
+all variables affected by this step to have the same levels. Because of this,
+you will need to know the full set of level when you define the recipe.
 
-Also, note that \code{\link[=prep]{prep()}} has an option \code{strings_as_factors} that
-defaults to \code{TRUE}. This should be changed so that raw character
-data will be applied to \code{step_string2factor()}. However, this step
-can also take existing factors (but will leave them as-is).
+Also, note that \code{\link[=prep]{prep()}} has an option \code{strings_as_factors} that defaults to
+\code{TRUE}. This should be changed so that raw character data will be applied to
+\code{step_string2factor()}. However, this step can also take existing factors
+(but will leave them as-is).
 }
 }
 \section{Tidying}{

@@ -18,34 +18,31 @@ step_nzv(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{freq_cut, unique_cut}{Numeric parameters for the filtering process. See
 the Details section below.}
 
-\item{options}{A list of options for the filter (see Details
-below).}
+\item{options}{A list of options for the filter (see Details below).}
 
-\item{removals}{A character string that contains the names of
-columns that should be removed. These values are not determined
-until \code{\link[=prep]{prep()}} is called.}
+\item{removals}{A character string that contains the names of columns that
+should be removed. These values are not determined until \code{\link[=prep]{prep()}} is
+called.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -63,9 +60,9 @@ cause issues for subsequent steps in your recipe if the missing columns are
 specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 
-This step diagnoses predictors that have one unique
-value (i.e. are zero variance predictors) or predictors that have
-both of the following characteristics:
+This step diagnoses predictors that have one unique value (i.e. are zero
+variance predictors) or predictors that have both of the following
+characteristics:
 \enumerate{
 \item they have very few unique values relative to the number
 of samples and
@@ -73,19 +70,17 @@ of samples and
 the frequency of the second most common value is large.
 }
 
-For example, an example of near-zero variance predictor is one
-that, for 1000 samples, has two distinct values and 999 of them
-are a single value.
+For example, an example of near-zero variance predictor is one that, for 1000
+samples, has two distinct values and 999 of them are a single value.
 
-To be flagged, first, the frequency of the most prevalent value
-over the second most frequent value (called the "frequency
-ratio") must be above \code{freq_cut}. Secondly, the "percent of
-unique values," the number of unique values divided by the total
-number of samples (times 100), must also be below
+To be flagged, first, the frequency of the most prevalent value over the
+second most frequent value (called the "frequency ratio") must be above
+\code{freq_cut}. Secondly, the "percent of unique values," the number of unique
+values divided by the total number of samples (times 100), must also be below
 \code{unique_cut}.
 
-In the above example, the frequency ratio is 999 and the unique
-value percent is 0.2\%.
+In the above example, the frequency ratio is 999 and the unique value percent
+is 0.2\%.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

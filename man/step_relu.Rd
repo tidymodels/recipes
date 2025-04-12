@@ -19,18 +19,18 @@ step_relu(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{shift}{A numeric value dictating a translation to apply to the data.}
 
@@ -47,12 +47,11 @@ transformations.}
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -65,23 +64,22 @@ sequence of any existing operations.
 rectified linear or softplus transformations of a variable to the data set.
 }
 \details{
-The rectified linear transformation is calculated as
-\deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
-If \code{reverse} is true, then the transformation is reflected about the
-y-axis, like so: \deqn{max(0, c - x)} Setting the \code{smooth} option
-to true will instead calculate a smooth approximation to ReLu
-according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
-also be applied to this transformation.
+The rectified linear transformation is calculated as \deqn{max(0, x - c)} and
+is also known as the ReLu or right hinge function. If \code{reverse} is true, then
+the transformation is reflected about the y-axis, like so: \deqn{max(0, c -
+x)} Setting the \code{smooth} option to true will instead calculate a smooth
+approximation to ReLu according to \deqn{ln(1 + e^(x - c)} The \code{reverse}
+argument may also be applied to this transformation.
 }
 \section{Connection to MARS:}{
 The rectified linear transformation is used in Multivariate Adaptive
 Regression Splines as a basis function to fit piecewise linear functions to
 data in a strategy similar to that employed in tree based models. The
-transformation is a popular choice as an activation function in many
-neural networks, which could then be seen as a stacked generalization of
-MARS when making use of ReLu activations. The hinge function also appears
-in the loss function of Support Vector Machines, where it penalizes
-residuals only if they are within a certain margin of the decision boundary.
+transformation is a popular choice as an activation function in many neural
+networks, which could then be seen as a stacked generalization of MARS when
+making use of ReLu activations. The hinge function also appears in the loss
+function of Support Vector Machines, where it penalizes residuals only if
+they are within a certain margin of the decision boundary.
 }
 
 \section{Tidying}{

@@ -18,8 +18,8 @@ add_check(rec, object)
 A updated \code{\link[=recipe]{recipe()}} with the new operation in the last slot.
 }
 \description{
-\code{add_step} adds a step to the last location in the recipe.
-\code{add_check} does the same for checks.
+\code{add_step()} adds a step to the last location in the recipe. \code{add_check()}
+does the same for checks.
 }
 \seealso{
 \link{developer_functions}

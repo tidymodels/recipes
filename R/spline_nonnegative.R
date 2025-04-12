@@ -5,18 +5,18 @@
 #'
 #' @inheritParams step_spline_b
 #' @param degree A nonnegative integer specifying the degree of the piecewise
-#'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
-#'  for piecewise constant basis functions.
-#' @param options A list of options for [splines2::mSpline()]
-#'  which should not include `x`, `df`, `degree`, or `intercept`.
+#'   polynomial. The default value is 3 for cubic splines. Zero degree is
+#'   allowed for piecewise constant basis functions.
+#' @param options A list of options for [splines2::mSpline()] which should not
+#'   include `x`, `df`, `degree`, or `intercept`.
 #' @return An object with classes `"step_spline_nonnegative"` and `"step"`.
 #' @export
 #' @details
 #'
 #' Spline transformations take a numeric column and create multiple features
 #' that, when used in a model, can estimate nonlinear trends between the column
-#' and some outcome. The degrees of freedom determines how many new features
-#' are added to the data.
+#' and some outcome. The degrees of freedom determines how many new features are
+#' added to the data.
 #'
 #' This function generates M-splines (Curry, and Schoenberg 1988) which are
 #' non-negative and have interesting statistical properties (such as integrating
@@ -26,9 +26,9 @@
 #' Setting `periodic = TRUE` in the list passed to `options`, a periodic version
 #' of the spline is used.
 #'
-#' If the spline expansion fails for a selected column, the step will
-#' remove that column's results (but will retain the original data). Use the
-#' `tidy()` method to determine which columns were used.
+#' If the spline expansion fails for a selected column, the step will remove
+#' that column's results (but will retain the original data). Use the `tidy()`
+#' method to determine which columns were used.
 #'
 #' # Tidying
 #'

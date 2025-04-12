@@ -1,30 +1,27 @@
 #' Tidy the result of a recipe
 #'
-#' `tidy` will return a data frame that contains information
-#'  regarding a recipe or operation within the recipe (when a `tidy`
-#'  method for the operation exists).
+#' `tidy()` will return a data frame that contains information regarding a
+#' recipe or operation within the recipe (when a `tidy()` method for the
+#' operation exists).
 #'
 #' @name tidy.recipe
 #'
 #' @param x A `recipe` object, step, or check (trained or otherwise).
-#' @param number An integer or `NA`. If missing, and `id` is not provided,
-#'  the return value is a list of the operations in the recipe.
-#'  If a number is given, a `tidy` method is executed for that operation
-#'  in the recipe (if it exists). `number` must not be provided if
-#'  `id` is.
-#' @param id A character string or `NA`. If missing and `number` is not provided,
-#'  the return value is a list of the operations in the recipe.
-#'  If a character string is given, a `tidy` method is executed for that
-#'  operation in the recipe (if it exists). `id` must not be provided
-#'  if `number` is.
+#' @param number An integer or `NA`. If missing, and `id` is not provided, the
+#'   return value is a list of the operations in the recipe. If a number is
+#'   given, a `tidy` method is executed for that operation in the recipe (if it
+#'   exists). `number` must not be provided if `id` is.
+#' @param id A character string or `NA`. If missing and `number` is not
+#'   provided, the return value is a list of the operations in the recipe. If a
+#'   character string is given, a `tidy` method is executed for that operation
+#'   in the recipe (if it exists). `id` must not be provided if `number` is.
 #' @param ... Not currently used.
-#' @return A tibble with columns that vary depending on what
-#'  `tidy` method is executed. When `number`, and `id` are `NA`, a
-#'  tibble with columns `number` (the operation iteration),
-#'  `operation` (either "step" or "check"),
-#'  `type` (the method, e.g. "nzv", "center"), a logical
-#'  column called `trained` for whether the operation has been
-#'  estimated using `prep`, a logical for `skip`, and a character column `id`.
+#' @return A tibble with columns that vary depending on what `tidy` method is
+#'   executed. When `number`, and `id` are `NA`, a tibble with columns `number`
+#'   (the operation iteration), `operation` (either "step" or "check"), `type`
+#'   (the method, e.g. "nzv", "center"), a logical column called `trained` for
+#'   whether the operation has been estimated using `prep`, a logical for
+#'   `skip`, and a character column `id`.
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(Sacramento, package = "modeldata")

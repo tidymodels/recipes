@@ -89,8 +89,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-    step_center(all_numeric_predictors()) %>%
-    prep()
+      step_center(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
@@ -104,8 +104,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-    step_center(all_numeric_predictors()) %>%
-    prep()
+      step_center(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],

@@ -6,25 +6,27 @@
 #' @inheritParams step_impute_bag
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose variables to be imputed;
-#' these variables **must** be of type `numeric`. When used with `imp_vars`,
-#' these dots indicate which variables are used to predict the missing data
-#' in each variable. See [selections()] for more details.
-#' @param models The [lm()] objects are stored here once the linear models
-#'  have been trained by [prep()].
+#'   these variables **must** be of type `numeric`. When used with `imp_vars`,
+#'   these dots indicate which variables are used to predict the missing data in
+#'   each variable. See [selections()] for more details.
+#' @param models The [lm()] objects are stored here once the linear models have
+#'   been trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
-#' @details For each variable requiring imputation, a linear model is fit
-#'  where the outcome is the variable of interest and the predictors are any
-#'  other variables listed in the `impute_with` formula. Note that if a variable
-#'  that is to be imputed is also in `impute_with`, this variable will be ignored.
+#' @details
+#'
+#' For each variable requiring imputation, a linear model is fit where the
+#' outcome is the variable of interest and the predictors are any other
+#' variables listed in the `impute_with` formula. Note that if a variable that
+#' is to be imputed is also in `impute_with`, this variable will be ignored.
 #'
 #' The variable(s) to be imputed must be of type `numeric`. The imputed values
-#'  will keep the same type as their original data (i.e, model predictions are
-#'  coerced to integer as needed).
+#' will keep the same type as their original data (i.e, model predictions are
+#' coerced to integer as needed).
 #'
-#'  Since this is a linear regression, the imputation model only uses complete
-#'  cases for the training set predictors.
+#' Since this is a linear regression, the imputation model only uses complete
+#' cases for the training set predictors.
 #'
 #' # Tidying
 #'

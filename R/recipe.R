@@ -636,16 +636,16 @@ prep.recipe <-
     # that variable was available.
     x$last_term_info <-
       running_info %>%
-      group_by(variable) %>%
-      arrange(desc(number)) %>%
-      summarise(
-        type = list(dplyr::first(type)),
-        role = list(unique(unlist(role))),
-        source = dplyr::first(source),
-        number = dplyr::first(number),
-        skip = dplyr::first(skip),
-        .groups = "keep"
-      )
+        group_by(variable) %>%
+        arrange(desc(number)) %>%
+        summarise(
+          type = list(dplyr::first(type)),
+          role = list(unique(unlist(role))),
+          source = dplyr::first(source),
+          number = dplyr::first(number),
+          skip = dplyr::first(skip),
+          .groups = "keep"
+        )
     x
   }
 
@@ -936,13 +936,13 @@ print.recipe <- function(x, form_width = 30, ...) {
 #'   set when the recipe was defined.
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
-#' @return A tibble with columns `variable`, `type`, `role`,
-#'   and `source`. When `original = TRUE`, an additional column is included
-#'   named `required_to_bake` (based on the results of
-#'   [update_role_requirements()]).
+#' @return A tibble with columns `variable`, `type`, `role`, and `source`. When
+#'   `original = TRUE`, an additional column is included named
+#'   `required_to_bake` (based on the results of [update_role_requirements()]).
 #' @details
-#' Note that, until the recipe has been trained,
-#' the current and original variables are the same.
+#'
+#' Note that, until the recipe has been trained, the current and original
+#' variables are the same.
 #'
 #' It is possible for variables to have multiple roles by adding them with
 #' [add_role()]. If a variable has multiple roles, it will have more than one
@@ -976,14 +976,13 @@ bake_req_tibble <- function(x) {
   req <- compute_bake_role_requirements(x)
   req <-
     tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
-    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+      dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
   req
 }
 
 #' Extract transformed training set
 #'
-#' @description
-#' `r lifecycle::badge('superseded')`
+#' @description `r lifecycle::badge('superseded')`
 #'
 #' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.
@@ -997,6 +996,7 @@ bake_req_tibble <- function(x) {
 #'   `retain = TRUE`.
 #'
 #' @details
+#'
 #' `juice()` will return the results of a recipe where _all steps_ have been
 #' applied to the data, irrespective of the value of the step's `skip` argument.
 #'

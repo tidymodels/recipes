@@ -5,24 +5,25 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param deg_free The degrees of freedom for the natural spline. As the
-#'  degrees of freedom for a natural spline increase, more flexible and
-#'  complex curves can be generated. When a single degree of freedom is used,
-#'  the result is a rescaled version of the original data.
-#' @param objects A list of [splines::ns()] objects
-#'  created once the step has been trained.
-#' @param options A list of options for [splines::ns()]
-#'  which should not include `x` or `df`.
+#' @param deg_free The degrees of freedom for the natural spline. As the degrees
+#'   of freedom for a natural spline increase, more flexible and complex curves
+#'   can be generated. When a single degree of freedom is used, the result is a
+#'   rescaled version of the original data.
+#' @param objects A list of [splines::ns()] objects created once the step has
+#'   been trained.
+#' @param options A list of options for [splines::ns()] which should not include
+#'   `x` or `df`.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details `step_ns` can create new features from a single variable
-#'  that enable fitting routines to model this variable in a
-#'  nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `df` or `knots` arguments of
-#'  [splines::ns()]. The original variables are removed
-#'  from the data and new columns are added. The naming convention
-#'  for the new variables is `varname_ns_1` and so on.
+#' @details
+#'
+#' `step_ns()` can create new features from a single variable that enable
+#' fitting routines to model this variable in a nonlinear manner. The extent of
+#' the possible nonlinearity is determined by the `df` or `knots` arguments of
+#' [splines::ns()]. The original variables are removed from the data and new
+#' columns are added. The naming convention for the new variables is
+#' `varname_ns_1` and so on.
 #'
 #' # Tidying
 #'

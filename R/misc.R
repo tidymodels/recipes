@@ -49,36 +49,35 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 
 #' Naming Tools
 #'
-#' `names0` creates a series of `num` names with a common prefix.
-#'  The names are numbered with leading zeros (e.g.
-#'  `prefix01`-`prefix10` instead of `prefix1`-`prefix10`).
-#'  `dummy_names` can be used for renaming unordered and ordered
-#'  dummy variables (in [step_dummy()]).
+#' `names0()` creates a series of `num` names with a common prefix. The names
+#' are numbered with leading zeros (e.g. `prefix01`-`prefix10` instead of
+#' `prefix1`-`prefix10`). `dummy_names` can be used for renaming unordered and
+#' ordered dummy variables (in [step_dummy()]).
 #'
 #' @param num A single integer for how many elements are created.
 #' @param prefix A character string that will start each name.
 #' @param var A single string for the original factor name.
-#' @param lvl A character vectors of the factor levels (in order).
-#'  When used with [step_dummy()], `lvl` would be the suffixes
-#'  that result _after_ `model.matrix` is called (see the
-#'  example below).
+#' @param lvl A character vectors of the factor levels (in order). When used
+#'   with [step_dummy()], `lvl` would be the suffixes that result _after_
+#'   `model.matrix` is called (see the example below).
 #' @param ordinal A logical; was the original factor ordered?
 #' @param sep A single character value for the separator between the names and
-#'  levels.
+#'   levels.
 #' @param call The execution environment of a currently running function, e.g.
 #'   `caller_env()`. The function will be mentioned in error messages as the
 #'   source of the error. See the call argument of [rlang::abort()] for more
 #'   information.
-#' @details When using `dummy_names()`, factor levels that are not valid
-#'  variable names (e.g. "some text  with spaces") will be changed to valid
-#'  names by [base::make.names()]; see example below. This function will also
-#'  change the names of ordinal dummy variables. Instead of values such as
-#'  "`.L`", "`.Q`", or "`^4`", ordinal dummy variables are given simple integer
-#'  suffixes such as "`_1`", "`_2`", etc.
+#' @details
 #'
-#' @return `names0` returns a character string of length `num` and
-#'  `dummy_names` generates a character vector the same length as
-#'  `lvl`.
+#' When using `dummy_names()`, factor levels that are not valid variable names
+#' (e.g. "some text  with spaces") will be changed to valid names by
+#' [base::make.names()]; see example below. This function will also change the
+#' names of ordinal dummy variables. Instead of values such as `".L"`, `".Q"`,
+#' or `"^4"`, ordinal dummy variables are given simple integer suffixes such as
+#' `"_1"`, `"_2"`, etc.
+#'
+#' @return `names0()` returns a character string of length `num` and
+#'   `dummy_names()` generates a character vector the same length as `lvl`.
 #'
 #' @seealso [developer_functions]
 #'
@@ -224,10 +223,10 @@ strings2factors <- function(x, info) {
 
 # ------------------------------------------------------------------------------
 
-# `vec_detect_complete` fails on list columns. This version counts a list column
-# as missing if _all_ values are missing. For if a list vector element is a
-# data frame with one missing value, that element of the list column will
-# be counted as complete.
+# `vec_detect_complete()` fails on list columns. This version counts a list
+# column as missing if _all_ values are missing. For if a list vector element is
+# a data frame with one missing value, that element of the list column will be
+# counted as complete.
 n_complete_rows <- function(x) {
   is_list_col <- purrr::map_lgl(x, is.list)
   pos_list_cols <- which(is_list_col)
@@ -318,11 +317,10 @@ ellipse_check <- function(...) {
 #'
 #' `printer()` is used for printing steps. `r lifecycle::badge("deprecated")`
 #'
-#' @param tr_obj A character vector of names that have been
-#'  resolved during preparing the recipe (e.g. the `columns` object
-#'  of [step_log()]).
-#' @param untr_obj An object of selectors prior to prepping the
-#'  recipe (e.g. `terms` in most steps).
+#' @param tr_obj A character vector of names that have been resolved during
+#'   preparing the recipe (e.g. the `columns` object of [step_log()]).
+#' @param untr_obj An object of selectors prior to prepping the recipe (e.g.
+#'   `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
 #'
@@ -364,8 +362,8 @@ printer <- function(
 #'
 #' @param x A recipe
 #' @return A logical which is true if all of the recipe steps have been run
-#'  through `prep`. If no steps have been added to the recipe, `TRUE` is
-#'  returned only if the recipe has been prepped.
+#'   through `prep`. If no steps have been added to the recipe, `TRUE` is
+#'   returned only if the recipe has been prepped.
 #' @export
 #'
 #' @seealso [developer_functions]
@@ -428,9 +426,9 @@ is_qual <- function(x) {
 
 #' Quantitatively check on variables
 #'
-#' This internal function is to be used in the prep function to ensure that
-#'   the type of the variables matches the expectation. Throws an error if
-#'   check fails.
+#' This internal function is to be used in the prep function to ensure that the
+#' type of the variables matches the expectation. Throws an error if check
+#' fails.
 #' @param dat A data frame or tibble of the training data.
 #' @param quant A logical indicating whether the data is expected to be numeric
 #'   (TRUE) or a factor/character (FALSE). Is ignored if `types` is specified.
@@ -438,12 +436,12 @@ is_qual <- function(x) {
 #'   [has_role()]. See details for more.
 #'
 #' @details
-#' Using `types` is a more fine-tuned way to use this. function compared to using
-#' `quant`. `types` should specify all allowed types as designated by
+#'
+#' Using `types` is a more fine-tuned way to use this. function compared to
+#' using `quant`. `types` should specify all allowed types as designated by
 #' [.get_data_types]. Suppose you want to allow doubles, integers, characters,
-#' factors and ordered factors, then you should specify
-#' `types = c("double", "integer", "string", "factor", "ordered")` to get a
-#' clear error message.
+#' factors and ordered factors, then you should specify `types = c("double",
+#' "integer", "string", "factor", "ordered")` to get a clear error message.
 #'
 #' @seealso [developer_functions]
 #'
@@ -459,7 +457,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
       types <- "factor or character"
     }
   } else {
-    all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
+    all_good <- purrr::map_lgl(get_types(dat)$type, ~any(.x %in% types))
   }
 
   if (!all(all_good)) {
@@ -571,16 +569,16 @@ simple_terms <- function(x, ...) {
 
 #' check that newly created variable names don't overlap
 #'
-#' `check_name` is to be used in the bake function to ensure that
-#'   newly created variable names don't overlap with existing names.
-#'   Throws an error if check fails.
+#' `check_name` is to be used in the bake function to ensure that newly created
+#' variable names don't overlap with existing names. Throws an error if check
+#' fails.
 #' @param res A data frame or tibble of the newly created variables.
 #' @param new_data A data frame or tibble passed to the bake function.
 #' @param object A trained object passed to the bake function.
-#' @param newname A string of variable names if prefix isn't specified
-#'   in the trained object.
-#' @param names A logical determining if the names should be set using
-#' the names function (TRUE) or colnames function (FALSE).
+#' @param newname A string of variable names if prefix isn't specified in the
+#'   trained object.
+#' @param names A logical determining if the names should be set using the names
+#'   function (TRUE) or colnames function (FALSE).
 #' @param call The execution environment of a currently running function, e.g.
 #'   `caller_env()`. The function will be mentioned in error messages as the
 #'   source of the error. See the call argument of [rlang::abort()] for more
@@ -628,7 +626,7 @@ check_name <- function(
 #' @param prefix A single character string
 #' @param len An integer for the number of random characters
 #' @return A character string with the prefix and random letters separated by
-#'  and underscore.
+#'   and underscore.
 #'
 #' @seealso [developer_functions]
 #' @keywords internal
@@ -855,8 +853,8 @@ uses_dim_red <- function(x) {
 
 #' Check for required column at bake-time
 #'
-#' When baking a step, create an information error message when a column that
-#' is used by the step is not present in `new_data`.
+#' When baking a step, create an information error message when a column that is
+#' used by the step is not present in `new_data`.
 #'
 #' @param req A character vector of required columns.
 #' @param object A step object.
@@ -931,8 +929,8 @@ vec_paste0 <- function(..., collapse = NULL) {
 #' @param new_data A tibble.
 #' @param object A step object.
 #' @param col_names A character vector, denoting columns to remove.
-#' @return new_data with `col_names` removed if
-#'     `get_keep_original_cols(object) == TRUE` or `object$preserve == TRUE`.
+#' @return new_data with `col_names` removed if `get_keep_original_cols(object)
+#'   == TRUE` or `object$preserve == TRUE`.
 #' @keywords internal
 #'
 #' @seealso [developer_functions]
@@ -1040,8 +1038,8 @@ try_fetch_eval_tidy <- function(x, call = rlang::caller_env(1)) {
 
 #' Check that options argument contain the right elements
 #'
-#' `check_options` is to be used in the prep function to ensure that
-#' `options` arguments are lists and contain the right elements.
+#' `check_options()` is to be used in the prep function to ensure that `options`
+#' arguments are lists and contain the right elements.
 #'
 #' @param options options to be checked.
 #' @param exclude Character vector, elements that can't be present in `options`.
@@ -1098,10 +1096,9 @@ check_options <- function(
 
 #' Evaluate a selection with tidyselect semantics for arguments
 #'
-#' @description
-#' `recipes_argument_select()` is a varient of [recipes_eval_select()] that is
-#' tailored to work well with arguments in steps that specify variables. Such as
-#' `denom` in [step_ratio()].
+#' @description `recipes_argument_select()` is a variant of
+#' [recipes_eval_select()] that is tailored to work well with arguments in steps
+#' that specify variables. Such as `denom` in [step_ratio()].
 #'
 #' This is a developer tool that is only useful for creating new recipes steps.
 #'
@@ -1110,8 +1107,8 @@ check_options <- function(
 #'   argument.
 #'
 #' @param data A data frame to use as the context to evaluate the selection in.
-#'   This is generally the `training` data passed to the [prep()] method
-#'   of your step.
+#'   This is generally the `training` data passed to the [prep()] method of your
+#'   step.
 #'
 #' @param info A data frame of term information describing each column's type
 #'   and role for use with the recipes selectors. This is generally the `info`
@@ -1128,6 +1125,7 @@ check_options <- function(
 #'   information.
 #'
 #' @details
+#'
 #' This function is written to be backwards compatible with previous input types
 #' of these arguments. Will thus accept strings, tidyselect, recipes selections,
 #' helper functions [imp_vars()] in addition to the prefered bare names.

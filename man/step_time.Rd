@@ -17,23 +17,23 @@ step_time(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. The selected variables should have class
-\code{POSIXct} or \code{POSIXlt}. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+The selected variables should have class \code{POSIXct} or \code{POSIXlt}. See
+\code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{features}{A character string that includes at least one
-of the following values: \code{am} (is is AM), \code{hour}, \code{hour12}, \code{minute},
-\code{second}, \code{decimal_day}.}
+\item{features}{A character string that includes at least one of the
+following values: \code{am} (is is AM), \code{hour}, \code{hour12}, \code{minute}, \code{second},
+\code{decimal_day}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -41,12 +41,11 @@ is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -59,14 +58,15 @@ sequence of any existing operations.
 date-time data into one or more factor or numeric variables.
 }
 \details{
-Unlike some other steps, \code{step_time()} does \emph{not}
-remove the original time variables by default. Set \code{keep_original_cols}
-to \code{FALSE} to remove them.
+Unlike some other steps, \code{step_time()} does \emph{not} remove the original time
+variables by default. Set \code{keep_original_cols} to \code{FALSE} to remove them.
 
 \code{decimal_day} return time of day as a decimal number between 0 and 24. for
 example \code{"07:15:00"} would be transformed to \code{7.25}  and \code{"03:59:59"} would
-be transformed to \code{3.999722}. The formula for these calculations are
-\code{hour(x) + (second(x) + minute(x) * 60) / 3600}.
+be transformed to \code{3.999722}. The formula for these calculations are `hour(x)
+\itemize{
+\item (second(x) + minute(x) * 60) / 3600`.
+}
 
 See \code{\link[=step_date]{step_date()}} if you want to calculate features that are larger than
 hours.

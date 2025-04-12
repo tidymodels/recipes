@@ -16,18 +16,17 @@ set when the recipe was defined.}
 used).}
 }
 \value{
-A tibble with columns \code{variable}, \code{type}, \code{role},
-and \code{source}. When \code{original = TRUE}, an additional column is included
-named \code{required_to_bake} (based on the results of
-\code{\link[=update_role_requirements]{update_role_requirements()}}).
+A tibble with columns \code{variable}, \code{type}, \code{role}, and \code{source}. When
+\code{original = TRUE}, an additional column is included named
+\code{required_to_bake} (based on the results of \code{\link[=update_role_requirements]{update_role_requirements()}}).
 }
 \description{
 This function prints the current set of variables/features and some of their
 characteristics.
 }
 \details{
-Note that, until the recipe has been trained,
-the current and original variables are the same.
+Note that, until the recipe has been trained, the current and original
+variables are the same.
 
 It is possible for variables to have multiple roles by adding them with
 \code{\link[=add_role]{add_role()}}. If a variable has multiple roles, it will have more than one

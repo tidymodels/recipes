@@ -19,8 +19,8 @@ recipes_argument_select(
 argument.}
 
 \item{data}{A data frame to use as the context to evaluate the selection in.
-This is generally the \code{training} data passed to the \code{\link[=prep]{prep()}} method
-of your step.}
+This is generally the \code{training} data passed to the \code{\link[=prep]{prep()}} method of your
+step.}
 
 \item{info}{A data frame of term information describing each column's type
 and role for use with the recipes selectors. This is generally the \code{info}
@@ -40,9 +40,9 @@ information.}
 A character vector containing the evaluated selection.
 }
 \description{
-\code{recipes_argument_select()} is a varient of \code{\link[=recipes_eval_select]{recipes_eval_select()}} that is
-tailored to work well with arguments in steps that specify variables. Such as
-\code{denom} in \code{\link[=step_ratio]{step_ratio()}}.
+\code{recipes_argument_select()} is a variant of
+\code{\link[=recipes_eval_select]{recipes_eval_select()}} that is tailored to work well with arguments in steps
+that specify variables. Such as \code{denom} in \code{\link[=step_ratio]{step_ratio()}}.
 
 This is a developer tool that is only useful for creating new recipes steps.
 }

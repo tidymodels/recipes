@@ -5,14 +5,14 @@
 #' matrices are converted to sparse tibbles internally as each step expects a
 #' tibble as its input, and is expected to return a tibble as well.
 #'
-#' Several steps work with sparse data. A step can either work with sparse
-#' data, ruin sparsity, or create sparsity. The documentation for each step
-#' will indicate whether it will work with sparse data or create sparse columns.
-#' If nothing is listed it is assumed to ruin sparsity.
+#' Several steps work with sparse data. A step can either work with sparse data,
+#' ruin sparsity, or create sparsity. The documentation for each step will
+#' indicate whether it will work with sparse data or create sparse columns. If
+#' nothing is listed it is assumed to ruin sparsity.
 #'
-#' Sparse tibbles or `data.frame`s will be returned from [bake()] if sparse columns
-#' are present in data, either from being generated in steps or because sparse
-#' data was passed into [recipe()], [prep()], or [bake()].
+#' Sparse tibbles or `data.frame`s will be returned from [bake()] if sparse
+#' columns are present in data, either from being generated in steps or because
+#' sparse data was passed into [recipe()], [prep()], or [bake()].
 #'
 #' @name sparse_data
 NULL
@@ -27,6 +27,7 @@ is_sparse_matrix <- function(x) {
 #' @param choice A character string for separating values.
 #'
 #' @details
+#'
 #' If a step has an argument `sparse = "auto"`, then workflows can use this
 #' function to fill these values with the preferred action. This preferred
 #' action is calculated in workflows dependent on the model and data heuristics.
@@ -49,11 +50,12 @@ is_sparse_matrix <- function(x) {
   x
 }
 
-#' Estimate sparity of a recipe
+#' Estimate sparsity of a recipe
 #'
 #' @param x An object.
 #'
 #' @details
+#'
 #' Takes a untrained recipe an provides a rough estimate of the sparsity of the
 #' prepped version of the recipe.
 #'
@@ -61,11 +63,11 @@ is_sparse_matrix <- function(x) {
 #'
 #' An estimated sparsity of the input data is calculated. Then each step where
 #' `sparse = "auto"` or `sparse = "yes"` is set, an estimate of how many
-#' predictores will be created and used to modify the estimate.
+#' predictors will be created and used to modify the estimate.
 #'
 #' An initial sparsity of 0 will be used if a zero-row data frame is used in
-#' specification of recipe. This is likely a under-estimate of the true
-#' sparsity of the data.
+#' specification of recipe. This is likely a under-estimate of the true sparsity
+#' of the data.
 #'
 #' @return A recipe
 #'
@@ -132,6 +134,7 @@ sparse_is_yes <- function(x) {
 #' @param x An object.
 #'
 #' @details
+#'
 #' This function return `TRUE` if modifications by this step is expected to
 #' destroy sparsity of its columns. It does not know whether it will happen or
 #' not since it doesn't know if the step will select sparse columns or not.
@@ -152,7 +155,7 @@ sparse_is_yes <- function(x) {
 .recipes_preserve_sparsity.default <- function(x, ...) {
   if (!inherits(x, "step")) {
     cli::cli_abort(
-      "{.fn .recipes_preserve_sparsity} is only applicable to steps, 
+      "{.fn .recipes_preserve_sparsity} is only applicable to steps,
       not {.obj_type_friendly {x}}."
     )
   }

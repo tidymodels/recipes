@@ -6,22 +6,24 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param penalty A non-negative number used as a penalization factor for the
-#' loadings. Values are usually between zero and one.
+#'   loadings. Values are usually between zero and one.
 #' @param options A list of options to `nmf()` in the RcppML package. That
-#'  package has a separate function `setRcppMLthreads()` that controls the
-#'  amount of internal parallelization. **Note** that the argument `A`, `k`,
-#'  `L1`, and `seed` should not be passed here.
+#'   package has a separate function `setRcppMLthreads()` that controls the
+#'   amount of internal parallelization. **Note** that the argument `A`, `k`,
+#'   `L1`, and `seed` should not be passed here.
 #' @param res A matrix of loadings is stored here, along with the names of the
-#'  original predictors, once this preprocessing step has been trained by
-#'  [prep()].
+#'   original predictors, once this preprocessing step has been trained by
+#'   [prep()].
 #' @param seed An integer that will be used to set the seed in isolation when
-#'  computing the factorization.
+#'   computing the factorization.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details Non-negative matrix factorization computes latent components that
-#'  have non-negative values and take into account that the original data have
-#'  non-negative values.
+#' @details
+#'
+#' Non-negative matrix factorization computes latent components that have
+#' non-negative values and take into account that the original data have
+#' non-negative values.
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "NNMF"

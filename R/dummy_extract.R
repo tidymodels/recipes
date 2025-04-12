@@ -7,25 +7,25 @@
 #' @inheritParams step_center
 #' @inheritParams step_other
 #' @inheritParams step_dummy
-#' @param sep Character string containing a regular expression to use
-#'   for splitting. [strsplit()] is used to perform the split. `sep` takes
-#'   priority if `pattern` is also specified.
-#' @param pattern Character string containing a regular expression used
-#'   for extraction. [gregexpr()] and [regmatches()] are used to perform
-#'   pattern extraction using `perl = TRUE`.
+#' @param sep Character string containing a regular expression to use for
+#'   splitting. [strsplit()] is used to perform the split. `sep` takes priority
+#'   if `pattern` is also specified.
+#' @param pattern Character string containing a regular expression used for
+#'   extraction. [gregexpr()] and [regmatches()] are used to perform pattern
+#'   extraction using `perl = TRUE`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_extract_names()]
 #' @export
-#' @details `step_dummy_extract()` will create a set of integer dummy
-#'  variables from a character variable by extracting individual strings
-#'  by either splitting or extracting then counting those to create
-#'  count variables.
+#' @details
 #'
-#'  Note that `threshold` works in a very specific way for this step.
-#'  While it is possible for one label to be present multiple times in
-#'  the same row, it will only be counted once when calculating the
-#'  occurrences and frequencies.
+#' `step_dummy_extract()` will create a set of integer dummy variables from a
+#' character variable by extracting individual strings by either splitting or
+#' extracting then counting those to create count variables.
+#'
+#' Note that `threshold` works in a very specific way for this step. While it is
+#' possible for one label to be present multiple times in the same row, it will
+#' only be counted once when calculating the occurrences and frequencies.
 #'
 #' @template dummy-naming
 #'
@@ -42,7 +42,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
-#' The return value is ordered according to the frequency of `columns` entries in the training data set.
+#' The return value is ordered according to the frequency of `columns` entries
+#' in the training data set.
 #'
 #' @template sparse-creation
 #'

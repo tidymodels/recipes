@@ -7,16 +7,17 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @inheritParams step_dummy
-#' @param holidays A character string that includes at least one
-#'  holiday supported by the `timeDate` package. See
-#'  [timeDate::listHolidays()] for a complete list.
+#' @param holidays A character string that includes at least one holiday
+#'   supported by the `timeDate` package. See [timeDate::listHolidays()] for a
+#'   complete list.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
 #' @export
-#' @details Unlike some other steps, `step_holiday` does *not*
-#'  remove the original date variables by default. Set `keep_original_cols`
-#'  to `FALSE` to remove them.
+#' @details
+#'
+#' Unlike some other steps, `step_holiday()` does *not* remove the original date
+#' variables by default. Set `keep_original_cols` to `FALSE` to remove them.
 #'
 #' # Tidying
 #'

@@ -5,41 +5,40 @@
 #'
 #' @inheritParams step_center
 #' @param threshold A numeric value between 0 and 1, or an integer greater or
-#'  equal to one.  If less than one, then factor levels with a rate of
-#'  occurrence in the training set below `threshold` will be pooled to `other`.
-#'  If greater or equal to one, then this value is treated as a frequency
-#'  and factor levels that occur less than `threshold` times will be pooled
-#'  to `other`.
-#' @param other A single character value for the "other" category.
-#' @param objects A list of objects that contain the information
-#'  to pool infrequent levels that is determined by
-#'  [prep()].
+#'   equal to one.  If less than one, then factor levels with a rate of
+#'   occurrence in the training set below `threshold` will be pooled to `other`.
+#'   If greater or equal to one, then this value is treated as a frequency and
+#'   factor levels that occur less than `threshold` times will be pooled to
+#'   `other`.
+#' @param other A single character value for the other category, default to
+#'   `"other"`.
+#' @param objects A list of objects that contain the information to pool
+#'   infrequent levels that is determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
-#' @details The overall proportion (or total counts) of the categories are
-#'  computed. The "other" category is used in place of any categorical levels
-#'  whose individual proportion (or frequency) in the training set is less than
-#'  `threshold`.
+#' @details
 #'
-#' If no pooling is done the data are unmodified (although character data may
-#'   be changed to factors based on the value of `strings_as_factors` in
-#'   [prep()]). Otherwise, a factor is always returned with
-#'   different factor levels.
+#' The overall proportion (or total counts) of the categories are computed. The
+#' `other` category is used in place of any categorical levels whose individual
+#' proportion (or frequency) in the training set is less than `threshold`.
+#'
+#' If no pooling is done the data are unmodified (although character data may be
+#' changed to factors based on the value of `strings_as_factors` in [prep()]).
+#' Otherwise, a factor is always returned with different factor levels.
 #'
 #' If `threshold` is less than the largest category proportion, all levels
-#'   except for the most frequent are collapsed to the `other` level.
+#' except for the most frequent are collapsed to the `other` level.
 #'
-#' If the retained categories include the value of `other`, an error is
-#'   thrown. If `other` is in the list of discarded levels, no error
-#'   occurs.
+#' If the retained categories include the value of `other`, an error is thrown.
+#' If `other` is in the list of discarded levels, no error occurs.
 #'
 #' If no pooling is done, novel factor levels are converted to missing. If
-#'  pooling is needed, they will be placed into the other category.
+#' pooling is needed, they will be placed into the other category.
 #'
-#' When data to be processed contains novel levels (i.e., not
-#' contained in the training set), the other category is assigned.
+#' When data to be processed contains novel levels (i.e., not contained in the
+#' training set), the other category is assigned.
 #'
 #' # Tidying
 #'

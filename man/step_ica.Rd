@@ -21,36 +21,35 @@ step_ica(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{num_comp}{The number of components to retain as new predictors.
-If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used. If \code{num_comp = 0}
-is set then no transformation is done and selected variables will
-stay unchanged, regardless of the value of \code{keep_original_cols}.}
+\item{num_comp}{The number of components to retain as new predictors. If
+\code{num_comp} is greater than the number of columns or the number of possible
+components, a smaller value will be used. If \code{num_comp = 0} is set then no
+transformation is done and selected variables will stay unchanged,
+regardless of the value of \code{keep_original_cols}.}
 
-\item{options}{A list of options to
-\code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
+\item{options}{A list of options to \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set
+here.
 \strong{Note} that the arguments \code{X} and \code{n.comp} should
 not be passed here.}
 
-\item{seed}{A single integer to set the random number stream prior to
-running ICA.}
+\item{seed}{A single integer to set the random number stream prior to running
+ICA.}
 
-\item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
-here once this preprocessing step has be trained by
-\code{\link[=prep]{prep()}}.}
+\item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored here once this
+preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -61,12 +60,11 @@ variables. See notes below.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -79,21 +77,19 @@ sequence of any existing operations.
 numeric data into one or more independent components.
 }
 \details{
-Independent component analysis (ICA) is a
-transformation of a group of variables that produces a new set
-of artificial features or components. ICA assumes that the
-variables are mixtures of a set of distinct, non-Gaussian
-signals and attempts to transform the data to isolate these
-signals. Like PCA, the components are statistically independent
-from one another. This means that they can be used to combat
-large inter-variables correlations in a data set. Also like PCA,
-it is advisable to center and scale the variables prior to
-running ICA.
+Independent component analysis (ICA) is a transformation of a group of
+variables that produces a new set of artificial features or components. ICA
+assumes that the variables are mixtures of a set of distinct, non-Gaussian
+signals and attempts to transform the data to isolate these signals. Like
+PCA, the components are statistically independent from one another. This
+means that they can be used to combat large inter-variables correlations in a
+data set. Also like PCA, it is advisable to center and scale the variables
+prior to running ICA.
 
-This package produces components using the "FastICA"
-methodology (see reference below). This step requires the
-\pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
-step will stop with a note about installing these packages.
+This package produces components using the "FastICA" methodology (see
+reference below). This step requires the \pkg{dimRed} and \pkg{fastICA}
+packages. If not installed, the step will stop with a note about installing
+these packages.
 
 The argument \code{num_comp} controls the number of components that will be retained
 (the original variables that are used to derive the components are removed from

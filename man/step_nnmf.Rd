@@ -22,55 +22,53 @@ step_nnmf(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{num_comp}{The number of components to retain as new predictors.
-If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used. If \code{num_comp = 0}
-is set then no transformation is done and selected variables will
-stay unchanged, regardless of the value of \code{keep_original_cols}.}
+\item{num_comp}{The number of components to retain as new predictors. If
+\code{num_comp} is greater than the number of columns or the number of possible
+components, a smaller value will be used. If \code{num_comp = 0} is set then no
+transformation is done and selected variables will stay unchanged,
+regardless of the value of \code{keep_original_cols}.}
 
-\item{num_run}{A positive integer for the number of computations runs used
-to obtain a consensus projection.}
+\item{num_run}{A positive integer for the number of computations runs used to
+obtain a consensus projection.}
 
 \item{options}{A list of options to \code{nmf()} in the NMF package by way of the
 \code{NNMF()} function in the \code{dimRed} package. \strong{Note} that the arguments
 \code{data} and \code{ndim} should not be passed here, and that NMF's parallel
 processing is turned off in favor of resample-level parallelization.}
 
-\item{res}{The \code{NNMF()} object is stored
-here once this preprocessing step has been trained by
-\code{\link[=prep]{prep()}}.}
+\item{res}{The \code{NNMF()} object is stored here once this preprocessing step
+has been trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below.}
+\item{prefix}{A character string that will be the prefix to the resulting new
+variables. See notes below.}
 
-\item{seed}{An integer that will be used to set the seed in isolation
-when computing the factorization.}
+\item{seed}{An integer that will be used to set the seed in isolation when
+computing the factorization.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -87,9 +85,9 @@ numeric data into one or more non-negative components.
 Please use \code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}} instead of this step function.
 }
 \details{
-Non-negative matrix factorization computes latent components that
-have non-negative values and take into account that the original data
-have non-negative values.
+Non-negative matrix factorization computes latent components that have
+non-negative values and take into account that the original data have
+non-negative values.
 
 The argument \code{num_comp} controls the number of components that will be retained
 (the original variables that are used to derive the components are removed from

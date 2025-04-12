@@ -9,13 +9,15 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param lag A vector of positive integers. Each specified column will be
-#'  lagged for each value in the vector.
-#' @param prefix A prefix for generated column names, default to "lag_".
-#' @param default Passed to `dplyr::lag`, determines what fills empty rows
+#'   lagged for each value in the vector.
+#' @param prefix A prefix for generated column names, default to `"lag_"`.
+#' @param default Passed to [dplyr::lag()], determines what fills empty rows
 #'   left by lagging (defaults to NA).
 #' @template step-return
-#' @details The step assumes that the data are already _in the proper sequential
-#'  order_ for lagging.
+#' @details
+#'
+#' The step assumes that the data are already _in the proper sequential order_
+#' for lagging.
 #'
 #' # Tidying
 #'

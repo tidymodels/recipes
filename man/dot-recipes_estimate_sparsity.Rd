@@ -2,7 +2,7 @@
 % Please edit documentation in R/sparsevctrs.R
 \name{.recipes_estimate_sparsity}
 \alias{.recipes_estimate_sparsity}
-\title{Estimate sparity of a recipe}
+\title{Estimate sparsity of a recipe}
 \usage{
 .recipes_estimate_sparsity(x, ...)
 }
@@ -13,7 +13,7 @@
 A recipe
 }
 \description{
-Estimate sparity of a recipe
+Estimate sparsity of a recipe
 }
 \details{
 Takes a untrained recipe an provides a rough estimate of the sparsity of the
@@ -23,10 +23,10 @@ Sampling of the input is done to avoid slowdown for larger data sets.
 
 An estimated sparsity of the input data is calculated. Then each step where
 \code{sparse = "auto"} or \code{sparse = "yes"} is set, an estimate of how many
-predictores will be created and used to modify the estimate.
+predictors will be created and used to modify the estimate.
 
 An initial sparsity of 0 will be used if a zero-row data frame is used in
-specification of recipe. This is likely a under-estimate of the true
-sparsity of the data.
+specification of recipe. This is likely a under-estimate of the true sparsity
+of the data.
 }
 \keyword{internal}

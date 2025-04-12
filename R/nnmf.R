@@ -15,25 +15,26 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_run A positive integer for the number of computations runs used
-#'  to obtain a consensus projection.
+#' @param num_run A positive integer for the number of computations runs used to
+#'   obtain a consensus projection.
 #' @param options A list of options to `nmf()` in the NMF package by way of the
-#'  `NNMF()` function in the `dimRed` package. **Note** that the arguments
-#'  `data` and `ndim` should not be passed here, and that NMF's parallel
-#'  processing is turned off in favor of resample-level parallelization.
-#' @param res The `NNMF()` object is stored
-#'  here once this preprocessing step has been trained by
-#'  [prep()].
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
-#' @param seed An integer that will be used to set the seed in isolation
-#'  when computing the factorization.
+#'   `NNMF()` function in the `dimRed` package. **Note** that the arguments
+#'   `data` and `ndim` should not be passed here, and that NMF's parallel
+#'   processing is turned off in favor of resample-level parallelization.
+#' @param res The `NNMF()` object is stored here once this preprocessing step
+#'   has been trained by [prep()].
+#' @param prefix A character string that will be the prefix to the resulting new
+#'   variables. See notes below.
+#' @param seed An integer that will be used to set the seed in isolation when
+#'   computing the factorization.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details Non-negative matrix factorization computes latent components that
-#'  have non-negative values and take into account that the original data
-#'  have non-negative values.
+#' @details
+#'
+#' Non-negative matrix factorization computes latent components that have
+#' non-negative values and take into account that the original data have
+#' non-negative values.
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "NNMF"

@@ -16,32 +16,30 @@ step_filter_missing(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{threshold}{A value for the threshold of missing values in column. The
-step will remove the columns where the proportion of missing values
-exceeds the threshold.}
+step will remove the columns where the proportion of missing values exceeds
+the threshold.}
 
-\item{removals}{A character string that contains the names of
-columns that should be removed. These values are not determined
-until \code{\link[=prep]{prep()}} is called.}
+\item{removals}{A character string that contains the names of columns that
+should be removed. These values are not determined until \code{\link[=prep]{prep()}} is
+called.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -59,8 +57,8 @@ cause issues for subsequent steps in your recipe if the missing columns are
 specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 
-This step will remove variables if the proportion of missing
-values exceeds the \code{threshold}.
+This step will remove variables if the proportion of missing values exceeds
+the \code{threshold}.
 
 All variables with missing values will be removed for \code{threshold = 0}.
 }

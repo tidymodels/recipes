@@ -19,56 +19,50 @@ step_profile(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{profile}{A bare name to specify which variable will be profiled (see
 \code{\link[=selections]{selections()}}). Can also be a string or tidyselect for backwards
 compatibility. If a column is included in both lists to be fixed and to be
 profiled, an error is thrown.}
 
-\item{pct}{A value between 0 and 1 that is the percentile to
-fix continuous variables. This is applied to all continuous
-variables captured by the selectors. For date variables, either
-the minimum, median, or maximum used based on their distance to
-\code{pct}.}
+\item{pct}{A value between 0 and 1 that is the percentile to fix continuous
+variables. This is applied to all continuous variables captured by the
+selectors. For date variables, either the minimum, median, or maximum used
+based on their distance to \code{pct}.}
 
-\item{index}{The level that qualitative variables will be
-fixed. If the variables are character (not factors), this will
-be the index of the sorted unique values. This is applied to all
-qualitative variables captured by the selectors.}
+\item{index}{The level that qualitative variables will be fixed. If the
+variables are character (not factors), this will be the index of the sorted
+unique values. This is applied to all qualitative variables captured by the
+selectors.}
 
-\item{grid}{A named list with elements \code{pctl} (a logical) and
-\code{len} (an integer). If \code{pctl = TRUE}, then \code{len} denotes how
-many percentiles to use to create the profiling grid. This
-creates a grid between 0 and 1 and the profile is determined by
-the percentiles of the data. For example, if \code{pctl = TRUE} and
-\code{len = 3}, the profile would contain the minimum, median, and
-maximum values. If \code{pctl = FALSE}, it defines how many grid
-points between the minimum and maximum values should be created.
-This parameter is ignored for qualitative variables (since all
-of their possible levels are profiled). In the case of date
-variables, \code{pctl = FALSE} will always be used since there is no
-quantile method for dates.}
+\item{grid}{A named list with elements \code{pctl} (a logical) and \code{len} (an
+integer). If \code{pctl = TRUE}, then \code{len} denotes how many percentiles to use
+to create the profiling grid. This creates a grid between 0 and 1 and the
+profile is determined by the percentiles of the data. For example, if \code{pctl = TRUE} and \code{len = 3}, the profile would contain the minimum, median, and
+maximum values. If \code{pctl = FALSE}, it defines how many grid points between
+the minimum and maximum values should be created. This parameter is ignored
+for qualitative variables (since all of their possible levels are
+profiled). In the case of date variables, \code{pctl = FALSE} will always be
+used since there is no quantile method for dates.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -83,9 +77,9 @@ remaining variable. This step can be helpful when creating partial regression
 plots for additive models.
 }
 \details{
-This step is atypical in that, when baked, the
-\code{new_data} argument is ignored; the resulting data set is
-based on the fixed and profiled variable's information.
+This step is atypical in that, when baked, the \code{new_data} argument is
+ignored; the resulting data set is based on the fixed and profiled variable's
+information.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

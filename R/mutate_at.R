@@ -1,20 +1,19 @@
 #' Mutate multiple columns using dplyr
 #'
-#' @description
-#' `r lifecycle::badge("superseded")`
+#' @description `r lifecycle::badge("superseded")`
 #'
-#' `step_mutate_at()` is superseded in favor of using [step_mutate()] with
-#' [dplyr::across()].
+#'   `step_mutate_at()` is superseded in favor of using [step_mutate()] with
+#'   [dplyr::across()].
 #'
-#' `step_mutate_at()` creates a *specification* of a recipe step that will
-#' modify the selected variables using a common function via
-#' [dplyr::mutate_at()].
+#'   `step_mutate_at()` creates a *specification* of a recipe step that will
+#'   modify the selected variables using a common function via
+#'   [dplyr::mutate_at()].
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param fn A function fun, a quosure style lambda `~ fun(.)`` or a list of
-#' either form. (see [dplyr::mutate_at()]). **Note that this argument must be
-#' named**.
+#' @param fn A function fun, a quosure style lambda `~ fun(.)` or a list of
+#'   either form. (see [dplyr::mutate_at()]). **Note that this argument must be
+#'   named**.
 #' @param inputs A vector of column names populated by [prep()].
 #' @template step-return
 #' @template mutate-leakage

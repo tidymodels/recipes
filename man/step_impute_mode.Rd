@@ -16,30 +16,28 @@ step_impute_mode(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{modes}{A named character vector of modes. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{modes}{A named character vector of modes. This is \code{NULL} until computed
+by \code{\link[=prep]{prep()}}.}
 
 \item{ptype}{A data frame prototype to cast new data sets to. This is
 commonly a 0-row slice of the training set.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -53,11 +51,10 @@ substitute missing values of nominal variables by the training set mode of
 those variables.
 }
 \details{
-\code{step_impute_mode} estimates the variable modes
-from the data used in the \code{training} argument of
-\code{prep.recipe}. \code{bake.recipe} then applies the new
-values to new data sets using these values. If the training set
-data has more than one mode, one is selected at random.
+\code{step_impute_mode()} estimates the variable modes from the data used in the
+\code{training} argument of \code{\link[=prep]{prep()}}. \code{\link[=bake]{bake()}} then applies the new values to new
+data sets using these values. If the training set data has more than one
+mode, one is selected at random.
 
 As of \code{recipes} 0.1.16, this function name changed from \code{step_modeimpute()}
 to \code{step_impute_mode()}.

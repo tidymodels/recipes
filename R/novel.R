@@ -4,32 +4,32 @@
 #' previously unseen factor level to `"new"`.
 #'
 #' @inheritParams step_center
-#' @param new_level A single character value that will be assigned
-#'  to new factor levels.
-#' @param objects A list of objects that contain the information
-#'  on factor levels that will be determined by [prep()].
+#' @param new_level A single character value that will be assigned to new factor
+#'   levels.
+#' @param objects A list of objects that contain the information on factor
+#'   levels that will be determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
-#' @details The selected variables are adjusted to have a new
-#'  level (given by `new_level`) that is placed in the last
-#'  position. During preparation there will be no data points
-#'  associated with this new level since all of the data have been
-#'  seen.
+#' @details
 #'
-#' Note that if the original columns are character, they will be
-#'  converted to factors by this step.
+#' The selected variables are adjusted to have a new level (given by
+#' `new_level`) that is placed in the last position. During preparation there
+#' will be no data points associated with this new level since all of the data
+#' have been seen.
+#'
+#' Note that if the original columns are character, they will be converted to
+#' factors by this step.
 #'
 #' Missing values will remain missing.
 #'
-#' If `new_level` is already in the data given to `prep`, an error
-#'  is thrown.
+#' If `new_level` is already in the data given to [prep()], an error is thrown.
 #'
 #' When fitting a model that can deal with new factor levels, consider using
-#'  [workflows::add_recipe()] with `allow_novel_levels = TRUE` set in
-#'  [hardhat::default_recipe_blueprint()]. This will allow your model to handle
-#'  new levels at prediction time, instead of throwing warnings or errors.
+#' [workflows::add_recipe()] with `allow_novel_levels = TRUE` set in
+#' [hardhat::default_recipe_blueprint()]. This will allow your model to handle
+#' new levels at prediction time, instead of throwing warnings or errors.
 #'
 #' # Tidying
 #'

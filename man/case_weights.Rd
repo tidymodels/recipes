@@ -27,8 +27,8 @@ The types of weights allowed in tidymodels are:
 More types can be added by request.
 
 For recipes, we distinguish between supervised and unsupervised steps.
-Supervised steps use the outcome in the calculations, this type of steps
-will use frequency and importance weights. Unsupervised steps don't use the
+Supervised steps use the outcome in the calculations, this type of steps will
+use frequency and importance weights. Unsupervised steps don't use the
 outcome and will only use frequency weights.
 
 There are 3 main principles about how case weights are used within recipes.

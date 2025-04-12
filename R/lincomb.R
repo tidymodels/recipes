@@ -6,19 +6,20 @@
 #'
 #' @inheritParams step_center
 #' @param max_steps The number of times to apply the algorithm.
-#' @param removals A character string that contains the names of
-#'  columns that should be removed. These values are not determined
-#'  until [prep()] is called.
+#' @param removals A character string that contains the names of columns that
+#'   should be removed. These values are not determined until [prep()] is
+#'   called.
 #' @template step-return
 #' @template filter-steps
 #' @family variable filter steps
 #' @author Max Kuhn, Kirk Mettler, and Jed Wing
 #' @export
 #'
-#' @details This step finds exact linear combinations between two
-#'  or more variables and recommends which column(s) should be
-#'  removed to resolve the issue. This algorithm may need to be
-#'  applied multiple times (as defined by `max_steps`).
+#' @details
+#'
+#' This step finds exact linear combinations between two or more variables and
+#' recommends which column(s) should be removed to resolve the issue. This
+#' algorithm may need to be applied multiple times (as defined by `max_steps`).
 #'
 #' # Tidying
 #'

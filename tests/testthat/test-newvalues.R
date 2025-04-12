@@ -241,7 +241,6 @@ test_that("bad args", {
   )
 })
 
-
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
   rec <- recipe(~., data) %>%

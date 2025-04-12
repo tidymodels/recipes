@@ -22,34 +22,34 @@ step_dummy_extract(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{sep}{Character string containing a regular expression to use
-for splitting. \code{\link[=strsplit]{strsplit()}} is used to perform the split. \code{sep} takes
-priority if \code{pattern} is also specified.}
+\item{sep}{Character string containing a regular expression to use for
+splitting. \code{\link[=strsplit]{strsplit()}} is used to perform the split. \code{sep} takes priority
+if \code{pattern} is also specified.}
 
-\item{pattern}{Character string containing a regular expression used
-for extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} are used to perform
-pattern extraction using \code{perl = TRUE}.}
+\item{pattern}{Character string containing a regular expression used for
+extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} are used to perform pattern
+extraction using \code{perl = TRUE}.}
 
 \item{threshold}{A numeric value between 0 and 1, or an integer greater or
 equal to one.  If less than one, then factor levels with a rate of
 occurrence in the training set below \code{threshold} will be pooled to \code{other}.
-If greater or equal to one, then this value is treated as a frequency
-and factor levels that occur less than \code{threshold} times will be pooled
-to \code{other}.}
+If greater or equal to one, then this value is treated as a frequency and
+factor levels that occur less than \code{threshold} times will be pooled to
+\code{other}.}
 
-\item{other}{A single character value for the "other" category.}
+\item{other}{A single character value for the other category, default to
+\code{"other"}.}
 
 \item{naming}{A function that defines the naming convention for new dummy
 columns. See Details below.}
@@ -65,12 +65,11 @@ then workflows can determine the best option. Defaults to \code{"auto"}.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -84,15 +83,13 @@ convert nominal data (e.g. characters or factors) into one or more integer
 model terms for the extracted levels.
 }
 \details{
-\code{step_dummy_extract()} will create a set of integer dummy
-variables from a character variable by extracting individual strings
-by either splitting or extracting then counting those to create
-count variables.
+\code{step_dummy_extract()} will create a set of integer dummy variables from a
+character variable by extracting individual strings by either splitting or
+extracting then counting those to create count variables.
 
-Note that \code{threshold} works in a very specific way for this step.
-While it is possible for one label to be present multiple times in
-the same row, it will only be counted once when calculating the
-occurrences and frequencies.
+Note that \code{threshold} works in a very specific way for this step. While it is
+possible for one label to be present multiple times in the same row, it will
+only be counted once when calculating the occurrences and frequencies.
 
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
@@ -111,7 +108,8 @@ columns \code{terms}, \code{columns} , and \code{id}:
 \item{id}{character, id of this step}
 }
 
-The return value is ordered according to the frequency of \code{columns} entries in the training data set.
+The return value is ordered according to the frequency of \code{columns} entries
+in the training data set.
 }
 
 \section{Sparse data}{

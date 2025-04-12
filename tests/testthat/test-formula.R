@@ -46,7 +46,7 @@ test_that("formulas", {
   expect_equal(
     formula(rec8),
     as.formula(
-      ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species
+      ~Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species
     ),
     ignore_formula_env = TRUE
   )
@@ -85,7 +85,7 @@ test_that("formulas", {
   expect_equal(
     formula(rec12),
     as.formula(
-      ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
+      ~cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
     ),
     ignore_formula_env = TRUE
   )

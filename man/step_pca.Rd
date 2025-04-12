@@ -21,34 +21,34 @@ step_pca(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{num_comp}{The number of components to retain as new predictors.
-If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used. If \code{num_comp = 0}
-is set then no transformation is done and selected variables will
-stay unchanged, regardless of the value of \code{keep_original_cols}.}
+\item{num_comp}{The number of components to retain as new predictors. If
+\code{num_comp} is greater than the number of columns or the number of possible
+components, a smaller value will be used. If \code{num_comp = 0} is set then no
+transformation is done and selected variables will stay unchanged,
+regardless of the value of \code{keep_original_cols}.}
 
 \item{threshold}{A fraction of the total variance that should be covered by
-the components. For example, \code{threshold = .75} means that \code{step_pca} should
-generate enough components to capture 75 percent of the variability in the
-variables. Note: using this argument will override and reset any value given
-to \code{num_comp}.}
+the components. For example, \code{threshold = .75} means that \code{step_pca()}
+should generate enough components to capture 75 percent of the variability
+in the variables. Note: using this argument will override and reset any
+value given to \code{num_comp}.}
 
-\item{options}{A list of options to the default method for
-\code{\link[stats:prcomp]{stats::prcomp()}}. Argument defaults are set to \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument \code{x}
-should not be passed here (or at all).}
+\item{options}{A list of options to the default method for \code{\link[stats:prcomp]{stats::prcomp()}}.
+Argument defaults are set to \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument \code{x} should not be
+passed here (or at all).}
 
 \item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
@@ -62,12 +62,11 @@ variables. See notes below.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -80,19 +79,17 @@ sequence of any existing operations.
 numeric variables into one or more principal components.
 }
 \details{
-Principal component analysis (PCA) is a transformation of a
-group of variables that produces a new set of artificial
-features or components. These components are designed to capture
-the maximum amount of information (i.e. variance) in the
-original variables. Also, the components are statistically
-independent from one another. This means that they can be used
-to combat large inter-variables correlations in a data set.
+Principal component analysis (PCA) is a transformation of a group of
+variables that produces a new set of artificial features or components. These
+components are designed to capture the maximum amount of information (i.e.
+variance) in the original variables. Also, the components are statistically
+independent from one another. This means that they can be used to combat
+large inter-variables correlations in a data set.
 
-It is advisable to standardize the variables prior to running
-PCA. Here, each variable will be centered and scaled prior to
-the PCA calculation. This can be changed using the
-\code{options} argument or by using \code{\link[=step_center]{step_center()}}
-and \code{\link[=step_scale]{step_scale()}}.
+It is advisable to standardize the variables prior to running PCA. Here, each
+variable will be centered and scaled prior to the PCA calculation. This can
+be changed using the \code{options} argument or by using \code{\link[=step_center]{step_center()}} and
+\code{\link[=step_scale]{step_scale()}}.
 
 The argument \code{num_comp} controls the number of components that will be retained
 (the original variables that are used to derive the components are removed from
@@ -101,9 +98,9 @@ sequence of numbers. The variable names are padded with zeros. For example, if
 \code{num_comp < 10}, their names will be \code{PC1} - \code{PC9}. If \code{num_comp = 101},
 the names would be \code{PC1} - \code{PC101}.
 
-Alternatively, \code{threshold} can be used to determine the
-number of components that are required to capture a specified
-fraction of the total variance in the variables.
+Alternatively, \code{threshold} can be used to determine the number of components
+that are required to capture a specified fraction of the total variance in
+the variables.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step two things can happen depending

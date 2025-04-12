@@ -15,28 +15,26 @@ step_impute_median(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{medians}{A named numeric vector of medians. This is \code{NULL} until
-computed by \code{\link[=prep]{prep()}}. Note that, if the original data are integers,
-the median will be converted to an integer to maintain the same data type.}
+computed by \code{\link[=prep]{prep()}}. Note that, if the original data are integers, the
+median will be converted to an integer to maintain the same data type.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -50,12 +48,12 @@ substitute missing values of numeric variables by the training set median of
 those variables.
 }
 \details{
-\code{step_impute_median} estimates the variable medians from the data
-used in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies
-the new values to new data sets using these medians.
+\code{step_impute_median()} estimates the variable medians from the data used in
+the \code{training} argument of \code{\link[=prep]{prep()}}. \code{\link[=bake]{bake()}} then applies the new values to
+new data sets using these medians.
 
-As of \code{recipes} 0.1.16, this function name changed from
-\code{step_medianimpute()} to \code{step_impute_median()}.
+As of \code{recipes} 0.1.16, this function name changed from \code{step_medianimpute()}
+to \code{step_impute_median()}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

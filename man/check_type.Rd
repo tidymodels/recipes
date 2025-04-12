@@ -16,17 +16,15 @@ check_type(dat, quant = TRUE, types = NULL, call = caller_env())
 \code{\link[=has_role]{has_role()}}. See details for more.}
 }
 \description{
-This internal function is to be used in the prep function to ensure that
-the type of the variables matches the expectation. Throws an error if
-check fails.
+This internal function is to be used in the prep function to ensure that the
+type of the variables matches the expectation. Throws an error if check
+fails.
 }
 \details{
-Using \code{types} is a more fine-tuned way to use this. function compared to using
-\code{quant}. \code{types} should specify all allowed types as designated by
+Using \code{types} is a more fine-tuned way to use this. function compared to
+using \code{quant}. \code{types} should specify all allowed types as designated by
 \link{.get_data_types}. Suppose you want to allow doubles, integers, characters,
-factors and ordered factors, then you should specify
-\code{types = c("double", "integer", "string", "factor", "ordered")} to get a
-clear error message.
+factors and ordered factors, then you should specify \code{types = c("double", "integer", "string", "factor", "ordered")} to get a clear error message.
 }
 \seealso{
 \link{developer_functions}

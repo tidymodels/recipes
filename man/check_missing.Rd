@@ -15,27 +15,25 @@ check_missing(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The check will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The check will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this check. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this check.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this check since no new variables are
-created.}
+\item{role}{Not used by this check since no new variables are created.}
 
-\item{trained}{A logical for whether the selectors in \code{...}
-have been resolved by \code{\link[=prep]{prep()}}.}
+\item{trained}{A logical for whether the selectors in \code{...} have been
+resolved by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the check be skipped when the recipe is baked
+by \code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -44,17 +42,17 @@ An updated version of \code{recipe} with the new check added to the
 sequence of any existing operations.
 }
 \description{
-\code{check_missing} creates a \emph{specification} of a recipe
-operation that will check if variables contain missing values.
+\code{check_missing()} creates a \emph{specification} of a recipe operation that will
+check if variables contain missing values.
 }
 \details{
-This check will break the \code{bake} function if any of the checked
-columns does contain \code{NA} values. If the check passes, nothing is changed
-to the data.
+This check will break the \code{\link[=bake]{bake()}} function if any of the checked columns
+does contain \code{NA} values. If the check passes, nothing is changed to the
+data.
 }
 \section{tidy() results}{
-When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with column
-\code{terms} (the selectors or variables selected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with column \code{terms}
+(the selectors or variables selected) is returned.
 }
 
 \examples{

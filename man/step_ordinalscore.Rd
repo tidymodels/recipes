@@ -16,30 +16,28 @@ step_ordinalscore(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{convert}{A function that takes an ordinal factor vector
-as an input and outputs a single numeric variable.}
+\item{convert}{A function that takes an ordinal factor vector as an input and
+outputs a single numeric variable.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -52,13 +50,12 @@ sequence of any existing operations.
 convert ordinal factor variables into numeric scores.
 }
 \details{
-Dummy variables from ordered factors with \code{C}
-levels will create polynomial basis functions with \code{C-1}
-terms. As an alternative, this step can be used to translate the
-ordered levels into a single numeric vector of values that
-represent (subjective) scores. By default, the translation uses
-a linear scale (1, 2, 3, ... \code{C}) but custom score
-functions can also be used (see the example below).
+Dummy variables from ordered factors with \code{C} levels will create polynomial
+basis functions with \code{C-1} terms. As an alternative, this step can be used to
+translate the ordered levels into a single numeric vector of values that
+represent (subjective) scores. By default, the translation uses a linear
+scale (1, 2, 3, ... \code{C}) but custom score functions can also be used (see the
+example below).
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

@@ -7,22 +7,23 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param options A list of options to [kernlab::kpca()]. Defaults are set for
-#'  the arguments `kernel` and `kpar` but others can be passed in.
+#'   the arguments `kernel` and `kpar` but others can be passed in.
 #'  **Note** that the arguments `x` and `features` should not be passed here
-#'  (or at all).
+#'   (or at all).
 #' @param res An S4 [kernlab::kpca()] object is stored here once this
-#'  preprocessing step has be trained by [prep()].
+#'   preprocessing step has be trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
 #' @details
-#' When performing kPCA with `step_kpca()`, you must choose the kernel
-#' function (and any important kernel parameters). This step uses the
-#' \pkg{kernlab} package; the reference below discusses the types of kernels
-#' available and their parameter(s). These specifications can be made in the
-#' `kernel` and `kpar` slots of the `options` argument to `step_kpca()`.
-#' Consider using [step_kpca_rbf()] for a radial basis function kernel or
-#' [step_kpca_poly()] for a polynomial kernel.
+#'
+#' When performing kPCA with `step_kpca()`, you must choose the kernel function
+#' (and any important kernel parameters). This step uses the \pkg{kernlab}
+#' package; the reference below discusses the types of kernels available and
+#' their parameter(s). These specifications can be made in the `kernel` and
+#' `kpar` slots of the `options` argument to `step_kpca()`. Consider using
+#' [step_kpca_rbf()] for a radial basis function kernel or [step_kpca_poly()]
+#' for a polynomial kernel.
 #'
 #' @template kpca-info
 #'

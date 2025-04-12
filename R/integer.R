@@ -6,29 +6,29 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param key A list that contains the information needed to
-#'  create integer variables for each variable contained in
-#'  `terms`. This is `NULL` until the step is trained by
-#'  [prep()].
-#' @param strict A logical for whether the values should be returned as
-#'  integers (as opposed to double).
+#' @param key A list that contains the information needed to create integer
+#'   variables for each variable contained in `terms`. This is `NULL` until the
+#'   step is trained by [prep()].
+#' @param strict A logical for whether the values should be returned as integers
+#'   (as opposed to double).
 #' @param zero_based A logical for whether the integers should start at zero and
-#'  new values be appended as the largest integer.
+#'   new values be appended as the largest integer.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details `step_integer()` will determine the unique values of
-#'  each variable from the training set (excluding missing values),
-#'  order them, and then assign integers to each value. When baked,
-#'  each data point is translated to its corresponding integer or a
-#'  value of zero for yet unseen data (although see the `zero_based`
-#'  argument above). Missing values propagate.
+#' @details
 #'
-#' Factor inputs are ordered by their levels. All others are
-#'  ordered by [sort()].
+#' `step_integer()` will determine the unique values of each variable from the
+#' training set (excluding missing values), order them, and then assign integers
+#' to each value. When baked, each data point is translated to its corresponding
+#' integer or a value of zero for yet unseen data (although see the `zero_based`
+#' argument above). Missing values propagate.
 #'
-#' Despite the name, the new values are returned as numeric unless
-#'  `strict = TRUE`, which will coerce the results to integers.
+#' Factor inputs are ordered by their levels. All others are ordered by
+#' [sort()].
+#'
+#' Despite the name, the new values are returned as numeric unless `strict =
+#' TRUE`, which will coerce the results to integers.
 #'
 #' # Tidying
 #'

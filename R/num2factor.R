@@ -5,24 +5,24 @@
 #' integers.
 #'
 #' @inheritParams step_center
-#' @param transform A function taking a single argument `x` that can be used
-#'  to modify the numeric values prior to determining the levels (perhaps using
-#'  [base::as.integer()] or [base::as.factor()]). The output of a function
-#'  should be an integer that corresponds to the value of `levels` that should
-#'  be assigned. If not an integer, the value will be converted to an integer
-#'  during [bake()].
+#' @param transform A function taking a single argument `x` that can be used to
+#'   modify the numeric values prior to determining the levels (perhaps using
+#'   [base::as.integer()] or [base::as.factor()]). The output of a function
+#'   should be an integer that corresponds to the value of `levels` that should
+#'   be assigned. If not an integer, the value will be converted to an integer
+#'   during [bake()].
 #' @param levels A character vector of values that will be used as the levels.
-#'  These are the numeric data converted to character and ordered. This is
-#'  modified once [prep()] is executed.
+#'   These are the numeric data converted to character and ordered. This is
+#'   modified once [prep()] is executed.
 #' @param ordered A single logical value; should the factor(s) be ordered?
 #' @template step-return
 #'
 #' @details
 #'
 #' Note that since the numeric variables will be used for indexing into `levels`
-#' it will need to take values between `1` and `length(levels)` to avoid `
-#' getting `NA`s as results. Using `transform = base::as.factor` can be used to
-#' shrink values to smaller domain.
+#' it will need to take values between `1` and `length(levels)` to avoid getting
+#' `NA`s as results. Using `transform = base::as.factor` can be used to shrink
+#' values to smaller domain.
 #'
 #' # Tidying
 #'

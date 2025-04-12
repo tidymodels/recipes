@@ -5,28 +5,29 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose variables
-#'  for this step. The selected variables should have class
-#'  `POSIXct` or `POSIXlt`. See [selections()] for more details.
-#' @param features A character string that includes at least one
-#'  of the following values: `am` (is is AM), `hour`, `hour12`, `minute`,
-#'  `second`, `decimal_day`.
+#' @param ... One or more selector functions to choose variables for this step.
+#'   The selected variables should have class `POSIXct` or `POSIXlt`. See
+#'   [selections()] for more details.
+#' @param features A character string that includes at least one of the
+#'   following values: `am` (is is AM), `hour`, `hour12`, `minute`, `second`,
+#'   `decimal_day`.
 #' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
+#'   output. Defaults to `TRUE`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details Unlike some other steps, `step_time()` does *not*
-#'  remove the original time variables by default. Set `keep_original_cols`
-#'  to `FALSE` to remove them.
+#' @details
 #'
-#'  `decimal_day` return time of day as a decimal number between 0 and 24. for
-#'  example `"07:15:00"` would be transformed to `7.25`  and `"03:59:59"` would
-#'  be transformed to `3.999722`. The formula for these calculations are
-#'  `hour(x) + (second(x) + minute(x) * 60) / 3600`.
+#' Unlike some other steps, `step_time()` does *not* remove the original time
+#' variables by default. Set `keep_original_cols` to `FALSE` to remove them.
 #'
-#'  See [step_date()] if you want to calculate features that are larger than
-#'  hours.
+#' `decimal_day` return time of day as a decimal number between 0 and 24. for
+#' example `"07:15:00"` would be transformed to `7.25`  and `"03:59:59"` would
+#' be transformed to `3.999722`. The formula for these calculations are `hour(x)
+#' + (second(x) + minute(x) * 60) / 3600`.
+#'
+#' See [step_date()] if you want to calculate features that are larger than
+#' hours.
 #'
 #' # Tidying
 #'

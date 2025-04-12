@@ -17,17 +17,16 @@ check_new_values(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The check will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The check will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this check. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this check.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this check since no new variables are
-created.}
+\item{role}{Not used by this check since no new variables are created.}
 
-\item{trained}{A logical for whether the selectors in \code{...}
-have been resolved by \code{\link[=prep]{prep()}}.}
+\item{trained}{A logical for whether the selectors in \code{...} have been
+resolved by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -35,15 +34,14 @@ is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.
 \item{ignore_NA}{A logical that indicates if we should consider missing
 values as value or not. Defaults to \code{TRUE}.}
 
-\item{values}{A named list with the allowed values.
-This is \code{NULL} until computed by prep.recipe().}
+\item{values}{A named list with the allowed values. This is \code{NULL} until
+computed by \code{\link[=prep]{prep()}}.}
 
-\item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the check be skipped when the recipe is baked
+by \code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -52,17 +50,17 @@ An updated version of \code{recipe} with the new check added to the
 sequence of any existing operations.
 }
 \description{
-\code{check_new_values} creates a \emph{specification} of a recipe
-operation that will check if variables contain new values.
+\code{check_new_values()} creates a \emph{specification} of a recipe operation that
+will check if variables contain new values.
 }
 \details{
-This check will break the \code{bake} function if any of the checked
-columns does contain values it did not contain when \code{prep} was called
-on the recipe. If the check passes, nothing is changed to the data.
+This check will break the \code{\link[=bake]{bake()}} function if any of the checked columns
+does contain values it did not contain when \code{\link[=prep]{prep()}} was called on the
+recipe. If the check passes, nothing is changed to the data.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
-\code{terms} (the selectors or variables selected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns \code{terms}
+(the selectors or variables selected) is returned.
 }
 
 \section{Case weights}{

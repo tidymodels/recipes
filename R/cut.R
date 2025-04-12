@@ -5,19 +5,21 @@
 #'
 #' @inheritParams step_center
 #' @param breaks A numeric vector with at least one cut point.
-#' @param include_outside_range Logical, indicating if values outside the
-#'  range in the train set should be included in the lowest or highest bucket.
-#'  Defaults to `FALSE`, values outside the original range will be set to `NA`.
+#' @param include_outside_range Logical, indicating if values outside the range
+#'   in the train set should be included in the lowest or highest bucket.
+#'   Defaults to `FALSE`, values outside the original range will be set to `NA`.
 #' @template step-return
 #' @family discretization steps
 #' @export
-#' @details Unlike the `base::cut()` function there is no need to specify the
-#'  min and the max values in the breaks. All values before the lowest break
-#'  point will end up in the first bucket, all values after the last break
-#'  points will end up in the last.
+#' @details
 #'
-#'  `step_cut()` will call `base::cut()` in the baking step with
-#'  `include.lowest` set to `TRUE`.
+#' Unlike the `base::cut()` function there is no need to specify the min and the
+#' max values in the breaks. All values before the lowest break point will end
+#' up in the first bucket, all values after the last break points will end up in
+#' the last.
+#'
+#' `step_cut()` will call `base::cut()` in the baking step with `include.lowest`
+#' set to `TRUE`.
 #'
 #' # Tidying
 #'

@@ -19,18 +19,18 @@ step_poly_bernstein(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{degree}{The degrees of the polynomial. As the degrees for a polynomial
 increase, more flexible and complex curves can be generated.}
@@ -40,25 +40,25 @@ Otherwise, the first basis will be excluded from the output. This maps to
 the \code{intercept} argument of the corresponding function from the
 \pkg{splines2} package and has the same default value.}
 
-\item{options}{A list of options for \code{\link[splines2:bernsteinPoly]{splines2::bernsteinPoly()}}
-which should not include \code{x} or \code{degree}.}
+\item{options}{A list of options for \code{\link[splines2:bernsteinPoly]{splines2::bernsteinPoly()}} which should
+not include \code{x} or \code{degree}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
 \item{results}{A list of objects created once the step has been trained.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An object with classes \code{"step_poly_bernstein"} and \code{"step"}.
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
 \code{step_poly_bernstein()} creates a \emph{specification} of a recipe step that
@@ -67,12 +67,12 @@ creates Bernstein polynomial features.
 \details{
 Polynomial transformations take a numeric column and create multiple features
 that, when used in a model, can estimate nonlinear trends between the column
-and some outcome. The degrees of freedom determines how many new features
-are added to the data.
+and some outcome. The degrees of freedom determines how many new features are
+added to the data.
 
-If the spline expansion fails for a selected column, the step will
-remove that column's results (but will retain the original data). Use the
-\code{tidy()} method to determine which columns were used.
+If the spline expansion fails for a selected column, the step will remove
+that column's results (but will retain the original data). Use the \code{tidy()}
+method to determine which columns were used.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

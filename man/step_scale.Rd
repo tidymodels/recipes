@@ -17,36 +17,33 @@ step_scale(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations. This is \code{NULL}
 until computed by \code{\link[=prep]{prep()}}.}
 
-\item{factor}{A numeric value of either 1 or 2 that scales the
-numeric inputs by one or two standard deviations. By dividing
-by two standard deviations, the coefficients attached to
-continuous predictors can be interpreted the same way as with
-binary inputs. Defaults to \code{1}. More in reference below.}
+\item{factor}{A numeric value of either 1 or 2 that scales the numeric inputs
+by one or two standard deviations. By dividing by two standard deviations,
+the coefficients attached to continuous predictors can be interpreted the
+same way as with binary inputs. Defaults to \code{1}. More in reference below.}
 
-\item{na_rm}{A logical value indicating whether \code{NA}
-values should be removed when computing the standard deviation.}
+\item{na_rm}{A logical value indicating whether \code{NA} values should be removed
+when computing the standard deviation.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -59,12 +56,10 @@ sequence of any existing operations.
 numeric data to have a standard deviation of one.
 }
 \details{
-Scaling data means that the standard deviation of a
-variable is divided out of the data. \code{step_scale} estimates
-the variable standard deviations from the data used in the
-\code{training} argument of \code{prep.recipe}.
-\code{bake.recipe} then applies the scaling to new data sets
-using these standard deviations.
+Scaling data means that the standard deviation of a variable is divided out
+of the data. \code{step_scale()} estimates the variable standard deviations from
+the data used in the \code{training} argument of \code{\link[=prep]{prep()}}. \code{\link[=bake]{bake()}} then applies
+the scaling to new data sets using these standard deviations.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

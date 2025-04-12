@@ -1,48 +1,45 @@
 #' Convert strings to factors
 #'
-#' @description
-#' `step_string2factor()` will convert one or more character vectors to factors
-#' (ordered or unordered).
+#' @description `step_string2factor()` will convert one or more character
+#' vectors to factors (ordered or unordered).
 #'
 #' _Use this step only in special cases_ (see Details) and instead convert
 #' strings to factors before using any tidymodels functions.
 #'
 #' @inheritParams step_center
-#' @param levels An optional specification of the levels to be used
-#'  for the new factor. If left `NULL`, the sorted unique
-#'  values present when `bake` is called will be used.
-#' @param ordered A single logical value; should the factor(s) be
-#'  ordered?
+#' @param levels An optional specification of the levels to be used for the new
+#'   factor. If left `NULL`, the sorted unique values present when `bake` is
+#'   called will be used.
+#' @param ordered A single logical value; should the factor(s) be ordered?
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
 #' @details
 #'
-#'  ## When should you use this step?
+#' ## When should you use this step?
 #'
-#'  In most cases, if you are planning to use `step_string2factor()`
-#'  without setting `levels`, you will be better off converting
-#'  those character variables to factor variables **before using a recipe**.
+#' In most cases, if you are planning to use `step_string2factor()` without
+#' setting `levels`, you will be better off converting those character variables
+#' to factor variables **before using a recipe**.
 #'
-#'  This can be done using \pkg{dplyr} with the following code
+#' This can be done using \pkg{dplyr} with the following code
 #'
 #'  ```r
 #'  df <- mutate(df, across(where(is.character), as.factor))
 #'  ```
 #'
-#'  During resampling, the complete set of values might
-#'  not be in the character data. Converting them to factors with
-#'  `step_string2factor()`  then will misconfigure the levels.
+#' During resampling, the complete set of values might not be in the character
+#' data. Converting them to factors with `step_string2factor()`  then will
+#' misconfigure the levels.
 #'
-#'  If the `levels` argument to `step_string2factor()`is used, it will
-#'  convert all variables affected by this step to have the same
-#'  levels. Because of this, you will need to know the full set of level
-#'  when you define the recipe.
+#' If the `levels` argument to `step_string2factor()`is used, it will convert
+#' all variables affected by this step to have the same levels. Because of this,
+#' you will need to know the full set of level when you define the recipe.
 #'
-#'  Also, note that [prep()] has an option `strings_as_factors` that
-#'  defaults to `TRUE`. This should be changed so that raw character
-#'  data will be applied to `step_string2factor()`. However, this step
-#'  can also take existing factors (but will leave them as-is).
+#' Also, note that [prep()] has an option `strings_as_factors` that defaults to
+#' `TRUE`. This should be changed so that raw character data will be applied to
+#' `step_string2factor()`. However, this step can also take existing factors
+#' (but will leave them as-is).
 #'
 #' # Tidying
 #'

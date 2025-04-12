@@ -16,23 +16,22 @@ step_sample(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
 \item{...}{Argument ignored; included for consistency with other step
 specification functions.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{size}{An integer or fraction. If the value is within (0, 1),
-\code{\link[dplyr:sample_n]{dplyr::sample_frac()}} is applied to the data. If an integer
-value of 1 or greater is used, \code{\link[dplyr:sample_n]{dplyr::sample_n()}} is applied.
-The default of \code{NULL} uses \code{\link[dplyr:sample_n]{dplyr::sample_n()}} with the size
-of the training set (or smaller for smaller \code{new_data}).}
+\code{\link[dplyr:sample_n]{dplyr::sample_frac()}} is applied to the data. If an integer value of 1 or
+greater is used, \code{\link[dplyr:sample_n]{dplyr::sample_n()}} is applied. The default of \code{NULL} uses
+\code{\link[dplyr:sample_n]{dplyr::sample_n()}} with the size of the training set (or smaller for
+smaller \code{new_data}).}
 
 \item{replace}{Sample with or without replacement?}
 

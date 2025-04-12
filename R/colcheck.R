@@ -1,22 +1,23 @@
 #' Check if all columns are present
 #'
-#' `check_cols` creates a *specification* of a recipe
-#'  step that will check if all the columns of the training frame are
-#'  present in the new data.
+#' `check_cols()` creates a *specification* of a recipe step that will check if
+#' all the columns of the training frame are present in the new data.
 #'
 #' @inheritParams check_missing
 #' @template check-return
 #' @family checks
 #' @export
-#' @details This check will break the `bake` function if any of the specified
-#' columns is not present in the data. If the check passes, nothing is changed
-#'  to the data.
+#' @details
 #'
-#'  # Tidying
+#' This check will break the [bake()] function if any of the specified columns
+#' is not present in the data. If the check passes, nothing is changed to the
+#' data.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the type)
-#'  is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this check, a tibble with columns `terms`
+#' (the selectors or variables selected) and `value` (the type) is returned.
+#'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(biomass, package = "modeldata")
 #'

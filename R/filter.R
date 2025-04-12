@@ -5,17 +5,17 @@
 #'
 #' @template row-ops
 #' @inheritParams step_center
-#' @param ... Logical predicates defined in terms of the variables
-#'  in the data. Multiple conditions are combined with `&`. Only
-#'  rows where the condition evaluates to `TRUE` are kept. See
-#'  [dplyr::filter()] for more details.
+#' @param ... Logical predicates defined in terms of the variables in the data.
+#'   Multiple conditions are combined with `&`. Only rows where the condition
+#'   evaluates to `TRUE` are kept. See [dplyr::filter()] for more details.
 #' @param inputs Quosure of values given by `...`.
 #' @template step-return
-#' @details When an object in the user's global environment is
-#'  referenced in the expression defining the new variable(s),
-#'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
-#'  the value of the object in the expression (to be portable
-#'  between sessions). See the examples.
+#' @details
+#'
+#' When an object in the user's global environment is referenced in the
+#' expression defining the new variable(s), it is a good idea to use
+#' quasiquotation (e.g. `!!`) to embed the value of the object in the expression
+#' (to be portable between sessions). See the examples.
 #'
 #' # Tidying
 #'

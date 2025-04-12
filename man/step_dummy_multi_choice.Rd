@@ -22,26 +22,26 @@ step_dummy_multi_choice(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables for this step.
 See \code{\link[=selections]{selections()}} for more details. The selected variables \emph{must} be
 factors.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{threshold}{A numeric value between 0 and 1, or an integer greater or
 equal to one.  If less than one, then factor levels with a rate of
 occurrence in the training set below \code{threshold} will be pooled to \code{other}.
-If greater or equal to one, then this value is treated as a frequency
-and factor levels that occur less than \code{threshold} times will be pooled
-to \code{other}.}
+If greater or equal to one, then this value is treated as a frequency and
+factor levels that occur less than \code{threshold} times will be pooled to
+\code{other}.}
 
 \item{levels}{A list that contains the information needed to create dummy
 variables for each variable contained in \code{terms}. This is \code{NULL} until the
@@ -50,7 +50,8 @@ step is trained by \code{\link[=prep]{prep()}}.}
 \item{input}{A character vector containing the names of the columns used.
 This is \code{NULL} until the step is trained by \code{\link[=prep]{prep()}}.}
 
-\item{other}{A single character value for the "other" category.}
+\item{other}{A single character value for the other category, default to
+\code{"other"}.}
 
 \item{naming}{A function that defines the naming convention for new dummy
 columns. See Details below.}
@@ -65,12 +66,11 @@ then workflows can determine the best option. Defaults to \code{"auto"}.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -92,8 +92,8 @@ individual proportion (or frequency) in the training set is less than
 This step produces a number of columns, based on the number of categories it
 finds. The naming of the columns is determined by the function based on the
 \code{naming} argument. The default is to return \verb{<prefix>_<category name>}. By
-default \code{prefix} is \code{NULL}, which means the name of the first column
-selected will be used in place.
+default \code{prefix} is \code{NULL}, which means the name of the first column selected
+will be used in place.
 
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}

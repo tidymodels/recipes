@@ -1,33 +1,31 @@
 #' Check variable class
 #'
-#' `check_class` creates a *specification* of a recipe
-#'  check that will check if a variable is of a designated class.
+#' `check_class` creates a *specification* of a recipe check that will check if
+#' a variable is of a designated class.
 #'
 #' @inheritParams check_missing
-#' @param class_nm A character vector that will be used in `inherits` to
-#'  check the class. If `NULL` the classes will be learned in `prep`.
-#'  Can contain more than one class.
-#' @param allow_additional If `TRUE` a variable is allowed to
-#'  have additional classes to the one(s) that are checked.
-#' @param class_list A named list of column classes. This is
-#'  `NULL` until computed by [prep()].
+#' @param class_nm A character vector that will be used in `inherits` to check
+#'   the class. If `NULL` the classes will be learned in `prep`. Can contain
+#'   more than one class.
+#' @param allow_additional If `TRUE` a variable is allowed to have additional
+#'   classes to the one(s) that are checked.
+#' @param class_list A named list of column classes. This is `NULL` until
+#'   computed by [prep()].
 #' @template check-return
 #'
 #' @family checks
 #' @export
 #' @details
-#' This function can check the classes of the variables
-#'  in two ways. When the `class` argument is provided
-#'  it will check if all the variables specified are of the
-#'  given class. If this argument is `NULL`, the check will
-#'  learn the classes of each of the specified variables in `prep`.
-#'  Both ways will break `bake` if the variables are not of
-#'  the requested class. If a variable has multiple
-#'  classes in `prep`, all the classes are checked. Please note
-#'  that in `prep` the argument `strings_as_factors` defaults to
-#'  `TRUE`. If the train set contains character variables
-#'  the check will be break `bake` when `strings_as_factors` is
-#'  `TRUE`.
+#'
+#' This function can check the classes of the variables in two ways. When the
+#' `class` argument is provided it will check if all the variables specified are
+#' of the given class. If this argument is `NULL`, the check will learn the
+#' classes of each of the specified variables in [prep()]. Both ways will break
+#' [bake()] if the variables are not of the requested class. If a variable has
+#' multiple classes in [prep()], all the classes are checked. Please note that
+#' in [prep()] the argument `strings_as_factors` defaults to `TRUE`. If the
+#' train set contains character variables the check will be break [bake()] when
+#' `strings_as_factors` is `TRUE`.
 #'
 #'  # Tidying
 #'

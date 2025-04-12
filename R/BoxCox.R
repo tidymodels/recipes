@@ -1,35 +1,35 @@
 #' Box-Cox transformation for non-negative data
 #'
-#' `step_BoxCox()` creates a *specification* of a recipe step that will transform
-#' data using a Box-Cox transformation.
+#' `step_BoxCox()` creates a *specification* of a recipe step that will
+#' transform data using a Box-Cox transformation.
 #'
 #' @inheritParams step_center
-#' @param lambdas A numeric vector of transformation values. This
-#'  is `NULL` until computed by [prep()].
-#' @param limits A length 2 numeric vector defining the range to
-#'  compute the transformation parameter lambda.
-#' @param num_unique An integer to specify minimum required unique
-#'  values to evaluate for a transformation.
+#' @param lambdas A numeric vector of transformation values. This is `NULL`
+#'   until computed by [prep()].
+#' @param limits A length 2 numeric vector defining the range to compute the
+#'   transformation parameter lambda.
+#' @param num_unique An integer to specify minimum required unique values to
+#'   evaluate for a transformation.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details The Box-Cox transformation, which requires a strictly
-#'  positive variable, can be used to rescale a variable to be more
-#'  similar to a normal distribution. In this package, the partial
-#'  log-likelihood function is directly optimized within a
-#'  reasonable set of transformation values (which can be changed by
-#'  the user).
+#' @details
 #'
-#'   This transformation is typically done on the outcome variable
-#'  using the residuals for a statistical model (such as ordinary
-#'  least squares). Here, a simple null model (intercept only) is
-#'  used to apply the transformation to the *predictor*
-#'  variables individually. This can have the effect of making the
-#'  variable distributions more symmetric.
+#' The Box-Cox transformation, which requires a strictly positive variable, can
+#' be used to rescale a variable to be more similar to a normal distribution. In
+#' this package, the partial log-likelihood function is directly optimized
+#' within a reasonable set of transformation values (which can be changed by the
+#' user).
 #'
-#' If the transformation parameters are estimated to be very
-#'  closed to the bounds, or if the optimization fails, a value of
-#'  `NA` is used and no transformation is applied.
+#' This transformation is typically done on the outcome variable using the
+#' residuals for a statistical model (such as ordinary least squares). Here, a
+#' simple null model (intercept only) is used to apply the transformation to the
+#' *predictor* variables individually. This can have the effect of making the
+#' variable distributions more symmetric.
+#'
+#' If the transformation parameters are estimated to be very closed to the
+#' bounds, or if the optimization fails, a value of `NA` is used and no
+#' transformation is applied.
 #'
 #' # Tidying
 #'

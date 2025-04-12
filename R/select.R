@@ -14,8 +14,8 @@
 #' [dplyr::select()] on the data before it is passed to `recipe()`.
 #'
 #' @inheritParams step_center
-#' @param role For model terms selected by this step, what analysis
-#'  role should they be assigned?
+#' @param role For model terms selected by this step, what analysis role should
+#'   they be assigned?
 #' @template step-return
 #'
 #' @details

@@ -18,39 +18,36 @@ step_corr(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{threshold}{A value for the threshold of absolute
-correlation values. The step will try to remove the minimum
-number of columns so that all the resulting absolute
-correlations are less than this value.}
+\item{threshold}{A value for the threshold of absolute correlation values.
+The step will try to remove the minimum number of columns so that all the
+resulting absolute correlations are less than this value.}
 
-\item{use}{A character string for the \code{use} argument to
-the \code{\link[stats:cor]{stats::cor()}} function.}
+\item{use}{A character string for the \code{use} argument to the \code{\link[stats:cor]{stats::cor()}}
+function.}
 
-\item{method}{A character string for the \code{method} argument
-to the \code{\link[stats:cor]{stats::cor()}} function.}
+\item{method}{A character string for the \code{method} argument to the
+\code{\link[stats:cor]{stats::cor()}} function.}
 
-\item{removals}{A character string that contains the names of
-columns that should be removed. These values are not determined
-until \code{\link[=prep]{prep()}} is called.}
+\item{removals}{A character string that contains the names of columns that
+should be removed. These values are not determined until \code{\link[=prep]{prep()}} is
+called.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -69,17 +66,16 @@ cause issues for subsequent steps in your recipe if the missing columns are
 specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 
-This step attempts to remove variables to keep the
-largest absolute correlation between the variables less than
-\code{threshold}.
+This step attempts to remove variables to keep the largest absolute
+correlation between the variables less than \code{threshold}.
 
-When a column has a single unique value, that column will be
-excluded from the correlation analysis. Also, if the data set
-has sporadic missing values (and an inappropriate value of \code{use}
-is chosen), some columns will also be excluded from the filter.
+When a column has a single unique value, that column will be excluded from
+the correlation analysis. Also, if the data set has sporadic missing values
+(and an inappropriate value of \code{use} is chosen), some columns will also be
+excluded from the filter.
 
-The arguments \code{use} and \code{method} don't take effect if case weights
-are used in the recipe.
+The arguments \code{use} and \code{method} don't take effect if case weights are used
+in the recipe.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
@@ -145,9 +141,8 @@ Other variable filter steps:
 \code{\link{step_zv}()}
 }
 \author{
-Original R code for filtering algorithm by Dong Li,
-modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
-original in \code{caret} package). Max Kuhn for the \code{step}
-function.
+Original R code for filtering algorithm by Dong Li, modified by Max
+Kuhn. Contributions by Reynald Lescarbeau (for original in \code{caret}
+package). Max Kuhn for the \code{step} function.
 }
 \concept{variable filter steps}

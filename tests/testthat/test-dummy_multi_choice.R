@@ -93,7 +93,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = languages) %>%
-    step_dummy_multi_choice(all_predictors())
+      step_dummy_multi_choice(all_predictors())
   rec_param <- tunable.step_dummy_multi_choice(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))

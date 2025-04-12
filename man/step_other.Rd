@@ -17,37 +17,35 @@ step_other(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{threshold}{A numeric value between 0 and 1, or an integer greater or
 equal to one.  If less than one, then factor levels with a rate of
 occurrence in the training set below \code{threshold} will be pooled to \code{other}.
-If greater or equal to one, then this value is treated as a frequency
-and factor levels that occur less than \code{threshold} times will be pooled
-to \code{other}.}
+If greater or equal to one, then this value is treated as a frequency and
+factor levels that occur less than \code{threshold} times will be pooled to
+\code{other}.}
 
-\item{other}{A single character value for the "other" category.}
+\item{other}{A single character value for the other category, default to
+\code{"other"}.}
 
-\item{objects}{A list of objects that contain the information
-to pool infrequent levels that is determined by
-\code{\link[=prep]{prep()}}.}
+\item{objects}{A list of objects that contain the information to pool
+infrequent levels that is determined by \code{\link[=prep]{prep()}}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -60,28 +58,25 @@ sequence of any existing operations.
 potentially pool infrequently occurring values into an \code{"other"} category.
 }
 \details{
-The overall proportion (or total counts) of the categories are
-computed. The "other" category is used in place of any categorical levels
-whose individual proportion (or frequency) in the training set is less than
-\code{threshold}.
+The overall proportion (or total counts) of the categories are computed. The
+\code{other} category is used in place of any categorical levels whose individual
+proportion (or frequency) in the training set is less than \code{threshold}.
 
-If no pooling is done the data are unmodified (although character data may
-be changed to factors based on the value of \code{strings_as_factors} in
-\code{\link[=prep]{prep()}}). Otherwise, a factor is always returned with
-different factor levels.
+If no pooling is done the data are unmodified (although character data may be
+changed to factors based on the value of \code{strings_as_factors} in \code{\link[=prep]{prep()}}).
+Otherwise, a factor is always returned with different factor levels.
 
 If \code{threshold} is less than the largest category proportion, all levels
 except for the most frequent are collapsed to the \code{other} level.
 
-If the retained categories include the value of \code{other}, an error is
-thrown. If \code{other} is in the list of discarded levels, no error
-occurs.
+If the retained categories include the value of \code{other}, an error is thrown.
+If \code{other} is in the list of discarded levels, no error occurs.
 
 If no pooling is done, novel factor levels are converted to missing. If
 pooling is needed, they will be placed into the other category.
 
-When data to be processed contains novel levels (i.e., not
-contained in the training set), the other category is assigned.
+When data to be processed contains novel levels (i.e., not contained in the
+training set), the other category is assigned.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

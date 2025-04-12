@@ -5,37 +5,36 @@
 #' variables.
 #'
 #' @inheritParams step_center
-#' @param threshold A value for the threshold of absolute
-#'  correlation values. The step will try to remove the minimum
-#'  number of columns so that all the resulting absolute
-#'  correlations are less than this value.
-#' @param use A character string for the `use` argument to
-#'  the [stats::cor()] function.
-#' @param method A character string for the `method` argument
-#'  to the [stats::cor()] function.
-#' @param removals A character string that contains the names of
-#'  columns that should be removed. These values are not determined
-#'  until [prep()] is called.
+#' @param threshold A value for the threshold of absolute correlation values.
+#'   The step will try to remove the minimum number of columns so that all the
+#'   resulting absolute correlations are less than this value.
+#' @param use A character string for the `use` argument to the [stats::cor()]
+#'   function.
+#' @param method A character string for the `method` argument to the
+#'   [stats::cor()] function.
+#' @param removals A character string that contains the names of columns that
+#'   should be removed. These values are not determined until [prep()] is
+#'   called.
 #' @template step-return
 #' @template filter-steps
-#' @author Original R code for filtering algorithm by Dong Li,
-#'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
-#'  original in `caret` package). Max Kuhn for the `step`
-#'  function.
+#' @author Original R code for filtering algorithm by Dong Li, modified by Max
+#'   Kuhn. Contributions by Reynald Lescarbeau (for original in `caret`
+#'   package). Max Kuhn for the `step` function.
 #' @family variable filter steps
 #' @export
 #'
-#' @details This step attempts to remove variables to keep the
-#'  largest absolute correlation between the variables less than
-#'  `threshold`.
+#' @details
 #'
-#' When a column has a single unique value, that column will be
-#'  excluded from the correlation analysis. Also, if the data set
-#'  has sporadic missing values (and an inappropriate value of `use`
-#'  is chosen), some columns will also be excluded from the filter.
+#' This step attempts to remove variables to keep the largest absolute
+#' correlation between the variables less than `threshold`.
 #'
-#' The arguments `use` and `method` don't take effect if case weights
-#' are used in the recipe.
+#' When a column has a single unique value, that column will be excluded from
+#' the correlation analysis. Also, if the data set has sporadic missing values
+#' (and an inappropriate value of `use` is chosen), some columns will also be
+#' excluded from the filter.
+#'
+#' The arguments `use` and `method` don't take effect if case weights are used
+#' in the recipe.
 #'
 #' # Tidying
 #'

@@ -21,31 +21,30 @@ step_classdist_shrunken(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{class}{A bare name that specifies a single categorical variable to be
 used as the class. Can also be a string or tidyselect for backwards
 compatibility.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{threshold}{A regularization parameter between zero and one. Zero means
 that no regularization is used and one means that centroids should be
 shrunk to the global centroid.}
 
-\item{sd_offset}{A value between zero and one for the quantile that should
-be used to stabilize the pooled standard deviation.}
+\item{sd_offset}{A value between zero and one for the quantile that should be
+used to stabilize the pooled standard deviation.}
 
-\item{log}{A logical: should the distances be transformed by
-the natural log function?}
+\item{log}{A logical: should the distances be transformed by the natural log
+function?}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -53,49 +52,47 @@ variables. See notes below.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
-\item{objects}{Statistics are stored here once this step has
-been trained by \code{\link[=prep]{prep()}}.}
+\item{objects}{Statistics are stored here once this step has been trained by
+\code{\link[=prep]{prep()}}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \description{
-\code{step_classdist_shrunken} creates a \emph{specification} of a recipe
-step  that will convert numeric data into Euclidean distance
-to the regularized class centroid. This is done for each value of a
-categorical class variable.
+\code{step_classdist_shrunken()} creates a \emph{specification} of a recipe step  that
+will convert numeric data into Euclidean distance to the regularized class
+centroid. This is done for each value of a categorical class variable.
 }
 \details{
 Class-specific centroids are the multivariate averages of each predictor
-using the data from each class in the training set. When pre-processing a
-new data point, this step computes the distance from the new point to each
-of the class centroids. These distance features can be very effective at
-capturing linear class boundaries. For this reason, they can be useful to
-add to an existing predictor set used within a nonlinear model. If the true
-boundary is actually linear, the model will have an easier time learning the
-training data patterns.
+using the data from each class in the training set. When pre-processing a new
+data point, this step computes the distance from the new point to each of the
+class centroids. These distance features can be very effective at capturing
+linear class boundaries. For this reason, they can be useful to add to an
+existing predictor set used within a nonlinear model. If the true boundary is
+actually linear, the model will have an easier time learning the training
+data patterns.
 
 Shrunken centroids use a form of regularization where the class-specific
 centroids are contracted to the overall class-independent centroid. If a
 predictor is uninformative, shrinking it may move it entirely to the overall
 centroid. This has the effect of removing that predictor's effect on the new
 distance features. However, it may not move all of the class-specific
-features to the center in many cases. This means that some features will
-only affect the classification of specific classes.
+features to the center in many cases. This means that some features will only
+affect the classification of specific classes.
 
 The \code{threshold} parameter can be used to optimized how much regularization
 should be used.
 
-\code{step_classdist_shrunken} will create a new column for every unique value of
-the \code{class} variable. The resulting variables will not replace the original
-values and, by default, have the prefix \code{classdist_}. The naming format can
-be changed using the \code{prefix} argument.
+\code{step_classdist_shrunken()} will create a new column for every unique value
+of the \code{class} variable. The resulting variables will not replace the
+original values and, by default, have the prefix \code{classdist_}. The naming
+format can be changed using the \code{prefix} argument.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

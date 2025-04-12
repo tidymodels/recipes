@@ -85,8 +85,8 @@ all_unordered_predictors()
 current_info()
 }
 \arguments{
-\item{match}{A single character string for the query. Exact
-matching is used (i.e. regular expressions won't work).}
+\item{match}{A single character string for the query. Exact matching is used
+(i.e. regular expressions won't work).}
 }
 \value{
 Selector functions return an integer vector.
@@ -94,8 +94,8 @@ Selector functions return an integer vector.
 \code{current_info()} returns an environment with objects \code{vars} and \code{data}.
 }
 \description{
-\code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to
-select variables in a formula that have certain roles.
+\code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to select
+variables in a formula that have certain roles.
 
 \strong{In most cases}, the right approach for users will be use to use the
 predictor-specific selectors such as \code{all_numeric_predictors()} and

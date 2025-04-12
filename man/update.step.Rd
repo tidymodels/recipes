@@ -9,8 +9,8 @@
 \arguments{
 \item{object}{A recipe \code{step}.}
 
-\item{...}{Key-value pairs where the keys match up with names of elements
-in the step, and the values are the new values to update the step with.}
+\item{...}{Key-value pairs where the keys match up with names of elements in
+the step, and the values are the new values to update the step with.}
 }
 \description{
 This \code{step} method for \code{update()} takes named arguments as \code{...} who's values

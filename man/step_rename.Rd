@@ -15,27 +15,26 @@ step_rename(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
 \item{...}{One or more unquoted expressions separated by commas. See
 \code{\link[dplyr:rename]{dplyr::rename()}} where the convention is \strong{\code{new_name = old_name}}.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{inputs}{Quosure(s) of \code{...}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -48,10 +47,10 @@ sequence of any existing operations.
 variables using \code{\link[dplyr:rename]{dplyr::rename()}}.
 }
 \details{
-When an object in the user's global environment is referenced in
-the expression defining the new variable(s), it is a good idea to use
-quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
-expression (to be portable between sessions).
+When an object in the user's global environment is referenced in the
+expression defining the new variable(s), it is a good idea to use
+quasiquotation (e.g. \verb{!!}) to embed the value of the object in the expression
+(to be portable between sessions).
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

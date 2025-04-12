@@ -16,30 +16,28 @@ step_lincomb(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{max_steps}{The number of times to apply the algorithm.}
 
-\item{removals}{A character string that contains the names of
-columns that should be removed. These values are not determined
-until \code{\link[=prep]{prep()}} is called.}
+\item{removals}{A character string that contains the names of columns that
+should be removed. These values are not determined until \code{\link[=prep]{prep()}} is
+called.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -58,10 +56,9 @@ cause issues for subsequent steps in your recipe if the missing columns are
 specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 
-This step finds exact linear combinations between two
-or more variables and recommends which column(s) should be
-removed to resolve the issue. This algorithm may need to be
-applied multiple times (as defined by \code{max_steps}).
+This step finds exact linear combinations between two or more variables and
+recommends which column(s) should be removed to resolve the issue. This
+algorithm may need to be applied multiple times (as defined by \code{max_steps}).
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

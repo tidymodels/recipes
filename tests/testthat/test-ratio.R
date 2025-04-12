@@ -10,7 +10,7 @@ ex_dat <- data.frame(
   x5 = letters[1:10]
 )
 
-rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat)
+rec <- recipe(~x1 + x2 + x3 + x4 + x5, data = ex_dat)
 
 test_that("1:many", {
   rec1 <- rec %>%
@@ -230,7 +230,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_o_disp")
 
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~mpg + disp, mtcars) %>%
     step_ratio(mpg, denom = disp, keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -241,7 +241,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~mpg + disp, mtcars) %>%
     step_ratio(mpg, denom = disp, keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -254,7 +254,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~mpg + disp, mtcars) %>%
     step_ratio(mpg, denom = disp)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -269,7 +269,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
+  rec <- recipe(~x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
     step_ratio(all_numeric(), denom = all_numeric())
 
   expect_snapshot(print(rec))
@@ -278,7 +278,7 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~ mpg + disp, mtcars) %>%
+    recipe(~mpg + disp, mtcars) %>%
       step_ratio(mpg, denom = disp, naming = NULL) %>%
       prep(),
     error = TRUE
