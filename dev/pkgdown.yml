@@ -4,12 +4,13 @@ pkgdown_sha: ~
 articles:
   articles/checklists: checklists.html
   Dummies: Dummies.html
+  articles/internals: internals.html
   Ordering: Ordering.html
   recipes: recipes.html
   Roles: Roles.html
   Selecting_Variables: Selecting_Variables.html
   Skipping: Skipping.html
-last_built: 2025-04-12T01:16Z
+last_built: 2025-04-12T05:20Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles
