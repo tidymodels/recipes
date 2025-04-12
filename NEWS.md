@@ -16,6 +16,8 @@
 
 * Fixed bug where `recipe()` would error on sf objects. (#1393)
 
+* `step_impute_bag()` now has a much smaller memory footprint when prepped. (#638)
+
 * `step_cut()` not longer errors on NA values in `bake()`. (#1304)
 
 * The following arguments in steps can now take bare names as input instead of strings, calls to `vars()`, `imp_vars()`, and `denom_vars()`. (#1225)

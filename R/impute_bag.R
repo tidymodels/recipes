@@ -208,7 +208,20 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
     }
   )
   out$..imp_vars <- vars$x
+  out <- butcher_bag_trees(out)
   out
+}
+
+butcher_bag_tree <- function(x) {
+  x$btree$call <- call("dummy_call")
+  attr(x$btree$terms, ".Environment") <- rlang::base_env()
+  x$btree$y <- integer()
+  x
+}
+
+butcher_bag_trees <- function(x) {
+  x$mtrees <- map(x$mtrees, butcher_bag_tree)
+  x
 }
 
 ## This figures out which data should be used to predict each variable
