@@ -1,4 +1,4 @@
-# recipes (development version)
+# recipes 1.3.0
 
 * Fixed printing for `step_geodist()` when no variables are selected. (#1423)
 
