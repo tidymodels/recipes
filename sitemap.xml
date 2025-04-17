@@ -9,7 +9,9 @@
 <url><loc>https://recipes.tidymodels.org/articles/Roles.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/articles/Selecting_Variables.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/articles/Skipping.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/articles/checklists.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/articles/index.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/articles/internals.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/articles/recipes.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/authors.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/contributors.html</loc></url>
@@ -25,6 +27,7 @@
 <url><loc>https://recipes.tidymodels.org/reference/check_name.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/check_new_data.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/check_new_values.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/reference/check_options.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/check_range.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/check_type.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/detect_step.html</loc></url>
@@ -44,6 +47,7 @@
 <url><loc>https://recipes.tidymodels.org/reference/juice.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/names0.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/prep.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/reference/prepare.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/prepper.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/print.recipe.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/rand_id.html</loc></url>
@@ -51,6 +55,7 @@
 <url><loc>https://recipes.tidymodels.org/reference/recipes-internal.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/recipes-role-indicator.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/recipes.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/reference/recipes_argument_select.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/recipes_eval_select.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/recipes_extension_check.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/recipes_pkg_check.html</loc></url>
