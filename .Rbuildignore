@@ -23,3 +23,4 @@ tests/testthat/NMF*
 ^CRAN-SUBMISSION$
 ^\.vscode$
 ^vignettes/articles$
+^[\.]?air\.toml$
