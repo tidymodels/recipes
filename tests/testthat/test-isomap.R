@@ -139,7 +139,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_isomap(all_predictors())
+    step_isomap(all_predictors())
   rec_param <- tunable.step_isomap(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_terms", "neighbors"))
   expect_true(all(rec_param$source == "recipe"))

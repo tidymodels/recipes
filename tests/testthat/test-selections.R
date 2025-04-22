@@ -337,32 +337,32 @@ test_that("new dplyr selectors", {
   expect_no_error(
     rec_1 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(all_of(c("hydrogen", "carbon"))) %>%
-        prep()
+      step_normalize(all_of(c("hydrogen", "carbon"))) %>%
+      prep()
   )
   expect_equal(names(rec_1$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_2 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(all_of(!!vnames)) %>%
-        prep()
+      step_normalize(all_of(!!vnames)) %>%
+      prep()
   )
   expect_equal(names(rec_2$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_3 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(any_of(c("hydrogen", "carbon"))) %>%
-        prep()
+      step_normalize(any_of(c("hydrogen", "carbon"))) %>%
+      prep()
   )
   expect_equal(names(rec_3$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_4 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
-        prep()
+      step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
+      prep()
   )
   expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
 })

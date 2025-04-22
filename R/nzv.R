@@ -235,10 +235,8 @@ nzv <- function(x, wts, freq_cut = 95 / 5, unique_cut = 10) {
 
   out <-
     which(
-      (
-        freq_ratio > freq_cut &
-          pct_unique <= unique_cut
-      ) |
+      (freq_ratio > freq_cut &
+        pct_unique <= unique_cut) |
         zero_var
     )
   names(out) <- NULL

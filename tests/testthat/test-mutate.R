@@ -6,33 +6,33 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-      step_mutate(
-        dbl_width = Sepal.Width * 2,
-        half_length = Sepal.Length / 2
-      )
+    step_mutate(
+      dbl_width = Sepal.Width * 2,
+      half_length = Sepal.Length / 2
+    )
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      mutate(
-        dbl_width = Sepal.Width * 2,
-        half_length = Sepal.Length / 2
-      )
+    as_tibble() %>%
+    slice(1:75) %>%
+    mutate(
+      dbl_width = Sepal.Width * 2,
+      half_length = Sepal.Length / 2
+    )
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-      as_tibble() %>%
-      slice(76:150) %>%
-      mutate(
-        dbl_width = Sepal.Width * 2,
-        half_length = Sepal.Length / 2
-      )
+    as_tibble() %>%
+    slice(76:150) %>%
+    mutate(
+      dbl_width = Sepal.Width * 2,
+      half_length = Sepal.Length / 2
+    )
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -41,22 +41,22 @@ test_that("quasiquotation", {
   const <- 9.077
   rec_1 <-
     iris_rec %>%
-      step_mutate(new_var = Sepal.Width * const)
+    step_mutate(new_var = Sepal.Width * const)
 
   prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      mutate(new_var = Sepal.Width * const)
+    as_tibble() %>%
+    slice(1:75) %>%
+    mutate(new_var = Sepal.Width * const)
 
   rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
   rec_2 <-
     iris_rec %>%
-      step_mutate(new_var = Sepal.Width * !!const)
+    step_mutate(new_var = Sepal.Width * !!const)
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 

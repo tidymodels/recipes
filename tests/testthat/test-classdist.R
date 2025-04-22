@@ -158,7 +158,7 @@ test_that("case weights", {
 
   ref_objects <- split(iris1, ~Species) %>%
     purrr::map(
-      ~get_both(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts))
+      ~ get_both(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts))
     )
 
   expect_equal(
@@ -172,7 +172,7 @@ test_that("case weights", {
 
   ref_objects_means <- split(iris1, ~Species) %>%
     purrr::map(
-      ~averages(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts))
+      ~ averages(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts))
     )
 
   ref_object_cov <- covariances(iris1[1:4], wts = iris1$wts)

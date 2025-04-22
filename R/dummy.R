@@ -257,7 +257,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     for (i in seq_along(col_names)) {
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form <- stats::update.formula(form, ~. - 1)
+        form <- stats::update.formula(form, ~ . - 1)
       }
       terms <- model.frame(
         formula = form,

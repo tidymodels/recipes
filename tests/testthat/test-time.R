@@ -24,10 +24,8 @@ test_that("default option", {
     times_minute = lubridate::minute(examples$times),
     times_second = lubridate::second(examples$times),
     times_decimal_day = lubridate::hour(examples$times) +
-      (
-        lubridate::second(examples$times) +
-          lubridate::minute(examples$times) * 60
-      ) /
+      (lubridate::second(examples$times) +
+        lubridate::minute(examples$times) * 60) /
         3600
   )
   expect_equal(date_res, date_exp)

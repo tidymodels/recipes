@@ -89,7 +89,7 @@ test_that("options(knots) works correctly (#1297)", {
     bake(new_data = NULL)
 
   mm_res <- model.matrix(
-    ~splines::bs(
+    ~ splines::bs(
       x,
       knots = seq(-1, 1, 0.125),
       Boundary.knots = c(-2.5, 2.5)
@@ -120,7 +120,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_bs(all_predictors())
+    step_bs(all_predictors())
   rec_param <- tunable.step_bs(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free", "degree"))
   expect_true(all(rec_param$source == "recipe"))

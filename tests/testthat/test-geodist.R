@@ -17,7 +17,7 @@ dists <-
   )
 
 test_that("basic functionality", {
-  rec <- recipe(~x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,
@@ -34,7 +34,7 @@ test_that("basic functionality", {
   expect_equal(tr_int[["geo_dist"]], dists)
   expect_equal(te_int[["geo_dist"]], dists)
 
-  rec_log <- recipe(~x + y, data = rand_data) %>%
+  rec_log <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,
@@ -255,7 +255,7 @@ test_that("bad args", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~x + y, data = rand_data) %>%
+    recipe(~ x + y, data = rand_data) %>%
       step_geodist(
         x,
         y,
@@ -268,7 +268,7 @@ test_that("bad args", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~x + y, data = rand_data) %>%
+    recipe(~ x + y, data = rand_data) %>%
       step_geodist(
         x,
         y,
@@ -284,7 +284,7 @@ test_that("bad args", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,
@@ -351,7 +351,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("geo_dist")
 
-  rec <- recipe(~x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,
@@ -369,7 +369,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,
@@ -389,7 +389,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,
@@ -410,7 +410,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(
       x,
       y,

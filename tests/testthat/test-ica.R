@@ -11,7 +11,7 @@ rec <-
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
   ) %>%
-    step_normalize(all_predictors())
+  step_normalize(all_predictors())
 
 # From directly calling fastICA
 exp_comp <-
@@ -144,7 +144,7 @@ test_that("tunable", {
   skip_if_not_installed("RSpectra")
   rec <-
     recipe(~., data = iris) %>%
-      step_ica(all_predictors())
+    step_ica(all_predictors())
   rec_param <- tunable.step_ica(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp"))
   expect_true(all(rec_param$source == "recipe"))
@@ -210,9 +210,9 @@ test_that("bake method errors when needed non-standard role columns are missing"
       HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
       data = biomass_tr
     ) %>%
-      step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
-      update_role(carbon, hydrogen, new_role = "potato") %>%
-      update_role_requirements(role = "potato", bake = FALSE)
+    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   ica_extract_trained <- prep(
     ica_extract,

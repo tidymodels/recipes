@@ -321,7 +321,7 @@ pls_project <- function(object, x) {
   z <- sweep(z, 2, STATS = object$sd, "/")
   res <- z %*% object$coefs
   res <- tibble::as_tibble(res)
-  res <- purrr::map2_dfc(res, object$col_norms, ~.x * .y)
+  res <- purrr::map2_dfc(res, object$col_norms, ~ .x * .y)
   res
 }
 
@@ -471,14 +471,14 @@ tidy.step_pls <- function(x, ...) {
         purrr::map2_dfc(
           as.data.frame(x$res$coefs),
           x$res$col_norms,
-          ~.x * .y
+          ~ .x * .y
         ) %>%
-          dplyr::mutate(terms = rownames(x$res$coefs)) %>%
-          tidyr::pivot_longer(
-            c(-terms),
-            names_to = "component",
-            values_to = "value"
-          )
+        dplyr::mutate(terms = rownames(x$res$coefs)) %>%
+        tidyr::pivot_longer(
+          c(-terms),
+          names_to = "component",
+          values_to = "value"
+        )
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {

@@ -147,8 +147,8 @@ test_that("scaling with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-      step_scale(all_numeric_predictors()) %>%
-      prep()
+    step_scale(all_numeric_predictors()) %>%
+    prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
@@ -162,8 +162,8 @@ test_that("scaling with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-      step_scale(all_numeric_predictors()) %>%
-      prep()
+    step_scale(all_numeric_predictors()) %>%
+    prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
@@ -176,7 +176,7 @@ test_that("scaling with case weights", {
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
-  rec <- recipe(~am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) %>%
     step_scale(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)

@@ -56,14 +56,14 @@ test_that("dummy variables with factor inputs", {
       columns = attributes(dummy_trained$steps[[1]]$levels$city)$values,
       id = ""
     ) %>%
-      slice(-1)
+    slice(-1)
   dum_tibble_prepped_2 <-
     tibble(
       terms = "zip",
       columns = attributes(dummy_trained$steps[[1]]$levels$zip)$values,
       id = ""
     ) %>%
-      slice(-1)
+    slice(-1)
   expect_equal(tidy(dummy, 1), dum_tibble)
   expect_equal(
     tidy(dummy_trained, 1),
@@ -770,13 +770,13 @@ test_that("bad args", {
   data(Sacramento, package = "modeldata")
 
   expect_snapshot(
-    recipe(~city + sqft + price, data = Sacramento) %>%
+    recipe(~ city + sqft + price, data = Sacramento) %>%
       step_dummy(city, one_hot = 2) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~city + sqft + price, data = Sacramento) %>%
+    recipe(~ city + sqft + price, data = Sacramento) %>%
       step_dummy(city, naming = NULL) %>%
       prep(),
     error = TRUE

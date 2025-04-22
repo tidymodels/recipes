@@ -316,7 +316,7 @@ recipes_eval_select <- function(
 has_role <- function(match = "predictor") {
   roles <- peek_roles()
   # roles is potentially a list columns so we unlist `.x` below.
-  lgl_matches <- purrr::map_lgl(roles, ~any(unlist(.x) %in% match))
+  lgl_matches <- purrr::map_lgl(roles, ~ any(unlist(.x) %in% match))
   which(lgl_matches)
 }
 
@@ -324,7 +324,7 @@ has_role <- function(match = "predictor") {
 #' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
-  lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
+  lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
   which(lgl_matches)
 }
 
@@ -338,7 +338,7 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~unlist(.x[[col]]))
+  purrr::map(.data, ~ unlist(.x[[col]]))
 }
 
 #' @export
