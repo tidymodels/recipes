@@ -78,7 +78,7 @@ the documentation in \link{case_weights} and the examples on \code{tidymodels.or
 Unlike most, this step requires the case weights to be available when new
 samples are processed (e.g., when \code{bake()} is used or \code{predict()} with a
 workflow). To tell recipes that the case weights are required at bake time,
-use \code{recipe \%>\% update_role_requirements(role = "case_weights", bake = TRUE)}. See \code{\link[=update_role_requirements]{update_role_requirements()}} for more information.
+use \code{recipe |> update_role_requirements(role = "case_weights", bake = TRUE)}. See \code{\link[=update_role_requirements]{update_role_requirements()}} for more information.
 }
 
 \examples{
@@ -93,9 +93,9 @@ rec <- recipe(
   data = biomass_tr
 )
 
-ss_trans <- rec \%>\%
-  step_center(carbon, hydrogen) \%>\%
-  step_scale(carbon, hydrogen) \%>\%
+ss_trans <- rec |>
+  step_center(carbon, hydrogen) |>
+  step_scale(carbon, hydrogen) |>
   step_spatialsign(carbon, hydrogen)
 
 ss_obj <- prep(ss_trans, training = biomass_tr)

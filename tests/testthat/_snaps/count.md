@@ -1,7 +1,7 @@
 # bad selector(s)
 
     Code
-      rec %>% step_count(description, rows, pattern = "(rock|stony)")
+      step_count(rec, description, rows, pattern = "(rock|stony)")
     Condition
       Error in `step_count()`:
       x For this step, only a single selector can be used.
@@ -30,7 +30,7 @@
 # checks for grepl arguments
 
     Code
-      recipe(~., data = mtcars) %>% step_count(options = list(not_real_option = TRUE))
+      step_count(recipe(~., data = mtcars), options = list(not_real_option = TRUE))
     Condition
       Error in `step_count()`:
       x The following elements of `options` are not allowed:
@@ -40,8 +40,7 @@
 # check_options() is used
 
     Code
-      recipe(~description, data = covers) %>% step_count(description, options = TRUE) %>%
-        prep()
+      prep(step_count(recipe(~description, data = covers), description, options = TRUE))
     Condition
       Error in `step_count()`:
       Caused by error in `prep()`:
@@ -135,8 +134,8 @@
 # bad args
 
     Code
-      recipe(~description, covers) %>% step_count(description, pattern = character(0)) %>%
-        prep()
+      prep(step_count(recipe(~description, covers), description, pattern = character(
+        0)))
     Condition
       Error in `step_count()`:
       ! `pattern` must be a single string, not an empty character vector.
@@ -144,8 +143,8 @@
 ---
 
     Code
-      recipe(~description, covers) %>% step_count(description, pattern = "(rock|stony)",
-        result = letters) %>% prep()
+      prep(step_count(recipe(~description, covers), description, pattern = "(rock|stony)",
+      result = letters))
     Condition
       Error in `step_count()`:
       Caused by error in `prep()`:
@@ -154,8 +153,8 @@
 ---
 
     Code
-      recipe(~description, covers) %>% step_count(description, pattern = "(rock|stony)",
-        normalize = "yes") %>% prep()
+      prep(step_count(recipe(~description, covers), description, pattern = "(rock|stony)",
+      normalize = "yes"))
     Condition
       Error in `step_count()`:
       Caused by error in `prep()`:

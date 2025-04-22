@@ -104,7 +104,7 @@ Sacramento$city <- as.character(Sacramento$city)
 
 rec <- recipe(~ city + zip, data = Sacramento)
 
-make_factor <- rec \%>\%
+make_factor <- rec |>
   step_string2factor(city)
 
 make_factor <- prep(make_factor,
@@ -114,10 +114,10 @@ make_factor <- prep(make_factor,
 make_factor
 
 # note that `city` is a factor in recipe output
-bake(make_factor, new_data = NULL) \%>\% head()
+bake(make_factor, new_data = NULL) |> head()
 
 # ...but remains a string in the data
-Sacramento \%>\% head()
+Sacramento |> head()
 \dontshow{\}) # examplesIf}
 }
 \seealso{

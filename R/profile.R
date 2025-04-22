@@ -54,9 +54,9 @@
 #' data(Sacramento, package = "modeldata")
 #'
 #' # Setup a grid across beds but keep the other values fixed
-#' recipe(~ city + price + beds, data = Sacramento) %>%
-#'   step_profile(-beds, profile = beds) %>%
-#'   prep(training = Sacramento) %>%
+#' recipe(~ city + price + beds, data = Sacramento) |>
+#'   step_profile(-beds, profile = beds) |>
+#'   prep(training = Sacramento) |>
 #'   bake(new_data = NULL)
 #'
 #' ##########
@@ -68,27 +68,27 @@
 #'
 #' # Show the difference in the two grid creation methods
 #'
-#' disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) %>%
-#'   step_profile(-disp, profile = disp) %>%
+#' disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) |>
+#'   step_profile(-disp, profile = disp) |>
 #'   prep(training = mtcars)
 #'
-#' disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) %>%
+#' disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) |>
 #'   step_profile(
 #'     -disp,
 #'     profile = disp,
 #'     grid = list(pctl = FALSE, len = 100)
-#'   ) %>%
+#'   ) |>
 #'   prep(training = mtcars)
 #'
 #' grid_data <- bake(disp_grid, new_data = NULL)
-#' grid_data <- grid_data %>%
+#' grid_data <- grid_data |>
 #'   mutate(
 #'     pred = predict(lin_mod, grid_data),
 #'     method = "grid"
 #'   )
 #'
 #' pctl_data <- bake(disp_pctl, new_data = NULL)
-#' pctl_data <- pctl_data %>%
+#' pctl_data <- pctl_data |>
 #'   mutate(
 #'     pred = predict(lin_mod, pctl_data),
 #'     method = "percentile"

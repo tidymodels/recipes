@@ -28,7 +28,7 @@ te_dat$x[1] <- NA
 te_dat$y[1] <- NA
 
 test_that("basic functionality", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~ x + y + z, data = tr_dat) |>
     step_integer(all_predictors())
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -47,7 +47,7 @@ test_that("basic functionality", {
 })
 
 test_that("zero-based", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~ x + y + z, data = tr_dat) |>
     step_integer(all_predictors(), zero_based = TRUE)
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -66,7 +66,7 @@ test_that("zero-based", {
 })
 
 test_that("not integers", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~ x + y + z, data = tr_dat) |>
     step_integer(all_predictors(), strict = FALSE)
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -82,9 +82,9 @@ test_that("not integers", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
-    step_integer(x) %>%
-    update_role(x, new_role = "potato") %>%
+  rec <- recipe(~ x + y + z, data = tr_dat) |>
+    step_integer(x) |>
+    update_role(x, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -134,7 +134,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~ x + y + z, data = tr_dat) |>
     step_integer(all_predictors())
 
   expect_snapshot(print(rec))
@@ -143,14 +143,14 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~ x + y + z, data = tr_dat) %>%
-      step_integer(all_predictors(), strict = "yes") %>%
+    recipe(~ x + y + z, data = tr_dat) |>
+      step_integer(all_predictors(), strict = "yes") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~ x + y + z, data = tr_dat) %>%
-      step_integer(all_predictors(), zero_based = "sure!") %>%
+    recipe(~ x + y + z, data = tr_dat) |>
+      step_integer(all_predictors(), zero_based = "sure!") |>
       prep(),
     error = TRUE
   )
@@ -158,8 +158,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_integer(Species) %>%
+  rec <- recipe(~., data) |>
+    step_integer(Species) |>
     prep()
 
   expect_identical(

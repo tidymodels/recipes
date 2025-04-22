@@ -55,7 +55,7 @@ test_that("correct Isomap values", {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  im_rec <- rec %>%
+  im_rec <- rec |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "")
 
   im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
@@ -80,8 +80,8 @@ test_that("No ISOmap", {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 0, id = "") %>%
+  im_rec <- rec |>
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 0, id = "") |>
     prep()
 
   expect_equal(
@@ -106,11 +106,11 @@ test_that("ISOmap fails gracefully", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(Sepal.Length ~ ., data = iris) %>%
-      step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%
-      step_bs(Sepal.Length, deg_free = 1, degree = 1) %>%
-      step_other(Species, threshold = .000000001) %>%
-      step_isomap(all_numeric_predictors(), num_terms = 1, neighbors = 1) %>%
+    recipe(Sepal.Length ~ ., data = iris) |>
+      step_bs(Sepal.Width, deg_free = 1, degree = 1) |>
+      step_bs(Sepal.Length, deg_free = 1, degree = 1) |>
+      step_other(Species, threshold = .000000001) |>
+      step_isomap(all_numeric_predictors(), num_terms = 1, neighbors = 1) |>
       prep(),
     transform = scrub_timestamp
   )
@@ -126,7 +126,7 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(dat1)
   dat$Isomap1 <- dat$x1
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
 
   expect_snapshot(
@@ -138,7 +138,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_isomap(all_predictors())
   rec_param <- tunable.step_isomap(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_terms", "neighbors"))
@@ -161,8 +161,8 @@ test_that("check_options() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_isomap(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_isomap(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -177,9 +177,9 @@ test_that("bake method errors when needed non-standard role columns are missing"
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) %>%
-    update_role(x1, x2, x3, new_role = "potato") %>%
+  im_rec <- rec |>
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) |>
+    update_role(x1, x2, x3, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
@@ -234,7 +234,7 @@ test_that("keep_original_cols works", {
 
   new_names <- c("Isomap1", "Isomap2", "Isomap3")
 
-  rec <- recipe(~., data = dat1) %>%
+  rec <- recipe(~., data = dat1) |>
     step_isomap(
       x1,
       x2,
@@ -252,7 +252,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~., data = dat1) %>%
+  rec <- recipe(~., data = dat1) |>
     step_isomap(
       x1,
       x2,
@@ -279,7 +279,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  rec <- recipe(~., data = dat1) %>%
+  rec <- recipe(~., data = dat1) |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -302,7 +302,7 @@ test_that("printing", {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  rec <- recipe(~., data = dat1) %>%
+  rec <- recipe(~., data = dat1) |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
 
   expect_snapshot(print(rec))
@@ -311,7 +311,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_isomap(
       all_predictors(),
       num_terms = hardhat::tune(),
@@ -332,14 +332,14 @@ test_that("bad args", {
   skip_if_not_installed("dimRed")
 
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
-      step_isomap(all_predictors(), num_terms = 2, neighbors = -1 / 3) %>%
+    recipe(~., data = mtcars) |>
+      step_isomap(all_predictors(), num_terms = 2, neighbors = -1 / 3) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
-      step_isomap(all_predictors(), prefix = NULL) %>%
+    recipe(~., data = mtcars) |>
+      step_isomap(all_predictors(), prefix = NULL) |>
       prep(),
     error = TRUE
   )
@@ -354,8 +354,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if(getRversion() <= "3.4.4")
 
   data <- as_tibble(dat1)
-  rec <- recipe(~., data) %>%
-    step_isomap(all_predictors(), neighbors = 3, num_terms = 3) %>%
+  rec <- recipe(~., data) |>
+    step_isomap(all_predictors(), neighbors = 3, num_terms = 3) |>
     prep()
 
   expect_identical(

@@ -4,17 +4,17 @@ library(recipes)
 test_that("is trained?", {
   rec1 <- recipe(~., data = iris)
   expect_false(fully_trained(rec1))
-  expect_true(fully_trained(rec1 %>% prep()))
+  expect_true(fully_trained(rec1 |> prep()))
 
-  rec2 <- rec1 %>%
-    step_sqrt(all_numeric()) %>%
+  rec2 <- rec1 |>
+    step_sqrt(all_numeric()) |>
     step_center(all_numeric())
   expect_false(fully_trained(rec2))
 
   rec3 <- prep(rec2, training = iris)
   expect_true(fully_trained(rec3))
 
-  rec4 <- rec3 %>% step_scale(all_numeric())
+  rec4 <- rec3 |> step_scale(all_numeric())
   expect_false(fully_trained(rec4))
 
   expect_snapshot(
@@ -24,7 +24,7 @@ test_that("is trained?", {
 })
 
 test_that("formulas", {
-  rec6 <- recipe(Species ~ ., data = iris) %>% prep(iris)
+  rec6 <- recipe(Species ~ ., data = iris) |> prep(iris)
   expect_equal(
     formula(rec6),
     as.formula(
@@ -33,8 +33,8 @@ test_that("formulas", {
     ignore_formula_env = TRUE
   )
 
-  rec7 <- rec6 %>%
-    step_rm(starts_with("Sepal")) %>%
+  rec7 <- rec6 |>
+    step_rm(starts_with("Sepal")) |>
     prep(iris)
   expect_equal(
     formula(rec7),
@@ -42,7 +42,7 @@ test_that("formulas", {
     ignore_formula_env = TRUE
   )
 
-  rec8 <- recipe(~., data = iris) %>% prep(iris)
+  rec8 <- recipe(~., data = iris) |> prep(iris)
   expect_equal(
     formula(rec8),
     as.formula(
@@ -51,7 +51,7 @@ test_that("formulas", {
     ignore_formula_env = TRUE
   )
 
-  rec9 <- recipe(Species + Sepal.Length ~ ., data = iris) %>% prep(iris)
+  rec9 <- recipe(Species + Sepal.Length ~ ., data = iris) |> prep(iris)
   expect_equal(
     formula(rec9),
     as.formula(
@@ -60,7 +60,7 @@ test_that("formulas", {
     ignore_formula_env = TRUE
   )
 
-  rec10 <- recipe(mtcars) %>% prep()
+  rec10 <- recipe(mtcars) |> prep()
   expect_equal(
     formula(rec10),
     as.formula(
@@ -69,8 +69,8 @@ test_that("formulas", {
     ignore_formula_env = TRUE
   )
 
-  rec11 <- recipe(mtcars) %>%
-    update_role(mpg, new_role = "outcome") %>%
+  rec11 <- recipe(mtcars) |>
+    update_role(mpg, new_role = "outcome") |>
     prep()
   expect_equal(
     formula(rec11),
@@ -79,8 +79,8 @@ test_that("formulas", {
     ),
     ignore_formula_env = TRUE
   )
-  rec12 <- recipe(mtcars) %>%
-    update_role(-mpg, new_role = "predictor") %>%
+  rec12 <- recipe(mtcars) |>
+    update_role(-mpg, new_role = "predictor") |>
     prep()
   expect_equal(
     formula(rec12),
@@ -89,9 +89,9 @@ test_that("formulas", {
     ),
     ignore_formula_env = TRUE
   )
-  rec13 <- recipe(mtcars) %>%
-    update_role(mpg, new_role = "outcome") %>%
-    update_role(-mpg, new_role = "predictor") %>%
+  rec13 <- recipe(mtcars) |>
+    update_role(mpg, new_role = "outcome") |>
+    update_role(-mpg, new_role = "predictor") |>
     prep()
   expect_equal(
     formula(rec13),
@@ -103,7 +103,7 @@ test_that("formulas", {
 })
 
 test_that("bad args", {
-  rec10 <- recipe(Species ~ ., data = iris) %>%
+  rec10 <- recipe(Species ~ ., data = iris) |>
     step_center(all_numeric())
   expect_snapshot(error = TRUE, formula(rec10))
 })

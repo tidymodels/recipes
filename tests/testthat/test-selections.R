@@ -22,7 +22,7 @@ rec_sac <- recipe(~., data = Sacramento)
 info_sac <- summary(rec_sac)
 
 data("biomass", package = "modeldata")
-rec_bio <- recipe(biomass) %>%
+rec_bio <- recipe(biomass) |>
   update_role(
     carbon,
     hydrogen,
@@ -30,9 +30,9 @@ rec_bio <- recipe(biomass) %>%
     nitrogen,
     sulfur,
     new_role = "predictor"
-  ) %>%
-  update_role(HHV, new_role = "outcome") %>%
-  update_role(sample, new_role = "id variable") %>%
+  ) |>
+  update_role(HHV, new_role = "outcome") |>
+  update_role(sample, new_role = "id variable") |>
   update_role(dataset, new_role = "splitting indicator")
 info_bio <- summary(rec_bio)
 
@@ -336,32 +336,32 @@ test_that("new dplyr selectors", {
   vnames <- c("hydrogen", "carbon")
   expect_no_error(
     rec_1 <-
-      recipe(HHV ~ ., data = biomass) %>%
-      step_normalize(all_of(c("hydrogen", "carbon"))) %>%
+      recipe(HHV ~ ., data = biomass) |>
+      step_normalize(all_of(c("hydrogen", "carbon"))) |>
       prep()
   )
   expect_equal(names(rec_1$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_2 <-
-      recipe(HHV ~ ., data = biomass) %>%
-      step_normalize(all_of(!!vnames)) %>%
+      recipe(HHV ~ ., data = biomass) |>
+      step_normalize(all_of(!!vnames)) |>
       prep()
   )
   expect_equal(names(rec_2$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_3 <-
-      recipe(HHV ~ ., data = biomass) %>%
-      step_normalize(any_of(c("hydrogen", "carbon"))) %>%
+      recipe(HHV ~ ., data = biomass) |>
+      step_normalize(any_of(c("hydrogen", "carbon"))) |>
       prep()
   )
   expect_equal(names(rec_3$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_4 <-
-      recipe(HHV ~ ., data = biomass) %>%
-      step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
+      recipe(HHV ~ ., data = biomass) |>
+      step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) |>
       prep()
   )
   expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
@@ -495,12 +495,12 @@ test_that("old recipes from 1.0.1 work with new get_types", {
   )
 
   expect_equal(
-    old_pca_rec_sac %>%
+    old_pca_rec_sac |>
       bake(new_data = Sacramento),
-    rec_sac %>%
-      step_normalize(all_numeric_predictors()) %>%
-      step_pca(beds, baths, sqft) %>%
-      prep() %>%
+    rec_sac |>
+      step_normalize(all_numeric_predictors()) |>
+      step_pca(beds, baths, sqft) |>
+      prep() |>
       bake(new_data = Sacramento)
   )
 })
@@ -510,8 +510,8 @@ test_that("error when selecting case weights", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_normalize(hp) %>%
+    recipe(~., data = mtcars) |>
+      step_normalize(hp) |>
       prep()
   )
 })

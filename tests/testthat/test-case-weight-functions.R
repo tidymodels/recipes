@@ -163,8 +163,8 @@ test_that("get_case_weights() catches non-numeric case weights", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_normalize(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_normalize(all_predictors()) |>
       prep()
   )
 })

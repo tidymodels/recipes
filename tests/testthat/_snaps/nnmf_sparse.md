@@ -11,7 +11,7 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_nnmf_sparse(all_predictors()) %>% prep()
+      prep(step_nnmf_sparse(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
@@ -22,7 +22,7 @@
 # errors for missing data
 
     Code
-      recipe(~., data = mtcars) %>% step_nnmf_sparse(all_predictors()) %>% prep()
+      prep(step_nnmf_sparse(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
@@ -32,8 +32,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_nnmf_sparse(all_predictors(), options = TRUE) %>%
-        prep()
+      prep(step_nnmf_sparse(recipe(~mpg, data = mtcars), all_predictors(), options = TRUE))
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
@@ -129,8 +128,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., mtcars) %>% step_nnmf_sparse(disp, drat, num_comp = -1) %>%
-        prep()
+      prep(step_nnmf_sparse(recipe(mpg ~ ., mtcars), disp, drat, num_comp = -1))
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
@@ -139,7 +137,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., mtcars) %>% step_nnmf_sparse(disp, drat, penalty = -1) %>% prep()
+      prep(step_nnmf_sparse(recipe(mpg ~ ., mtcars), disp, drat, penalty = -1))
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
@@ -148,7 +146,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., mtcars) %>% step_nnmf_sparse(disp, drat, prefix = 1) %>% prep()
+      prep(step_nnmf_sparse(recipe(mpg ~ ., mtcars), disp, drat, prefix = 1))
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:

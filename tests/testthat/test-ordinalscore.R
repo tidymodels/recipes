@@ -19,7 +19,7 @@ ex_miss$ord3[2] <- NA
 score <- function(x) as.numeric(x)^2
 
 test_that("linear scores", {
-  rec1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
+  rec1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) |>
     step_ordinalscore(starts_with("ord"))
   rec1 <- prep(
     rec1,
@@ -38,7 +38,7 @@ test_that("linear scores", {
 })
 
 test_that("nonlinear scores", {
-  rec2 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
+  rec2 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) |>
     step_ordinalscore(starts_with("ord"), convert = score)
   rec2 <- prep(
     rec2,
@@ -57,7 +57,7 @@ test_that("nonlinear scores", {
 })
 
 test_that("bad spec", {
-  rec3 <- recipe(~., data = ex_dat) %>%
+  rec3 <- recipe(~., data = ex_dat) |>
     step_ordinalscore(all_predictors())
   expect_snapshot(error = TRUE, prep(rec3, training = ex_dat, verbose = FALSE))
 })
@@ -65,9 +65,9 @@ test_that("bad spec", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
-    step_ordinalscore(starts_with("ord")) %>%
-    update_role(starts_with("ord"), new_role = "potato") %>%
+  rec1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) |>
+    step_ordinalscore(starts_with("ord")) |>
+    update_role(starts_with("ord"), new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   rec1 <- prep(
     rec1,
@@ -116,7 +116,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_ordinalscore(starts_with("ord"))
 
   expect_snapshot(print(rec))
@@ -125,8 +125,8 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_ordinalscore(starts_with("ord"), convert = NULL) %>%
+    recipe(~., data = ex_dat) |>
+      step_ordinalscore(starts_with("ord"), convert = NULL) |>
       prep(),
     error = TRUE
   )
@@ -135,8 +135,8 @@ test_that("bad args", {
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
   data$Species <- as.ordered(data$Species)
-  rec <- recipe(~., data) %>%
-    step_ordinalscore(Species) %>%
+  rec <- recipe(~., data) |>
+    step_ordinalscore(Species) |>
     prep()
 
   expect_identical(

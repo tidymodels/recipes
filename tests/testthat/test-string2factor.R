@@ -16,18 +16,18 @@ ex_dat <- data.frame(
 rec <- recipe(~., data = ex_dat)
 
 test_that("basic functionality", {
-  ex_1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
-    step_string2factor(w, x) %>%
-    prep(ex_dat) %>%
+  ex_1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) |>
+    step_string2factor(w, x) |>
+    prep(ex_dat) |>
     bake(new_data = NULL)
   expect_equal(class(ex_1$w), "factor")
   expect_equal(class(ex_1$x), "factor")
   expect_equal(levels(ex_1$w), letters[1:3])
   expect_equal(levels(ex_1$x), LETTERS[1:2])
 
-  ex_2 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
-    step_string2factor(w, x, ordered = TRUE) %>%
-    prep(ex_dat) %>%
+  ex_2 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) |>
+    step_string2factor(w, x, ordered = TRUE) |>
+    prep(ex_dat) |>
     bake(new_data = NULL)
   expect_equal(class(ex_2$w), c("ordered", "factor"))
   expect_equal(class(ex_2$x), c("ordered", "factor"))
@@ -38,22 +38,22 @@ test_that("basic functionality", {
 test_that("bad args", {
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_string2factor(w, n) %>%
+    rec |>
+      step_string2factor(w, n) |>
       prep(ex_dat)
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_string2factor(w, x, ordered = "yes") %>%
+    rec |>
+      step_string2factor(w, x, ordered = "yes") |>
       prep(ex_dat)
   )
 })
 
 test_that("pre-made factors", {
-  ex_1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
-    step_string2factor(w, x, y, z) %>%
-    prep(ex_dat) %>%
+  ex_1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) |>
+    step_string2factor(w, x, y, z) |>
+    prep(ex_dat) |>
     bake(new_data = NULL)
   expect_true(inherits(ex_1$w, "factor"))
   expect_true(inherits(ex_1$x, "factor"))
@@ -68,9 +68,9 @@ test_that("pre-made factors", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- rec %>%
-    step_string2factor(w, x) %>%
-    update_role(w, new_role = "potato") %>%
+  rec <- rec |>
+    step_string2factor(w, x) |>
+    update_role(w, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat)
@@ -116,7 +116,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_string2factor(w, x)
 
   expect_snapshot(print(rec))
@@ -126,8 +126,8 @@ test_that("printing", {
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
   data$vs <- as.character(data$vs)
-  rec <- recipe(~., data) %>%
-    step_string2factor(vs) %>%
+  rec <- recipe(~., data) |>
+    step_string2factor(vs) |>
     prep()
 
   expect_identical(

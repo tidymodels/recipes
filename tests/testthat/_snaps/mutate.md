@@ -1,7 +1,7 @@
 # quasiquotation
 
     Code
-      prep(rec_1, training = iris %>% slice(1:75))
+      prep(rec_1, training = slice(iris, 1:75))
     Condition
       Error in `step_mutate()`:
       Caused by error in `dplyr::mutate()`:
@@ -12,7 +12,7 @@
 # required_pkgs.step_mutate() works
 
     Code
-      recipe(~., data = mtcars) %>% step_mutate(new = 2, .pkgs = "not-a-package")
+      step_mutate(recipe(~., data = mtcars), new = 2, .pkgs = "not-a-package")
     Message
       1 package (not-a-package) is needed for this step but is not installed.
       To install run: `install.packages("not-a-package")`

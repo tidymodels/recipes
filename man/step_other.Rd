@@ -118,7 +118,7 @@ sacr_te <- Sacramento[-in_train, ]
 rec <- recipe(~ city + zip, data = sacr_tr)
 
 
-rec <- rec \%>\%
+rec <- rec |>
   step_other(city, zip, threshold = .1, other = "other values")
 rec <- prep(rec, training = sacr_tr)
 
@@ -135,14 +135,14 @@ bake(rec, tahiti)
 # threshold as a frequency
 rec <- recipe(~ city + zip, data = sacr_tr)
 
-rec <- rec \%>\%
+rec <- rec |>
   step_other(city, zip, threshold = 2000, other = "other values")
 rec <- prep(rec, training = sacr_tr)
 
 tidy(rec, number = 1)
 # compare it to
-# sacr_tr \%>\% count(city, sort = TRUE) \%>\% top_n(4)
-# sacr_tr \%>\% count(zip, sort = TRUE) \%>\% top_n(3)
+# sacr_tr |> count(city, sort = TRUE) |> top_n(4)
+# sacr_tr |> count(zip, sort = TRUE) |> top_n(3)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

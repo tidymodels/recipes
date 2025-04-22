@@ -54,12 +54,12 @@ data(ames, package = "modeldata")
 ames <- mutate(ames, Sale_Price = log10(Sale_Price))
 
 ames_rec <-
-  recipe(Sale_Price ~ ., data = ames[-(1:6), ]) \%>\%
-  step_other(Neighborhood, threshold = 0.05) \%>\%
-  step_dummy(all_nominal()) \%>\%
-  step_interact(~ starts_with("Central_Air"):Year_Built) \%>\%
-  step_ns(Longitude, Latitude, deg_free = 2) \%>\%
-  step_zv(all_predictors()) \%>\%
+  recipe(Sale_Price ~ ., data = ames[-(1:6), ]) |>
+  step_other(Neighborhood, threshold = 0.05) |>
+  step_dummy(all_nominal()) |>
+  step_interact(~ starts_with("Central_Air"):Year_Built) |>
+  step_ns(Longitude, Latitude, deg_free = 2) |>
+  step_zv(all_predictors()) |>
   prep()
 
 # return the training set (already embedded in ames_rec)

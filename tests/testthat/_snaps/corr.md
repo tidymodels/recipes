@@ -55,7 +55,7 @@
 # corr_filter() warns on many NA values
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_corr(all_predictors()) %>% prep()
+      tmp <- prep(step_corr(recipe(~., data = mtcars), all_predictors()))
     Condition
       Warning:
       Too many correlations are `NA`; skipping correlation filter.
@@ -131,7 +131,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., mtcars) %>% step_corr(all_predictors(), threshold = 2) %>% prep()
+      prep(step_corr(recipe(mpg ~ ., mtcars), all_predictors(), threshold = 2))
     Condition
       Error in `step_corr()`:
       Caused by error in `prep()`:
@@ -140,7 +140,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., mtcars) %>% step_corr(all_predictors(), use = "this") %>% prep()
+      prep(step_corr(recipe(mpg ~ ., mtcars), all_predictors(), use = "this"))
     Condition
       Error in `step_corr()`:
       Caused by error in `prep()`:
@@ -149,8 +149,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., mtcars) %>% step_corr(all_predictors(), method = "my dissertation") %>%
-        prep()
+      prep(step_corr(recipe(mpg ~ ., mtcars), all_predictors(), method = "my dissertation"))
     Condition
       Error in `step_corr()`:
       Caused by error in `prep()`:

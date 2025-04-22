@@ -3,7 +3,7 @@ library(recipes)
 
 test_that("defaults", {
   skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
     step_depth(all_predictors(), class = Species, metric = "spatial", id = "")
   trained <- prep(rec, training = iris, verbose = FALSE)
   depths <- bake(trained, new_data = iris)
@@ -41,7 +41,7 @@ test_that("defaults", {
 
 test_that("alt args", {
   skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
     step_depth(
       all_predictors(),
       class = Species,
@@ -76,7 +76,7 @@ test_that("alt args", {
 
 test_that("prefix", {
   skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
     step_depth(
       all_predictors(),
       class = Species,
@@ -92,18 +92,18 @@ test_that("prefix", {
 test_that("bad args", {
   skip_if_not_installed("ddalpha")
   expect_snapshot(
-    recipe(Species ~ ., data = iris) %>%
+    recipe(Species ~ ., data = iris) |>
       step_depth(
         all_numeric_predictors(),
         class = Species,
         metric = "circular"
-      ) %>%
+      ) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(Species ~ ., data = iris) %>%
-      step_depth(all_numeric_predictors(), class = Species, prefix = 0L) %>%
+    recipe(Species ~ ., data = iris) |>
+      step_depth(all_numeric_predictors(), class = Species, prefix = 0L) |>
       prep(),
     error = TRUE
   )
@@ -113,12 +113,12 @@ test_that("check_options() is used", {
   skip_if_not_installed("ddalpha")
   expect_snapshot(
     error = TRUE,
-    recipe(~Species, data = iris) %>%
+    recipe(~Species, data = iris) |>
       step_depth(
         all_numeric_predictors(),
         class = Species,
         options = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 })
@@ -128,8 +128,8 @@ test_that("recipes_argument_select() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_depth(disp, class = NULL) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_depth(disp, class = NULL) |>
       prep()
   )
 })
@@ -137,8 +137,8 @@ test_that("recipes_argument_select() is used", {
 test_that("addition of recipes_argument_select() is backwards compatible", {
   skip_if_not_installed("ddalpha")
 
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = Species, options = list(seed = 1)) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
+    step_depth(all_predictors(), class = Species, options = list(seed = 1)) |>
     prep()
 
   exp <- bake(rec, iris)
@@ -150,12 +150,12 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  rec_old <- recipe(Species ~ ., data = iris) %>%
+  rec_old <- recipe(Species ~ ., data = iris) |>
     step_depth(
       all_predictors(),
       class = "Species",
       options = list(seed = 1)
-    ) %>%
+    ) |>
     prep()
 
   expect_identical(
@@ -169,9 +169,9 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("ddalpha")
 
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(starts_with("Sepal"), class = Species, metric = "spatial") %>%
-    update_role(starts_with("Sepal"), new_role = "potato") %>%
+  rec <- recipe(Species ~ ., data = iris) |>
+    step_depth(starts_with("Sepal"), class = Species, metric = "spatial") |>
+    update_role(starts_with("Sepal"), new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   trained <- prep(rec, training = iris, verbose = FALSE)
@@ -228,7 +228,7 @@ test_that("keep_original_cols works", {
     "depth_virginica"
   )
 
-  rec <- recipe(Species ~ ., iris) %>%
+  rec <- recipe(Species ~ ., iris) |>
     step_depth(all_predictors(), class = Species, keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -239,7 +239,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(Species ~ ., iris) %>%
+  rec <- recipe(Species ~ ., iris) |>
     step_depth(all_predictors(), class = Species, keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -253,7 +253,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., iris) %>%
+  rec <- recipe(Species ~ ., iris) |>
     step_depth(all_predictors(), class = Species)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -269,7 +269,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 
 test_that("printing", {
   skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., data = iris) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
     step_depth(all_predictors(), class = Species, metric = "spatial")
 
   expect_snapshot(print(rec))
@@ -279,8 +279,8 @@ test_that("printing", {
 test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("ddalpha")
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_depth(all_numeric_predictors(), class = Species) %>%
+  rec <- recipe(~., data) |>
+    step_depth(all_numeric_predictors(), class = Species) |>
     prep()
 
   expect_identical(

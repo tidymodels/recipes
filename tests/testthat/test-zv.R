@@ -28,7 +28,7 @@ vars <- names(pct_uni)
 
 test_that("zv filtering", {
   rec <- recipe(y ~ ., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_zv(x1, x2, x3, x4)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -37,27 +37,27 @@ test_that("zv filtering", {
 })
 
 test_that("group-wise zv filtering", {
-  mtcars0 <- mtcars %>%
+  mtcars0 <- mtcars |>
     mutate(
       const = 0,
       group1 = am,
       group2 = vs
     )
 
-  rec_group1 <- recipe(~., data = mtcars0) %>%
-    step_zv(all_predictors(), group = "group1") %>%
+  rec_group1 <- recipe(~., data = mtcars0) |>
+    step_zv(all_predictors(), group = "group1") |>
     prep()
 
   expect_equal(rec_group1$steps[[1]]$removals, c("am", "const"))
 
-  rec_group2 <- recipe(~., data = mtcars0) %>%
-    step_zv(all_predictors(), group = "group2") %>%
+  rec_group2 <- recipe(~., data = mtcars0) |>
+    step_zv(all_predictors(), group = "group2") |>
     prep()
 
   expect_equal(rec_group2$steps[[1]]$removals, c("vs", "const"))
 
-  rec_group12 <- recipe(~., data = mtcars0) %>%
-    step_zv(all_predictors(), group = c("group1", "group2")) %>%
+  rec_group12 <- recipe(~., data = mtcars0) |>
+    step_zv(all_predictors(), group = c("group1", "group2")) |>
     prep()
 
   expect_equal(
@@ -65,8 +65,8 @@ test_that("group-wise zv filtering", {
     c("cyl", "vs", "am", "gear", "const")
   )
 
-  rec_group12_vars <- recipe(~., data = mtcars0) %>%
-    step_zv(all_predictors(), group = vars(group1, group2)) %>%
+  rec_group12_vars <- recipe(~., data = mtcars0) |>
+    step_zv(all_predictors(), group = vars(group1, group2)) |>
     prep()
 
   expect_equal(
@@ -88,7 +88,7 @@ test_that("mssing values in zero-variance screen", {
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
-  rec <- recipe(~ am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) |>
     step_zv(all_predictors())
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -159,8 +159,8 @@ test_that("empty printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_zv(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_zv(all_predictors()) |>
     prep()
 
   expect_identical(

@@ -86,7 +86,7 @@
 # bad args
 
     Code
-      recipe(~., data = ex_dat) %>% step_logit(x1, offset = "sure") %>% prep()
+      prep(step_logit(recipe(~., data = ex_dat), x1, offset = "sure"))
     Condition
       Error in `step_logit()`:
       Caused by error in `prep()`:

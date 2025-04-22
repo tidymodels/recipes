@@ -11,8 +11,7 @@
 # errors on wrong values of features
 
     Code
-      recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(), features = "yearly") %>%
-        prep()
+      prep(step_date(recipe(~ Dan + Stefan, examples), all_predictors(), features = "yearly"))
     Condition
       Error in `step_date()`:
       x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
@@ -21,8 +20,8 @@
 ---
 
     Code
-      recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(), features = c(
-        "daily", "monthly", "yearly")) %>% prep()
+      prep(step_date(recipe(~ Dan + Stefan, examples), all_predictors(), features = c(
+        "daily", "monthly", "yearly")))
     Condition
       Error in `step_date()`:
       x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
@@ -31,8 +30,8 @@
 ---
 
     Code
-      recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(), features = c(
-        "daily", "month", "yearly")) %>% prep()
+      prep(step_date(recipe(~ Dan + Stefan, examples), all_predictors(), features = c(
+        "daily", "month", "yearly")))
     Condition
       Error in `step_date()`:
       x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
@@ -126,8 +125,8 @@
 # bad args
 
     Code
-      date_rec <- recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(),
-      abbr = "nope") %>% prep()
+      date_rec <- prep(step_date(recipe(~ Dan + Stefan, examples), all_predictors(),
+      abbr = "nope"))
     Condition
       Error in `step_date()`:
       Caused by error in `prep()`:
@@ -136,8 +135,8 @@
 ---
 
     Code
-      date_rec <- recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(),
-      label = "no!") %>% prep()
+      date_rec <- prep(step_date(recipe(~ Dan + Stefan, examples), all_predictors(),
+      label = "no!"))
     Condition
       Error in `step_date()`:
       Caused by error in `prep()`:
@@ -146,8 +145,8 @@
 ---
 
     Code
-      date_rec <- recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(),
-      ordinal = "never") %>% prep()
+      date_rec <- prep(step_date(recipe(~ Dan + Stefan, examples), all_predictors(),
+      ordinal = "never"))
     Condition
       Error in `step_date()`:
       Caused by error in `prep()`:

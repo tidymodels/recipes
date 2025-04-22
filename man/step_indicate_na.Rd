@@ -106,7 +106,7 @@ credit_te <- credit_data[-in_training, ]
 
 rec <- recipe(Price ~ ., data = credit_tr)
 
-impute_rec <- rec \%>\%
+impute_rec <- rec |>
   step_indicate_na(Income, Assets, Debt)
 
 imp_models <- prep(impute_rec, training = credit_tr)

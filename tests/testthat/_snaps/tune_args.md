@@ -1,8 +1,8 @@
 # tune_args() errors on multiple tune()s in same arg
 
     Code
-      recipe(~., data = mtcars) %>% step_pca(all_predictors(), num_comp = ~ tune() +
-        tune()) %>% tune_args()
+      tune_args(step_pca(recipe(~., data = mtcars), all_predictors(), num_comp = ~
+      tune() + tune()))
     Condition
       Error in `find_tune_id()`:
       ! Only one tunable value is currently allowed per argument. The current argument has: tune() + tune().

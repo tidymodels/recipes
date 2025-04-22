@@ -11,7 +11,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_ns(mpg, options = TRUE) %>% prep()
+      prep(step_ns(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_ns()`:
       Caused by error in `prep()`:

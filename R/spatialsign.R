@@ -37,7 +37,7 @@
 #'   Unlike most, this step requires the case weights to be available when new
 #'   samples are processed (e.g., when `bake()` is used or `predict()` with a
 #'   workflow). To tell recipes that the case weights are required at bake time,
-#'   use `recipe %>% update_role_requirements(role = "case_weights", bake =
+#'   use `recipe |> update_role_requirements(role = "case_weights", bake =
 #'   TRUE)`. See [update_role_requirements()] for more information.
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial sign
@@ -56,9 +56,9 @@
 #'   data = biomass_tr
 #' )
 #'
-#' ss_trans <- rec %>%
-#'   step_center(carbon, hydrogen) %>%
-#'   step_scale(carbon, hydrogen) %>%
+#' ss_trans <- rec |>
+#'   step_center(carbon, hydrogen) |>
+#'   step_scale(carbon, hydrogen) |>
 #'   step_spatialsign(carbon, hydrogen)
 #'
 #' ss_obj <- prep(ss_trans, training = biomass_tr)

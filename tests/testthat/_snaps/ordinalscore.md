@@ -88,8 +88,7 @@
 # bad args
 
     Code
-      recipe(~., data = ex_dat) %>% step_ordinalscore(starts_with("ord"), convert = NULL) %>%
-        prep()
+      prep(step_ordinalscore(recipe(~., data = ex_dat), starts_with("ord"), convert = NULL))
     Condition
       Error in `step_ordinalscore()`:
       Caused by error in `prep()`:

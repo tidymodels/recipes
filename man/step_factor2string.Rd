@@ -76,7 +76,7 @@ data(Sacramento, package = "modeldata")
 
 rec <- recipe(~ city + zip, data = Sacramento)
 
-make_string <- rec \%>\%
+make_string <- rec |>
   step_factor2string(city)
 
 make_string <- prep(make_string,
@@ -87,10 +87,10 @@ make_string <- prep(make_string,
 make_string
 
 # note that `city` is a string in recipe output
-bake(make_string, new_data = NULL) \%>\% head()
+bake(make_string, new_data = NULL) |> head()
 
 # ...but remains a factor in the original data
-Sacramento \%>\% head()
+Sacramento |> head()
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -127,12 +127,12 @@ sim_dat$y2 <- cos(sim_dat$x1) + rnorm(n, sd = 0.1)
 sim_dat$x2 <- runif(n)
 sim_dat$x3 <- rnorm(n)
 
-rec <- recipe(y1 + y2 ~ x1 + x2 + x3, data = sim_dat) \%>\%
+rec <- recipe(y1 + y2 ~ x1 + x2 + x3, data = sim_dat) |>
   step_window(starts_with("y"),
     size = 7, statistic = "median",
     names = paste0("med_7pt_", 1:2),
     role = "outcome"
-  ) \%>\%
+  ) |>
   step_window(starts_with("y"),
     names = paste0("mean_3pt_", 1:2),
     role = "outcome"
@@ -153,7 +153,7 @@ tidy(rec, number = 2)
 # If you want to replace the selected variables with the rolling statistic
 # don't set `names`
 sim_dat$original <- sim_dat$y1
-rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) \%>\%
+rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) |>
   step_window(starts_with("y"))
 rec <- prep(rec, training = sim_dat)
 smoothed_dat <- bake(rec, sim_dat)

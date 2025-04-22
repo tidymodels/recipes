@@ -1,7 +1,7 @@
 # bad args
 
     Code
-      rec %>% step_relevel(sqft, ref_level = 23) %>% prep()
+      prep(step_relevel(rec, sqft, ref_level = 23))
     Condition
       Error in `step_relevel()`:
       Caused by error in `prep()`:
@@ -11,7 +11,7 @@
 ---
 
     Code
-      rec %>% step_relevel(city, ref_level = "missing_level") %>% prep()
+      prep(step_relevel(rec, city, ref_level = "missing_level"))
     Condition
       Error in `step_relevel()`:
       Caused by error in `prep()`:
@@ -20,7 +20,7 @@
 ---
 
     Code
-      rec %>% step_relevel(city, ref_level = character(0)) %>% prep()
+      prep(step_relevel(rec, city, ref_level = character(0)))
     Condition
       Error in `step_relevel()`:
       Caused by error in `prep()`:

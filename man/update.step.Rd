@@ -32,7 +32,7 @@ biomass_te <- biomass[biomass$dataset == "Testing", ]
 rec <- recipe(
   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass_tr
-) \%>\%
+) |>
   step_bs(carbon, hydrogen, degree = 3)
 
 # Update the step to use degree = 4

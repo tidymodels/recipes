@@ -97,15 +97,15 @@ test_that("NA values with step_discretize (issue #127)", {
   # We expect na.rm to be overwritten
   opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = FALSE)
 
-  rec <- recipe(~., data = iris_na) %>%
-    step_discretize(sepal_na, options = opts) %>%
+  rec <- recipe(~., data = iris_na) |>
+    step_discretize(sepal_na, options = opts) |>
     prep(training = iris_na)
 
   expect_equal(rec$steps[[1]]$objects$sepal_na, disc_values)
 })
 
 test_that("tidys", {
-  rec <- recipe(~., data = ex_tr) %>%
+  rec <- recipe(~., data = ex_tr) |>
     step_discretize(x1, id = "")
 
   tidy_exp_un <- tibble(
@@ -132,15 +132,15 @@ test_that("multiple column prefix", {
     x2 = rnorm(1000)
   )
   expect_snapshot(
-    recipe(~., data = example_data) %>%
-      step_discretize(x1, x2, options = list(prefix = "hello")) %>%
+    recipe(~., data = example_data) |>
+      step_discretize(x1, x2, options = list(prefix = "hello")) |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = example_data) %>%
-      step_discretize(x1, x2, options = list(labels = "hello")) %>%
+    recipe(~., data = example_data) |>
+      step_discretize(x1, x2, options = list(labels = "hello")) |>
       prep(),
     variant = r_version()
   )
@@ -149,25 +149,25 @@ test_that("multiple column prefix", {
 test_that("bad args", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = ex_tr) %>%
-      step_discretize(x1, num_breaks = 1) %>%
+    recipe(~., data = ex_tr) |>
+      step_discretize(x1, num_breaks = 1) |>
       prep()
   )
   expect_snapshot(
-    recipe(~., data = ex_tr) %>%
-      step_discretize(x1, num_breaks = 100) %>%
+    recipe(~., data = ex_tr) |>
+      step_discretize(x1, num_breaks = 100) |>
       prep()
   )
   expect_snapshot(
-    recipe(~., data = ex_tr) %>%
-      step_discretize(x1, options = list(prefix = "@$")) %>%
+    recipe(~., data = ex_tr) |>
+      step_discretize(x1, options = list(prefix = "@$")) |>
       prep()
   )
 })
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_discretize(all_predictors())
   rec_param <- tunable.step_discretize(rec$steps[[1]])
   expect_equal(rec_param$name, c("min_unique", "num_breaks"))
@@ -187,25 +187,25 @@ test_that("war when less breaks are generated", {
 })
 
 test_that("bake works predicting on only NAs (#1350)", {
-  rec <- recipe(~mpg, data = mtcars) %>%
-    step_discretize(mpg, min_unique = 4) %>%
+  rec <- recipe(~mpg, data = mtcars) |>
+    step_discretize(mpg, min_unique = 4) |>
     prep()
 
-  exp_levels <- rec %>%
-    bake(data.frame(mpg = numeric(0))) %>%
-    pull() %>%
+  exp_levels <- rec |>
+    bake(data.frame(mpg = numeric(0))) |>
+    pull() |>
     levels()
 
   expect_identical(
-    rec %>%
-      bake(data.frame(mpg = NA)) %>%
+    rec |>
+      bake(data.frame(mpg = NA)) |>
       pull(mpg),
     factor(NA, exp_levels)
   )
 
   expect_identical(
-    rec %>%
-      bake(data.frame(mpg = c(NA, NA))) %>%
+    rec |>
+      bake(data.frame(mpg = c(NA, NA))) |>
       pull(mpg),
     factor(c(NA, NA), exp_levels)
   )
@@ -214,8 +214,8 @@ test_that("bake works predicting on only NAs (#1350)", {
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_discretize(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_discretize(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -224,8 +224,8 @@ test_that("check_options() is used", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(cyl ~ ., mtcars)
-  rec <- step_discretize(rec, mpg, min_unique = 3) %>%
-    update_role(mpg, new_role = "potato") %>%
+  rec <- step_discretize(rec, mpg, min_unique = 3) |>
+    update_role(mpg, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   rec <- prep(rec, mtcars)
 
@@ -270,7 +270,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_tr) %>%
+  rec <- recipe(~., data = ex_tr) |>
     step_discretize(x1)
 
   expect_snapshot(print(rec))
@@ -279,7 +279,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_discretize(
       all_predictors(),
       min_unique = hardhat::tune(),
@@ -294,14 +294,14 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_discretize(disp, num_breaks = 0) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_discretize(disp, num_breaks = 0) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_discretize(disp, min_unique = -1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_discretize(disp, min_unique = -1) |>
       prep(),
     error = TRUE
   )
@@ -309,8 +309,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_discretize(mpg, min_unique = 3) %>%
+  rec <- recipe(~., data) |>
+    step_discretize(mpg, min_unique = 3) |>
     prep()
 
   expect_identical(

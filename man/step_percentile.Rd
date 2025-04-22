@@ -90,12 +90,12 @@ biomass_te <- biomass[biomass$dataset == "Testing", ]
 rec <- recipe(
   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass_tr
-) \%>\%
+) |>
   step_percentile(carbon)
 
 prepped_rec <- prep(rec)
 
-prepped_rec \%>\%
+prepped_rec |>
   bake(biomass_te)
 
 tidy(rec, 1)

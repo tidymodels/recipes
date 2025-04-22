@@ -13,7 +13,7 @@
 # warnings
 
     Code
-      recipe(~., data = exp_dat) %>% step_BoxCox(x1) %>% prep()
+      prep(step_BoxCox(recipe(~., data = exp_dat), x1))
     Condition
       Warning:
       Non-positive values in selected variable.
@@ -36,8 +36,8 @@
 ---
 
     Code
-      recipe(~ mpg + disp, data = mtcars) %>% step_BoxCox(mpg, disp) %>% prep() %>%
-        bake(new_data = tibble(mpg = -1, disp = -1))
+      bake(prep(step_BoxCox(recipe(~ mpg + disp, data = mtcars), mpg, disp)),
+      new_data = tibble(mpg = -1, disp = -1))
     Condition
       Warning:
       Applying Box-Cox transformation to non-positive data in column mpg.

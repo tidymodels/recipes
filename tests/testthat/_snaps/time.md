@@ -11,8 +11,7 @@
 # errors on wrong values of features
 
     Code
-      recipe(~times, examples) %>% step_time(all_predictors(), features = "hourly") %>%
-        prep()
+      prep(step_time(recipe(~times, examples), all_predictors(), features = "hourly"))
     Condition
       Error in `step_time()`:
       Caused by error in `prep()`:

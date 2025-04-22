@@ -31,7 +31,7 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_ica(all_predictors()) %>% prep()
+      prep(step_ica(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_ica()`:
       Caused by error in `prep()`:
@@ -42,8 +42,7 @@
 # check_options() is used
 
     Code
-      recipe(~., data = mtcars) %>% step_ica(all_predictors(), options = TRUE) %>%
-        prep()
+      prep(step_ica(recipe(~., data = mtcars), all_predictors(), options = TRUE))
     Condition
       Error in `step_ica()`:
       Caused by error in `prep()`:
@@ -141,7 +140,7 @@
 # bad args
 
     Code
-      rec %>% step_ica(carbon, hydrogen, prefix = 2) %>% prep()
+      prep(step_ica(rec, carbon, hydrogen, prefix = 2))
     Condition
       Error in `step_ica()`:
       Caused by error in `prep()`:

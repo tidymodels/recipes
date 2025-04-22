@@ -1,7 +1,7 @@
 # step_cut throws error on non-numerics
 
     Code
-      recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
+      prep(step_cut(recipe(x), cat_var, breaks = 2))
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
@@ -11,7 +11,7 @@
 ---
 
     Code
-      recipe(~., x) %>% step_cut(all_predictors(), breaks = 2) %>% prep()
+      prep(step_cut(recipe(~., x), all_predictors(), breaks = 2))
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
@@ -21,8 +21,7 @@
 ---
 
     Code
-      recipe(~., x) %>% step_cut(num_var, breaks = 2, include_outside_range = 2) %>%
-        prep()
+      prep(step_cut(recipe(~., x), num_var, breaks = 2, include_outside_range = 2))
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
@@ -47,7 +46,7 @@
 # step_cut() provides informative warning on missing values
 
     Code
-      recipe(~., data = mtcars_with_na) %>% step_cut(mpg, breaks = 20) %>% prep()
+      prep(step_cut(recipe(~., data = mtcars_with_na), mpg, breaks = 20))
     Condition
       Warning in `prep()`:
       `var` contains missing values. These will be ignored in break calculations.
@@ -68,7 +67,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars_with_nas) %>% step_cut(mpg, breaks = 20) %>% prep()
+      prep(step_cut(recipe(~., data = mtcars_with_nas), mpg, breaks = 20))
     Condition
       Warning in `prep()`:
       `var` contains missing values. These will be ignored in break calculations.
@@ -89,7 +88,7 @@
 # breaks argument are type checked
 
     Code
-      recipe(~., data = mtcars) %>% step_cut(disp, hp, breaks = TRUE) %>% prep()
+      prep(step_cut(recipe(~., data = mtcars), disp, hp, breaks = TRUE))
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
@@ -98,8 +97,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_cut(disp, hp, breaks = c("100", "200")) %>%
-        prep()
+      prep(step_cut(recipe(~., data = mtcars), disp, hp, breaks = c("100", "200")))
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:

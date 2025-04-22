@@ -52,27 +52,27 @@
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(tate_text, package = "modeldata")
 #'
-#' dummies <- recipe(~ artist + medium, data = tate_text) %>%
-#'   step_dummy_extract(artist, medium, sep = ", ") %>%
+#' dummies <- recipe(~ artist + medium, data = tate_text) |>
+#'   step_dummy_extract(artist, medium, sep = ", ") |>
 #'   prep()
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
 #'
-#' dummy_data %>%
-#'   select(starts_with("medium")) %>%
-#'   names() %>%
+#' dummy_data |>
+#'   select(starts_with("medium")) |>
+#'   names() |>
 #'   head()
 #'
 #' # More detailed splitting
-#' dummies_specific <- recipe(~medium, data = tate_text) %>%
-#'   step_dummy_extract(medium, sep = "(, )|( and )|( on )") %>%
+#' dummies_specific <- recipe(~medium, data = tate_text) |>
+#'   step_dummy_extract(medium, sep = "(, )|( and )|( on )") |>
 #'   prep()
 #'
 #' dummy_data_specific <- bake(dummies_specific, new_data = NULL)
 #'
-#' dummy_data_specific %>%
-#'   select(starts_with("medium")) %>%
-#'   names() %>%
+#' dummy_data_specific |>
+#'   select(starts_with("medium")) |>
+#'   names() |>
 #'   head()
 #'
 #' tidy(dummies, number = 1)
@@ -87,11 +87,11 @@
 #'   )
 #' )
 #'
-#' dummies_color <- recipe(~colors, data = color_examples) %>%
-#'   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") %>%
+#' dummies_color <- recipe(~colors, data = color_examples) |>
+#'   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") |>
 #'   prep()
 #'
-#' dummies_data_color <- dummies_color %>%
+#' dummies_data_color <- dummies_color |>
 #'   bake(new_data = NULL)
 #'
 #' dummies_data_color

@@ -56,7 +56,7 @@ test_that("format_selectors handles a long expression (#1083)", {
     withr::defer(options(op), env)
   }
 
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
     step_mutate(
       vs = function_call(
         .x = vs,

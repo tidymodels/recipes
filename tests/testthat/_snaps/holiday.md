@@ -11,8 +11,7 @@
 # error on incorrect holidays argument
 
     Code
-      recipe(~., mtcars) %>% step_holiday(holidays = c("Invalid Holiday",
-        "NewYearsDay"))
+      step_holiday(recipe(~., mtcars), holidays = c("Invalid Holiday", "NewYearsDay"))
     Condition
       Error in `step_holiday()`:
       ! Invalid `holidays` value. See `timeDate::listHolidays()` for possible values.

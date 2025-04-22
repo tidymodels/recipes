@@ -9,9 +9,9 @@ rec <- recipe(
 )
 
 test_that("spatial sign", {
-  sp_sign <- rec %>%
-    step_center(carbon, hydrogen) %>%
-    step_scale(carbon, hydrogen) %>%
+  sp_sign <- rec |>
+    step_center(carbon, hydrogen) |>
+    step_scale(carbon, hydrogen) |>
     step_spatialsign(carbon, hydrogen)
 
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
@@ -25,8 +25,8 @@ test_that("spatial sign", {
   expect_equal(sp_sign_pred, x)
 
   expect_snapshot(
-    rec %>%
-      step_spatialsign(carbon, hydrogen, na_rm = 12) %>%
+    rec |>
+      step_spatialsign(carbon, hydrogen, na_rm = 12) |>
       prep(),
     error = TRUE
   )
@@ -38,18 +38,18 @@ test_that("Missing values", {
   with_na$hydrogen[2] <- NA
   rownames(with_na) <- NULL
 
-  sp_sign_rm_na <- rec %>%
-    step_spatialsign(carbon, hydrogen) %>%
-    prep() %>%
+  sp_sign_rm_na <- rec |>
+    step_spatialsign(carbon, hydrogen) |>
+    prep() |>
     bake(
       new_data = with_na,
       one_of(c("carbon", "hydrogen")),
       composition = "matrix"
     )
 
-  sp_sign_no_rm_na <- rec %>%
-    step_spatialsign(carbon, hydrogen, na_rm = FALSE) %>%
-    prep() %>%
+  sp_sign_no_rm_na <- rec |>
+    step_spatialsign(carbon, hydrogen, na_rm = FALSE) |>
+    prep() |>
     bake(
       new_data = with_na,
       one_of(c("carbon", "hydrogen")),
@@ -69,8 +69,8 @@ test_that("centering with case weights", {
   mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars_freq) %>%
-    step_spatialsign(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_freq) |>
+    step_spatialsign(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -86,8 +86,8 @@ test_that("centering with case weights", {
   mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
 
   rec <-
-    recipe(mpg ~ ., mtcars_imp) %>%
-    step_spatialsign(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_imp) |>
+    step_spatialsign(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -101,9 +101,9 @@ test_that("centering with case weights", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  sp_sign <- rec %>%
-    step_spatialsign(carbon, hydrogen) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
+  sp_sign <- rec |>
+    step_spatialsign(carbon, hydrogen) |>
+    update_role(carbon, hydrogen, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
@@ -155,9 +155,9 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass
-  ) %>%
-    step_center(carbon, hydrogen) %>%
-    step_scale(carbon, hydrogen) %>%
+  ) |>
+    step_center(carbon, hydrogen) |>
+    step_scale(carbon, hydrogen) |>
     step_spatialsign(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -166,8 +166,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_spatialsign(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_spatialsign(all_predictors()) |>
     prep()
 
   expect_identical(

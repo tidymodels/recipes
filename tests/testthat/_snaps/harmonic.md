@@ -1,8 +1,8 @@
 # harmonic error
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 1, cycle_size = NA)
+      step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var, frequency = 1,
+      cycle_size = NA)
     Condition
       Error in `step_harmonic()`:
       x `cycle_size` must have at least one non-NA numeric value.
@@ -11,8 +11,8 @@
 ---
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 1, starting_val = 0, cycle_size = NA)
+      step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var, frequency = 1,
+      starting_val = 0, cycle_size = NA)
     Condition
       Error in `step_harmonic()`:
       x `cycle_size` must have at least one non-NA numeric value.
@@ -21,8 +21,8 @@
 ---
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 1, starting_val = 0, cycle_size = "a")
+      step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var, frequency = 1,
+      starting_val = 0, cycle_size = "a")
     Condition
       Error in `step_harmonic()`:
       x `cycle_size` must have at least one non-NA numeric value.
@@ -31,8 +31,8 @@
 ---
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 1, starting_val = "a", cycle_size = 86400)
+      step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var, frequency = 1,
+      starting_val = "a", cycle_size = 86400)
     Condition
       Error in `step_harmonic()`:
       ! starting_val must be NA, numeric, Date or POSIXt, not a string.
@@ -40,8 +40,8 @@
 ---
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 1, starting_val = factor("a"), cycle_size = 86400)
+      step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var, frequency = 1,
+      starting_val = factor("a"), cycle_size = 86400)
     Condition
       Error in `step_harmonic()`:
       ! starting_val must be NA, numeric, Date or POSIXt, not a <factor> object.
@@ -49,8 +49,8 @@
 # harmonic NA in term
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
+      bake(prep(step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var,
+      frequency = 4, cycle_size = 86400)), new_data = NULL)
     Condition
       Error in `step_harmonic()`:
       Caused by error in `bake()`:
@@ -59,8 +59,8 @@
 # harmonic character in term
 
     Code
-      recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
-        frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
+      bake(prep(step_harmonic(recipe(osc ~ time_var, data = harmonic_dat), time_var,
+      frequency = 4, cycle_size = 86400)), new_data = NULL)
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
@@ -70,9 +70,8 @@
 # harmonic cycle_size length
 
     Code
-      recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
-        step_harmonic(time_var_1, time_var_2, time_var_3, frequency = 4, cycle_size = c(
-          86400, 86400)) %>% prep()
+      prep(step_harmonic(recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat),
+      time_var_1, time_var_2, time_var_3, frequency = 4, cycle_size = c(86400, 86400)))
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
@@ -81,9 +80,9 @@
 # harmonic starting_val length
 
     Code
-      recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
-        step_harmonic(time_var_1, time_var_2, time_var_3, frequency = 4,
-          starting_val = c(86400, 86400), cycle_size = 86400) %>% prep()
+      prep(step_harmonic(recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat),
+      time_var_1, time_var_2, time_var_3, frequency = 4, starting_val = c(86400,
+        86400), cycle_size = 86400))
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:

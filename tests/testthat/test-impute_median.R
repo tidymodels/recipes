@@ -12,7 +12,7 @@ credit_te <- credit_data[-in_training, ]
 test_that("simple median", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_median(Age, Assets, Income, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
@@ -65,7 +65,7 @@ test_that("simple median", {
 test_that("non-numeric", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_median(Assets, Job)
   expect_snapshot(
     error = TRUE,
@@ -76,24 +76,24 @@ test_that("non-numeric", {
 test_that("all NA values", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_median(Age, Assets)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  imputed_te <- bake(imputed, new_data = credit_te %>% mutate(Age = NA))
+  imputed_te <- bake(imputed, new_data = credit_te |> mutate(Age = NA))
 
   expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$medians$Age)
 })
 
 test_that("case weights", {
-  credit_tr_cw <- credit_tr %>%
+  credit_tr_cw <- credit_tr |>
     mutate(Amount = frequency_weights(Amount))
 
-  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
-    step_impute_median(Age, Assets, Income, id = "") %>%
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) |>
+    step_impute_median(Age, Assets, Income, id = "") |>
     prep()
 
-  ref_medians <- credit_tr_cw %>%
-    select(Age, Assets, Income) %>%
+  ref_medians <- credit_tr_cw |>
+    select(Age, Assets, Income) |>
     medians(credit_tr_cw$Amount)
 
   expect_equal(
@@ -105,15 +105,15 @@ test_that("case weights", {
 
   # ----------------------------------------------------------------------------
 
-  credit_tr_cw <- credit_tr %>%
+  credit_tr_cw <- credit_tr |>
     mutate(Amount = importance_weights(Amount))
 
-  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
-    step_impute_median(Age, Assets, Income, id = "") %>%
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) |>
+    step_impute_median(Age, Assets, Income, id = "") |>
     prep()
 
-  ref_medians <- credit_tr_cw %>%
-    select(Age, Assets, Income) %>%
+  ref_medians <- credit_tr_cw |>
+    select(Age, Assets, Income) |>
     medians(wts = NULL)
 
   expect_equal(
@@ -126,7 +126,7 @@ test_that("case weights", {
 
 test_that("doesn't destroy sparsity", {
   credit_tr$Debt <- sparsevctrs::as_sparse_double(credit_tr$Debt)
-  rec <- recipe(~Debt, data = credit_tr) %>%
+  rec <- recipe(~Debt, data = credit_tr) |>
     step_impute_median(Debt)
 
   rec_trained <- prep(rec, training = credit_tr, verbose = FALSE)
@@ -142,9 +142,9 @@ test_that("doesn't destroy sparsity", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
-    step_impute_median(Age) %>%
-    update_role(Age, new_role = "potato") %>%
+  impute_rec <- rec |>
+    step_impute_median(Age) |>
+    update_role(Age, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
@@ -189,7 +189,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(Price ~ ., data = credit_tr) %>%
+  rec <- recipe(Price ~ ., data = credit_tr) |>
     step_impute_median(Age, Assets, Income)
 
   expect_snapshot(print(rec))
@@ -198,8 +198,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_impute_median(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_impute_median(disp, mpg) |>
     prep()
 
   expect_identical(

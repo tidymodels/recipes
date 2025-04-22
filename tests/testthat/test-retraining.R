@@ -10,34 +10,34 @@ rec <- recipe(
 )
 
 test_that("training in stages", {
-  whole_recipe <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_rm(sulfur) %>%
+  whole_recipe <- rec |>
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
+    step_rm(sulfur) |>
     step_scale(carbon, hydrogen, oxygen, nitrogen)
 
   at_same_time <- prep(whole_recipe, training = biomass)
 
   ## not train in stages
-  center_first <- rec %>%
+  center_first <- rec |>
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
   center_first_trained <-
     prep(center_first, training = biomass)
 
-  no_sulfur <- center_first_trained %>%
+  no_sulfur <- center_first_trained |>
     step_rm(sulfur)
 
   expect_snapshot(
     no_sulfur_trained <- prep(no_sulfur)
   )
 
-  scale_last <- no_sulfur_trained %>%
+  scale_last <- no_sulfur_trained |>
     step_scale(carbon, hydrogen, oxygen, nitrogen)
   expect_snapshot(
     sequentially <- prep(scale_last)
   )
 
-  in_stages <- center_first_trained %>%
-    step_rm(sulfur) %>%
+  in_stages <- center_first_trained |>
+    step_rm(sulfur) |>
     step_scale(carbon, hydrogen, oxygen, nitrogen)
   expect_snapshot(
     in_stages_trained <- prep(in_stages)
@@ -75,10 +75,10 @@ test_that("training in stages", {
   )
 
   expect_snapshot(
-    rec %>%
-      step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-      prep(training = biomass) %>%
-      step_rm(sulfur) %>%
+    rec |>
+      step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
+      prep(training = biomass) |>
+      step_rm(sulfur) |>
       prep(training = biomass)
   )
 })

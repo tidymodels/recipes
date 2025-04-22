@@ -142,7 +142,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_range(disp, wt, max = "max") %>% prep()
+      prep(step_range(recipe(mpg ~ ., data = mtcars), disp, wt, max = "max"))
     Condition
       Error in `step_range()`:
       Caused by error in `prep()`:
@@ -151,7 +151,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_range(disp, wt, min = "min") %>% prep()
+      prep(step_range(recipe(mpg ~ ., data = mtcars), disp, wt, min = "min"))
     Condition
       Error in `step_range()`:
       Caused by error in `prep()`:
@@ -160,8 +160,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_range(disp, wt, clipping = "never") %>%
-        prep()
+      prep(step_range(recipe(mpg ~ ., data = mtcars), disp, wt, clipping = "never"))
     Condition
       Error in `step_range()`:
       Caused by error in `prep()`:

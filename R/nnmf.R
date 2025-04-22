@@ -65,16 +65,16 @@
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' data(biomass, package = "modeldata")
 #'
-#' # rec <- recipe(HHV ~ ., data = biomass) %>%
-#' #   update_role(sample, new_role = "id var") %>%
-#' #   update_role(dataset, new_role = "split variable") %>%
-#' #   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) %>%
+#' # rec <- recipe(HHV ~ ., data = biomass) |>
+#' #   update_role(sample, new_role = "id var") |>
+#' #   update_role(dataset, new_role = "split variable") |>
+#' #   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
 #' #   prep(training = biomass)
 #' #
 #' # bake(rec, new_data = NULL)
 #' #
 #' # library(ggplot2)
-#' # bake(rec, new_data = NULL) %>%
+#' # bake(rec, new_data = NULL) |>
 #' #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 step_nnmf <-
   function(

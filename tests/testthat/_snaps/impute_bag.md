@@ -1,8 +1,7 @@
 # impute_with errors with nothing selected
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_bag(all_predictors(), impute_with = NULL) %>%
-        prep()
+      prep(step_impute_bag(recipe(~., data = mtcars), all_predictors(), impute_with = NULL))
     Condition
       Error in `step_impute_bag()`:
       Caused by error in `prep()`:
@@ -11,8 +10,8 @@
 # Warns when impute_with contains all NAs in a row
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_impute_bag(mpg, disp, vs,
-        impute_with = c(am, gear)) %>% prep()
+      tmp <- prep(step_impute_bag(recipe(~., data = mtcars), mpg, disp, vs,
+      impute_with = c(am, gear)))
     Condition
       Warning:
       The `impute_with` variables for `mpg` only contains missing values for row: 2 and 3. Cannot impute for those rows.
@@ -22,7 +21,7 @@
 # Better error message for nzv fit error (#209)
 
     Code
-      recipe(~., d) %>% step_impute_bag(let) %>% prep()
+      prep(step_impute_bag(recipe(~., d), let))
     Condition
       Error in `step_impute_bag()`:
       Caused by error in `prep()`:
@@ -32,7 +31,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_impute_bag(mpg, options = TRUE) %>% prep()
+      prep(step_impute_bag(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_impute_bag()`:
       Caused by error in `prep()`:
@@ -41,8 +40,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_impute_bag(disp, impute_with = NULL) %>%
-        prep()
+      prep(step_impute_bag(recipe(mpg ~ ., data = mtcars), disp, impute_with = NULL))
     Condition
       Error in `step_impute_bag()`:
       Caused by error in `prep()`:
@@ -129,8 +127,7 @@
 # bad args
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_bag(all_predictors(), trees = -1) %>%
-        prep()
+      prep(step_impute_bag(recipe(~., data = mtcars), all_predictors(), trees = -1))
     Condition
       Error in `step_impute_bag()`:
       Caused by error in `prep()`:
@@ -139,8 +136,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_bag(all_predictors(), seed_val = 1:4) %>%
-        prep()
+      prep(step_impute_bag(recipe(~., data = mtcars), all_predictors(), seed_val = 1:
+      4))
     Condition
       Error in `step_impute_bag()`:
       Caused by error in `prep()`:

@@ -11,8 +11,8 @@
 # check_type() is used
 
     Code
-      recipe(sqft ~ zip + price + city, data = sacr) %>% step_dummy(city, zip, price) %>%
-        prep()
+      prep(step_dummy(recipe(sqft ~ zip + price + city, data = sacr), city, zip,
+      price))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -22,7 +22,7 @@
 # make sure contrasts argument is checked
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = TRUE) %>% prep()
+      prep(step_dummy(recipe(~Species, iris), Species, contrasts = TRUE))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -31,7 +31,7 @@
 ---
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list()) %>% prep()
+      prep(step_dummy(recipe(~Species, iris), Species, contrasts = list()))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -40,8 +40,7 @@
 ---
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = "contr.treatment")) %>%
-        prep()
+      prep(step_dummy(recipe(~Species, iris), Species, contrasts = list(ordered = "contr.treatment")))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -50,8 +49,8 @@
 ---
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = 1,
-        unordered = "contr.treatment")) %>% prep()
+      prep(step_dummy(recipe(~Species, iris), Species, contrasts = list(ordered = 1,
+        unordered = "contr.treatment")))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -60,8 +59,8 @@
 ---
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = "contr.treatment",
-        unordered = 1)) %>% prep()
+      prep(step_dummy(recipe(~Species, iris), Species, contrasts = list(ordered = "contr.treatment",
+        unordered = 1)))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -70,7 +69,7 @@
 # getOption('contrasts') gives deprecation warning in step_dummy
 
     Code
-      tmp <- recipe(~., data = iris) %>% step_dummy(Species) %>% prep()
+      tmp <- prep(step_dummy(recipe(~., data = iris), Species))
     Condition
       Warning:
       options(contrasts) with step_dummy() was deprecated in recipes 1.3.0.
@@ -148,7 +147,7 @@
 # warns about NA in column (#450)
 
     Code
-      tmp <- recipe(~a, data = data) %>% step_dummy(a) %>% prep()
+      tmp <- prep(step_dummy(recipe(~a, data = data), a))
     Condition
       Warning:
       ! There are new levels in `a`: NA.
@@ -157,7 +156,7 @@
 # Deprecation warning
 
     Code
-      recipe(~., data = mtcars) %>% step_dummy(preserve = TRUE)
+      step_dummy(recipe(~., data = mtcars), preserve = TRUE)
     Condition
       Error:
       ! The `preserve` argument of `step_dummy()` was deprecated in recipes 0.1.16 and is now defunct.
@@ -205,7 +204,7 @@
 # throws an informative error for single level
 
     Code
-      recipe(~., data = data.frame(x = "only-level")) %>% step_dummy(x) %>% prep()
+      prep(step_dummy(recipe(~., data = data.frame(x = "only-level")), x))
     Condition
       Error in `step_dummy()`:
       Caused by error in `bake()`:
@@ -301,8 +300,8 @@
 # bad args
 
     Code
-      recipe(~ city + sqft + price, data = Sacramento) %>% step_dummy(city, one_hot = 2) %>%
-        prep()
+      prep(step_dummy(recipe(~ city + sqft + price, data = Sacramento), city,
+      one_hot = 2))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
@@ -311,8 +310,7 @@
 ---
 
     Code
-      recipe(~ city + sqft + price, data = Sacramento) %>% step_dummy(city, naming = NULL) %>%
-        prep()
+      prep(step_dummy(recipe(~ city + sqft + price, data = Sacramento), city, naming = NULL))
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:

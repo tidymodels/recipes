@@ -1,8 +1,8 @@
 # multiple column prefix
 
     Code
-      recipe(~., data = example_data) %>% step_discretize(x1, x2, options = list(
-        labels = "hello")) %>% prep()
+      prep(step_discretize(recipe(~., data = example_data), x1, x2, options = list(
+        labels = "hello")))
     Condition
       Warning:
       Note that the options `prefix` and `labels` will be applied to all variables.

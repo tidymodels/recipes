@@ -1,7 +1,7 @@
 # check_col works in the bake stage
 
     Code
-      rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars[-1])
+      bake(prep(check_cols(rp1, all_predictors())), mtcars[-1])
     Condition
       Error in `bake()`:
       x The following required columns are missing from `new_data`: `mpg`.
@@ -10,7 +10,7 @@
 ---
 
     Code
-      rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars[, c(2, 5)])
+      bake(prep(check_cols(rp2, cyl, mpg, drat)), mtcars[, c(2, 5)])
     Condition
       Error in `bake()`:
       x The following required columns are missing from `new_data`: `mpg`.
@@ -19,7 +19,7 @@
 # non-standard roles during bake/predict
 
     Code
-      predict(role_wts_fit, head(Chicago) %>% select(-date))
+      predict(role_wts_fit, select(head(Chicago), -date))
     Condition
       Error in `hardhat::forge()`:
       ! The required column "date" is missing.
@@ -27,7 +27,7 @@
 ---
 
     Code
-      predict(rm_fit, Chicago %>% select(-date))
+      predict(rm_fit, select(Chicago, -date))
     Condition
       Error in `hardhat::forge()`:
       ! The required column "date" is missing.
@@ -35,7 +35,7 @@
 ---
 
     Code
-      predict(rm_fit, Chicago %>% select(-date))
+      predict(rm_fit, select(Chicago, -date))
     Condition
       Error in `hardhat::forge()`:
       ! The required column "date" is missing.

@@ -1,7 +1,7 @@
 # Fails when one of the variables to impute is non-numeric.
 
     Code
-      recipe(tg_dat) %>% step_impute_linear(supp, impute_with = len) %>% prep(tg_dat)
+      prep(step_impute_linear(recipe(tg_dat), supp, impute_with = len), tg_dat)
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
@@ -10,8 +10,7 @@
 ---
 
     Code
-      recipe(tg_dat) %>% step_impute_linear(supp, dose, impute_with = len) %>% prep(
-        tg_dat)
+      prep(step_impute_linear(recipe(tg_dat), supp, dose, impute_with = len), tg_dat)
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
@@ -58,8 +57,8 @@
 # impute_with errors with nothing selected
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_linear(all_predictors(), impute_with = NULL) %>%
-        prep()
+      prep(step_impute_linear(recipe(~., data = mtcars), all_predictors(),
+      impute_with = NULL))
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
@@ -68,8 +67,7 @@
 # warns if impute_with columns contains missing values
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_impute_linear(mpg, impute_with = disp) %>%
-        prep()
+      tmp <- prep(step_impute_linear(recipe(~., data = mtcars), mpg, impute_with = disp))
     Condition
       Warning:
       There were missing values in the predictor(s) used to impute; imputation did not occur.
@@ -77,7 +75,7 @@
 # errors if there are no rows without missing values
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_linear(all_predictors()) %>% prep()
+      prep(step_impute_linear(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
@@ -86,8 +84,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_impute_linear(disp, impute_with = NULL) %>%
-        prep()
+      prep(step_impute_linear(recipe(mpg ~ ., data = mtcars), disp, impute_with = NULL))
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:

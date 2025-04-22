@@ -20,24 +20,24 @@ test_that("harmonic error", {
   # missing input
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
       step_harmonic(time_var, frequency = 1, cycle_size = NA)
   )
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
       step_harmonic(time_var, frequency = 1, starting_val = 0, cycle_size = NA)
   )
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
       step_harmonic(time_var, frequency = 1, starting_val = 0, cycle_size = "a")
   )
 
   # starting_val is numeric, Date or POSIXt
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
       step_harmonic(
         time_var,
         frequency = 1,
@@ -48,7 +48,7 @@ test_that("harmonic error", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
       step_harmonic(
         time_var,
         frequency = 1,
@@ -65,14 +65,14 @@ test_that("harmonic multiple variables", {
     time_var_2 = x_second * 2
   )
 
-  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) %>%
+  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) |>
     step_harmonic(
       time_var_1,
       time_var_2,
       frequency = c(5, 10),
       cycle_size = 1
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_equal(rec$time_var_1_sin_1, rec$time_var_2_sin_2)
@@ -85,9 +85,9 @@ test_that("harmonic frequencies", {
     time_var = x_second
   )
 
-  rec <- recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var, frequency = c(1, 1.93, 2), cycle_size = 86400) %>%
-    prep() %>%
+  rec <- recipe(osc ~ time_var, data = harmonic_dat) |>
+    step_harmonic(time_var, frequency = c(1, 1.93, 2), cycle_size = 86400) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_equal(ncol(rec), 7)
@@ -99,9 +99,9 @@ test_that("harmonic phase", {
     time_var = x_second
   )
 
-  rec_1 <- recipe(osc ~ time_var, data = harmonic_dat_1) %>%
-    step_harmonic(time_var, frequency = 1, cycle_size = 86400) %>%
-    prep() %>%
+  rec_1 <- recipe(osc ~ time_var, data = harmonic_dat_1) |>
+    step_harmonic(time_var, frequency = 1, cycle_size = 86400) |>
+    prep() |>
     bake(new_data = NULL)
 
   # different starting point
@@ -109,9 +109,9 @@ test_that("harmonic phase", {
     osc = sin(2 * pi * (x_second + 43200) / 86400),
     time_var = x_second
   )
-  rec_2 <- recipe(osc ~ time_var, data = harmonic_dat_2) %>%
-    step_harmonic(time_var, frequency = 1, cycle_size = 86400) %>%
-    prep() %>%
+  rec_2 <- recipe(osc ~ time_var, data = harmonic_dat_2) |>
+    step_harmonic(time_var, frequency = 1, cycle_size = 86400) |>
+    prep() |>
     bake(new_data = NULL)
   fit_1 <- lm(osc ~ time_var_sin_1 + time_var_cos_1 - 1, rec_1)
   fit_2 <- lm(osc ~ time_var_sin_1 + time_var_cos_1 - 1, rec_2)
@@ -124,14 +124,14 @@ test_that("harmonic phase", {
   )
 
   # set reference (starting_val) at half period
-  rec_3 <- recipe(osc ~ time_var, data = harmonic_dat_2) %>%
+  rec_3 <- recipe(osc ~ time_var, data = harmonic_dat_2) |>
     step_harmonic(
       time_var,
       frequency = 1,
       starting_val = 43200,
       cycle_size = 86400
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     bake(new_data = NULL)
   fit_3 <- lm(osc ~ time_var_sin_1 + time_var_cos_1 - 1, rec_3)
   co_3 <- coefficients(fit_3)
@@ -145,9 +145,9 @@ test_that("harmonic model recovers amplitude", {
     osc = amplitude * sin(2 * pi * x_second / (3600 * 6)),
     time_var = x_second
   )
-  rec <- recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var, frequency = 4, cycle_size = 86400) %>%
-    prep() %>%
+  rec <- recipe(osc ~ time_var, data = harmonic_dat) |>
+    step_harmonic(time_var, frequency = 4, cycle_size = 86400) |>
+    prep() |>
     bake(new_data = NULL)
   fit <- lm(osc ~ time_var_sin_1 + time_var_cos_1 - 1, rec)
   expect_equal(sqrt(sum(coefficients(fit)^2)), amplitude)
@@ -162,14 +162,14 @@ test_that("harmonic datetime, numeric and date columns", {
     time_var_int = x_second
   )
 
-  rec_datetime <- recipe(osc ~ time_var_posixt, data = harmonic_dat) %>%
-    step_harmonic(time_var_posixt, frequency = 4, cycle_size = 86400) %>%
-    prep() %>%
+  rec_datetime <- recipe(osc ~ time_var_posixt, data = harmonic_dat) |>
+    step_harmonic(time_var_posixt, frequency = 4, cycle_size = 86400) |>
+    prep() |>
     bake(new_data = NULL)
 
-  rec_numeric <- recipe(osc ~ time_var_int, data = harmonic_dat) %>%
-    step_harmonic(time_var_int, frequency = 4, cycle_size = 86400) %>%
-    prep() %>%
+  rec_numeric <- recipe(osc ~ time_var_int, data = harmonic_dat) |>
+    step_harmonic(time_var_int, frequency = 4, cycle_size = 86400) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_equal(rec_datetime[[3]], rec_numeric[[3]], ignore_attr = TRUE)
@@ -180,9 +180,9 @@ test_that("harmonic datetime, numeric and date columns", {
     time_var_date = x_date
   )
 
-  rec_date <- recipe(osc ~ time_var_date, data = harmonic_dat) %>%
-    step_harmonic(time_var_date, frequency = 12, cycle_size = 366) %>%
-    prep() %>%
+  rec_date <- recipe(osc ~ time_var_date, data = harmonic_dat) |>
+    step_harmonic(time_var_date, frequency = 12, cycle_size = 366) |>
+    prep() |>
     bake(new_data = NULL)
 
   x_date_sec <- seq(0, 365, 1) * 86400 # one year
@@ -191,9 +191,9 @@ test_that("harmonic datetime, numeric and date columns", {
     time_var_date_s = x_date_sec
   )
 
-  rec_date_s <- recipe(osc ~ time_var_date_s, data = harmonic_dat) %>%
-    step_harmonic(time_var_date_s, frequency = 12, cycle_size = 86400 * 366) %>%
-    prep() %>%
+  rec_date_s <- recipe(osc ~ time_var_date_s, data = harmonic_dat) |>
+    step_harmonic(time_var_date_s, frequency = 12, cycle_size = 86400 * 366) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_equal(rec_date[[3]], rec_date_s[[3]], ignore_attr = TRUE)
@@ -206,14 +206,14 @@ test_that("harmonic NA in term", {
   )
   harmonic_dat[20, "time_var"] <- NA
   harmonic_dat[3, "time_var"] <- NA
-  rec_na <- recipe(osc ~ time_var, data = harmonic_dat) %>%
+  rec_na <- recipe(osc ~ time_var, data = harmonic_dat) |>
     step_harmonic(
       time_var,
       frequency = 4,
       cycle_size = 86400,
       keep_original_cols = TRUE
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_equal(sum(is.na(rec_na)), 2 * 3)
@@ -225,9 +225,9 @@ test_that("harmonic NA in term", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
-      step_harmonic(time_var, frequency = 4, cycle_size = 86400) %>%
-      prep() %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
+      step_harmonic(time_var, frequency = 4, cycle_size = 86400) |>
+      prep() |>
       bake(new_data = NULL)
   )
 })
@@ -239,9 +239,9 @@ test_that("harmonic character in term", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var, data = harmonic_dat) %>%
-      step_harmonic(time_var, frequency = 4, cycle_size = 86400) %>%
-      prep() %>%
+    recipe(osc ~ time_var, data = harmonic_dat) |>
+      step_harmonic(time_var, frequency = 4, cycle_size = 86400) |>
+      prep() |>
       bake(new_data = NULL)
   )
 })
@@ -255,14 +255,14 @@ test_that("harmonic cycle_size length", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
+    recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) |>
       step_harmonic(
         time_var_1,
         time_var_2,
         time_var_3,
         frequency = 4,
         cycle_size = c(86400, 86400)
-      ) %>%
+      ) |>
       prep()
   )
 })
@@ -276,7 +276,7 @@ test_that("harmonic starting_val length", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
+    recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) |>
       step_harmonic(
         time_var_1,
         time_var_2,
@@ -284,7 +284,7 @@ test_that("harmonic starting_val length", {
         frequency = 4,
         starting_val = c(86400, 86400),
         cycle_size = 86400
-      ) %>%
+      ) |>
       prep()
   )
 })
@@ -295,21 +295,21 @@ test_that("harmonic check tidy starting value", {
     time_var = x_second
   )
 
-  tidy_starting <- recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var, frequency = 4, cycle_size = 86400) %>%
-    prep() %>%
+  tidy_starting <- recipe(osc ~ time_var, data = harmonic_dat) |>
+    step_harmonic(time_var, frequency = 4, cycle_size = 86400) |>
+    prep() |>
     tidy(number = 1)
 
   expect_equal(tidy_starting$starting_val[[1]], 0, ignore_attr = TRUE)
 
-  tidy_starting <- recipe(osc ~ time_var, data = harmonic_dat) %>%
+  tidy_starting <- recipe(osc ~ time_var, data = harmonic_dat) |>
     step_harmonic(
       time_var,
       frequency = 4,
       starting_val = 10,
       cycle_size = 86400
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     tidy(number = 1)
 
   expect_equal(tidy_starting$starting_val[[1]], 10, ignore_attr = TRUE)
@@ -320,14 +320,14 @@ test_that("harmonic check tidy starting value", {
     time_var_posixt = x_datetime
   )
 
-  tidy_starting <- recipe(osc ~ time_var_posixt, data = harmonic_dat) %>%
+  tidy_starting <- recipe(osc ~ time_var_posixt, data = harmonic_dat) |>
     step_harmonic(
       time_var_posixt,
       frequency = 4,
       starting_val = as.POSIXct(100, origin = "1970-01-01"),
       cycle_size = 86400
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     tidy(number = 1)
 
   expect_equal(tidy_starting$starting_val[[1]], 100, ignore_attr = TRUE)
@@ -337,7 +337,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_sin_1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_harmonic(mpg, frequency = 3, cycle_size = 2.5)
 
   expect_snapshot(
@@ -348,7 +348,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_harmonic(all_predictors(), cycle_size = 1)
   rec_param <- tunable.step_harmonic(rec$steps[[1]])
   expect_equal(rec_param$name, c("frequency"))
@@ -370,15 +370,15 @@ test_that("bake method errors when needed non-standard role columns are missing"
     time_var_2 = x_second * 2
   )
 
-  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) %>%
+  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) |>
     step_harmonic(
       time_var_1,
       time_var_2,
       frequency = c(5, 10),
       cycle_size = 1
-    ) %>%
-    update_role(time_var_1, time_var_2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+    ) |>
+    update_role(time_var_1, time_var_2, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep()
 
   expect_snapshot(error = TRUE, bake(rec, new_data = harmonic_dat_mult[, 1:2]))
@@ -431,7 +431,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_sin_1", "mpg_cos_1")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_harmonic(
       all_predictors(),
       frequency = 3,
@@ -447,7 +447,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_harmonic(
       all_predictors(),
       frequency = 3,
@@ -465,7 +465,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_harmonic(all_predictors(), frequency = 3, cycle_size = 2.5)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -480,7 +480,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., mtcars) %>%
+  rec <- recipe(mpg ~ ., mtcars) |>
     step_harmonic(hp, frequency = 1 / 11, cycle_size = 1)
 
   expect_snapshot(print(rec))
@@ -489,7 +489,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_harmonic(
       all_predictors(),
       cycle_size = 1,
@@ -504,8 +504,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_harmonic(disp, frequency = 1 / 11, cycle_size = 1) %>%
+  rec <- recipe(~., data) |>
+    step_harmonic(disp, frequency = 1 / 11, cycle_size = 1) |>
     prep()
 
   expect_identical(

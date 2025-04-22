@@ -36,7 +36,7 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' log_trans <- rec %>%
+#' log_trans <- rec |>
 #'   step_log(all_numeric_predictors())
 #'
 #' log_obj <- prep(log_trans, training = examples)
@@ -52,14 +52,14 @@
 #' examples2 <- matrix(rnorm(40, sd = 5), ncol = 2)
 #' examples2 <- as.data.frame(examples2)
 #'
-#' recipe(~ V1 + V2, data = examples2) %>%
-#'   step_log(all_numeric_predictors()) %>%
-#'   prep(training = examples2) %>%
+#' recipe(~ V1 + V2, data = examples2) |>
+#'   step_log(all_numeric_predictors()) |>
+#'   prep(training = examples2) |>
 #'   bake(examples2)
 #'
-#' recipe(~ V1 + V2, data = examples2) %>%
-#'   step_log(all_numeric_predictors(), signed = TRUE) %>%
-#'   prep(training = examples2) %>%
+#' recipe(~ V1 + V2, data = examples2) |>
+#'   step_log(all_numeric_predictors(), signed = TRUE) |>
+#'   prep(training = examples2) |>
 #'   bake(examples2)
 step_log <-
   function(

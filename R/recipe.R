@@ -57,8 +57,8 @@
 #' )
 #'
 #' # Now add preprocessing steps to the recipe
-#' sp_signed <- rec %>%
-#'   step_normalize(all_numeric_predictors()) %>%
+#' sp_signed <- rec |>
+#'   step_normalize(all_numeric_predictors()) |>
 #'   step_spatialsign(all_numeric_predictors())
 #' sp_signed
 #'
@@ -68,19 +68,19 @@
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
 #'   data = biomass_tr
 #' )
-#' multi_y <- multi_y %>%
-#'   step_center(all_numeric_predictors()) %>%
+#' multi_y <- multi_y |>
+#'   step_center(all_numeric_predictors()) |>
 #'   step_scale(all_numeric_predictors())
 #'
 #' # example using `update_role` instead of formula:
 #' # best choice for high-dimensional data
 #'
-#' rec <- recipe(biomass_tr) %>%
+#' rec <- recipe(biomass_tr) |>
 #'   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
 #'     new_role = "predictor"
-#'   ) %>%
-#'   update_role(HHV, new_role = "outcome") %>%
-#'   update_role(sample, new_role = "id variable") %>%
+#'   ) |>
+#'   update_role(HHV, new_role = "outcome") |>
+#'   update_role(sample, new_role = "id variable") |>
 #'   update_role(dataset, new_role = "splitting indicator")
 #' rec
 #' @export
@@ -403,10 +403,10 @@ inline_check <- function(x, data, call) {
 #'   recipe(
 #'     Sale_Price ~ Longitude + Latitude + Neighborhood + Year_Built + Central_Air,
 #'     data = ames
-#'   ) %>%
-#'   step_other(Neighborhood, threshold = 0.05) %>%
-#'   step_dummy(all_nominal()) %>%
-#'   step_interact(~ starts_with("Central_Air"):Year_Built) %>%
+#'   ) |>
+#'   step_other(Neighborhood, threshold = 0.05) |>
+#'   step_dummy(all_nominal()) |>
+#'   step_interact(~ starts_with("Central_Air"):Year_Built) |>
 #'   step_ns(Longitude, Latitude, deg_free = 5)
 #'
 #' prep(ames_rec, verbose = TRUE)
@@ -472,13 +472,13 @@ prep.recipe <-
       all(x$var_info$source == "original") &
         inherits(x$var_info$type, "character")
     ) {
-      x$var_info <- x$var_info %>%
-        dplyr::select(-type) %>%
+      x$var_info <- x$var_info |>
+        dplyr::select(-type) |>
         dplyr::left_join(
           get_types(training),
           by = "variable",
           multiple = "all"
-        ) %>%
+        ) |>
         dplyr::select(variable, type, role, source)
     }
 
@@ -486,13 +486,13 @@ prep.recipe <-
       all(x$term_info$source == "original") &
         inherits(x$term_info$type, "character")
     ) {
-      x$term_info <- x$term_info %>%
-        dplyr::select(-type) %>%
+      x$term_info <- x$term_info |>
+        dplyr::select(-type) |>
         dplyr::left_join(
           get_types(training),
           by = "variable",
           multiple = "all"
-        ) %>%
+        ) |>
         dplyr::select(variable, type, role, source)
     }
 
@@ -502,7 +502,7 @@ prep.recipe <-
 
     fit_times <- list()
 
-    running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
+    running_info <- x$term_info |> mutate(number = 0, skip = FALSE)
 
     get_needs_tuning <- function(x) {
       res <- map_lgl(x, is_tune)
@@ -635,9 +635,9 @@ prep.recipe <-
     # created along the way. `number` will be the last step where
     # that variable was available.
     x$last_term_info <-
-      running_info %>%
-      group_by(variable) %>%
-      arrange(desc(number)) %>%
+      running_info |>
+      group_by(variable) |>
+      arrange(desc(number)) |>
       summarise(
         type = list(dplyr::first(type)),
         role = list(unique(unlist(role))),
@@ -701,12 +701,12 @@ prep.recipe <-
 #' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
 #'
 #' ames_rec <-
-#'   recipe(Sale_Price ~ ., data = ames[-(1:6), ]) %>%
-#'   step_other(Neighborhood, threshold = 0.05) %>%
-#'   step_dummy(all_nominal()) %>%
-#'   step_interact(~ starts_with("Central_Air"):Year_Built) %>%
-#'   step_ns(Longitude, Latitude, deg_free = 2) %>%
-#'   step_zv(all_predictors()) %>%
+#'   recipe(Sale_Price ~ ., data = ames[-(1:6), ]) |>
+#'   step_other(Neighborhood, threshold = 0.05) |>
+#'   step_dummy(all_nominal()) |>
+#'   step_interact(~ starts_with("Central_Air"):Year_Built) |>
+#'   step_ns(Longitude, Latitude, deg_free = 2) |>
+#'   step_zv(all_predictors()) |>
 #'   prep()
 #'
 #' # return the training set (already embedded in ames_rec)
@@ -975,7 +975,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 bake_req_tibble <- function(x) {
   req <- compute_bake_role_requirements(x)
   req <-
-    tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
+    tibble::tibble(role = names(req), required_to_bake = unname(req)) |>
     dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
   req
 }

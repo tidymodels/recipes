@@ -1,7 +1,7 @@
 # error checks
 
     Code
-      rec %>% step_window(y1, size = 6) %>% prep()
+      prep(step_window(rec, y1, size = 6))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -10,7 +10,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = NA) %>% prep()
+      prep(step_window(rec, y1, size = NA))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -19,7 +19,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = NULL) %>% prep()
+      prep(step_window(rec, y1, size = NULL))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -28,7 +28,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, statistic = "average")
+      step_window(rec, y1, statistic = "average")
     Condition
       Error in `step_window()`:
       ! `statistic` must be one of "mean", "median", "sd", "var", "sum", "prod", "min", or "max", not "average".
@@ -36,7 +36,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = 1) %>% prep()
+      prep(step_window(rec, y1, size = 1))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -45,7 +45,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = 2) %>% prep()
+      prep(step_window(rec, y1, size = 2))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -54,7 +54,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = -1) %>% prep()
+      prep(step_window(rec, y1, size = -1))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -63,7 +63,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = 3 + .Machine$double.eps) %>% prep()
+      prep(step_window(rec, y1, size = 3 + .Machine$double.eps))
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -81,7 +81,7 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = 3 + 2 * .Machine$double.eps) %>% prep()
+      prep(step_window(rec, y1, size = 3 + 2 * .Machine$double.eps))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -90,7 +90,7 @@
 ---
 
     Code
-      prep(rec %>% step_window(fac), training = sim_dat)
+      prep(step_window(rec, fac), training = sim_dat)
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -100,7 +100,7 @@
 ---
 
     Code
-      prep(rec %>% step_window(y1, size = 1000L), training = sim_dat) %>% prep()
+      prep(prep(step_window(rec, y1, size = 1000L), training = sim_dat))
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
@@ -128,7 +128,7 @@
 # error on too large window size
 
     Code
-      recipe(~., data = mtcars) %>% step_window(mpg, size = 999) %>% prep()
+      prep(step_window(recipe(~., data = mtcars), mpg, size = 999))
     Condition
       Error in `step_window()`:
       Caused by error in `roller()`:

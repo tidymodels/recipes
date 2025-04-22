@@ -42,8 +42,8 @@
 #'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'   data = biomass_tr
 #' )
-#' rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) %>%
-#'   step_intercept(value = 2) %>%
+#' rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) |>
+#'   step_intercept(value = 2) |>
 #'   step_scale(carbon)
 #'
 #' rec_obj <- prep(rec_trans, training = biomass_tr)

@@ -52,7 +52,7 @@
 #'   data = biomass_tr
 #' )
 #'
-#' impute_rec <- rec %>%
+#' impute_rec <- rec |>
 #'   step_impute_lower(carbon, hydrogen)
 #'
 #' tidy(impute_rec, number = 1)

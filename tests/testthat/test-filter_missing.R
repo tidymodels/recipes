@@ -13,7 +13,7 @@ dat <- data.frame(
 
 test_that("high filter", {
   rec <- recipe(~., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_filter_missing(all_predictors(), threshold = .2)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -25,7 +25,7 @@ test_that("high filter", {
 
 test_that("low filter", {
   rec <- recipe(~., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_filter_missing(all_predictors(), threshold = 0.8)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -35,7 +35,7 @@ test_that("low filter", {
 
 test_that("Remove all columns with missing data", {
   rec <- recipe(~., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_filter_missing(all_predictors(), threshold = 0)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -47,7 +47,7 @@ test_that("Remove all columns with missing data", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_filter_missing(all_predictors())
   rec_param <- tunable.step_filter_missing(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -61,11 +61,11 @@ test_that("tunable", {
 })
 
 test_that("case weights", {
-  dat_cw <- dat %>%
+  dat_cw <- dat |>
     mutate(wts = frequency_weights(rep(c(1, 0), c(20, 80))))
 
   rec <- recipe(~., data = dat_cw)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_filter_missing(all_predictors(), threshold = .2)
 
   filtering_trained <- prep(filtering)
@@ -78,11 +78,11 @@ test_that("case weights", {
 
   # ----------------------------------------------------------------------------
 
-  dat_cw <- dat %>%
+  dat_cw <- dat |>
     mutate(wts = importance_weights(rep(c(1, 0), c(20, 80))))
 
   rec <- recipe(~., data = dat_cw)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_filter_missing(all_predictors(), threshold = .2)
 
   filtering_trained <- prep(filtering)
@@ -97,7 +97,7 @@ test_that("case weights", {
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
-  rec <- recipe(~ am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) |>
     step_scale(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -155,7 +155,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_filter_missing(all_predictors())
 
   expect_snapshot(print(rec))
@@ -164,7 +164,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_filter_missing(
       all_predictors(),
       threshold = hardhat::tune()
@@ -178,8 +178,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = dat) %>%
-      step_filter_missing(all_predictors(), threshold = -.2) %>%
+    recipe(~., data = dat) |>
+      step_filter_missing(all_predictors(), threshold = -.2) |>
       prep(),
     error = TRUE
   )
@@ -187,8 +187,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_filter_missing(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_filter_missing(all_predictors()) |>
     prep()
 
   expect_identical(

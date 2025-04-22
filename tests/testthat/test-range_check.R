@@ -32,24 +32,24 @@ test_that("core function - workings", {
 test_that("in recipe", {
   train <- tibble(x = c(0, 100), y = c(0, 50))
   test <- tibble(x = c(-10, 110), y = c(-10, 60))
-  rec1 <- recipe(train) %>%
-    check_range(x, y, slack_prop = 0.2) %>%
+  rec1 <- recipe(train) |>
+    check_range(x, y, slack_prop = 0.2) |>
     prep()
   expect_no_warning(bake(rec1, test))
   expect_no_error(bake(rec1, test))
 
-  rec2 <- recipe(train) %>%
-    check_range(x, y) %>%
+  rec2 <- recipe(train) |>
+    check_range(x, y) |>
     prep()
   expect_snapshot(error = TRUE, bake(rec2, test))
 
-  rec3 <- recipe(train) %>%
-    check_range(x, y, warn = TRUE) %>%
+  rec3 <- recipe(train) |>
+    check_range(x, y, warn = TRUE) |>
     prep()
   expect_snapshot(bake(rec3, test))
 
-  rec4 <- recipe(train) %>%
-    check_range(y, slack_prop = c(0.2, 0.1)) %>%
+  rec4 <- recipe(train) |>
+    check_range(y, slack_prop = c(0.2, 0.1)) |>
     prep()
   expect_snapshot(error = TRUE, bake(rec4, test))
 })
@@ -57,9 +57,9 @@ test_that("in recipe", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(mtcars) %>%
-    check_range(disp) %>%
-    update_role(disp, new_role = "potato") %>%
+  rec <- recipe(mtcars) |>
+    check_range(disp) |>
+    update_role(disp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mtcars)
@@ -105,7 +105,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mtcars) %>%
+  rec <- recipe(mtcars) |>
     check_range(drat, cyl, am)
 
   expect_snapshot(print(rec))
@@ -114,8 +114,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    check_range(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    check_range(disp, mpg) |>
     prep()
 
   expect_identical(

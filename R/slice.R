@@ -33,29 +33,29 @@
 #' @family dplyr steps
 #' @export
 #' @examples
-#' rec <- recipe(~., data = iris) %>%
+#' rec <- recipe(~., data = iris) |>
 #'   step_slice(1:3)
 #'
-#' prepped <- prep(rec, training = iris %>% slice(1:75))
+#' prepped <- prep(rec, training = iris |> slice(1:75))
 #' tidy(prepped, number = 1)
 #'
 #' library(dplyr)
 #'
 #' dplyr_train <-
-#'   iris %>%
-#'   as_tibble() %>%
-#'   slice(1:75) %>%
+#'   iris |>
+#'   as_tibble() |>
+#'   slice(1:75) |>
 #'   slice(1:3)
 #'
 #' rec_train <- bake(prepped, new_data = NULL)
 #' all.equal(dplyr_train, rec_train)
 #'
 #' dplyr_test <-
-#'   iris %>%
-#'   as_tibble() %>%
+#'   iris |>
+#'   as_tibble() |>
 #'   slice(76:150)
 #'
-#' rec_test <- bake(prepped, iris %>% slice(76:150))
+#' rec_test <- bake(prepped, iris |> slice(76:150))
 #' all.equal(dplyr_test, rec_test)
 #'
 #' # Embedding the integer expression (or vector) into the
@@ -64,9 +64,9 @@
 #' keep_rows <- 1:6
 #'
 #' qq_rec <-
-#'   recipe(~., data = iris) %>%
+#'   recipe(~., data = iris) |>
 #'   # Embed `keep_rows` in the call using !!!
-#'   step_slice(!!!keep_rows) %>%
+#'   step_slice(!!!keep_rows) |>
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)

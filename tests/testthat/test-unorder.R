@@ -10,7 +10,7 @@ examples <- data.frame(
 rec <- recipe(~ X1 + X2, data = examples)
 
 test_that("correct var", {
-  rec1 <- rec %>% step_unorder(X2)
+  rec1 <- rec |> step_unorder(X2)
 
   rec1_trained <- prep(rec1, training = examples, verbose = FALSE)
   rec1_trans <- bake(rec1_trained, new_data = examples)
@@ -23,18 +23,18 @@ test_that("correct var", {
 })
 
 test_that("wrong vars", {
-  rec2 <- rec %>% step_unorder(X1, X2)
+  rec2 <- rec |> step_unorder(X1, X2)
   expect_snapshot(prep(rec2, training = examples, verbose = FALSE))
-  rec3 <- rec %>% step_unorder(X1)
+  rec3 <- rec |> step_unorder(X1)
   expect_snapshot(prep(rec3, training = examples, verbose = FALSE))
 })
 
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- rec %>%
-    step_unorder(X2) %>%
-    update_role(X2, new_role = "potato") %>%
+  rec1 <- rec |>
+    step_unorder(X2) |>
+    update_role(X2, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec1_trained <- prep(rec1, training = examples, verbose = FALSE)
@@ -83,7 +83,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ X1 + X2, data = examples) %>%
+  rec <- recipe(~ X1 + X2, data = examples) |>
     step_unorder(X2)
 
   expect_snapshot(print(rec))
@@ -94,8 +94,8 @@ test_that("0 and 1 rows data work in bake method", {
   data <- iris
   data$Species <- as.ordered(data$Species)
 
-  rec <- recipe(~., data) %>%
-    step_unorder(Species) %>%
+  rec <- recipe(~., data) |>
+    step_unorder(Species) |>
     prep()
 
   expect_identical(

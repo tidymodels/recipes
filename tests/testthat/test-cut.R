@@ -1,18 +1,18 @@
 test_that("step_cut throws error on non-numerics", {
   x <- tibble(num_var = 1:3, cat_var = c("1", "2", "3"))
-  expect_no_error(recipe(x) %>% step_cut(num_var, breaks = 2) %>% prep())
+  expect_no_error(recipe(x) |> step_cut(num_var, breaks = 2) |> prep())
   expect_snapshot(
     error = TRUE,
-    recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
+    recipe(x) |> step_cut(cat_var, breaks = 2) |> prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., x) %>% step_cut(all_predictors(), breaks = 2) %>% prep()
+    recipe(~., x) |> step_cut(all_predictors(), breaks = 2) |> prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., x) %>%
-      step_cut(num_var, breaks = 2, include_outside_range = 2) %>%
+    recipe(~., x) |>
+      step_cut(num_var, breaks = 2, include_outside_range = 2) |>
       prep()
   )
 })
@@ -98,19 +98,19 @@ test_that("step_cut integration test", {
   tb3 <- tibble(x = c(-1, 6), y = c(1, 1))
 
   expect_equal(
-    recipe(tb) %>%
-      step_cut(x, breaks = 5) %>%
-      prep() %>%
-      bake(tb) %>%
+    recipe(tb) |>
+      step_cut(x, breaks = 5) |>
+      prep() |>
+      bake(tb) |>
       pull(x),
     factor(c("[2,5]", "[2,5]", "(5,7]"), levels = c("[2,5]", "(5,7]"))
   )
 
   expect_equal(
-    recipe(tb) %>%
-      step_cut(y, breaks = c(3, 9)) %>%
-      prep() %>%
-      bake(tb) %>%
+    recipe(tb) |>
+      step_cut(y, breaks = c(3, 9)) |>
+      prep() |>
+      bake(tb) |>
       pull(y),
     factor(
       c("[1,3]", "(3,9]", "(9,12]"),
@@ -130,35 +130,35 @@ test_that("step_cut integration test", {
   )
 
   expect_equal(
-    recipe(tb) %>%
-      step_cut(x, y, breaks = c(4, 6)) %>%
-      prep() %>%
+    recipe(tb) |>
+      step_cut(x, y, breaks = c(4, 6)) |>
+      prep() |>
       bake(tb),
     result
   )
 
   expect_equal(
-    recipe(tb) %>%
-      step_cut(x, breaks = 5, include_outside_range = TRUE) %>%
-      prep() %>%
-      bake(tb2) %>%
+    recipe(tb) |>
+      step_cut(x, breaks = 5, include_outside_range = TRUE) |>
+      prep() |>
+      bake(tb2) |>
       pull(x),
     factor(c("[min,5]", "(5,max]"), levels = c("[min,5]", "(5,max]"))
   )
 
   expect_equal(
-    recipe(tb) %>%
-      step_cut(x, breaks = 5, include_outside_range = TRUE) %>%
-      prep() %>%
-      bake(tb3) %>%
+    recipe(tb) |>
+      step_cut(x, breaks = 5, include_outside_range = TRUE) |>
+      prep() |>
+      bake(tb3) |>
       pull(x),
     factor(c("[min,5]", "(5,max]"), levels = c("[min,5]", "(5,max]"))
   )
 })
 
 test_that("tidy method works", {
-  rec <- recipe(~., data = mtcars) %>%
-    step_cut(disp, hp, breaks = 200) %>%
+  rec <- recipe(~., data = mtcars) |>
+    step_cut(disp, hp, breaks = 200) |>
     prep()
 
   res <- tidy(rec, 1)
@@ -187,8 +187,8 @@ test_that("step_cut() provides informative warning on missing values", {
   mtcars_with_na[1, "mpg"] <- NA
 
   expect_snapshot(
-    recipe(~., data = mtcars_with_na) %>%
-      step_cut(mpg, breaks = 20) %>%
+    recipe(~., data = mtcars_with_na) |>
+      step_cut(mpg, breaks = 20) |>
       prep()
   )
 
@@ -197,8 +197,8 @@ test_that("step_cut() provides informative warning on missing values", {
   mtcars_with_nas[c(1, 3, 5), "mpg"] <- NA
 
   expect_snapshot(
-    recipe(~., data = mtcars_with_nas) %>%
-      step_cut(mpg, breaks = 20) %>%
+    recipe(~., data = mtcars_with_nas) |>
+      step_cut(mpg, breaks = 20) |>
       prep()
   )
 })
@@ -208,8 +208,8 @@ test_that("step_cut() can handle missig missing values in bake() (#1304)", {
   mtcars_with_na[c(1, 10, 20), "mpg"] <- NA
 
   suppressWarnings(
-    rec <- recipe(~., data = mtcars_with_na) %>%
-      step_cut(mpg, breaks = 20) %>%
+    rec <- recipe(~., data = mtcars_with_na) |>
+      step_cut(mpg, breaks = 20) |>
       prep()
   )
 
@@ -225,15 +225,15 @@ test_that("step_cut() can handle missig missing values in bake() (#1304)", {
 test_that("breaks argument are type checked", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_cut(disp, hp, breaks = TRUE) %>%
+    recipe(~., data = mtcars) |>
+      step_cut(disp, hp, breaks = TRUE) |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_cut(disp, hp, breaks = c("100", "200")) %>%
+    recipe(~., data = mtcars) |>
+      step_cut(disp, hp, breaks = c("100", "200")) |>
       prep()
   )
 })
@@ -246,10 +246,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   # The min and max of the variable are used as boundaries
   # if they exceed the breaks
-  prepped <- rec %>%
-    step_cut(x, breaks = 5) %>%
-    update_role(x, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  prepped <- rec |>
+    step_cut(x, breaks = 5) |>
+    update_role(x, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep()
 
   expect_snapshot(error = TRUE, bake(prepped, df[, 2, drop = FALSE]))
@@ -293,7 +293,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., mtcars) %>%
+  rec <- recipe(mpg ~ ., mtcars) |>
     step_cut(disp, breaks = 100)
 
   expect_snapshot(print(rec))
@@ -302,8 +302,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_cut(disp, breaks = 100) %>%
+  rec <- recipe(~., data) |>
+    step_cut(disp, breaks = 100) |>
     prep()
 
   expect_identical(

@@ -61,24 +61,24 @@ Notice that integer variables have roles `"integer"` and `"numeric"`, and the fa
 We can add a step to normalize numeric data:
 
 ```{r dummy_1}
-dummied <- rec %>% step_normalize(all_numeric())
+dummied <- rec |> step_normalize(all_numeric())
 ```
 
 This will capture _any_ variables that are either character integers or doubles: `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm` and `body_mass_g`. However, since `body_mass_g` is our outcome, we might want to keep it as a factor so we can _subtract_ that variable out either by name or by role:
 
 ```{r dummy_2}
-dummied <- rec %>% step_normalize(bill_length_mm, bill_depth_mm, 
+dummied <- rec |> step_normalize(bill_length_mm, bill_depth_mm, 
                                   flipper_length_mm) # or
-dummied <- rec %>% step_normalize(all_numeric(), - body_mass_g) # or
-dummied <- rec %>% step_normalize(all_numeric_predictors()) # recommended
+dummied <- rec |> step_normalize(all_numeric(), - body_mass_g) # or
+dummied <- rec |> step_normalize(all_numeric_predictors()) # recommended
 ```
 
 Whenever possible, it is recommended to use the more specific `*_predictors()` variants to avoid accidentally selecting the outcomes.
 
 ```{r}
-rec %>%
-  step_dummy(sex) %>%
-  prep() %>%
+rec |>
+  step_dummy(sex) |>
+  prep() |>
   juice()
 ```
 

@@ -39,7 +39,7 @@
 #' )
 #'
 #' library(dplyr)
-#' smaller_set <- rec %>%
+#' smaller_set <- rec |>
 #'   step_rm(contains("gen"))
 #'
 #' smaller_set <- prep(smaller_set, training = biomass_tr)

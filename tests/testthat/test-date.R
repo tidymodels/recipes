@@ -8,7 +8,7 @@ examples <- data.frame(
 
 examples$Dan <- as.POSIXct(examples$Dan)
 
-date_rec <- recipe(~ Dan + Stefan, examples) %>%
+date_rec <- recipe(~ Dan + Stefan, examples) |>
   step_date(all_predictors())
 
 feats <- c(
@@ -23,7 +23,7 @@ feats <- c(
 )
 
 test_that("default option", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
     step_date(all_predictors(), features = feats)
 
   date_rec <- prep(date_rec, training = examples)
@@ -70,7 +70,7 @@ test_that("default option", {
 })
 
 test_that("nondefault options", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
     step_date(
       all_predictors(),
       features = c("dow", "month", "mday"),
@@ -95,7 +95,7 @@ test_that("nondefault options", {
 })
 
 test_that("ordinal values", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
 
   date_rec <- prep(date_rec, training = examples)
@@ -117,7 +117,7 @@ test_that("check_name() is used", {
   dat <- examples
   dat$Dan_year <- dat$Dan
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_date(Dan)
 
   expect_snapshot(
@@ -134,8 +134,8 @@ test_that("locale argument have recipe work in different locale", {
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
   Sys.setlocale("LC_TIME", 'fr_FR.UTF8')
 
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors()) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
+    step_date(all_predictors()) |>
     prep()
 
   ref_res <- bake(date_rec, new_data = examples)
@@ -153,16 +153,16 @@ test_that("locale argument works when specified", {
 
   old_locale <- Sys.getlocale("LC_TIME")
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors()) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
+    step_date(all_predictors()) |>
     prep()
 
   ref_res <- bake(date_rec, new_data = examples)
 
   Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
 
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), locale = old_locale) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
+    step_date(all_predictors(), locale = old_locale) |>
     prep()
 
   new_res <- bake(date_rec, new_data = examples)
@@ -173,8 +173,8 @@ test_that("locale argument works when specified", {
 test_that("locale argument works with clock locale", {
   labels_fr <- clock::clock_locale(labels = "fr")$labels
 
-  date_rec <- recipe(~Stefan, examples) %>%
-    step_date(all_predictors(), locale = labels_fr, ordinal = TRUE) %>%
+  date_rec <- recipe(~Stefan, examples) |>
+    step_date(all_predictors(), locale = labels_fr, ordinal = TRUE) |>
     prep()
 
   ref_res <- bake(date_rec, new_data = examples)
@@ -198,8 +198,8 @@ test_that("locale argument works with clock locale", {
 })
 
 test_that("can bake and recipes with no locale", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors()) %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
+    step_date(all_predictors()) |>
     prep()
 
   date_rec$steps[[1]]$locale <- NULL
@@ -212,23 +212,23 @@ test_that("can bake and recipes with no locale", {
 test_that("errors on wrong values of features", {
   expect_snapshot(
     error = TRUE,
-    recipe(~ Dan + Stefan, examples) %>%
-      step_date(all_predictors(), features = "yearly") %>%
+    recipe(~ Dan + Stefan, examples) |>
+      step_date(all_predictors(), features = "yearly") |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ Dan + Stefan, examples) %>%
+    recipe(~ Dan + Stefan, examples) |>
       step_date(
         all_predictors(),
         features = c("daily", "monthly", "yearly")
-      ) %>%
+      ) |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ Dan + Stefan, examples) %>%
-      step_date(all_predictors(), features = c("daily", "month", "yearly")) %>%
+    recipe(~ Dan + Stefan, examples) |>
+      step_date(all_predictors(), features = c("daily", "month", "yearly")) |>
       prep()
   )
 })
@@ -236,9 +236,9 @@ test_that("errors on wrong values of features", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(Dan, features = feats) %>%
-    update_role(Dan, new_role = "potato") %>%
+  date_rec <- recipe(~ Dan + Stefan, examples) |>
+    step_date(Dan, features = feats) |>
+    update_role(Dan, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   date_rec <- prep(date_rec, training = examples)
@@ -295,7 +295,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("Dan_dow", "Dan_month", "Dan_year")
 
-  rec <- recipe(~Dan, examples) %>%
+  rec <- recipe(~Dan, examples) |>
     step_date(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -306,7 +306,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~Dan, examples) %>%
+  rec <- recipe(~Dan, examples) |>
     step_date(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -319,7 +319,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~Dan, examples) %>%
+  rec <- recipe(~Dan, examples) |>
     step_date(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -334,7 +334,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ Dan + Stefan, examples) %>%
+  rec <- recipe(~ Dan + Stefan, examples) |>
     step_date(all_predictors(), features = feats)
 
   expect_snapshot(print(rec))
@@ -343,20 +343,20 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    date_rec <- recipe(~ Dan + Stefan, examples) %>%
-      step_date(all_predictors(), abbr = "nope") %>%
+    date_rec <- recipe(~ Dan + Stefan, examples) |>
+      step_date(all_predictors(), abbr = "nope") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    date_rec <- recipe(~ Dan + Stefan, examples) %>%
-      step_date(all_predictors(), label = "no!") %>%
+    date_rec <- recipe(~ Dan + Stefan, examples) |>
+      step_date(all_predictors(), label = "no!") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    date_rec <- recipe(~ Dan + Stefan, examples) %>%
-      step_date(all_predictors(), ordinal = "never") %>%
+    date_rec <- recipe(~ Dan + Stefan, examples) |>
+      step_date(all_predictors(), ordinal = "never") |>
       prep(),
     error = TRUE
   )
@@ -364,8 +364,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- examples
-  rec <- recipe(~., data) %>%
-    step_date(all_date_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_date(all_date_predictors()) |>
     prep()
 
   expect_identical(

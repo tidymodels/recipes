@@ -7,7 +7,7 @@ ex_dat <- tibble(
 )
 
 test_that("add appropriate column with default settings", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_intercept()
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -19,7 +19,7 @@ test_that("add appropriate column with default settings", {
 })
 
 test_that("adds arbitrary numeric column", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_intercept(name = "(Intercept)", value = 2.5)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -33,21 +33,21 @@ test_that("adds arbitrary numeric column", {
 test_that("deals with bad input", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = ex_dat) %>%
-      step_intercept(value = "Pie") %>%
+    recipe(~., data = ex_dat) |>
+      step_intercept(value = "Pie") |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = ex_dat) %>%
-      step_intercept(name = 4) %>%
+    recipe(~., data = ex_dat) |>
+      step_intercept(name = 4) |>
       prep()
   )
 
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_intercept(all_predictors()) %>%
+    recipe(~., data = ex_dat) |>
+      step_intercept(all_predictors()) |>
       prep()
   )
 })
@@ -56,7 +56,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$intercept <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_intercept()
 
   expect_snapshot(
@@ -92,7 +92,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_intercept()
 
   expect_snapshot(print(rec))
@@ -101,8 +101,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_intercept() %>%
+  rec <- recipe(~., data) |>
+    step_intercept() |>
     prep()
 
   expect_identical(

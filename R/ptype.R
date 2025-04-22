@@ -21,8 +21,8 @@
 #' the right columns with the right types.
 #'
 #' ```r
-#' rec_spec <- recipe(outcome ~ ., data = data_ptype) %>%
-#'   step_normalize(all_numeric_predictors()) %>%
+#' rec_spec <- recipe(outcome ~ ., data = data_ptype) |>
+#'   step_normalize(all_numeric_predictors()) |>
 #'   step_dummy(all_nominal_predictors())
 #'
 #' rec_prep <- prep(rec_spec, training = data_training)
@@ -66,7 +66,7 @@
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")
 #'
-#' rec_spec <- recipe(y ~ ., data = training) %>%
+#' rec_spec <- recipe(y ~ ., data = training) |>
 #'   update_role(x1, new_role = "id")
 #'
 #' # outcomes and case_weights are not required at bake time
@@ -74,8 +74,8 @@
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")
 #'
-#' rec_spec <- recipe(y ~ ., data = training) %>%
-#'   update_role(x1, new_role = "id") %>%
+#' rec_spec <- recipe(y ~ ., data = training) |>
+#'   update_role(x1, new_role = "id") |>
 #'   update_role_requirements("id", bake = FALSE)
 #'
 #' # update_role_requirements() is used to specify that "id" isn't needed

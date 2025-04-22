@@ -1,8 +1,8 @@
 # errors if degree > deg_free (#1170)
 
     Code
-      recipe(~., data = mtcars) %>% step_spline_monotone(mpg, degree = 3, deg_free = 3,
-        complete_set = TRUE) %>% prep()
+      prep(step_spline_monotone(recipe(~., data = mtcars), mpg, degree = 3, deg_free = 3,
+      complete_set = TRUE))
     Condition
       Error in `step_spline_monotone()`:
       Caused by error in `prep()`:
@@ -11,8 +11,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_spline_monotone(mpg, degree = 4, deg_free = 3,
-        complete_set = FALSE) %>% prep()
+      prep(step_spline_monotone(recipe(~., data = mtcars), mpg, degree = 4, deg_free = 3,
+      complete_set = FALSE))
     Condition
       Error in `step_spline_monotone()`:
       Caused by error in `prep()`:
@@ -31,8 +31,8 @@
 # errors with zero variance predictors (#1455)
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(all_numeric_predictors()) %>%
-        prep()
+      prep(step_spline_monotone(recipe(mpg ~ ., data = mtcars),
+      all_numeric_predictors()))
     Condition
       Error in `step_spline_monotone()`:
       Caused by error in `prep()`:
@@ -120,8 +120,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(disp, degree = -1) %>%
-        prep()
+      prep(step_spline_monotone(recipe(mpg ~ ., data = mtcars), disp, degree = -1))
     Condition
       Error in `step_spline_monotone()`:
       Caused by error in `prep()`:
@@ -130,8 +129,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(disp, deg_free = "a") %>%
-        prep()
+      prep(step_spline_monotone(recipe(mpg ~ ., data = mtcars), disp, deg_free = "a"))
     Condition
       Error in `step_spline_monotone()`:
       Caused by error in `prep()`:
@@ -140,8 +138,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(disp, complete_set = 1) %>%
-        prep()
+      prep(step_spline_monotone(recipe(mpg ~ ., data = mtcars), disp, complete_set = 1))
     Condition
       Error in `step_spline_monotone()`:
       Caused by error in `prep()`:

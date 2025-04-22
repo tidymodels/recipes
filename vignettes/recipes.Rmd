@@ -78,7 +78,7 @@ From here, preprocessing steps for some step _X_ can be added sequentially in on
 
 ```{r step_code, eval = FALSE}
 rec_obj <- step_{X}(rec_obj, arguments)    ## or
-rec_obj <- rec_obj %>% step_{X}(arguments)
+rec_obj <- rec_obj |> step_{X}(arguments)
 ```
 
 `step_dummy` and the other functions will always return updated recipes. 
@@ -103,7 +103,7 @@ grep("impute_", ls("package:recipes"), value = TRUE)
 Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors and then removes those that are numeric:
 
 ```{r dummy}
-imputed <- rec_obj %>%
+imputed <- rec_obj |>
   step_impute_knn(all_predictors()) 
 imputed
 ```
@@ -113,7 +113,7 @@ It is important to realize that the _specific_ variables have not been declared 
 Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy()`. To do this, the step selects all non-numeric predictors:
 
 ```{r imputing}
-ind_vars <- imputed %>%
+ind_vars <- imputed |>
   step_dummy(all_nominal_predictors()) 
 ind_vars
 ```
@@ -121,8 +121,8 @@ ind_vars
 At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:
 
 ```{r center_scale}
-standardized <- ind_vars %>%
-  step_center(all_numeric_predictors()) %>%
+standardized <- ind_vars |>
+  step_center(all_numeric_predictors()) |>
   step_scale(all_numeric_predictors()) 
 standardized
 ```
@@ -165,7 +165,7 @@ Another type of operation that can be added to a recipes is a _check_. Checks co
 For example, `check_missing` will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:
 
 ```{r check, eval = FALSE}
-trained_rec <- trained_rec %>%
+trained_rec <- trained_rec |>
   check_missing(contains("Marital"))
 ```
 

@@ -10,7 +10,7 @@
 # if the threshold argument is greather than one then it should be an integer(ish)
 
     Code
-      rec %>% step_other(city, zip, threshold = 3.14) %>% prep()
+      prep(step_other(rec, city, zip, threshold = 3.14))
     Condition
       Error in `step_other()`:
       Caused by error in `prep()`:
@@ -19,7 +19,7 @@
 # bad values of threshold are treated correctly
 
     Code
-      rec %>% step_other(city, zip, threshold = letters) %>% prep()
+      prep(step_other(rec, city, zip, threshold = letters))
     Condition
       Error in `step_other()`:
       Caused by error in `prep()`:

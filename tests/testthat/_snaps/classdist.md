@@ -55,7 +55,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_classdist(disp, class = NULL) %>% prep()
+      prep(step_classdist(recipe(mpg ~ ., data = mtcars), disp, class = NULL))
     Condition
       Error in `step_classdist()`:
       Caused by error in `prep()`:
@@ -151,8 +151,8 @@
 # bad args
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
-      mean_func = 2) %>% prep()
+      prep(step_classdist(recipe(Species ~ ., data = iris), all_predictors(), class = Species,
+      mean_func = 2))
     Condition
       Error in `step_classdist()`:
       Caused by error in `prep()`:
@@ -161,8 +161,8 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
-      cov_func = NULL) %>% prep()
+      prep(step_classdist(recipe(Species ~ ., data = iris), all_predictors(), class = Species,
+      cov_func = NULL))
     Condition
       Error in `step_classdist()`:
       Caused by error in `prep()`:
@@ -171,8 +171,8 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
-      prefix = NULL) %>% prep()
+      prep(step_classdist(recipe(Species ~ ., data = iris), all_predictors(), class = Species,
+      prefix = NULL))
     Condition
       Error in `step_classdist()`:
       Caused by error in `prep()`:
@@ -181,8 +181,8 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
-      pool = NULL) %>% prep()
+      prep(step_classdist(recipe(Species ~ ., data = iris), all_predictors(), class = Species,
+      pool = NULL))
     Condition
       Error in `step_classdist()`:
       Caused by error in `prep()`:

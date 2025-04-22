@@ -7,20 +7,20 @@ skip_if_not_installed("modeldata")
 
 data(biomass, package = "modeldata")
 
-biom_tr <- biomass %>%
-  dplyr::filter(dataset == "Training") %>%
+biom_tr <- biomass |>
+  dplyr::filter(dataset == "Training") |>
   dplyr::select(-dataset, -sample)
-biom_te <- biomass %>%
-  dplyr::filter(dataset == "Testing") %>%
+biom_te <- biomass |>
+  dplyr::filter(dataset == "Testing") |>
   dplyr::select(-dataset, -sample, -HHV)
 
 data(cells, package = "modeldata")
 
-cell_tr <- cells %>%
-  dplyr::filter(case == "Train") %>%
+cell_tr <- cells |>
+  dplyr::filter(case == "Train") |>
   dplyr::select(-case)
-cell_te <- cells %>%
-  dplyr::filter(case == "Test") %>%
+cell_te <- cells |>
+  dplyr::filter(case == "Test") |>
   dplyr::select(-case, -class)
 
 load(test_path("test_pls_new.RData"))
@@ -29,7 +29,7 @@ load(test_path("test_pls_new.RData"))
 
 test_that("PLS, dense loadings", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+  rec <- recipe(HHV ~ ., data = biom_tr) |>
     step_pls(all_predictors(), outcome = HHV, num_comp = 3)
 
   rec <- prep(rec)
@@ -47,7 +47,7 @@ test_that("PLS, dense loadings", {
 
 test_that("PLS, dense loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV + carbon ~ ., data = biom_tr) %>%
+  rec <- recipe(HHV + carbon ~ ., data = biom_tr) |>
     step_pls(all_predictors(), outcome = c("HHV", "carbon"), num_comp = 3)
 
   rec <- prep(rec)
@@ -59,13 +59,13 @@ test_that("PLS, dense loadings, multiple outcomes", {
 
   tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, bm_pls_multi_tr)
-  te_new <- bake(rec, biom_te %>% select(-carbon))
+  te_new <- bake(rec, biom_te |> select(-carbon))
   expect_equal(te_new, bm_pls_multi_te)
 })
 
 test_that("PLS, sparse loadings", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+  rec <- recipe(HHV ~ ., data = biom_tr) |>
     step_pls(
       all_predictors(),
       outcome = HHV,
@@ -88,7 +88,7 @@ test_that("PLS, sparse loadings", {
 
 test_that("PLS, dense loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV + carbon ~ ., data = biom_tr) %>%
+  rec <- recipe(HHV + carbon ~ ., data = biom_tr) |>
     step_pls(
       all_predictors(),
       outcome = c("HHV", "carbon"),
@@ -105,7 +105,7 @@ test_that("PLS, dense loadings, multiple outcomes", {
 
   tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, bm_spls_multi_tr)
-  te_new <- bake(rec, biom_te %>% select(-carbon))
+  te_new <- bake(rec, biom_te |> select(-carbon))
   expect_equal(te_new, bm_spls_multi_te)
 })
 
@@ -113,7 +113,7 @@ test_that("PLS, dense loadings, multiple outcomes", {
 
 test_that("PLS-DA, dense loadings", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(class ~ ., data = cell_tr) %>%
+  rec <- recipe(class ~ ., data = cell_tr) |>
     step_pls(all_predictors(), outcome = class, num_comp = 3)
 
   rec <- prep(rec)
@@ -131,7 +131,7 @@ test_that("PLS-DA, dense loadings", {
 
 test_that("PLS-DA, dense loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(class + case ~ ., data = cells) %>%
+  rec <- recipe(class + case ~ ., data = cells) |>
     step_pls(all_predictors(), outcome = c("class", "case"), num_comp = 3)
 
   expect_snapshot(error = TRUE, prep(rec))
@@ -139,7 +139,7 @@ test_that("PLS-DA, dense loadings, multiple outcomes", {
 
 test_that("PLS-DA, sparse loadings", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(class ~ ., data = cell_tr) %>%
+  rec <- recipe(class ~ ., data = cell_tr) |>
     step_pls(
       all_predictors(),
       outcome = class,
@@ -162,7 +162,7 @@ test_that("PLS-DA, sparse loadings", {
 
 test_that("PLS-DA, sparse loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(class + case ~ ., data = cells) %>%
+  rec <- recipe(class + case ~ ., data = cells) |>
     step_pls(
       all_predictors(),
       outcome = c("class", "case"),
@@ -177,7 +177,7 @@ test_that("PLS-DA, sparse loadings, multiple outcomes", {
 
 test_that("No PLS", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(class ~ ., data = cell_tr) %>%
+  rec <- recipe(class ~ ., data = cell_tr) |>
     step_pls(all_predictors(), outcome = class, num_comp = 0)
 
   rec <- prep(rec)
@@ -197,7 +197,7 @@ test_that("No PLS", {
 
 test_that("tidy method", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+  rec <- recipe(HHV ~ ., data = biom_tr) |>
     step_pls(all_predictors(), outcome = HHV, num_comp = 3, id = "dork")
 
   tidy_pre <- tidy(rec, number = 1)
@@ -290,7 +290,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$PLS1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_pls(mpg, disp, vs, outcome = am)
 
   expect_snapshot(
@@ -304,14 +304,14 @@ test_that("check_name() is used", {
 test_that("Deprecation warning", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
+    recipe(~., data = mtcars) |>
       step_pls(outcome = mpg, preserve = TRUE)
   )
 })
 
 test_that("tunable", {
   rec <-
-    recipe(Species ~ ., data = iris) %>%
+    recipe(Species ~ ., data = iris) |>
     step_pls(all_predictors(), outcome = Species)
   rec_param <- tunable.step_pls(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "predictor_prop"))
@@ -325,13 +325,13 @@ test_that("tunable", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(carb ~ ., data = mtcars) %>%
+  rec <- recipe(carb ~ ., data = mtcars) |>
     step_pls(
       all_predictors(),
       outcome = carb,
       num_comp = 0,
       keep_original_cols = FALSE
-    ) %>%
+    ) |>
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -349,8 +349,8 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    tmp <- recipe(~., data = mtcars) %>%
-      step_pls(all_predictors(), outcome = mpg) %>%
+    tmp <- recipe(~., data = mtcars) |>
+      step_pls(all_predictors(), outcome = mpg) |>
       prep()
   )
 })
@@ -359,8 +359,8 @@ test_that("error on no outcome", {
   skip_if_not_installed("mixOmics")
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_pls(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_pls(all_predictors()) |>
       prep()
   )
 })
@@ -369,8 +369,8 @@ test_that("check_options() is used", {
   skip_if_not_installed("mixOmics")
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_pls(disp, outcome = mpg, options = TRUE) %>%
+    recipe(~., data = mtcars) |>
+      step_pls(disp, outcome = mpg, options = TRUE) |>
       prep()
   )
 })
@@ -380,8 +380,8 @@ test_that("recipes_argument_select() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_pls(disp, outcome = NULL) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_pls(disp, outcome = NULL) |>
       prep()
   )
 })
@@ -389,8 +389,8 @@ test_that("recipes_argument_select() is used", {
 test_that("addition of recipes_argument_select() is backwards compatible", {
   skip_if_not_installed("mixOmics")
 
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_pls(all_predictors(), outcome = Species) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
+    step_pls(all_predictors(), outcome = Species) |>
     prep()
 
   exp <- bake(rec, iris)
@@ -402,8 +402,8 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  rec_old <- recipe(Species ~ ., data = iris) %>%
-    step_pls(all_predictors(), outcome = "Species") %>%
+  rec_old <- recipe(Species ~ ., data = iris) |>
+    step_pls(all_predictors(), outcome = "Species") |>
     prep()
 
   expect_identical(
@@ -416,9 +416,9 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(carbon, outcome = HHV, num_comp = 3) %>%
-    update_role(carbon, new_role = "potato") %>%
+  rec <- recipe(HHV ~ ., data = biom_tr) |>
+    step_pls(carbon, outcome = HHV, num_comp = 3) |>
+    update_role(carbon, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec <- prep(rec)
@@ -472,7 +472,7 @@ test_that("keep_original_cols works", {
   skip_if_not_installed("mixOmics")
   new_names <- c("vs", "PLS1")
 
-  rec <- recipe(vs ~ mpg, mtcars) %>%
+  rec <- recipe(vs ~ mpg, mtcars) |>
     step_pls(all_predictors(), outcome = vs, keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -483,7 +483,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(vs ~ mpg, mtcars) %>%
+  rec <- recipe(vs ~ mpg, mtcars) |>
     step_pls(all_predictors(), outcome = vs, keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -497,7 +497,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(vs ~ mpg, mtcars) %>%
+  rec <- recipe(vs ~ mpg, mtcars) |>
     step_pls(all_predictors(), outcome = vs)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -513,7 +513,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 
 test_that("printing", {
   skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+  rec <- recipe(HHV ~ ., data = biom_tr) |>
     step_pls(all_predictors(), outcome = HHV, num_comp = 3)
 
   expect_snapshot(print(rec))
@@ -522,7 +522,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
     step_pls(
       all_predictors(),
       outcome = mpg,
@@ -540,20 +540,20 @@ test_that("bad args", {
   skip_if_not_installed("mixOmics")
 
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_pls(-mpg, outcome = mpg, num_comp = -1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_pls(-mpg, outcome = mpg, num_comp = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_pls(-mpg, outcome = mpg, prefix = 1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_pls(-mpg, outcome = mpg, prefix = 1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_pls(-mpg, outcome = mpg, predictor_prop = -1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_pls(-mpg, outcome = mpg, predictor_prop = -1) |>
       prep(),
     error = TRUE
   )
@@ -563,8 +563,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("mixOmics")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_pls(all_predictors(), outcome = mpg) %>%
+  rec <- recipe(~., data) |>
+    step_pls(all_predictors(), outcome = mpg) |>
     prep()
 
   expect_identical(

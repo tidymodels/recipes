@@ -102,8 +102,7 @@
 # tunable arguments at prep-time
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_ns(all_predictors(), deg_free = .tune()) %>%
-        prep()
+      prep(step_ns(recipe(Species ~ ., data = iris), all_predictors(), deg_free = .tune()))
     Condition
       Error in `prep()`:
       x You cannot `prep()` a tunable recipe.
@@ -113,9 +112,9 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_pca(all_predictors(), threshold = .tune()) %>%
-        step_kpca(all_predictors(), num_comp = .tune()) %>% step_bs(all_predictors(),
-      deg_free = .tune()) %>% prep()
+      prep(step_bs(step_kpca(step_pca(recipe(~., data = mtcars), all_predictors(),
+      threshold = .tune()), all_predictors(), num_comp = .tune()), all_predictors(),
+      deg_free = .tune()))
     Condition
       Error in `prep()`:
       x You cannot `prep()` a tunable recipe.
@@ -127,8 +126,8 @@
 # logging
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_ns(disp, deg_free = 2, id = "splines!") %>%
-        prep(log_changes = TRUE)
+      prep(step_ns(recipe(mpg ~ ., data = mtcars), disp, deg_free = 2, id = "splines!"),
+      log_changes = TRUE)
     Output
       step_ns (splines!): 
        new (2): disp_ns_1, disp_ns_2
@@ -207,7 +206,7 @@
 # steps give errors when arguments are misspelled
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pca(vs, am, gear, number = 2) %>% prep()
+      prep(step_pca(recipe(mpg ~ ., data = mtcars), vs, am, gear, number = 2))
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:
@@ -216,8 +215,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_normalize(vs, AM = am, GEAR = gear) %>%
-        prep()
+      prep(step_normalize(recipe(mpg ~ ., data = mtcars), vs, AM = am, GEAR = gear))
     Condition
       Error in `step_normalize()`:
       Caused by error in `prep()`:
@@ -242,7 +240,7 @@
 # step constructor
 
     Code
-      recipe(~., mtcars) %>% step_normalize(trained = "yes")
+      step_normalize(recipe(~., mtcars), trained = "yes")
     Condition
       Error in `step_normalize()`:
       ! `trained` must be `TRUE` or `FALSE`, not the string "yes".
@@ -250,7 +248,7 @@
 ---
 
     Code
-      recipe(~., mtcars) %>% step_normalize(id = TRUE)
+      step_normalize(recipe(~., mtcars), id = TRUE)
     Condition
       Error in `step_normalize()`:
       ! `id` must be a single string, not `TRUE`.
@@ -258,7 +256,7 @@
 ---
 
     Code
-      recipe(~., mtcars) %>% step_normalize(skip = "you betcha")
+      step_normalize(recipe(~., mtcars), skip = "you betcha")
     Condition
       Error in `step_normalize()`:
       ! `skip` must be `TRUE` or `FALSE`, not the string "you betcha".
@@ -266,7 +264,7 @@
 ---
 
     Code
-      recipe(~., mtcars) %>% step_normalize(role = 13)
+      step_normalize(recipe(~., mtcars), role = 13)
     Condition
       Error in `step_normalize()`:
       ! `x$role` must be a single string or `NA`, not the number 13.
@@ -274,7 +272,7 @@
 ---
 
     Code
-      recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0)
+      step_pca(recipe(~., mtcars), all_predictors(), keep_original_cols = 0)
     Condition
       Error in `step_pca()`:
       ! `keep_original_cols` must be `TRUE` or `FALSE`, not the number 0.
@@ -298,7 +296,7 @@
 # bake() error on wrong composition
 
     Code
-      recipe(~., data = mtcars) %>% prep() %>% bake(mtcars, composition = "wrong")
+      bake(prep(recipe(~., data = mtcars)), mtcars, composition = "wrong")
     Condition
       Error in `bake()`:
       x `composition` cannot be "wrong".
@@ -307,7 +305,7 @@
 # juice() error on wrong composition
 
     Code
-      recipe(~., data = mtcars) %>% prep() %>% juice(composition = "wrong")
+      juice(prep(recipe(~., data = mtcars)), composition = "wrong")
     Condition
       Error in `juice()`:
       x `composition` cannot be "wrong".
@@ -316,7 +314,7 @@
 # juice() error if prep(retain = FALSE)
 
     Code
-      recipe(~., data = mtcars) %>% prep(retain = FALSE) %>% juice()
+      juice(prep(recipe(~., data = mtcars), retain = FALSE))
     Condition
       Error in `juice()`:
       ! Use `retain = TRUE` in `prep()` to be able to extract the training set.

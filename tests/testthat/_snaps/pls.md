@@ -29,7 +29,7 @@
 # Deprecation warning
 
     Code
-      recipe(~., data = mtcars) %>% step_pls(outcome = mpg, preserve = TRUE)
+      step_pls(recipe(~., data = mtcars), outcome = mpg, preserve = TRUE)
     Condition
       Error:
       ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
@@ -38,8 +38,7 @@
 # rethrows error correctly from implementation
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = mpg) %>%
-        prep()
+      tmp <- prep(step_pls(recipe(~., data = mtcars), all_predictors(), outcome = mpg))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -50,7 +49,7 @@
 # error on no outcome
 
     Code
-      recipe(~., data = mtcars) %>% step_pls(all_predictors()) %>% prep()
+      prep(step_pls(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -59,8 +58,7 @@
 # check_options() is used
 
     Code
-      recipe(~., data = mtcars) %>% step_pls(disp, outcome = mpg, options = TRUE) %>%
-        prep()
+      prep(step_pls(recipe(~., data = mtcars), disp, outcome = mpg, options = TRUE))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -69,7 +67,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(disp, outcome = NULL) %>% prep()
+      prep(step_pls(recipe(mpg ~ ., data = mtcars), disp, outcome = NULL))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -165,8 +163,8 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = mpg, num_comp = -1) %>%
-        prep()
+      prep(step_pls(recipe(mpg ~ ., data = mtcars), -mpg, outcome = mpg, num_comp = -
+      1))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -175,8 +173,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = mpg, prefix = 1) %>%
-        prep()
+      prep(step_pls(recipe(mpg ~ ., data = mtcars), -mpg, outcome = mpg, prefix = 1))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -185,8 +182,8 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = mpg,
-        predictor_prop = -1) %>% prep()
+      prep(step_pls(recipe(mpg ~ ., data = mtcars), -mpg, outcome = mpg,
+      predictor_prop = -1))
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:

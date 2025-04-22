@@ -1,7 +1,7 @@
 # bad args
 
     Code
-      recipe(~., data = iris) %>% step_novel(all_predictors()) %>% prep(iris)
+      prep(step_novel(recipe(~., data = iris), all_predictors()), iris)
     Condition
       Error in `step_novel()`:
       Caused by error in `prep()`:
@@ -11,7 +11,7 @@
 ---
 
     Code
-      recipe(~., data = tr_bad) %>% step_novel(all_predictors()) %>% prep(tr_bad)
+      prep(step_novel(recipe(~., data = tr_bad), all_predictors()), tr_bad)
     Condition
       Error in `step_novel()`:
       Caused by error in `prep()`:
@@ -20,7 +20,7 @@
 ---
 
     Code
-      rec %>% step_novel(all_predictors(), new_level = letters) %>% prep()
+      prep(step_novel(rec, all_predictors(), new_level = letters))
     Condition
       Error in `step_novel()`:
       Caused by error in `prep()`:

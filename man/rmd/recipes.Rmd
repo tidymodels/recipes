@@ -31,8 +31,8 @@ recipe(data, vars = vars, roles = roles)
 Lastly you can use `update_role()`, `add_role()`, and `remove_role()`. These functions will alter, add, or eliminate roles from the selections. These can be used in combination with the above ways, or by themselves since `recipe(data)` will consume all the data as undeclared roles. Note that `update_role()`, `add_role()`, and `remove_role()` are applied before steps and checks, regardless of where they are in the pipeline.
 
 ```r
-recipe(data) %>%
-  update_role(class, new_role = "outcome") %>%
+recipe(data) |>
+  update_role(class, new_role = "outcome") |>
   update_role(starts_with("x"), new_role = "predictor")
 ```
 
@@ -65,8 +65,8 @@ library(parsnip)
 data(biomass, package = "modeldata")
 
 # split data
-biomass_tr <- biomass %>% filter(dataset == "Training")
-biomass_te <- biomass %>% filter(dataset == "Testing")
+biomass_tr <- biomass |> filter(dataset == "Training")
+biomass_te <- biomass |> filter(dataset == "Testing")
 
 # With only predictors and outcomes, use a formula:
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
@@ -74,8 +74,8 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 
 # Now add preprocessing steps to the recipe:
 sp_signed <- 
-  rec %>%
-  step_normalize(all_numeric_predictors()) %>%
+  rec |>
+  step_normalize(all_numeric_predictors()) |>
   step_spatialsign(all_numeric_predictors())
 sp_signed
 ```
@@ -86,8 +86,8 @@ We can create a `parsnip` model, and then build a workflow with the model and re
 linear_mod <- linear_reg()
 
 linear_sp_sign_wflow <- 
-  workflow() %>% 
-  add_model(linear_mod) %>% 
+  workflow() |> 
+  add_model(linear_mod) |> 
   add_recipe(sp_signed)
 
 linear_sp_sign_wflow
@@ -116,8 +116,8 @@ As an example of using PCA (perhaps to produce a plot):
 ```{r}
 # Define the recipe
 pca_rec <- 
-  rec %>%
-  step_normalize(all_numeric_predictors()) %>%
+  rec |>
+  step_normalize(all_numeric_predictors()) |>
   step_pca(all_numeric_predictors())
 ```
 

@@ -1,8 +1,8 @@
 # errors if degree > deg_free (#1170)
 
     Code
-      recipe(~., data = mtcars) %>% step_spline_b(mpg, degree = 3, deg_free = 3,
-        complete_set = TRUE) %>% prep()
+      prep(step_spline_b(recipe(~., data = mtcars), mpg, degree = 3, deg_free = 3,
+      complete_set = TRUE))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
@@ -11,8 +11,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_spline_b(mpg, degree = 4, deg_free = 3,
-        complete_set = FALSE) %>% prep()
+      prep(step_spline_b(recipe(~., data = mtcars), mpg, degree = 4, deg_free = 3,
+      complete_set = FALSE))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
@@ -31,8 +31,7 @@
 # errors with zero variance predictors (#1455)
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(all_numeric_predictors()) %>%
-        prep()
+      prep(step_spline_b(recipe(mpg ~ ., data = mtcars), all_numeric_predictors()))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
@@ -42,7 +41,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_spline_b(mpg, options = TRUE) %>% prep()
+      prep(step_spline_b(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
@@ -129,7 +128,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(disp, degree = -1) %>% prep()
+      prep(step_spline_b(recipe(mpg ~ ., data = mtcars), disp, degree = -1))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
@@ -138,7 +137,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(disp, deg_free = "a") %>% prep()
+      prep(step_spline_b(recipe(mpg ~ ., data = mtcars), disp, deg_free = "a"))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
@@ -147,8 +146,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(disp, complete_set = 1) %>%
-        prep()
+      prep(step_spline_b(recipe(mpg ~ ., data = mtcars), disp, complete_set = 1))
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:

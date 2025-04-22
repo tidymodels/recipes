@@ -15,7 +15,7 @@
 # bad args
 
     Code
-      recipe(~., data = sacr_tr) %>% step_unknown(sqft) %>% prep()
+      prep(step_unknown(recipe(~., data = sacr_tr), sqft))
     Condition
       Error in `step_unknown()`:
       Caused by error in `prep()`:
@@ -25,8 +25,7 @@
 ---
 
     Code
-      recipe(~., data = sacr_tr) %>% step_unknown(city, new_level = "FAIR_OAKS") %>%
-        prep()
+      prep(step_unknown(recipe(~., data = sacr_tr), city, new_level = "FAIR_OAKS"))
     Condition
       Error in `step_unknown()`:
       Caused by error in `prep()`:
@@ -35,7 +34,7 @@
 ---
 
     Code
-      recipe(~., data = sacr_tr) %>% step_unknown(city, new_level = 2) %>% prep()
+      prep(step_unknown(recipe(~., data = sacr_tr), city, new_level = 2))
     Condition
       Error in `step_unknown()`:
       Caused by error in `prep()`:

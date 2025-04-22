@@ -48,9 +48,9 @@
 #'   day = seq(start, end, by = "day")
 #' )
 #'
-#' recipe(~., data = df) %>%
-#'   step_lag(index, day, lag = 2:3) %>%
-#'   prep(df) %>%
+#' recipe(~., data = df) |>
+#'   step_lag(index, day, lag = 2:3) |>
+#'   prep(df) |>
 #'   bake(df)
 step_lag <-
   function(

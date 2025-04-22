@@ -61,18 +61,18 @@
 #'   NA,         NA,        NA
 #' )
 #'
-#' dummy_multi_choice_rec <- recipe(~., data = languages) %>%
-#'   step_dummy_multi_choice(starts_with("lang")) %>%
+#' dummy_multi_choice_rec <- recipe(~., data = languages) |>
+#'   step_dummy_multi_choice(starts_with("lang")) |>
 #'   prep()
 #'
 #' bake(dummy_multi_choice_rec, new_data = NULL)
 #' tidy(dummy_multi_choice_rec, number = 1)
 #'
-#' dummy_multi_choice_rec2 <- recipe(~., data = languages) %>%
+#' dummy_multi_choice_rec2 <- recipe(~., data = languages) |>
 #'   step_dummy_multi_choice(starts_with("lang"),
 #'     prefix = "lang",
 #'     threshold = 0.2
-#'   ) %>%
+#'   ) |>
 #'   prep()
 #'
 #' bake(dummy_multi_choice_rec2, new_data = NULL)

@@ -9,7 +9,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple logit trans", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_invlogit(x1, id = "")
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -29,9 +29,9 @@ test_that("simple logit trans", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_invlogit(x1) %>%
-    update_role(x1, new_role = "potato") %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_invlogit(x1) |>
+    update_role(x1, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -80,7 +80,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_invlogit(x1)
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
@@ -88,8 +88,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_invlogit(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_invlogit(mpg, disp) |>
     prep()
 
   expect_identical(

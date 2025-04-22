@@ -5,10 +5,10 @@ skip_if_not_installed("modeldata")
 data(Sacramento, package = "modeldata")
 
 set.seed(131)
-Sacramento_rec <- recipe(~., data = Sacramento) %>%
-  step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-  step_center(all_numeric()) %>%
-  step_dummy(all_nominal()) %>%
+Sacramento_rec <- recipe(~., data = Sacramento) |>
+  step_other(all_nominal(), threshold = 0.05, other = "another") |>
+  step_center(all_numeric()) |>
+  step_dummy(all_nominal()) |>
   check_cols(starts_with("beds"))
 
 test_that("untrained", {

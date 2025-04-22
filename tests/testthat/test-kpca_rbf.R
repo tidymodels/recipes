@@ -12,7 +12,7 @@ rec <- recipe(X1 ~ ., data = tr_dat)
 test_that("correct kernel PCA values", {
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>%
+  kpca_rec <- rec |>
     step_kpca_rbf(X2, X3, X4, X5, X6, id = "")
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
@@ -44,8 +44,8 @@ test_that("correct kernel PCA values", {
 })
 
 test_that("No kPCA comps", {
-  pca_extract <- rec %>%
-    step_kpca_rbf(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
+  pca_extract <- rec |>
+    step_kpca_rbf(X2, X3, X4, X5, X6, num_comp = 0, id = "") |>
     prep()
 
   expect_equal(
@@ -65,7 +65,7 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(tr_dat)
   dat$kPC1 <- dat$X1
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_kpca_rbf(X2, X3, X4, X5, X6)
 
   expect_snapshot(
@@ -76,7 +76,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_kpca_rbf(all_predictors())
   rec_param <- tunable.step_kpca_rbf(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "sigma"))
@@ -90,12 +90,12 @@ test_that("tunable", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_kpca_rbf(
       all_predictors(),
       num_comp = 0,
       keep_original_cols = FALSE
-    ) %>%
+    ) |>
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -114,8 +114,8 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_kpca_rbf(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_kpca_rbf(all_predictors()) |>
       prep()
   )
 })
@@ -125,9 +125,9 @@ test_that("rethrows error correctly from implementation", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>%
-    step_kpca_rbf(X2, X3, X4, X5, X6) %>%
-    update_role(X2, X3, X4, X5, X6, new_role = "potato") %>%
+  kpca_rec <- rec |>
+    step_kpca_rbf(X2, X3, X4, X5, X6) |>
+    update_role(X2, X3, X4, X5, X6, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
@@ -176,7 +176,7 @@ test_that("keep_original_cols works", {
   skip_if_not_installed("kernlab")
   new_names <- paste0("kPC", 1:5)
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_kpca_rbf(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -187,7 +187,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_kpca_rbf(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -201,7 +201,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("kernlab")
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_kpca_rbf(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -218,7 +218,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 test_that("printing", {
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- recipe(X1 ~ ., data = tr_dat) %>%
+  kpca_rec <- recipe(X1 ~ ., data = tr_dat) |>
     step_kpca_rbf(X2, X3, X4, X5, X6)
 
   expect_snapshot(print(rec))
@@ -227,7 +227,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_kpca_rbf(
       all_predictors(),
       num_comp = hardhat::tune(),
@@ -244,20 +244,20 @@ test_that("bad args", {
   skip_if_not_installed("kernlab")
 
   expect_snapshot(
-    recipe(~., data = tr_dat) %>%
-      step_kpca_rbf(all_numeric_predictors(), num_comp = -1) %>%
+    recipe(~., data = tr_dat) |>
+      step_kpca_rbf(all_numeric_predictors(), num_comp = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = tr_dat) %>%
-      step_kpca_rbf(all_numeric_predictors(), sigma = 0) %>%
+    recipe(~., data = tr_dat) |>
+      step_kpca_rbf(all_numeric_predictors(), sigma = 0) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = tr_dat) %>%
-      step_kpca_rbf(all_numeric_predictors(), prefix = 1) %>%
+    recipe(~., data = tr_dat) |>
+      step_kpca_rbf(all_numeric_predictors(), prefix = 1) |>
       prep(),
     error = TRUE
   )
@@ -267,8 +267,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("kernlab")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_kpca_rbf(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_kpca_rbf(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

@@ -11,7 +11,7 @@
 # check_options() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_bs(disp, options = TRUE) %>% prep()
+      prep(step_bs(recipe(mpg ~ ., data = mtcars), disp, options = TRUE))
     Condition
       Error in `step_bs()`:
       Caused by error in `prep()`:

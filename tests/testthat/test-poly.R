@@ -12,7 +12,7 @@ rec <- recipe(
 )
 
 test_that("correct basis functions", {
-  with_poly <- rec %>%
+  with_poly <- rec |>
     step_poly(carbon, hydrogen, id = "")
 
   exp_tidy_un <- tibble(
@@ -72,7 +72,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_poly_1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_poly(mpg)
 
   expect_snapshot(
@@ -83,7 +83,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_poly(all_predictors())
   rec_param <- tunable.step_poly(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
@@ -99,9 +99,9 @@ test_that("tunable", {
 test_that("old option argument", {
   expect_snapshot(
     res <-
-      recipe(~., data = iris) %>%
-      step_poly(Sepal.Width, options = list(degree = 3)) %>%
-      prep() %>%
+      recipe(~., data = iris) |>
+      step_poly(Sepal.Width, options = list(degree = 3)) |>
+      prep() |>
       bake(new_data = NULL)
   )
   exp_names <- c(
@@ -122,8 +122,8 @@ test_that("old option argument", {
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_poly(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_poly(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -131,9 +131,9 @@ test_that("check_options() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  with_poly <- rec %>%
-    step_poly(carbon, hydrogen, id = "") %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
+  with_poly <- rec |>
+    step_poly(carbon, hydrogen, id = "") |>
+    update_role(carbon, hydrogen, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   exp_tidy_un <- tibble(
@@ -187,7 +187,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_poly_1", "mpg_poly_2")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_poly(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -198,7 +198,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_poly(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -211,7 +211,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_poly(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -229,7 +229,7 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
-  ) %>%
+  ) |>
     step_poly(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -238,7 +238,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_poly(
       all_predictors(),
       degree = hardhat::tune()
@@ -252,8 +252,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_poly(disp, degree = 0) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_poly(disp, degree = 0) |>
       prep(),
     error = TRUE
   )
@@ -261,8 +261,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_poly(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_poly(disp, mpg) |>
     prep()
 
   expect_identical(

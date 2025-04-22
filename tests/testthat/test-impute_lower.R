@@ -14,7 +14,7 @@ biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 test_that("basic usage", {
-  rec1 <- rec %>%
+  rec1 <- rec |>
     step_impute_lower(carbon, hydrogen, id = "")
 
   untrained <- tibble(
@@ -53,8 +53,8 @@ test_that("basic usage", {
 test_that("bad data", {
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_impute_lower(carbon, hydrogen, has_neg) %>%
+    rec |>
+      step_impute_lower(carbon, hydrogen, has_neg) |>
       prep()
   )
 })
@@ -62,9 +62,9 @@ test_that("bad data", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  imputed <- recipe(HHV ~ carbon + hydrogen, data = biomass) %>%
-    step_impute_lower(carbon) %>%
-    update_role(carbon, new_role = "potato") %>%
+  imputed <- recipe(HHV ~ carbon + hydrogen, data = biomass) |>
+    step_impute_lower(carbon) |>
+    update_role(carbon, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
@@ -113,7 +113,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + has_neg, data = biomass) %>%
+  rec <- recipe(HHV ~ carbon + hydrogen + has_neg, data = biomass) |>
     step_impute_lower(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -122,8 +122,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_impute_lower(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_impute_lower(disp, mpg) |>
     prep()
 
   expect_identical(
