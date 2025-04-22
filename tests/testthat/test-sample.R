@@ -11,59 +11,59 @@ iris_rec <- recipe(~., data = iris2)
 test_that("basic usage", {
   single_sample <-
     iris_rec %>%
-      step_sample(size = 1) %>%
-      prep(training = iris2) %>%
-      bake(new_data = NULL) %>%
-      nrow()
+    step_sample(size = 1) %>%
+    prep(training = iris2) %>%
+    bake(new_data = NULL) %>%
+    nrow()
   expect_equal(single_sample, 1)
 
   full_sample <-
     iris_rec %>%
-      step_sample(size = 0.99999) %>%
-      prep(training = iris2) %>%
-      bake(new_data = NULL) %>%
-      nrow()
+    step_sample(size = 0.99999) %>%
+    prep(training = iris2) %>%
+    bake(new_data = NULL) %>%
+    nrow()
   expect_equal(full_sample, 150)
 
   half_sample <-
     iris_rec %>%
-      step_sample(size = 0.5) %>%
-      prep(training = iris2) %>%
-      bake(new_data = NULL) %>%
-      nrow()
+    step_sample(size = 0.5) %>%
+    prep(training = iris2) %>%
+    bake(new_data = NULL) %>%
+    nrow()
   expect_equal(half_sample, 75)
 
   third_sample <-
     iris_rec %>%
-      step_sample(size = 50) %>%
-      prep(training = iris2) %>%
-      bake(new_data = NULL) %>%
-      nrow()
+    step_sample(size = 50) %>%
+    prep(training = iris2) %>%
+    bake(new_data = NULL) %>%
+    nrow()
   expect_equal(third_sample, 50)
 
   whole_sample <-
     iris_rec %>%
-      step_sample() %>%
-      prep(training = iris2) %>%
-      bake(new_data = NULL) %>%
-      nrow()
+    step_sample() %>%
+    prep(training = iris2) %>%
+    bake(new_data = NULL) %>%
+    nrow()
   expect_equal(whole_sample, 150)
 
   smaller_iris <-
     iris_rec %>%
-      step_sample() %>%
-      prep(training = iris2 %>% slice(1:120))
+    step_sample() %>%
+    prep(training = iris2 %>% slice(1:120))
 
   expect_equal(bake(smaller_iris, new_data = NULL) %>% nrow(), 120)
   expect_equal(bake(smaller_iris, iris2 %>% slice(121:150)) %>% nrow(), 30)
 
   boot_sample <-
     iris_rec %>%
-      step_sample(replace = TRUE) %>%
-      prep(training = iris2) %>%
-      bake(new_data = NULL) %>%
-      pull(row) %>%
-      table()
+    step_sample(replace = TRUE) %>%
+    prep(training = iris2) %>%
+    bake(new_data = NULL) %>%
+    pull(row) %>%
+    table()
   expect_true(max(boot_sample) > 1)
   expect_equal(sum(boot_sample), 150)
 })
@@ -85,8 +85,8 @@ test_that("sample with case weights", {
   set.seed(1234)
   rec <-
     recipe(~., mtcars1) %>%
-      step_sample(size = 10, id = "") %>%
-      prep()
+    step_sample(size = 10, id = "") %>%
+    prep()
 
   set.seed(1234)
   exp_res <- sample_n(
@@ -104,8 +104,8 @@ test_that("sample with case weights", {
   set.seed(1234)
   rec <-
     recipe(~., mtcars1) %>%
-      step_sample(size = 0.5, id = "") %>%
-      prep()
+    step_sample(size = 0.5, id = "") %>%
+    prep()
 
   set.seed(1234)
   exp_res <- sample_frac(
@@ -127,8 +127,8 @@ test_that("sample with case weights", {
 
   rec <-
     recipe(~., mtcars1) %>%
-      step_sample(size = 10, id = "") %>%
-      prep()
+    step_sample(size = 10, id = "") %>%
+    prep()
 
   expect_snapshot(rec)
 })

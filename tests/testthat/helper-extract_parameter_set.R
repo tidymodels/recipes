@@ -11,7 +11,10 @@ check_parameter_set_tibble <- function(x) {
   expect_true(!any(duplicated(x$id)))
 
   expect_equal(class(x$object), "list")
-  obj_check <- purrr::map_lgl(x$object, ~inherits(.x, "param") | all(is.na(.x)))
+  obj_check <- purrr::map_lgl(
+    x$object,
+    ~ inherits(.x, "param") | all(is.na(.x))
+  )
   expect_true(all(obj_check))
 
   invisible(TRUE)

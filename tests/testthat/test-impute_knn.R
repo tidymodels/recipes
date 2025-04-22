@@ -185,7 +185,7 @@ test_that("options", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_impute_knn(all_predictors())
+    step_impute_knn(all_predictors())
   rec_param <- tunable.step_impute_knn(rec$steps[[1]])
   expect_equal(rec_param$name, c("neighbors"))
   expect_true(all(rec_param$source == "recipe"))
@@ -312,9 +312,9 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   imputed <-
     recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) %>%
-      step_impute_knn(carbon, impute_with = c(hydrogen, oxygen)) %>%
-      update_role(hydrogen, new_role = "potato") %>%
-      update_role_requirements(role = "potato", bake = FALSE)
+    step_impute_knn(carbon, impute_with = c(hydrogen, oxygen)) %>%
+    update_role(hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
 

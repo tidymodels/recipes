@@ -236,7 +236,7 @@ print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Collapsing factor levels for "
     if (x$trained) {
-      columns <- map_lgl(x$objects, ~.x$collapse)
+      columns <- map_lgl(x$objects, ~ .x$collapse)
       columns <- names(columns)[columns]
     } else {
       columns <- names(x$objects)

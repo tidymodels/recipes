@@ -156,7 +156,7 @@ test_that("tunable", {
 
   rec <-
     recipe(~., data = iris) %>%
-      step_spline_monotone(all_predictors())
+    step_spline_monotone(all_predictors())
   rec_param <- tunable.step_spline_monotone(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free", "degree"))
   expect_true(all(rec_param$source == "recipe"))

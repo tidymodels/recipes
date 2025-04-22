@@ -88,7 +88,7 @@ test_that("mssing values in zero-variance screen", {
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
-  rec <- recipe(~am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) %>%
     step_zv(all_predictors())
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)

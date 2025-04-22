@@ -10,23 +10,23 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-      step_slice(1:5)
+    step_slice(1:5)
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      slice(1:5)
+    as_tibble() %>%
+    slice(1:75) %>%
+    slice(1:5)
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-      as_tibble() %>%
-      slice(76:150)
+    as_tibble() %>%
+    slice(76:150)
   dplyr_test <- dplyr_test[, names(rec_train)]
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
@@ -35,24 +35,24 @@ test_that("basic usage", {
 test_that("skip = FALSE", {
   rec <-
     iris_rec %>%
-      step_slice(1:5, skip = FALSE)
+    step_slice(1:5, skip = FALSE)
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      slice(1:5)
+    as_tibble() %>%
+    slice(1:75) %>%
+    slice(1:5)
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-      as_tibble() %>%
-      slice(76:150) %>%
-      slice(1:5)
+    as_tibble() %>%
+    slice(76:150) %>%
+    slice(1:5)
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -61,15 +61,15 @@ test_that("quasiquotation", {
   values <- 1:5
   rec_1 <-
     iris_rec %>%
-      step_slice(values)
+    step_slice(values)
 
   prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      slice(values)
+    as_tibble() %>%
+    slice(1:75) %>%
+    slice(values)
 
   rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
@@ -77,7 +77,7 @@ test_that("quasiquotation", {
   expect_no_error(
     rec_2 <-
       iris_rec %>%
-        step_slice(!!values)
+      step_slice(!!values)
   )
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))

@@ -63,8 +63,8 @@ test_that("change only 1 role of variable with multiple roles", {
   rec <- recipe(x = biomass)
   rec <-
     rec %>%
-      update_role(sample, new_role = "role 1") %>%
-      add_role(sample, new_role = "role 2")
+    update_role(sample, new_role = "role 1") %>%
+    add_role(sample, new_role = "role 2")
 
   orig_roles <- rec
 
@@ -570,8 +570,8 @@ test_that("role information from summary()", {
 
   req_roles <-
     rec_roles %>%
-      update_role_requirements("important", bake = FALSE) %>%
-      prep()
+    update_role_requirements("important", bake = FALSE) %>%
+    prep()
 
   expect_snapshot(summary(rec_roles, original = TRUE))
   expect_snapshot(summary(req_roles, original = TRUE))
@@ -581,16 +581,16 @@ test_that("role information from summary()", {
 
   na_rec <-
     mtcars %>%
-      recipe() %>%
-      update_role(mpg, new_role = "outcome") %>%
-      update_role(disp, wt, new_role = "predictor") %>%
-      update_role(carb, new_role = "other") %>%
-      prep()
+    recipe() %>%
+    update_role(mpg, new_role = "outcome") %>%
+    update_role(disp, wt, new_role = "predictor") %>%
+    update_role(carb, new_role = "other") %>%
+    prep()
 
   na_req_rec <-
     na_rec %>%
-      update_role_requirements("NA", bake = FALSE) %>%
-      prep()
+    update_role_requirements("NA", bake = FALSE) %>%
+    prep()
 
   expect_snapshot(summary(na_rec, original = TRUE))
   expect_snapshot(summary(na_req_rec, original = TRUE))

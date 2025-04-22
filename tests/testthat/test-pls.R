@@ -312,7 +312,7 @@ test_that("Deprecation warning", {
 test_that("tunable", {
   rec <-
     recipe(Species ~ ., data = iris) %>%
-      step_pls(all_predictors(), outcome = Species)
+    step_pls(all_predictors(), outcome = Species)
   rec_param <- tunable.step_pls(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "predictor_prop"))
   expect_true(all(rec_param$source == "recipe"))

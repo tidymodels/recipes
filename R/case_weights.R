@@ -165,10 +165,10 @@ averages <- function(x, wts = NULL, na_rm = TRUE) {
     res <- colMeans(x, na.rm = TRUE)
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts))
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
   }
   if (!na_rm) {
-    res[map_lgl(x, ~anyNA(.x))] <- NA
+    res[map_lgl(x, ~ anyNA(.x))] <- NA
   }
   res
 }
@@ -183,7 +183,7 @@ medians <- function(x, wts = NULL) {
     res <- apply(x, 2, median, na.rm = TRUE)
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "median"))
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "median"))
   }
   res
 }
@@ -206,12 +206,12 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
     return(vapply(x, sd, c(sd = 0), na.rm = na_rm))
   }
   if (is.null(wts)) {
-    res <- purrr::map_dbl(x, ~stats::var(.x, na.rm = na_rm))
+    res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = na_rm))
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "var"))
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "var"))
     if (!na_rm) {
-      res[map_lgl(x, ~anyNA(.x))] <- NA
+      res[map_lgl(x, ~ anyNA(.x))] <- NA
     }
   }
   res

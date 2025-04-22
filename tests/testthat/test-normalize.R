@@ -116,8 +116,8 @@ test_that("normalizing with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-      step_normalize(all_numeric_predictors()) %>%
-      prep()
+    step_normalize(all_numeric_predictors()) %>%
+    prep()
 
   expect_equal(
     rec$steps[[1]]$means,
@@ -136,8 +136,8 @@ test_that("normalizing with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-      step_normalize(all_numeric_predictors()) %>%
-      prep()
+    step_normalize(all_numeric_predictors()) %>%
+    prep()
 
   expect_equal(
     rec$steps[[1]]$means,

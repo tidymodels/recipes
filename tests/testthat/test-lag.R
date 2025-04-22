@@ -80,7 +80,7 @@ rm(n, start, end)
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_double(mtcars$am)
-  rec <- recipe(~am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) %>%
     step_lag(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)

@@ -100,10 +100,10 @@ test_that("All NA values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_impute_bag(
-        all_predictors(),
-        impute_with = all_predictors()
-      )
+    step_impute_bag(
+      all_predictors(),
+      impute_with = all_predictors()
+    )
   rec_param <- tunable.step_impute_bag(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))
   expect_true(all(rec_param$source == "recipe"))
@@ -121,8 +121,8 @@ test_that("non-factor imputation", {
   scat$Location[1] <- NA
   rec <-
     recipe(Species ~ ., data = scat, strings_as_factors = FALSE) %>%
-      step_impute_bag(Location, impute_with = all_predictors()) %>%
-      prep()
+    step_impute_bag(Location, impute_with = all_predictors()) %>%
+    prep()
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 

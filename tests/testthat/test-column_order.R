@@ -12,10 +12,10 @@ test_that("basic steps", {
       HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
       data = biomass_tr
     ) %>%
-      step_mutate(hydrogen = hydrogen / 2) %>%
-      step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
-      step_corr(all_predictors(), threshold = .6) %>%
-      prep()
+    step_mutate(hydrogen = hydrogen / 2) %>%
+    step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
+    step_corr(all_predictors(), threshold = .6) %>%
+    prep()
 
   cols_1 <- c("hydrogen", "nitrogen", "sulfur", "HHV", "oxygen_o_carbon")
 
@@ -44,10 +44,10 @@ test_that("skipped steps", {
       HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
       data = biomass_tr
     ) %>%
-      step_mutate(hydrogen = hydrogen / 2) %>%
-      step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
-      step_corr(all_predictors(), threshold = .6, skip = TRUE) %>%
-      prep()
+    step_mutate(hydrogen = hydrogen / 2) %>%
+    step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
+    step_corr(all_predictors(), threshold = .6, skip = TRUE) %>%
+    prep()
 
   cols_1 <- c(
     "hydrogen",
@@ -97,11 +97,11 @@ test_that("remove and add a column", {
       HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
       data = biomass_tr
     ) %>%
-      step_rm(HHV) %>%
-      step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
-      step_corr(all_predictors(), threshold = .6) %>%
-      step_mutate(HHV = 17) %>%
-      prep()
+    step_rm(HHV) %>%
+    step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
+    step_corr(all_predictors(), threshold = .6) %>%
+    step_mutate(HHV = 17) %>%
+    prep()
 
   cols_3 <- c("hydrogen", "nitrogen", "sulfur", "oxygen_o_carbon", "HHV")
 
@@ -130,12 +130,12 @@ test_that("extra roles", {
       HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
       data = biomass_tr
     ) %>%
-      add_role(nitrogen, new_role = "drummer") %>%
-      step_rm(HHV) %>%
-      step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
-      step_corr(all_predictors(), threshold = .6) %>%
-      step_mutate(HHV = 17) %>%
-      prep()
+    add_role(nitrogen, new_role = "drummer") %>%
+    step_rm(HHV) %>%
+    step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
+    step_corr(all_predictors(), threshold = .6) %>%
+    step_mutate(HHV = 17) %>%
+    prep()
 
   cols_3 <- c("hydrogen", "nitrogen", "sulfur", "oxygen_o_carbon", "HHV")
 

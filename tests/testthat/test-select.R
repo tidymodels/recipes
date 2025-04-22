@@ -97,10 +97,10 @@ test_that("quasiquotation", {
 
   rec_1 <-
     recipe(~., data = iris_train) %>%
-      step_select(all_of(sepal_vars))
+    step_select(all_of(sepal_vars))
   rec_2 <-
     recipe(~., data = iris_train) %>%
-      step_select(all_of(!!sepal_vars))
+    step_select(all_of(!!sepal_vars))
 
   # both work when local variable is available
   prepped_1 <- prep(rec_1, training = iris_train)

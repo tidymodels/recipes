@@ -6,7 +6,7 @@ data(covers, package = "modeldata")
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
 
-rec <- recipe(~description + rows + ch_rows, covers)
+rec <- recipe(~ description + rows + ch_rows, covers)
 
 test_that("default options", {
   rec1 <- rec %>%
@@ -150,10 +150,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <-
     recipe(mpg ~ ., data = mt_tibble) %>%
-      step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
-      update_role(make_model, new_role = "potato") %>%
-      update_role_requirements(role = "potato", bake = FALSE) %>%
-      prep(mt_tibble)
+    step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
+    update_role(make_model, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(mt_tibble)
 
   expect_snapshot(error = TRUE, bake(rec, new_data = mt_tibble[, c(-1)]))
 })
@@ -247,7 +247,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~description + rows + ch_rows, covers) %>%
+  rec <- recipe(~ description + rows + ch_rows, covers) %>%
     step_regex(description, pattern = "(rock|stony)")
 
   expect_snapshot(print(rec))
