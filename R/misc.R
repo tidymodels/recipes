@@ -276,13 +276,13 @@ train_info <- function(x) {
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
   # the original value
-  .new %>%
-    dplyr::rename(new_type = type) %>%
-    dplyr::left_join(.old, by = "variable", multiple = "all") %>%
+  .new |>
+    dplyr::rename(new_type = type) |>
+    dplyr::left_join(.old, by = "variable", multiple = "all") |>
     dplyr::mutate(
       type = ifelse(is.na(type), "other", "type"),
       type = ifelse(type != new_type, new_type, type)
-    ) %>%
+    ) |>
     dplyr::select(-new_type)
 }
 
@@ -369,14 +369,14 @@ printer <- function(
 #' @seealso [developer_functions]
 #'
 #' @examples
-#' rec <- recipe(Species ~ ., data = iris) %>%
+#' rec <- recipe(Species ~ ., data = iris) |>
 #'   step_center(all_numeric())
 #'
-#' rec %>% fully_trained()
+#' rec |> fully_trained()
 #'
 #'
-#' rec %>%
-#'   prep(training = iris) %>%
+#' rec |>
+#'   prep(training = iris) |>
 #'   fully_trained()
 fully_trained <- function(x) {
   if (is.null(x$steps)) {
@@ -403,7 +403,7 @@ fully_trained <- function(x) {
 #' @seealso [developer_functions]
 #'
 #' @examples
-#' rec <- recipe(Species ~ ., data = iris) %>%
+#' rec <- recipe(Species ~ ., data = iris) |>
 #'   step_intercept()
 #'
 #' detect_step(rec, "intercept")

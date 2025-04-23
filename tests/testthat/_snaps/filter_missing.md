@@ -107,8 +107,8 @@
 # bad args
 
     Code
-      recipe(~., data = dat) %>% step_filter_missing(all_predictors(), threshold = -
-      0.2) %>% prep()
+      prep(step_filter_missing(recipe(~., data = dat), all_predictors(), threshold = -
+      0.2))
     Condition
       Error in `step_filter_missing()`:
       Caused by error in `prep()`:

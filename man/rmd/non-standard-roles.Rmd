@@ -21,8 +21,8 @@ data(biomass, package = "modeldata")
 biomass_train <- biomass[1:100,]
 biomass_test <- biomass[101:200,]
 
-rec <- recipe(HHV ~ ., data = biomass_train) %>%
-  update_role(sample, new_role = "id variable") %>%
+rec <- recipe(HHV ~ ., data = biomass_train) |>
+  update_role(sample, new_role = "id variable") |>
   step_center(carbon)
 
 rec <- prep(rec, biomass_train)
@@ -49,9 +49,9 @@ As we mentioned before, the best way to avoid this issue is to not even use a ro
 If you can't remove `sample` for some reason, then the second best way to get around this issue is to tell recipes that the `"id variable"` role isn't required at `bake()` time. You can do that by using `update_role_requirements()`:
 
 ```{r}
-rec <- recipe(HHV ~ ., data = biomass_train) %>%
-  update_role(sample, new_role = "id variable") %>%
-  update_role_requirements("id variable", bake = FALSE) %>%
+rec <- recipe(HHV ~ ., data = biomass_train) |>
+  update_role(sample, new_role = "id variable") |>
+  update_role_requirements("id variable", bake = FALSE) |>
   step_center(carbon)
 
 rec <- prep(rec, biomass_train)

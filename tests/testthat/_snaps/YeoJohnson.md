@@ -87,8 +87,7 @@
 # bad args
 
     Code
-      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, na_rm = "yes") %>%
-        prep()
+      prep(step_YeoJohnson(recipe(~., data = ex_dat), x1, x2, x3, x4, na_rm = "yes"))
     Condition
       Error in `step_YeoJohnson()`:
       Caused by error in `prep()`:
@@ -97,8 +96,7 @@
 ---
 
     Code
-      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, num_unique = "yes") %>%
-        prep()
+      prep(step_YeoJohnson(recipe(~., data = ex_dat), x1, x2, x3, x4, num_unique = "yes"))
     Condition
       Error in `step_YeoJohnson()`:
       Caused by error in `prep()`:
@@ -107,8 +105,7 @@
 ---
 
     Code
-      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, limits = NA_real_) %>%
-        prep()
+      prep(step_YeoJohnson(recipe(~., data = ex_dat), x1, x2, x3, x4, limits = NA_real_))
     Condition
       Error in `step_YeoJohnson()`:
       Caused by error in `prep()`:

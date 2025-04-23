@@ -78,8 +78,8 @@ data(biomass, package = "modeldata")
 biomass_train <- biomass[1:100,]
 biomass_test <- biomass[101:200,]
 
-rec <- recipe(HHV ~ ., data = biomass_train) \%>\%
-  update_role(sample, new_role = "id variable") \%>\%
+rec <- recipe(HHV ~ ., data = biomass_train) |>
+  update_role(sample, new_role = "id variable") |>
   step_center(carbon)
 
 rec <- prep(rec, biomass_train)
@@ -104,9 +104,9 @@ As we mentioned before, the best way to avoid this issue is to not even use a ro
 
 If you can't remove \code{sample} for some reason, then the second best way to get around this issue is to tell recipes that the \code{"id variable"} role isn't required at \code{bake()} time. You can do that by using \code{update_role_requirements()}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{rec <- recipe(HHV ~ ., data = biomass_train) \%>\%
-  update_role(sample, new_role = "id variable") \%>\%
-  update_role_requirements("id variable", bake = FALSE) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rec <- recipe(HHV ~ ., data = biomass_train) |>
+  update_role(sample, new_role = "id variable") |>
+  update_role_requirements("id variable", bake = FALSE) |>
   step_center(carbon)
 
 rec <- prep(rec, biomass_train)
@@ -124,58 +124,58 @@ library(recipes)
 data(biomass, package = "modeldata")
 
 # Using the formula method, roles are created for any outcomes and predictors:
-recipe(HHV ~ ., data = biomass) \%>\%
+recipe(HHV ~ ., data = biomass) |>
   summary()
 
 # However `sample` and `dataset` aren't predictors. Since they already have
 # roles, `update_role()` can be used to make changes, to any arbitrary role:
-recipe(HHV ~ ., data = biomass) \%>\%
-  update_role(sample, new_role = "id variable") \%>\%
-  update_role(dataset, new_role = "splitting variable") \%>\%
+recipe(HHV ~ ., data = biomass) |>
+  update_role(sample, new_role = "id variable") |>
+  update_role(dataset, new_role = "splitting variable") |>
   summary()
 
 # `update_role()` cannot set a role to NA, use `remove_role()` for that
 \dontrun{
-recipe(HHV ~ ., data = biomass) \%>\%
+recipe(HHV ~ ., data = biomass) |>
   update_role(sample, new_role = NA_character_)
 }
 
 # Variables can have more than one role. `add_role()` can be used
 # if the column already has at least one role:
-recipe(HHV ~ ., data = biomass) \%>\%
-  add_role(carbon, sulfur, new_role = "something") \%>\%
+recipe(HHV ~ ., data = biomass) |>
+  add_role(carbon, sulfur, new_role = "something") |>
   summary()
 
 # `update_role()` has an argument called `old_role` that is required to
 # unambiguously update a role when the column currently has multiple roles.
-recipe(HHV ~ ., data = biomass) \%>\%
-  add_role(carbon, new_role = "something") \%>\%
-  update_role(carbon, new_role = "something else", old_role = "something") \%>\%
+recipe(HHV ~ ., data = biomass) |>
+  add_role(carbon, new_role = "something") |>
+  update_role(carbon, new_role = "something else", old_role = "something") |>
   summary()
 
 # `carbon` has two roles at the end, so the last `update_role()` fails since
 # `old_role` was not given.
 \dontrun{
-recipe(HHV ~ ., data = biomass) \%>\%
-  add_role(carbon, sulfur, new_role = "something") \%>\%
+recipe(HHV ~ ., data = biomass) |>
+  add_role(carbon, sulfur, new_role = "something") |>
   update_role(carbon, new_role = "something else")
 }
 
 # To remove a role, `remove_role()` can be used to remove a single role.
-recipe(HHV ~ ., data = biomass) \%>\%
-  add_role(carbon, new_role = "something") \%>\%
-  remove_role(carbon, old_role = "something") \%>\%
+recipe(HHV ~ ., data = biomass) |>
+  add_role(carbon, new_role = "something") |>
+  remove_role(carbon, old_role = "something") |>
   summary()
 
 # To remove all roles, call `remove_role()` multiple times to reset to `NA`
-recipe(HHV ~ ., data = biomass) \%>\%
-  add_role(carbon, new_role = "something") \%>\%
-  remove_role(carbon, old_role = "something") \%>\%
-  remove_role(carbon, old_role = "predictor") \%>\%
+recipe(HHV ~ ., data = biomass) |>
+  add_role(carbon, new_role = "something") |>
+  remove_role(carbon, old_role = "something") |>
+  remove_role(carbon, old_role = "predictor") |>
   summary()
 
 # If the formula method is not used, all columns have a missing role:
-recipe(biomass) \%>\%
+recipe(biomass) |>
   summary()
 \dontshow{\}) # examplesIf}
 }

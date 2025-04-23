@@ -42,8 +42,8 @@
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(covers, package = "modeldata")
 #'
-#' rec <- recipe(~description, covers) %>%
-#'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
+#' rec <- recipe(~description, covers) |>
+#'   step_regex(description, pattern = "(rock|stony)", result = "rocks") |>
 #'   step_regex(description, pattern = "ratake families")
 #'
 #' rec2 <- prep(rec, training = covers)

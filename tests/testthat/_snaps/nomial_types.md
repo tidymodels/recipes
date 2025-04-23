@@ -31,7 +31,7 @@
 ---
 
     Code
-      res <- bake(rec, te %>% mutate(city = as.character(city)))
+      res <- bake(rec, mutate(te, city = as.character(city)))
     Condition
       Warning in `bake()`:
       ! There were 2 columns that were factors when the recipe was prepped:

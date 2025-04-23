@@ -71,7 +71,7 @@
 # bad args
 
     Code
-      dum_rec %>% step_lincomb(all_predictors(), max_steps = 0) %>% prep()
+      prep(step_lincomb(dum_rec, all_predictors(), max_steps = 0))
     Condition
       Error in `step_lincomb()`:
       Caused by error in `prep()`:

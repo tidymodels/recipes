@@ -7,11 +7,11 @@ skip_if_not_installed("modeldata")
 
 data(biomass, package = "modeldata")
 
-biom_tr <- biomass %>%
-  dplyr::filter(dataset == "Training") %>%
+biom_tr <- biomass |>
+  dplyr::filter(dataset == "Training") |>
   dplyr::select(-dataset, -sample)
-biom_te <- biomass %>%
-  dplyr::filter(dataset == "Testing") %>%
+biom_te <- biomass |>
+  dplyr::filter(dataset == "Testing") |>
   dplyr::select(-dataset, -sample, -HHV)
 
 load(test_path("test_pls_old.RData"))

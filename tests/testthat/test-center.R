@@ -13,7 +13,7 @@ rec <- recipe(
 )
 
 test_that("working correctly", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center")
 
   cent_tibble_un <-
@@ -40,7 +40,7 @@ test_that("working correctly", {
 })
 
 test_that("single predictor", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_center(carbon)
 
   standardized_trained <- prep(standardized, training = biomass)
@@ -56,12 +56,12 @@ test_that("na_rm argument works for step_center", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
 
-  rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
-    step_center(all_predictors(), na_rm = FALSE) %>%
+  rec_no_na_rm <- recipe(~., data = mtcars_na) |>
+    step_center(all_predictors(), na_rm = FALSE) |>
     prep()
 
-  rec_na_rm <- recipe(~., data = mtcars_na) %>%
-    step_center(all_predictors(), na_rm = TRUE) %>%
+  rec_na_rm <- recipe(~., data = mtcars_na) |>
+    step_center(all_predictors(), na_rm = TRUE) |>
     prep()
 
   exp_no_na_rm <- vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1))
@@ -88,8 +88,8 @@ test_that("centering with case weights", {
   mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars_freq) %>%
-    step_center(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_freq) |>
+    step_center(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -103,8 +103,8 @@ test_that("centering with case weights", {
   mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
 
   rec <-
-    recipe(mpg ~ ., mtcars_imp) %>%
-    step_center(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_imp) |>
+    step_center(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -116,19 +116,19 @@ test_that("centering with case weights", {
 })
 
 test_that("warns when NaN is returned due to Inf or -Inf", {
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) %>%
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) |>
     step_center(x)
   expect_snapshot(prep(rec))
 
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) %>%
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) |>
     step_center(x)
   expect_snapshot(prep(rec))
 })
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  std <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  std <- rec |>
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     update_role(
       carbon,
       hydrogen,
@@ -136,7 +136,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
       nitrogen,
       sulfur,
       new_role = "potato"
-    ) %>%
+    ) |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   std_trained <- prep(std, training = biomass)
@@ -182,7 +182,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- rec %>%
+  rec <- rec |>
     step_center(carbon)
 
   expect_snapshot(print(rec))
@@ -191,8 +191,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_center(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_center(mpg, disp) |>
     prep()
 
   expect_identical(

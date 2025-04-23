@@ -12,7 +12,7 @@ credit_te <- credit_data[-in_training, ]
 test_that("simple modes", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mode(Status, Home, Marital, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
@@ -62,7 +62,7 @@ test_that("simple modes", {
 test_that("non-nominal", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mode(Assets, Job)
   expect_snapshot(
     error = TRUE,
@@ -73,10 +73,10 @@ test_that("non-nominal", {
 test_that("all NA values", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mode(Status, Home)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  imputed_te <- bake(imputed, credit_te %>% mutate(Status = factor(NA)))
+  imputed_te <- bake(imputed, credit_te |> mutate(Status = factor(NA)))
   expect_equal(
     imputed$steps[[1]]$modes[["Status"]],
     as.character(unique(imputed_te$Status))
@@ -84,8 +84,8 @@ test_that("all NA values", {
 })
 
 test_that("can bake recipes with no ptype", {
-  imputed <- recipe(Price ~ ., data = credit_tr) %>%
-    step_impute_mode(Status, Home) %>%
+  imputed <- recipe(Price ~ ., data = credit_tr) |>
+    step_impute_mode(Status, Home) |>
     prep(credit_tr, verbose = FALSE)
 
   imputed$steps[[1]]$ptype <- NULL
@@ -101,16 +101,16 @@ test_that('case weights', {
     x2 = frequency_weights(1:150)
   )
 
-  impute_rec <- recipe(~., data = fake_data) %>%
+  impute_rec <- recipe(~., data = fake_data) |>
     step_impute_mode(x1, id = "")
   imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = fake_data)
 
-  imp_tibble_tr <- fake_data %>%
-    mutate(x2 = as.double(x2)) %>%
-    count(value = x1, wt = x2) %>%
-    slice_max(n, n = 1) %>%
-    mutate(terms = "x1", id = "") %>%
+  imp_tibble_tr <- fake_data |>
+    mutate(x2 = as.double(x2)) |>
+    count(value = x1, wt = x2) |>
+    slice_max(n, n = 1) |>
+    mutate(terms = "x1", id = "") |>
     select(terms, value, id)
 
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
@@ -124,15 +124,15 @@ test_that('case weights', {
     x2 = importance_weights(1:150)
   )
 
-  impute_rec <- recipe(~., data = fake_data) %>%
+  impute_rec <- recipe(~., data = fake_data) |>
     step_impute_mode(x1, id = "")
   imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = fake_data)
 
-  imp_tibble_tr <- fake_data %>%
-    count(value = x1) %>%
-    slice_max(n, n = 1) %>%
-    mutate(terms = "x1", id = "") %>%
+  imp_tibble_tr <- fake_data |>
+    count(value = x1) |>
+    slice_max(n, n = 1) |>
+    mutate(terms = "x1", id = "") |>
     select(terms, value, id)
 
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
@@ -145,9 +145,9 @@ test_that('case weights', {
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
-    step_impute_mode(Marital) %>%
-    update_role(Marital, new_role = "potato") %>%
+  impute_rec <- rec |>
+    step_impute_mode(Marital) |>
+    update_role(Marital, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
@@ -192,7 +192,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(Price ~ ., data = credit_tr) %>%
+  rec <- recipe(Price ~ ., data = credit_tr) |>
     step_impute_mode(Status, Home, Marital)
 
   expect_snapshot(print(rec))
@@ -201,8 +201,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_impute_bag(Species) %>%
+  rec <- recipe(~., data) |>
+    step_impute_bag(Species) |>
     prep()
 
   expect_identical(

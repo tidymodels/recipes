@@ -92,8 +92,8 @@
 #'
 #' @examples
 #' rec <- recipe(~., data = USArrests)
-#' pca_trans <- rec %>%
-#'   step_normalize(all_numeric()) %>%
+#' pca_trans <- rec |>
+#'   step_normalize(all_numeric()) |>
 #'   step_pca(all_numeric(), num_comp = 3)
 #' pca_estimates <- prep(pca_trans, training = USArrests)
 #' pca_data <- bake(pca_estimates, USArrests)
@@ -103,8 +103,8 @@
 #'   xlim = rng, ylim = rng
 #' )
 #'
-#' with_thresh <- rec %>%
-#'   step_normalize(all_numeric()) %>%
+#' with_thresh <- rec |>
+#'   step_normalize(all_numeric()) |>
 #'   step_pca(all_numeric(), threshold = .99)
 #' with_thresh <- prep(with_thresh, training = USArrests)
 #' bake(with_thresh, USArrests)

@@ -281,7 +281,7 @@ print.discretize <-
 #' rec <- recipe(
 #'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'   data = biomass_tr
-#' ) %>%
+#' ) |>
 #'   step_discretize(carbon, hydrogen)
 #'
 #' rec <- prep(rec, biomass_tr)

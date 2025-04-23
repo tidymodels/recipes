@@ -8,7 +8,7 @@ biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 test_that("simple percentile trans", {
-  rec <- recipe(~., data = biomass_tr) %>%
+  rec <- recipe(~., data = biomass_tr) |>
     step_percentile(carbon, sulfur)
 
   rec_trained <- prep(rec)
@@ -49,12 +49,12 @@ test_that("simple percentile trans", {
 })
 
 test_that("works works with fewer unique values than percentiles requested", {
-  biomass_tr1 <- biomass_tr %>%
+  biomass_tr1 <- biomass_tr |>
     mutate(carbon1 = round(carbon, -1))
-  biomass_te1 <- biomass_te %>%
+  biomass_te1 <- biomass_te |>
     mutate(carbon1 = round(carbon, -1))
 
-  rec <- recipe(~., data = biomass_tr1) %>%
+  rec <- recipe(~., data = biomass_tr1) |>
     step_percentile(carbon1)
 
   rec_trained <- prep(rec)
@@ -90,7 +90,7 @@ test_that("works works with fewer unique values than percentiles requested", {
 })
 
 test_that("passing new probs works", {
-  rec <- recipe(~., data = biomass_tr) %>%
+  rec <- recipe(~., data = biomass_tr) |>
     step_percentile(carbon, sulfur, options = list(probs = seq(0, 1, by = 0.2)))
 
   rec_trained <- prep(rec)
@@ -122,52 +122,52 @@ test_that("outside argument", {
   new_df <- tibble(a = c(0.99, 5, 9.01))
 
   expect_identical(
-    recipe(~a, data = train_df) %>%
-      step_percentile(a, outside = "none") %>%
-      prep() %>%
+    recipe(~a, data = train_df) |>
+      step_percentile(a, outside = "none") |>
+      prep() |>
       bake(new_data = new_df),
     tibble(a = c(NA, 0.5, NA))
   )
 
   expect_identical(
-    recipe(~a, data = train_df) %>%
-      step_percentile(a, outside = "lower") %>%
-      prep() %>%
+    recipe(~a, data = train_df) |>
+      step_percentile(a, outside = "lower") |>
+      prep() |>
       bake(new_data = new_df),
     tibble(a = c(0, 0.5, NA))
   )
 
   expect_identical(
-    recipe(~a, data = train_df) %>%
-      step_percentile(a, outside = "upper") %>%
-      prep() %>%
+    recipe(~a, data = train_df) |>
+      step_percentile(a, outside = "upper") |>
+      prep() |>
       bake(new_data = new_df),
     tibble(a = c(NA, 0.5, 1))
   )
 
   expect_identical(
-    recipe(~a, data = train_df) %>%
-      step_percentile(a, outside = "both") %>%
-      prep() %>%
+    recipe(~a, data = train_df) |>
+      step_percentile(a, outside = "both") |>
+      prep() |>
       bake(new_data = new_df),
     tibble(a = c(0, 0.5, 1))
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~a, data = train_df) %>%
-      step_percentile(a, outside = "left") %>%
-      prep() %>%
+    recipe(~a, data = train_df) |>
+      step_percentile(a, outside = "left") |>
+      prep() |>
       bake(new_data = new_df)
   )
 })
 
 test_that("case weights", {
   test_wts <- rep(c(1, 0), c(200, 256))
-  biomass_tr_cw <- biomass_tr %>%
+  biomass_tr_cw <- biomass_tr |>
     mutate(wts = frequency_weights(test_wts))
 
-  rec <- recipe(~., data = biomass_tr_cw) %>%
+  rec <- recipe(~., data = biomass_tr_cw) |>
     step_percentile(carbon, sulfur)
 
   rec_trained <- prep(rec)
@@ -203,10 +203,10 @@ test_that("case weights", {
   # ----------------------------------------------------------------------------
 
   test_wts <- rep(c(1, 0), c(200, 256))
-  biomass_tr_cw <- biomass_tr %>%
+  biomass_tr_cw <- biomass_tr |>
     mutate(wts = importance_weights(test_wts))
 
-  rec <- recipe(~., data = biomass_tr_cw) %>%
+  rec <- recipe(~., data = biomass_tr_cw) |>
     step_percentile(carbon, sulfur)
 
   rec_trained <- prep(rec)
@@ -241,8 +241,8 @@ test_that("case weights", {
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_percentile(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_percentile(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -250,9 +250,9 @@ test_that("check_options() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = biomass_tr) %>%
-    step_percentile(carbon, sulfur) %>%
-    update_role(carbon, sulfur, new_role = "potato") %>%
+  rec <- recipe(~., data = biomass_tr) |>
+    step_percentile(carbon, sulfur) |>
+    update_role(carbon, sulfur, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec)
@@ -306,7 +306,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = biomass_tr) %>%
+  rec <- recipe(~., data = biomass_tr) |>
     step_percentile(carbon, sulfur)
 
   expect_snapshot(print(rec))
@@ -315,8 +315,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_percentile(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_percentile(disp, mpg) |>
     prep()
 
   expect_identical(

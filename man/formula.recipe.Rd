@@ -20,10 +20,10 @@ recipe to show what predictors and outcome(s) could be used.
 }
 \examples{
 
-formula(recipe(Species + Sepal.Length ~ ., data = iris) \%>\% prep())
+formula(recipe(Species + Sepal.Length ~ ., data = iris) |> prep())
 
-iris_rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_center(all_numeric()) \%>\%
+iris_rec <- recipe(Species ~ ., data = iris) |>
+  step_center(all_numeric()) |>
   prep()
 formula(iris_rec)
 }

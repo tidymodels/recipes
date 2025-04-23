@@ -45,8 +45,8 @@
 #'
 #' model.matrix(~fail_severity, data = ord_data)
 #'
-#' linear_values <- recipe(~ item + fail_severity, data = ord_data) %>%
-#'   step_dummy(item) %>%
+#' linear_values <- recipe(~ item + fail_severity, data = ord_data) |>
+#'   step_dummy(item) |>
 #'   step_ordinalscore(fail_severity)
 #'
 #' linear_values <- prep(linear_values, training = ord_data)
@@ -58,8 +58,8 @@
 #'   new_values[as.numeric(x)]
 #' }
 #'
-#' nonlin_scores <- recipe(~ item + fail_severity, data = ord_data) %>%
-#'   step_dummy(item) %>%
+#' nonlin_scores <- recipe(~ item + fail_severity, data = ord_data) |>
+#'   step_dummy(item) |>
 #'   step_ordinalscore(fail_severity, convert = custom)
 #'
 #' tidy(nonlin_scores, number = 2)

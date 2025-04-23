@@ -36,9 +36,9 @@
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(covers, package = "modeldata")
 #'
-#' rec <- recipe(~description, covers) %>%
-#'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
-#'   step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
+#' rec <- recipe(~description, covers) |>
+#'   step_regex(description, pattern = "(rock|stony)", result = "rocks") |>
+#'   step_regex(description, pattern = "(rock|stony)", result = "more_rocks") |>
 #'   step_bin2factor(rocks)
 #'
 #' tidy(rec, number = 3)

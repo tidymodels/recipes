@@ -11,8 +11,7 @@
 # gives informative error if terms isn't a formula (#1299)
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_interact(terms = starts_with("dis")) %>%
-        prep()
+      prep(step_interact(recipe(mpg ~ ., data = mtcars), terms = starts_with("dis")))
     Condition
       Error in `step_interact()`:
       Caused by error:
@@ -21,8 +20,8 @@
 ---
 
     Code
-      tmp <- recipe(mpg ~ ., data = mtcars, strings_as_factors = FALSE) %>%
-        step_interact(~ disp:am) %>% prep()
+      tmp <- prep(step_interact(recipe(mpg ~ ., data = mtcars, strings_as_factors = FALSE),
+      ~ disp:am))
     Condition
       Warning:
       Categorical variables used in `step_interact()` should probably be avoided; This can lead to differences in dummy variable values that are produced by ?step_dummy (`?recipes::step_dummy()`). Please convert all involved variables to dummy variables first.
@@ -117,8 +116,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_interact(~ disp::wt, sep = TRUE) %>%
-        prep()
+      prep(step_interact(recipe(mpg ~ ., data = mtcars), ~ disp::wt, sep = TRUE))
     Condition
       Error in `step_interact()`:
       ! `sep` must be a single string, not `TRUE`.

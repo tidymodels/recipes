@@ -5,7 +5,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$NNMF1 <- as.character(dat$mpg)
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_nnmf_sparse(all_numeric_predictors())
 
   expect_snapshot(
@@ -17,12 +17,12 @@ test_that("check_name() is used", {
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   skip_if_not_installed("RcppML")
 
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_nnmf_sparse(
       all_predictors(),
       num_comp = 0,
       keep_original_cols = FALSE
-    ) %>%
+    ) |>
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -41,8 +41,8 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_nnmf_sparse(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_nnmf_sparse(all_predictors()) |>
       prep()
   )
 })
@@ -54,8 +54,8 @@ test_that("errors for missing data", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_nnmf_sparse(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_nnmf_sparse(all_predictors()) |>
       prep()
   )
 })
@@ -65,8 +65,8 @@ test_that("check_options() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_nnmf_sparse(all_predictors(), options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_nnmf_sparse(all_predictors(), options = TRUE) |>
       prep()
   )
 })
@@ -76,9 +76,9 @@ test_that("check_options() is used", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("RcppML")
 
-  rec <- recipe(mtcars) %>%
-    step_nnmf_sparse(disp, wt) %>%
-    update_role(disp, new_role = "potato") %>%
+  rec <- recipe(mtcars) |>
+    step_nnmf_sparse(disp, wt) |>
+    update_role(disp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mtcars)
@@ -139,7 +139,7 @@ test_that("keep_original_cols works", {
 
   new_names <- c("NNMF1")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_nnmf_sparse(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -150,7 +150,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_nnmf_sparse(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -165,7 +165,7 @@ test_that("keep_original_cols works", {
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("RcppML")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_nnmf_sparse(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -182,7 +182,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 test_that("printing", {
   skip_if_not_installed("RcppML")
 
-  rec <- recipe(mpg ~ ., mtcars) %>%
+  rec <- recipe(mpg ~ ., mtcars) |>
     step_nnmf_sparse(disp, drat)
 
   expect_snapshot(print(rec))
@@ -193,20 +193,20 @@ test_that("bad args", {
   skip_if_not_installed("RcppML")
 
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      step_nnmf_sparse(disp, drat, num_comp = -1) %>%
+    recipe(mpg ~ ., mtcars) |>
+      step_nnmf_sparse(disp, drat, num_comp = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      step_nnmf_sparse(disp, drat, penalty = -1) %>%
+    recipe(mpg ~ ., mtcars) |>
+      step_nnmf_sparse(disp, drat, penalty = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      step_nnmf_sparse(disp, drat, prefix = 1) %>%
+    recipe(mpg ~ ., mtcars) |>
+      step_nnmf_sparse(disp, drat, prefix = 1) |>
       prep(),
     error = TRUE
   )
@@ -216,8 +216,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("RcppML")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_nnmf_sparse(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_nnmf_sparse(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

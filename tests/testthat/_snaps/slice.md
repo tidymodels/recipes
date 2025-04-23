@@ -1,7 +1,7 @@
 # quasiquotation
 
     Code
-      prep(rec_1, training = iris %>% slice(1:75))
+      prep(rec_1, training = slice(iris, 1:75))
     Condition
       Error in `step_slice()`:
       Caused by error in `dplyr::slice()`:

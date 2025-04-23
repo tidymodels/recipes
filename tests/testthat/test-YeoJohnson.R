@@ -117,7 +117,7 @@ exp_dat <- structure(
 )
 
 test_that("simple YJ trans", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_YeoJohnson(x1, x2, x3, x4, id = "")
 
   yj_tibble_un <-
@@ -145,12 +145,12 @@ test_that("simple YJ trans", {
 
 test_that("missing data", {
   ex_dat$x1[1] <- NA
-  rec_true <- recipe(~., data = ex_dat) %>%
+  rec_true <- recipe(~., data = ex_dat) |>
     step_YeoJohnson(x1, x2, x3, x4)
 
   expect_no_error(prep(rec_true, training = ex_dat, verbose = FALSE))
 
-  rec_false <- recipe(~., data = ex_dat) %>%
+  rec_false <- recipe(~., data = ex_dat) |>
     step_YeoJohnson(x1, x2, x3, x4, na_rm = FALSE)
 
   expect_snapshot(
@@ -162,9 +162,9 @@ test_that("missing data", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_YeoJohnson(x1, x2, x3, x4, id = "") %>%
-    update_role(x1, x2, x3, x4, new_role = "potato") %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_YeoJohnson(x1, x2, x3, x4, id = "") |>
+    update_role(x1, x2, x3, x4, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -210,7 +210,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_YeoJohnson(x1, x2, x3, x4)
 
   expect_snapshot(print(rec))
@@ -219,20 +219,20 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_YeoJohnson(x1, x2, x3, x4, na_rm = "yes") %>%
+    recipe(~., data = ex_dat) |>
+      step_YeoJohnson(x1, x2, x3, x4, na_rm = "yes") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_YeoJohnson(x1, x2, x3, x4, num_unique = "yes") %>%
+    recipe(~., data = ex_dat) |>
+      step_YeoJohnson(x1, x2, x3, x4, num_unique = "yes") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_YeoJohnson(x1, x2, x3, x4, limits = NA_real_) %>%
+    recipe(~., data = ex_dat) |>
+      step_YeoJohnson(x1, x2, x3, x4, limits = NA_real_) |>
       prep(),
     error = TRUE
   )
@@ -240,8 +240,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_YeoJohnson(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_YeoJohnson(all_predictors()) |>
     prep()
 
   expect_identical(

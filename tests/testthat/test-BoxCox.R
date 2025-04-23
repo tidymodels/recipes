@@ -114,7 +114,7 @@ exp_dat <- structure(
 )
 
 test_that("simple Box Cox", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_BoxCox(x1, x2, x3, x4)
 
   bc_tibble_un <-
@@ -150,15 +150,15 @@ test_that("simple Box Cox", {
 
 test_that("warnings", {
   expect_snapshot(
-    recipe(~., data = exp_dat) %>%
-      step_BoxCox(x1) %>%
+    recipe(~., data = exp_dat) |>
+      step_BoxCox(x1) |>
       prep()
   )
 
   expect_snapshot(
-    recipe(~ mpg + disp, data = mtcars) %>%
-      step_BoxCox(mpg, disp) %>%
-      prep() %>%
+    recipe(~ mpg + disp, data = mtcars) |>
+      step_BoxCox(mpg, disp) |>
+      prep() |>
       bake(new_data = tibble(mpg = -1, disp = -1))
   )
 })
@@ -166,9 +166,9 @@ test_that("warnings", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_BoxCox(x1, x2, x3, x4) %>%
-    update_role(x1, x2, x3, x4, new_role = "potato") %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_BoxCox(x1, x2, x3, x4) |>
+    update_role(x1, x2, x3, x4, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   # Capture warnings
@@ -217,7 +217,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_BoxCox(x1, x2, x3, x4)
 
   expect_snapshot(print(rec))
@@ -226,8 +226,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_BoxCox(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_BoxCox(mpg, disp) |>
     prep()
 
   expect_identical(

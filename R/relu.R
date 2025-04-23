@@ -63,9 +63,9 @@
 #'   data = biomass_tr
 #' )
 #'
-#' transformed_te <- rec %>%
-#'   step_relu(carbon, shift = 40) %>%
-#'   prep(biomass_tr) %>%
+#' transformed_te <- rec |>
+#'   step_relu(carbon, shift = 40) |>
+#'   prep(biomass_tr) |>
 #'   bake(biomass_te)
 #'
 #' transformed_te

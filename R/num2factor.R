@@ -43,22 +43,22 @@
 #' library(dplyr)
 #' data(attrition, package = "modeldata")
 #'
-#' attrition %>%
-#'   group_by(StockOptionLevel) %>%
+#' attrition |>
+#'   group_by(StockOptionLevel) |>
 #'   count()
 #'
 #' amnt <- c("nothin", "meh", "some", "copious")
 #'
 #' rec <-
-#'   recipe(Attrition ~ StockOptionLevel, data = attrition) %>%
+#'   recipe(Attrition ~ StockOptionLevel, data = attrition) |>
 #'   step_num2factor(
 #'     StockOptionLevel,
 #'     transform = function(x) x + 1,
 #'     levels = amnt
 #'   )
 #'
-#' encoded <- rec %>%
-#'   prep() %>%
+#' encoded <- rec |>
+#'   prep() |>
 #'   bake(new_data = NULL)
 #'
 #' table(encoded$StockOptionLevel, attrition$StockOptionLevel)
@@ -75,13 +75,13 @@
 #' inc <- c("low", "med", "high")
 #'
 #' rec <-
-#'   recipe(Attrition ~ MonthlyIncome, data = attrition) %>%
+#'   recipe(Attrition ~ MonthlyIncome, data = attrition) |>
 #'   step_num2factor(
 #'     MonthlyIncome,
 #'     transform = binner,
 #'     levels = inc,
 #'     ordered = TRUE
-#'   ) %>%
+#'   ) |>
 #'   prep()
 #'
 #' encoded <- bake(rec, new_data = NULL)
@@ -89,8 +89,8 @@
 #' table(encoded$MonthlyIncome, binner(attrition$MonthlyIncome))
 #'
 #' # What happens when a value is out of range?
-#' ceo <- attrition %>%
-#'   slice(1) %>%
+#' ceo <- attrition |>
+#'   slice(1) |>
 #'   mutate(MonthlyIncome = 10^10)
 #'
 #' bake(rec, ceo)

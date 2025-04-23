@@ -129,8 +129,7 @@
 # bad args
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_mean(all_predictors(), trim = 0.6) %>%
-        prep()
+      prep(step_impute_mean(recipe(~., data = mtcars), all_predictors(), trim = 0.6))
     Condition
       Error in `step_impute_mean()`:
       Caused by error in `prep()`:

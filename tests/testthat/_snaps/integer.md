@@ -77,8 +77,7 @@
 # bad args
 
     Code
-      recipe(~ x + y + z, data = tr_dat) %>% step_integer(all_predictors(), strict = "yes") %>%
-        prep()
+      prep(step_integer(recipe(~ x + y + z, data = tr_dat), all_predictors(), strict = "yes"))
     Condition
       Error in `step_integer()`:
       Caused by error in `prep()`:
@@ -87,8 +86,8 @@
 ---
 
     Code
-      recipe(~ x + y + z, data = tr_dat) %>% step_integer(all_predictors(),
-      zero_based = "sure!") %>% prep()
+      prep(step_integer(recipe(~ x + y + z, data = tr_dat), all_predictors(),
+      zero_based = "sure!"))
     Condition
       Error in `step_integer()`:
       Caused by error in `prep()`:

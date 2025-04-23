@@ -1,7 +1,7 @@
 # default lag works on a single feature
 
     Code
-      prepped_rec <- recipe(~., data = df) %>% step_lag(x, lag = 0.5) %>% prep(df)
+      prepped_rec <- prep(step_lag(recipe(~., data = df), x, lag = 0.5), df)
     Condition
       Error in `step_lag()`:
       Caused by error in `prep()`:
@@ -10,7 +10,7 @@
 ---
 
     Code
-      recipe(~., data = df) %>% step_lag(x, prefix = 2) %>% prep()
+      prep(step_lag(recipe(~., data = df), x, prefix = 2))
     Condition
       Error in `step_lag()`:
       Caused by error in `prep()`:

@@ -99,13 +99,13 @@
 #'     year = 1700:1988,
 #'     n_sunspot = sunspot.year,
 #'     type = "measured"
-#'   ) %>%
+#'   ) |>
 #'   slice(1:75)
 #'
 #' # sunspots period is around 11 years, sample spacing is one year
-#' dat <- recipe(n_sunspot ~ year, data = sunspots) %>%
-#'   step_harmonic(year, frequency = 1 / 11, cycle_size = 1) %>%
-#'   prep() %>%
+#' dat <- recipe(n_sunspot ~ year, data = sunspots) |>
+#'   step_harmonic(year, frequency = 1 / 11, cycle_size = 1) |>
+#'   prep() |>
 #'   bake(new_data = NULL)
 #'
 #' fit <- lm(n_sunspot ~ year_sin_1 + year_cos_1, data = dat)
@@ -116,7 +116,7 @@
 #'   type = "predicted"
 #' )
 #'
-#' bind_rows(sunspots, preds) %>%
+#' bind_rows(sunspots, preds) |>
 #'   ggplot(aes(x = year, y = n_sunspot, color = type)) +
 #'   geom_line()
 #'
@@ -139,11 +139,11 @@
 #' dat <-
 #'   recipe(co2 ~ date_time,
 #'     data = carbon_dioxide
-#'   ) %>%
-#'   step_mutate(date_time_num = as.numeric(date_time)) %>%
-#'   step_ns(date_time_num, deg_free = 3) %>%
-#'   step_harmonic(date_time, frequency = 1, cycle_size = 86400 * 365.24) %>%
-#'   prep() %>%
+#'   ) |>
+#'   step_mutate(date_time_num = as.numeric(date_time)) |>
+#'   step_ns(date_time_num, deg_free = 3) |>
+#'   step_harmonic(date_time, frequency = 1, cycle_size = 86400 * 365.24) |>
+#'   prep() |>
 #'   bake(new_data = NULL)
 #'
 #' fit <- lm(co2 ~ date_time_num_ns_1 + date_time_num_ns_2 +
@@ -156,7 +156,7 @@
 #'   type = "predicted"
 #' )
 #'
-#' bind_rows(carbon_dioxide, preds) %>%
+#' bind_rows(carbon_dioxide, preds) |>
 #'   ggplot(aes(x = date_time, y = co2, color = type)) +
 #'   geom_line()
 step_harmonic <-

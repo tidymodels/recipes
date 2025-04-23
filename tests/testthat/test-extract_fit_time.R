@@ -1,7 +1,7 @@
 test_that("extract_fit_time() works", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_scale(all_numeric_predictors(), id = "scale") %>%
-    step_center(all_numeric_predictors(), id = "center") %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
+    step_scale(all_numeric_predictors(), id = "scale") |>
+    step_center(all_numeric_predictors(), id = "center") |>
     prep()
 
   res <- extract_fit_time(rec)
@@ -32,7 +32,7 @@ test_that("extract_fit_time() works", {
 })
 
 test_that("extract_fit_time() works with no steps", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
     prep()
 
   res <- extract_fit_time(rec)

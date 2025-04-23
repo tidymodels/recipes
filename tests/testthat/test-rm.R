@@ -9,7 +9,7 @@ test_that("basics", {
     x2 = runif(n)
   )
 
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_rm(x1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -27,7 +27,7 @@ test_that("basics", {
 #     x2 = runif(n)
 #   )
 #
-#   rec <- recipe(~., data = ex_dat) %>%
+#   rec <- recipe(~., data = ex_dat) |>
 #     step_rm(x1, skip = TRUE)
 #
 #   rec_trained <- prep(rec, training = ex_dat)
@@ -40,27 +40,27 @@ test_that("basics", {
 
 test_that("basic usage", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_rm(Species, starts_with("Sepal"))
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     select(-Species, -starts_with("Sepal"))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
+  iris_test <- iris |>
+    as_tibble() |>
     # change the position of the variables
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
+    select(Species, starts_with("Sepal"), starts_with("Petal")) |>
     slice(76:150)
   dplyr_test <-
-    iris_test %>%
+    iris_test |>
     select(-Species, -starts_with("Sepal"))
 
   rec_test <- bake(prepped, iris_test)
@@ -69,35 +69,35 @@ test_that("basic usage", {
 
 test_that("basic rename", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_rm(sepal_length = Sepal.Length)
 
-  expect_snapshot(error = TRUE, prep(rec, training = iris %>% slice(1:75)))
+  expect_snapshot(error = TRUE, prep(rec, training = iris |> slice(1:75)))
 })
 
 test_that("remove via type", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_rm(all_numeric())
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     select_if(~ !is.numeric(.))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
+  iris_test <- iris |>
+    as_tibble() |>
     # change the position of the variables
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
+    select(Species, starts_with("Sepal"), starts_with("Petal")) |>
     slice(76:150)
   dplyr_test <-
-    iris_test %>%
+    iris_test |>
     select_if(~ !is.numeric(.))
 
   rec_test <- bake(prepped, iris_test)
@@ -106,27 +106,27 @@ test_that("remove via type", {
 
 test_that("remove via role", {
   rec <-
-    recipe(Species ~ ., data = iris) %>%
+    recipe(Species ~ ., data = iris) |>
     step_rm(all_predictors())
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     select(Species)
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
-  iris_test <- iris %>%
-    as_tibble() %>%
+  iris_test <- iris |>
+    as_tibble() |>
     # change the position of the variables
-    select(Species, starts_with("Sepal"), starts_with("Petal")) %>%
+    select(Species, starts_with("Sepal"), starts_with("Petal")) |>
     slice(76:150)
   dplyr_test <-
-    iris_test %>%
+    iris_test |>
     select(Species)
 
   rec_test <- bake(prepped, iris_test)
@@ -137,28 +137,28 @@ test_that("remove with quasi-quotation", {
   sepal_vars <- c("Sepal.Width", "Sepal.Length")
 
   rec_1 <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_rm(all_of(sepal_vars))
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
+  prepped_1 <- prep(rec_1, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     select(-all_of(sepal_vars))
 
   rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
   rec_2 <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_rm(!!sepal_vars)
 
-  prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
+  prepped_2 <- prep(rec_2, training = iris |> slice(1:75))
 
   # expect_no_error(
-  #   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
+  #   prepped_2 <- prep(rec_2, training = iris |> slice(1:75))
   # )
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
@@ -168,8 +168,8 @@ test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
 
-  rec <- recipe(~ vs + am, mtcars) %>%
-    step_rm(vs) %>%
+  rec <- recipe(~ vs + am, mtcars) |>
+    step_rm(vs) |>
     prep()
 
   expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
@@ -222,7 +222,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_rm(disp)
 
   expect_snapshot(print(rec))
@@ -231,8 +231,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_rm(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_rm(mpg, disp) |>
     prep()
 
   expect_identical(

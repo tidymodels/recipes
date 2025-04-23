@@ -8,7 +8,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple sqrt trans", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_sqrt(x1, x2)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -21,7 +21,7 @@ test_that("simple sqrt trans", {
 test_that("doesn't destroy sparsity", {
   ex_dat$x1 <- sparsevctrs::as_sparse_double(ex_dat$x1)
   ex_dat$x2 <- sparsevctrs::as_sparse_integer(ex_dat$x2)
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_sqrt(x1, x2)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -35,10 +35,10 @@ test_that("doesn't destroy sparsity", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_sqrt(x1, x2) %>%
-    update_role(x1, x2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_sqrt(x1, x2) |>
+    update_role(x1, x2, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep(ex_dat)
 
   expect_snapshot(error = TRUE, bake(rec, new_data = ex_dat[, 2, drop = FALSE]))
@@ -82,7 +82,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_sqrt(x1, x2)
 
   expect_snapshot(print(rec))
@@ -91,8 +91,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_sqrt(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_sqrt(mpg, disp) |>
     prep()
 
   expect_identical(

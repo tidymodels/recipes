@@ -59,7 +59,7 @@
 #'   Dan = ymd("2002-03-04") + days(1:10),
 #'   Stefan = ymd("2006-01-13") + days(1:10)
 #' )
-#' date_rec <- recipe(~ Dan + Stefan, examples) %>%
+#' date_rec <- recipe(~ Dan + Stefan, examples) |>
 #'   step_date(all_predictors())
 #'
 #' tidy(date_rec, number = 1)

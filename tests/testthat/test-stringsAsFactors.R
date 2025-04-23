@@ -15,7 +15,7 @@ as_str$fact <- as.character(as_str$fact)
 as_str$ord <- as.character(as_str$ord)
 
 test_that("strings_as_factors = FALSE", {
-  rec1 <- recipe(~., data = as_fact, strings_as_factors = FALSE) %>%
+  rec1 <- recipe(~., data = as_fact, strings_as_factors = FALSE) |>
     step_center(numbers)
   rec1 <- prep(
     rec1,
@@ -33,7 +33,7 @@ test_that("strings_as_factors = FALSE", {
 })
 
 test_that("strings_as_factors = TRUE", {
-  rec2 <- recipe(~., data = as_fact, strings_as_factors = TRUE) %>%
+  rec2 <- recipe(~., data = as_fact, strings_as_factors = TRUE) |>
     step_center(numbers)
   rec2 <- prep(
     rec2,
@@ -53,7 +53,7 @@ test_that("strings_as_factors = TRUE", {
 test_that("strings_as_factors = FALSE and zero row input", {
   as_fact <- as_fact[0, ]
   as_str <- as_str[0, ]
-  rec1 <- recipe(~., data = as_fact, strings_as_factors = FALSE) %>%
+  rec1 <- recipe(~., data = as_fact, strings_as_factors = FALSE) |>
     step_center(numbers)
   rec1 <- prep(
     rec1,
@@ -73,7 +73,7 @@ test_that("strings_as_factors = FALSE and zero row input", {
 test_that("strings_as_factors = TRUE and zero row input", {
   as_fact <- as_fact[0, ]
   as_str <- as_str[0, ]
-  rec2 <- recipe(~., data = as_fact, strings_as_factors = TRUE) %>%
+  rec2 <- recipe(~., data = as_fact, strings_as_factors = TRUE) |>
     step_center(numbers)
   rec2 <- prep(
     rec2,

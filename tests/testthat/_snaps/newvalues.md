@@ -41,7 +41,7 @@
 # check_new_values breaks with new values
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2[1:4, , drop = FALSE])
+      bake(prep(check_new_values(recipe(x1), a)), x2[1:4, , drop = FALSE])
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "d".
@@ -49,7 +49,7 @@
 ---
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new values: "d" and "e".
@@ -57,7 +57,7 @@
 # check_new_values ignores NA by default
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "d".
@@ -65,8 +65,7 @@
 # check_new_values not ignoring NA argument
 
     Code
-      recipe(x1) %>% check_new_values(a, ignore_NA = FALSE) %>% prep() %>% bake(x2[-4,
-        , drop = FALSE])
+      bake(prep(check_new_values(recipe(x1), a, ignore_NA = FALSE)), x2[-4, , drop = FALSE])
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: NA.
@@ -74,7 +73,7 @@
 ---
 
     Code
-      recipe(x1) %>% check_new_values(a, ignore_NA = FALSE) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a, ignore_NA = FALSE)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new values: "d" and NA.
@@ -82,7 +81,7 @@
 # check_new_values works on doubles
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "1.3".
@@ -90,7 +89,7 @@
 # check_new_values works on integers
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "3".
@@ -98,7 +97,7 @@
 # check_new_values works on factors
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "c".
@@ -106,7 +105,7 @@
 # check_new_values works on characters
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "c".
@@ -114,7 +113,7 @@
 # check_new_values works on logicals
 
     Code
-      recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+      bake(prep(check_new_values(recipe(x1), a)), x2)
     Condition
       Error in `new_values_func()`:
       ! `a` contains the new value: "FALSE".
@@ -200,7 +199,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., mtcars) %>% check_new_values(disp, ignore_NA = 2) %>% prep()
+      prep(check_new_values(recipe(mpg ~ ., mtcars), disp, ignore_NA = 2))
     Condition
       Error in `check_new_values()`:
       Caused by error in `prep()`:

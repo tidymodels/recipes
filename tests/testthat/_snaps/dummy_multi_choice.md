@@ -106,8 +106,8 @@
 # bad args
 
     Code
-      dummy_multi_choice_rec <- recipe(~., data = languages) %>%
-        step_dummy_multi_choice(starts_with("lang"), other = 2) %>% prep()
+      dummy_multi_choice_rec <- prep(step_dummy_multi_choice(recipe(~., data = languages),
+      starts_with("lang"), other = 2))
     Condition
       Error in `step_dummy_multi_choice()`:
       Caused by error in `prep()`:
@@ -116,8 +116,8 @@
 ---
 
     Code
-      dummy_multi_choice_rec <- recipe(~., data = languages) %>%
-        step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>% prep()
+      dummy_multi_choice_rec <- prep(step_dummy_multi_choice(recipe(~., data = languages),
+      starts_with("lang"), naming = NULL))
     Condition
       Error in `step_dummy_multi_choice()`:
       Caused by error in `prep()`:

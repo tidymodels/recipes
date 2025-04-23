@@ -81,17 +81,17 @@ The underlying operation does not allow for case weights.
 
 \examples{
 library(dplyr)
-recipe(~., data = iris) \%>\%
-  step_mutate_at(contains("Length"), fn = ~ 1 / .) \%>\%
-  prep() \%>\%
-  bake(new_data = NULL) \%>\%
+recipe(~., data = iris) |>
+  step_mutate_at(contains("Length"), fn = ~ 1 / .) |>
+  prep() |>
+  bake(new_data = NULL) |>
   slice(1:10)
 
-recipe(~., data = iris) \%>\%
+recipe(~., data = iris) |>
   # leads to more columns being created.
-  step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) \%>\%
-  prep() \%>\%
-  bake(new_data = NULL) \%>\%
+  step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) |>
+  prep() |>
+  bake(new_data = NULL) |>
   slice(1:10)
 }
 \seealso{

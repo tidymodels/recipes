@@ -138,9 +138,9 @@ rec <- recipe(
   data = biomass_tr
 )
 
-kpca_trans <- rec \%>\%
-  step_YeoJohnson(all_numeric_predictors()) \%>\%
-  step_normalize(all_numeric_predictors()) \%>\%
+kpca_trans <- rec |>
+  step_YeoJohnson(all_numeric_predictors()) |>
+  step_normalize(all_numeric_predictors()) |>
   step_kpca(all_numeric_predictors())
 
 kpca_estimates <- prep(kpca_trans, training = biomass_tr)

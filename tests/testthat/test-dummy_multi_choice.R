@@ -53,7 +53,7 @@ result <- tribble(
 )
 
 test_that("dummy variables with factor inputs", {
-  dummy <- recipe(~., data = languages) %>%
+  dummy <- recipe(~., data = languages) |>
     step_dummy_multi_choice(all_predictors())
 
   dummy_prepped <- prep(dummy)
@@ -71,7 +71,7 @@ test_that("dummy variables with factor inputs", {
 })
 
 test_that("dummy variables with non-factor inputs", {
-  dummy <- recipe(~., data = mtcars) %>%
+  dummy <- recipe(~., data = mtcars) |>
     step_dummy_multi_choice(all_predictors())
 
   expect_snapshot(error = TRUE, prep(dummy))
@@ -81,7 +81,7 @@ test_that("check_name() is used", {
   dat <- iris
   dat$Species_setosa <- dat$Species
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_dummy_multi_choice(Species)
 
   expect_snapshot(
@@ -92,7 +92,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = languages) %>%
+    recipe(~., data = languages) |>
     step_dummy_multi_choice(all_predictors())
   rec_param <- tunable.step_dummy_multi_choice(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -112,9 +112,9 @@ test_that("no columns selected", {
     z = 3:1
   )
 
-  rec <- recipe(y ~ ., data = zdat) %>%
-    step_zv(all_predictors()) %>%
-    step_dummy_multi_choice(all_nominal()) %>%
+  rec <- recipe(y ~ ., data = zdat) |>
+    step_zv(all_predictors()) |>
+    step_dummy_multi_choice(all_nominal()) |>
     prep(training = zdat)
 
   expect_equal(
@@ -139,8 +139,8 @@ test_that("one columns selected", {
     z = 3:1
   )
 
-  rec <- recipe(y ~ ., data = zdat) %>%
-    step_dummy_multi_choice(all_nominal()) %>%
+  rec <- recipe(y ~ ., data = zdat) |>
+    step_dummy_multi_choice(all_nominal()) |>
     prep(training = zdat)
 
   expect_equal(
@@ -161,16 +161,16 @@ test_that("factor levels are preserved", {
   te <- data.frame(
     x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g"))
   )
-  data1 <- tr %>%
-    recipe() %>%
-    step_dummy(x, one_hot = T) %>%
-    prep() %>%
+  data1 <- tr |>
+    recipe() |>
+    step_dummy(x, one_hot = T) |>
+    prep() |>
     bake(new_data = te)
 
-  data2 <- tr %>%
-    recipe() %>%
-    step_dummy_multi_choice(x, threshold = 0) %>%
-    prep() %>%
+  data2 <- tr |>
+    recipe() |>
+    step_dummy_multi_choice(x, threshold = 0) |>
+    prep() |>
     bake(new_data = te)
 
   expect_identical(ncol(data1), ncol(data2))
@@ -179,14 +179,14 @@ test_that("factor levels are preserved", {
 test_that("sparse = 'yes' works", {
   rec <- recipe(~., data = languages)
 
-  dense <- rec %>%
-    step_dummy_multi_choice(all_predictors(), sparse = "no") %>%
-    prep() %>%
+  dense <- rec |>
+    step_dummy_multi_choice(all_predictors(), sparse = "no") |>
+    prep() |>
     bake(NULL)
-  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
-  sparse <- rec %>%
-    step_dummy_multi_choice(all_predictors(), sparse = "yes") %>%
-    prep() %>%
+  dense <- purrr::map(dense, as.integer) |> tibble::new_tibble()
+  sparse <- rec |>
+    step_dummy_multi_choice(all_predictors(), sparse = "yes") |>
+    prep() |>
     bake(NULL)
 
   expect_identical(dense, sparse)
@@ -196,8 +196,8 @@ test_that("sparse = 'yes' works", {
 })
 
 test_that("sparse argument is backwards compatible", {
-  rec <- recipe(~., data = languages) %>%
-    step_dummy_multi_choice(all_predictors()) %>%
+  rec <- recipe(~., data = languages) |>
+    step_dummy_multi_choice(all_predictors()) |>
     prep()
 
   exp <- bake(rec, languages)
@@ -212,10 +212,10 @@ test_that("sparse argument is backwards compatible", {
 })
 
 test_that(".recipes_toggle_sparse_args works", {
-  rec <- recipe(~., data = languages) %>%
+  rec <- recipe(~., data = languages) |>
     step_dummy_multi_choice(all_predictors(), sparse = "auto")
 
-  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+  exp <- rec |> prep() |> bake(NULL) |> sparsevctrs::sparsity()
 
   expect_true(
     .recipes_estimate_sparsity(rec) < exp
@@ -227,10 +227,10 @@ test_that(".recipes_toggle_sparse_args works", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   # lang_1 is not converted automatically because it has a non-standard role
   # but it is used like a factor variable. See also `?step_string2factor`
-  languages <- languages %>% mutate(lang_1 = factor(lang_1))
-  rec <- recipe(~., data = languages) %>%
-    step_dummy_multi_choice(lang_1, lang_2, lang_3) %>%
-    update_role(lang_1, new_role = "potato") %>%
+  languages <- languages |> mutate(lang_1 = factor(lang_1))
+  rec <- recipe(~., data = languages) |>
+    step_dummy_multi_choice(lang_1, lang_2, lang_3) |>
+    update_role(lang_1, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = languages)
@@ -278,7 +278,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("lang_1_", c("Armenian", "English", "Spanish"))
 
-  rec <- recipe(~lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) |>
     step_dummy_multi_choice(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -289,7 +289,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) |>
     step_dummy_multi_choice(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -302,7 +302,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) |>
     step_dummy_multi_choice(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -317,7 +317,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = languages) %>%
+  rec <- recipe(~., data = languages) |>
     step_dummy_multi_choice(all_predictors())
 
   expect_snapshot(print(rec))
@@ -326,7 +326,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_dummy_multi_choice(
       all_predictors(),
       threshold = hardhat::tune()
@@ -340,14 +340,14 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    dummy_multi_choice_rec <- recipe(~., data = languages) %>%
-      step_dummy_multi_choice(starts_with("lang"), other = 2) %>%
+    dummy_multi_choice_rec <- recipe(~., data = languages) |>
+      step_dummy_multi_choice(starts_with("lang"), other = 2) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    dummy_multi_choice_rec <- recipe(~., data = languages) %>%
-      step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>%
+    dummy_multi_choice_rec <- recipe(~., data = languages) |>
+      step_dummy_multi_choice(starts_with("lang"), naming = NULL) |>
       prep(),
     error = TRUE
   )
@@ -355,8 +355,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- languages
-  rec <- recipe(~., data) %>%
-    step_dummy_multi_choice(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_dummy_multi_choice(all_predictors()) |>
     prep()
 
   expect_identical(

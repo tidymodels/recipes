@@ -100,7 +100,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_pca(mpg, options = TRUE) %>% prep()
+      prep(step_pca(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:
@@ -196,8 +196,8 @@
 # bad args
 
     Code
-      recipe(~., data = mtcars) %>% step_pca(all_numeric_predictors(), num_comp = -1) %>%
-        prep()
+      prep(step_pca(recipe(~., data = mtcars), all_numeric_predictors(), num_comp = -
+      1))
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:
@@ -206,8 +206,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_pca(all_numeric_predictors(), prefix = 1) %>%
-        prep()
+      prep(step_pca(recipe(~., data = mtcars), all_numeric_predictors(), prefix = 1))
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:
@@ -216,8 +215,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_pca(all_numeric_predictors(), threshold = -1) %>%
-        prep()
+      prep(step_pca(recipe(~., data = mtcars), all_numeric_predictors(), threshold = -
+      1))
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:

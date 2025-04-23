@@ -10,7 +10,7 @@ rec <-
   recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
-  ) %>%
+  ) |>
   step_normalize(all_predictors())
 
 # From directly calling fastICA
@@ -57,7 +57,7 @@ test_that("correct ICA values", {
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
 
-  ica_extract <- rec %>%
+  ica_extract <- rec |>
     step_ica(
       carbon,
       hydrogen,
@@ -89,7 +89,7 @@ test_that("correct ICA values", {
     component = rep(c("IC1", "IC2"), 5),
     value = rep(NA_real_, 2 * 5),
     id = ""
-  ) %>%
+  ) |>
     arrange(terms, component)
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 2))
 
@@ -100,7 +100,7 @@ test_that("correct ICA values", {
     component = as.character(loadings$ind),
     value = loadings$values,
     id = ""
-  ) %>%
+  ) |>
     arrange(terms, component)
   expect_equal(tidy_exp_tr, tidy(ica_extract_trained, number = 2))
 })
@@ -109,7 +109,7 @@ test_that("No ICA comps", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
-  ica_extract <- rec %>%
+  ica_extract <- rec |>
     step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
 
   ica_extract_trained <- prep(ica_extract, training = biomass_tr)
@@ -129,7 +129,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$IC1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_ica(mpg, disp)
 
   expect_snapshot(
@@ -143,7 +143,7 @@ test_that("tunable", {
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_ica(all_predictors())
   rec_param <- tunable.step_ica(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp"))
@@ -157,8 +157,8 @@ test_that("tunable", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(~., data = mtcars) %>%
-    step_ica(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
+  rec <- recipe(~., data = mtcars) |>
+    step_ica(all_predictors(), num_comp = 0, keep_original_cols = FALSE) |>
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -179,8 +179,8 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_ica(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_ica(all_predictors()) |>
       prep()
   )
 })
@@ -192,8 +192,8 @@ test_that("check_options() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_ica(all_predictors(), options = TRUE) %>%
+    recipe(~., data = mtcars) |>
+      step_ica(all_predictors(), options = TRUE) |>
       prep()
   )
 })
@@ -209,9 +209,9 @@ test_that("bake method errors when needed non-standard role columns are missing"
     recipe(
       HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
       data = biomass_tr
-    ) %>%
-    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
+    ) |>
+    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) |>
+    update_role(carbon, hydrogen, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   ica_extract_trained <- prep(
@@ -287,7 +287,7 @@ test_that("keep_original_cols works", {
 
   new_names <- c("IC1", "IC2", "IC3", "IC4", "IC5")
 
-  rec <- recipe(~., mtcars) %>%
+  rec <- recipe(~., mtcars) |>
     step_ica(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -298,7 +298,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~., mtcars) %>%
+  rec <- recipe(~., mtcars) |>
     step_ica(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -315,7 +315,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
 
-  rec <- recipe(~., mtcars) %>%
+  rec <- recipe(~., mtcars) |>
     step_ica(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -337,8 +337,8 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
-  ) %>%
-    step_normalize(all_predictors()) %>%
+  ) |>
+    step_normalize(all_predictors()) |>
     step_ica(carbon, hydrogen, num_comp = 2)
 
   expect_snapshot(print(rec))
@@ -350,7 +350,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_ica(
       all_predictors(),
       num_comp = hardhat::tune()
@@ -366,8 +366,8 @@ test_that("bad args", {
   skip_if_not_installed("fastICA")
 
   expect_snapshot(
-    rec %>%
-      step_ica(carbon, hydrogen, prefix = 2) %>%
+    rec |>
+      step_ica(carbon, hydrogen, prefix = 2) |>
       prep(),
     error = TRUE
   )
@@ -379,8 +379,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("RSpectra")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_ica(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_ica(disp, mpg) |>
     prep()
 
   expect_identical(

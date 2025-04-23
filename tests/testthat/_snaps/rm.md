@@ -1,7 +1,7 @@
 # basic rename
 
     Code
-      prep(rec, training = iris %>% slice(1:75))
+      prep(rec, training = slice(iris, 1:75))
     Condition
       Error in `step_rm()`:
       Caused by error in `prep()`:

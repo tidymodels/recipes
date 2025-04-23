@@ -1,8 +1,8 @@
 # bad args
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
-      class = Species, metric = "circular") %>% prep()
+      prep(step_depth(recipe(Species ~ ., data = iris), all_numeric_predictors(),
+      class = Species, metric = "circular"))
     Condition
       Error in `step_depth()`:
       Caused by error in `prep()`:
@@ -11,8 +11,8 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
-      class = Species, prefix = 0L) %>% prep()
+      prep(step_depth(recipe(Species ~ ., data = iris), all_numeric_predictors(),
+      class = Species, prefix = 0L))
     Condition
       Error in `step_depth()`:
       Caused by error in `prep()`:
@@ -21,8 +21,8 @@
 # check_options() is used
 
     Code
-      recipe(~Species, data = iris) %>% step_depth(all_numeric_predictors(), class = Species,
-      options = TRUE) %>% prep()
+      prep(step_depth(recipe(~Species, data = iris), all_numeric_predictors(), class = Species,
+      options = TRUE))
     Condition
       Error in `step_depth()`:
       Caused by error in `prep()`:
@@ -31,7 +31,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_depth(disp, class = NULL) %>% prep()
+      prep(step_depth(recipe(mpg ~ ., data = mtcars), disp, class = NULL))
     Condition
       Error in `step_depth()`:
       Caused by error in `prep()`:

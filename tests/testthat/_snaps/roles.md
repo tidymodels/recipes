@@ -139,7 +139,7 @@
 # bad args
 
     Code
-      recipe(x = biomass) %>% add_role(carbon, new_role = letters[1:2])
+      add_role(recipe(x = biomass), carbon, new_role = letters[1:2])
     Condition
       Error in `add_role()`:
       ! `new_role` must be a single string, not a character vector.
@@ -147,7 +147,7 @@
 ---
 
     Code
-      recipe(x = biomass) %>% add_role(carbon, new_role = "a", new_type = letters[1:2])
+      add_role(recipe(x = biomass), carbon, new_role = "a", new_type = letters[1:2])
     Condition
       Error in `add_role()`:
       ! `new_type` must be a single string or `NULL`, not a character vector.
@@ -155,7 +155,7 @@
 ---
 
     Code
-      recipe(x = biomass) %>% update_role(carbon, new_role = c("a", "b"))
+      update_role(recipe(x = biomass), carbon, new_role = c("a", "b"))
     Condition
       Error in `update_role()`:
       ! `new_role` must be a single string, not a character vector.
@@ -163,7 +163,7 @@
 ---
 
     Code
-      recipe(x = biomass) %>% update_role(carbon, old_role = c("a", "b"))
+      update_role(recipe(x = biomass), carbon, old_role = c("a", "b"))
     Condition
       Error in `update_role()`:
       ! `old_role` must be a single string or `NULL`, not a character vector.
@@ -171,7 +171,7 @@
 # role functions handle case weights correctly
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% update_role("disp", new_role = "case_weights")
+      update_role(recipe(mpg ~ ., data = mtcars), "disp", new_role = "case_weights")
     Condition
       Error in `update_role()`:
       ! Roles of "case_weights" cannot be set using `update_role()`.
@@ -180,7 +180,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% add_role("disp", new_role = "case_weights")
+      add_role(recipe(mpg ~ ., data = mtcars), "disp", new_role = "case_weights")
     Condition
       Error in `add_role()`:
       ! Roles of "case_weights" cannot be set using `add_role()`.
@@ -189,7 +189,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars1) %>% remove_role(wt, old_role = "case_weights")
+      remove_role(recipe(mpg ~ ., data = mtcars1), wt, old_role = "case_weights")
     Condition
       Error in `remove_role()`:
       ! Roles of "case_weights" cannot removed using `remove_role()`.
@@ -197,7 +197,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars1) %>% update_role(wt)
+      update_role(recipe(mpg ~ ., data = mtcars1), wt)
     Condition
       Error in `update_role()`:
       ! `update_role()` cannot be used on variables with role "case_weights".
@@ -205,7 +205,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars1) %>% add_role(wt)
+      add_role(recipe(mpg ~ ., data = mtcars1), wt)
     Condition
       Error in `add_role()`:
       ! `add_role()` cannot be used on variables with role "case_weights".
@@ -293,7 +293,7 @@
 # add_roles() error if columns would be both predictor and outcome
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% add_role(mpg, new_role = "predictor")
+      add_role(recipe(mpg ~ ., data = mtcars), mpg, new_role = "predictor")
     Condition
       Error in `add_role()`:
       ! `mpg` cannot get "predictor" role as it already has role "outcome".
@@ -301,7 +301,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% add_role(disp, new_role = "outcome")
+      add_role(recipe(mpg ~ ., data = mtcars), disp, new_role = "outcome")
     Condition
       Error in `add_role()`:
       ! `disp` cannot get "outcome" role as it already has role "predictor".

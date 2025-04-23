@@ -59,7 +59,7 @@
 #'   data = biomass_tr
 #' )
 #'
-#' quadratic <- rec %>%
+#' quadratic <- rec |>
 #'   step_poly(carbon, hydrogen)
 #' quadratic <- prep(quadratic, training = biomass_tr)
 #'

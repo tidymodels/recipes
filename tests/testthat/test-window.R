@@ -15,39 +15,39 @@ rec <- recipe(~., data = sim_dat)
 test_that("error checks", {
   skip_if_not_installed("RcppRoll")
 
-  expect_snapshot(error = TRUE, rec %>% step_window(y1, size = 6) %>% prep())
-  expect_snapshot(error = TRUE, rec %>% step_window(y1, size = NA) %>% prep())
+  expect_snapshot(error = TRUE, rec |> step_window(y1, size = 6) |> prep())
+  expect_snapshot(error = TRUE, rec |> step_window(y1, size = NA) |> prep())
   expect_snapshot(
     error = TRUE,
-    rec %>% step_window(y1, size = NULL) %>% prep()
+    rec |> step_window(y1, size = NULL) |> prep()
   )
-  expect_snapshot(error = TRUE, rec %>% step_window(y1, statistic = "average"))
-  expect_snapshot(error = TRUE, rec %>% step_window(y1, size = 1) %>% prep())
-  expect_snapshot(error = TRUE, rec %>% step_window(y1, size = 2) %>% prep())
-  expect_snapshot(error = TRUE, rec %>% step_window(y1, size = -1) %>% prep())
+  expect_snapshot(error = TRUE, rec |> step_window(y1, statistic = "average"))
+  expect_snapshot(error = TRUE, rec |> step_window(y1, size = 1) |> prep())
+  expect_snapshot(error = TRUE, rec |> step_window(y1, size = 2) |> prep())
+  expect_snapshot(error = TRUE, rec |> step_window(y1, size = -1) |> prep())
   expect_snapshot(
-    rec %>% step_window(y1, size = 3 + .Machine$double.eps) %>% prep()
+    rec |> step_window(y1, size = 3 + .Machine$double.eps) |> prep()
   )
   expect_snapshot(
-    rec %>% step_window(y1, size = 3 + 2 * .Machine$double.eps) %>% prep(),
+    rec |> step_window(y1, size = 3 + 2 * .Machine$double.eps) |> prep(),
     error = TRUE
   )
   expect_snapshot(
     error = TRUE,
-    prep(rec %>% step_window(fac), training = sim_dat)
+    prep(rec |> step_window(fac), training = sim_dat)
   )
   expect_snapshot(
     error = TRUE,
-    prep(rec %>% step_window(y1, size = 1000L), training = sim_dat) %>% prep()
+    prep(rec |> step_window(y1, size = 1000L), training = sim_dat) |> prep()
   )
-  bad_names <- rec %>%
+  bad_names <- rec |>
     step_window(starts_with("y"), names = "only_one_name")
   expect_snapshot(error = TRUE, prep(bad_names, training = sim_dat))
 })
 
 test_that("basic moving average", {
   skip_if_not_installed("RcppRoll")
-  simple_ma <- rec %>%
+  simple_ma <- rec |>
     step_window(starts_with("y"))
   simple_ma <- prep(simple_ma, training = sim_dat)
   simple_ma_res <- bake(simple_ma, new_data = sim_dat)
@@ -65,7 +65,7 @@ test_that("basic moving average", {
 
 test_that("creating new variables", {
   skip_if_not_installed("RcppRoll")
-  new_names <- rec %>%
+  new_names <- rec |>
     step_window(
       starts_with("y"),
       names = paste0("new", 1:2),
@@ -74,7 +74,7 @@ test_that("creating new variables", {
   new_names <- prep(new_names, training = sim_dat)
   new_names_res <- bake(new_names, new_data = sim_dat)
 
-  simple_ma <- rec %>%
+  simple_ma <- rec |>
     step_window(starts_with("y"))
   simple_ma <- prep(simple_ma, training = sim_dat)
   simple_ma_res <- bake(simple_ma, new_data = sim_dat)
@@ -89,14 +89,14 @@ test_that("na_rm argument works for step_window", {
   sim_dat_na <- sim_dat
   sim_dat_na[7, 2:3] <- NA
 
-  simple_ma_no_rm_na <- recipe(~., data = sim_dat_na) %>%
-    step_window(starts_with("y"), na_rm = FALSE) %>%
-    prep() %>%
+  simple_ma_no_rm_na <- recipe(~., data = sim_dat_na) |>
+    step_window(starts_with("y"), na_rm = FALSE) |>
+    prep() |>
     bake(new_data = NULL)
 
-  simple_ma_rm_na <- recipe(~., data = sim_dat_na) %>%
-    step_window(starts_with("y"), na_rm = TRUE) %>%
-    prep() %>%
+  simple_ma_rm_na <- recipe(~., data = sim_dat_na) |>
+    step_window(starts_with("y"), na_rm = TRUE) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_false(anyNA(simple_ma_rm_na$y1))
@@ -113,7 +113,7 @@ test_that("na_rm argument works for step_window", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_window(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_window(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "size"))
@@ -132,7 +132,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$new_value <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_window(mpg, names = "new_value")
 
   expect_snapshot(
@@ -146,8 +146,8 @@ test_that("error on too large window size", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_window(mpg, size = 999) %>%
+    recipe(~., data = mtcars) |>
+      step_window(mpg, size = 999) |>
       prep()
   )
 })
@@ -156,9 +156,9 @@ test_that("error on too large window size", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("RcppRoll")
-  rec <- rec %>%
-    step_window(x1) %>%
-    update_role(x1, new_role = "potato") %>%
+  rec <- rec |>
+    step_window(x1) |>
+    update_role(x1, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = sim_dat)
@@ -212,7 +212,7 @@ test_that("keep_original_cols works", {
   skip_if_not_installed("RcppRoll")
   new_names <- c("new_y1")
 
-  rec <- recipe(~y1, data = sim_dat) %>%
+  rec <- recipe(~y1, data = sim_dat) |>
     step_window(y1, names = "new_y1", keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -223,7 +223,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~y1, data = sim_dat) %>%
+  rec <- recipe(~y1, data = sim_dat) |>
     step_window(y1, names = "new_y1", keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -237,7 +237,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("RcppRoll")
-  rec <- recipe(~y1, data = sim_dat) %>%
+  rec <- recipe(~y1, data = sim_dat) |>
     step_window(y1, names = "new_y1")
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -261,7 +261,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_window(
       all_predictors(),
       statistic = hardhat::tune(),

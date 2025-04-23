@@ -16,7 +16,7 @@ rec <- recipe(
 # ------------------------------------------------------------------------------
 
 test_that("correct basis functions", {
-  with_ns <- rec %>%
+  with_ns <- rec |>
     step_ns(carbon, hydrogen)
 
   with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
@@ -83,12 +83,12 @@ test_that("correct basis functions", {
 test_that("options(knots) works correctly (#1297)", {
   exmaple_data <- tibble(x = seq(-2, 2, 0.01))
 
-  rec_res <- recipe(~., data = exmaple_data) %>%
+  rec_res <- recipe(~., data = exmaple_data) |>
     step_ns(
       x,
       options = list(knots = seq(-1, 1, 0.125), Boundary.knots = c(-1.5, 1.5))
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     bake(new_data = NULL)
 
   mm_res <- model.matrix(
@@ -111,7 +111,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_ns_1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_ns(mpg)
 
   expect_snapshot(
@@ -122,7 +122,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_ns(all_predictors())
   rec_param <- tunable.step_ns(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free"))
@@ -136,8 +136,8 @@ test_that("tunable", {
 })
 
 test_that("works when baked with 1 row", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_ns(disp) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
+    step_ns(disp) |>
     prep()
 
   expect_no_error(
@@ -150,8 +150,8 @@ test_that("works when baked with 1 row", {
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_ns(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_ns(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -159,9 +159,9 @@ test_that("check_options() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  with_ns <- rec %>%
-    step_ns(carbon, hydrogen) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
+  with_ns <- rec |>
+    step_ns(carbon, hydrogen) |>
+    update_role(carbon, hydrogen, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
@@ -209,7 +209,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_ns_1", "mpg_ns_2")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_ns(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -220,7 +220,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_ns(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -233,7 +233,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_ns(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -248,7 +248,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
     step_ns(disp, wt)
 
   expect_snapshot(print(rec))
@@ -257,7 +257,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_ns(
       all_predictors(),
       deg_free = hardhat::tune()
@@ -271,8 +271,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_ns(disp) %>%
+  rec <- recipe(~., data) |>
+    step_ns(disp) |>
     prep()
 
   expect_identical(

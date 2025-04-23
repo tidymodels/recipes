@@ -91,10 +91,10 @@ ames_rec <-
   recipe(
     Sale_Price ~ Longitude + Latitude + Neighborhood + Year_Built + Central_Air,
     data = ames
-  ) \%>\%
-  step_other(Neighborhood, threshold = 0.05) \%>\%
-  step_dummy(all_nominal()) \%>\%
-  step_interact(~ starts_with("Central_Air"):Year_Built) \%>\%
+  ) |>
+  step_other(Neighborhood, threshold = 0.05) |>
+  step_dummy(all_nominal()) |>
+  step_interact(~ starts_with("Central_Air"):Year_Built) |>
   step_ns(Longitude, Latitude, deg_free = 5)
 
 prep(ames_rec, verbose = TRUE)

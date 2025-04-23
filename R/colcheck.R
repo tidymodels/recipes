@@ -21,9 +21,9 @@
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(biomass, package = "modeldata")
 #'
-#' biomass_rec <- recipe(HHV ~ ., data = biomass) %>%
-#'   step_rm(sample, dataset) %>%
-#'   check_cols(contains("gen")) %>%
+#' biomass_rec <- recipe(HHV ~ ., data = biomass) |>
+#'   step_rm(sample, dataset) |>
+#'   check_cols(contains("gen")) |>
 #'   step_center(all_numeric_predictors())
 #' \dontrun{
 #' bake(biomass_rec, biomass[, c("carbon", "HHV")])

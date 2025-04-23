@@ -49,8 +49,8 @@ df <- tibble(y = c(1, 2, 3), x = c(4, 5, 6), var = c("a", "b", "c"))
 # We typically recommend that you remove this column before passing the
 # `data` to `recipe()`, but for now let's pass it through and assign it an
 # `"id"` role.
-rec <- recipe(y ~ ., df) \%>\%
-  update_role(var, new_role = "id") \%>\%
+rec <- recipe(y ~ ., df) |>
+  update_role(var, new_role = "id") |>
   step_center(x)
 
 prepped <- prep(rec, df)

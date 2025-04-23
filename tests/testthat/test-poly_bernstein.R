@@ -17,7 +17,7 @@ test_that("correct nonnegative functions", {
     data = biomass_tr
   )
 
-  with_ns <- rec %>%
+  with_ns <- rec |>
     step_poly_bernstein(carbon, hydrogen, degree = 5)
 
   with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
@@ -85,7 +85,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_01 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_poly_bernstein(mpg)
 
   expect_snapshot(
@@ -104,7 +104,7 @@ test_that("tunable", {
   )
 
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_poly_bernstein(all_predictors())
   rec_param <- tunable.step_poly_bernstein(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
@@ -122,8 +122,8 @@ test_that("check_options() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_poly_bernstein(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_poly_bernstein(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -131,9 +131,9 @@ test_that("check_options() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(mtcars) %>%
-    step_poly_bernstein(disp) %>%
-    update_role(disp, new_role = "potato") %>%
+  rec <- recipe(mtcars) |>
+    step_poly_bernstein(disp) |>
+    update_role(disp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mtcars)
@@ -181,7 +181,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("mpg_", formatC(1:10, width = 2, flag = "0"))
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_poly_bernstein(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -192,7 +192,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_poly_bernstein(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -214,7 +214,7 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass
-  ) %>%
+  ) |>
     step_poly_bernstein(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -223,7 +223,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_poly_bernstein(
       all_predictors(),
       degree = hardhat::tune()
@@ -239,14 +239,14 @@ test_that("bad args", {
   skip_if_not_installed("splines2")
 
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_poly_bernstein(disp, degree = -1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_poly_bernstein(disp, degree = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_poly_bernstein(disp, complete_set = 1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_poly_bernstein(disp, complete_set = 1) |>
       prep(),
     error = TRUE
   )
@@ -256,8 +256,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("splines2")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_poly_bernstein(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_poly_bernstein(disp, mpg) |>
     prep()
 
   expect_identical(

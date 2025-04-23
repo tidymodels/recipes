@@ -11,8 +11,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_poly_bernstein(mpg, options = TRUE) %>%
-        prep()
+      prep(step_poly_bernstein(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_poly_bernstein()`:
       Caused by error in `prep()`:
@@ -99,8 +98,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_poly_bernstein(disp, degree = -1) %>%
-        prep()
+      prep(step_poly_bernstein(recipe(mpg ~ ., data = mtcars), disp, degree = -1))
     Condition
       Error in `step_poly_bernstein()`:
       Caused by error in `prep()`:
@@ -109,8 +107,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_poly_bernstein(disp, complete_set = 1) %>%
-        prep()
+      prep(step_poly_bernstein(recipe(mpg ~ ., data = mtcars), disp, complete_set = 1))
     Condition
       Error in `step_poly_bernstein()`:
       Caused by error in `prep()`:

@@ -3,15 +3,15 @@ test_that("basic usage", {
 
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
-  iris_test <- slice(iris_tbl, 76:150) %>%
+  iris_test <- slice(iris_tbl, 76:150) |>
     # change the position of the variables to check that this is not a problem
     select(Species, starts_with("Sepal"), starts_with("Petal"))
 
   dplyr_train <- select(iris_train, Species, starts_with("Sepal"))
   dplyr_test <- select(iris_test, Species, starts_with("Sepal"))
 
-  rec <- recipe(~., data = iris_train) %>%
-    step_select(Species, starts_with("Sepal")) %>%
+  rec <- recipe(~., data = iris_train) |>
+    step_select(Species, starts_with("Sepal")) |>
     prep(training = iris_train)
 
   rec_train <- bake(rec, new_data = NULL)
@@ -31,8 +31,8 @@ test_that("basic rename", {
   dplyr_train <- select(iris_train, Species, sepal_length = Sepal.Length)
   dplyr_test <- select(iris_test, Species, sepal_length = Sepal.Length)
 
-  rec <- recipe(~., data = iris_train) %>%
-    step_select(Species, sepal_length = Sepal.Length) %>%
+  rec <- recipe(~., data = iris_train) |>
+    step_select(Species, sepal_length = Sepal.Length) |>
     prep(training = iris_train)
 
   rec_train <- bake(rec, new_data = NULL)
@@ -52,8 +52,8 @@ test_that("select via type", {
   dplyr_train <- select_if(iris_train, is.numeric)
   dplyr_test <- select_if(iris_test, is.numeric)
 
-  rec <- recipe(~., data = iris_train) %>%
-    step_select(all_numeric()) %>%
+  rec <- recipe(~., data = iris_train) |>
+    step_select(all_numeric()) |>
     prep(training = iris_train)
 
   rec_train <- bake(rec, new_data = NULL)
@@ -73,8 +73,8 @@ test_that("select via role", {
   dplyr_train <- select(iris_train, -Species)
   dplyr_test <- select(iris_test, -Species)
 
-  rec <- recipe(Species ~ ., data = iris_train) %>%
-    step_select(all_predictors()) %>%
+  rec <- recipe(Species ~ ., data = iris_train) |>
+    step_select(all_predictors()) |>
     prep(training = iris_train)
 
   rec_train <- bake(rec, new_data = NULL)
@@ -96,10 +96,10 @@ test_that("quasiquotation", {
   dplyr_train <- select(iris_train, all_of(sepal_vars))
 
   rec_1 <-
-    recipe(~., data = iris_train) %>%
+    recipe(~., data = iris_train) |>
     step_select(all_of(sepal_vars))
   rec_2 <-
-    recipe(~., data = iris_train) %>%
+    recipe(~., data = iris_train) |>
     step_select(all_of(!!sepal_vars))
 
   # both work when local variable is available
@@ -125,13 +125,13 @@ test_that("tidying", {
   petal <- c("Petal.Width", "Petal.Length")
 
   set.seed(403)
-  rec <- recipe(~., data = iris) %>%
+  rec <- recipe(~., data = iris) |>
     step_select(
       species = Species,
       starts_with("Sepal"),
       all_of(petal),
       id = "select_no_qq"
-    ) %>%
+    ) |>
     step_select(all_of(!!petal), id = "select_qq")
   prepped <- prep(rec, training = iris_train)
 
@@ -151,8 +151,8 @@ test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
 
-  rec <- recipe(~., mtcars) %>%
-    step_select(vs, mpg, disp) %>%
+  rec <- recipe(~., mtcars) |>
+    step_select(vs, mpg, disp) |>
     prep()
 
   expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
@@ -161,7 +161,7 @@ test_that("doesn't destroy sparsity", {
 
 test_that("step_select() throws deprecating warning", {
   expect_snapshot(
-    tmp <- recipe(~., mtcars) %>%
+    tmp <- recipe(~., mtcars) |>
       step_select(vs, mpg, disp)
   )
 })
@@ -171,10 +171,10 @@ test_that("step_select() throws deprecating warning", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
-  rec <- recipe(~., data = mtcars) %>%
-    step_select(cyl) %>%
-    update_role(cyl, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec <- recipe(~., data = mtcars) |>
+    step_select(cyl) |>
+    update_role(cyl, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep(training = mtcars)
 
   expect_snapshot(error = TRUE, bake(rec, new_data = mtcars[, c(-2)]))
@@ -217,7 +217,7 @@ test_that("empty selection tidy method works", {
 test_that("printing", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
-  rec <- recipe(~., data = iris) %>%
+  rec <- recipe(~., data = iris) |>
     step_select(Species)
 
   expect_snapshot(print(rec))
@@ -228,8 +228,8 @@ test_that("0 and 1 rows data work in bake method", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_select(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_select(all_predictors()) |>
     prep()
 
   expect_identical(

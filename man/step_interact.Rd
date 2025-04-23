@@ -102,16 +102,16 @@ The underlying operation does not allow for case weights.
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(penguins, package = "modeldata")
-penguins <- penguins \%>\% na.omit()
+penguins <- penguins |> na.omit()
 
 rec <- recipe(flipper_length_mm ~ ., data = penguins)
 
-int_mod_1 <- rec \%>\%
+int_mod_1 <- rec |>
   step_interact(terms = ~ bill_depth_mm:bill_length_mm)
 
 # specify all dummy variables succinctly with `starts_with()`
-int_mod_2 <- rec \%>\%
-  step_dummy(sex, species, island) \%>\%
+int_mod_2 <- rec |>
+  step_dummy(sex, species, island) |>
   step_interact(terms = ~ body_mass_g:starts_with("species"))
 
 int_mod_1 <- prep(int_mod_1, training = penguins)

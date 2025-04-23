@@ -128,7 +128,7 @@ missing_examples <- c(14, 394, 565)
 
 rec <- recipe(Price ~ ., data = credit_tr)
 \dontrun{
-impute_rec <- rec \%>\%
+impute_rec <- rec |>
   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt)
 
 imp_models <- prep(impute_rec, training = credit_tr)
@@ -143,7 +143,7 @@ tidy(imp_models, number = 1)
 
 ## Specifying which variables to imputate with
 
-impute_rec <- rec \%>\%
+impute_rec <- rec |>
   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
     impute_with = c(Time, Age, Expenses),
     # for quick execution, nbagg lowered

@@ -13,7 +13,7 @@ ex_dat <- data.frame(
 rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat)
 
 test_that("1:many", {
-  rec1 <- rec %>%
+  rec1 <- rec |>
     step_ratio(x1, denom = all_numeric(), id = "")
 
   exp_un_1 <- tibble(
@@ -43,7 +43,7 @@ test_that("1:many", {
 })
 
 test_that("many:1", {
-  rec2 <- rec %>%
+  rec2 <- rec |>
     step_ratio(all_numeric(), denom = x1, id = "")
 
   exp_un_2 <- tibble(
@@ -73,7 +73,7 @@ test_that("many:1", {
 })
 
 test_that("many:many", {
-  rec3 <- rec %>%
+  rec3 <- rec |>
     step_ratio(all_numeric(), denom = all_numeric(), id = "")
 
   exp_un_3 <- tibble(
@@ -114,15 +114,15 @@ test_that("many:many", {
 })
 
 test_that("wrong type", {
-  rec4 <- rec %>%
+  rec4 <- rec |>
     step_ratio(x1, denom = all_predictors())
   expect_snapshot(error = TRUE, prep(rec4, ex_dat, verbose = FALSE))
 
-  rec5 <- rec %>%
+  rec5 <- rec |>
     step_ratio(all_predictors(), denom = x1)
   expect_snapshot(error = TRUE, prep(rec5, ex_dat, verbose = FALSE))
 
-  rec6 <- rec %>%
+  rec6 <- rec |>
     step_ratio(all_predictors(), denom = all_predictors())
   expect_snapshot(error = TRUE, prep(rec6, ex_dat, verbose = FALSE))
 })
@@ -131,7 +131,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_o_disp <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_ratio(mpg, denom = disp)
 
   expect_snapshot(
@@ -143,15 +143,15 @@ test_that("check_name() is used", {
 test_that("recipes_argument_select() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_ratio(disp, denom = NULL) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_ratio(disp, denom = NULL) |>
       prep()
   )
 })
 
 test_that("addition of recipes_argument_select() is backwards compatible", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_ratio(all_predictors(), denom = disp) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
+    step_ratio(all_predictors(), denom = disp) |>
     prep()
 
   exp <- bake(rec, mtcars)
@@ -167,8 +167,8 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  rec_old <- recipe(mpg ~ ., data = mtcars) %>%
-    step_ratio(all_predictors(), denom = denom_vars(disp)) %>%
+  rec_old <- recipe(mpg ~ ., data = mtcars) |>
+    step_ratio(all_predictors(), denom = denom_vars(disp)) |>
     prep()
 
   expect_identical(
@@ -180,9 +180,9 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- rec %>%
-    step_ratio(x1, denom = all_numeric()) %>%
-    update_role(x1, new_role = "potato") %>%
+  rec1 <- rec |>
+    step_ratio(x1, denom = all_numeric()) |>
+    update_role(x1, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec1 <- prep(rec1, ex_dat, verbose = FALSE)
@@ -230,7 +230,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_o_disp")
 
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~ mpg + disp, mtcars) |>
     step_ratio(mpg, denom = disp, keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -241,7 +241,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~ mpg + disp, mtcars) |>
     step_ratio(mpg, denom = disp, keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -254,7 +254,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~ mpg + disp, mtcars) |>
     step_ratio(mpg, denom = disp)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -269,7 +269,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
+  rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat) |>
     step_ratio(all_numeric(), denom = all_numeric())
 
   expect_snapshot(print(rec))
@@ -278,8 +278,8 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~ mpg + disp, mtcars) %>%
-      step_ratio(mpg, denom = disp, naming = NULL) %>%
+    recipe(~ mpg + disp, mtcars) |>
+      step_ratio(mpg, denom = disp, naming = NULL) |>
       prep(),
     error = TRUE
   )
@@ -287,8 +287,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_ratio(disp, mpg, denom = carb) %>%
+  rec <- recipe(~., data) |>
+    step_ratio(disp, mpg, denom = carb) |>
     prep()
 
   expect_identical(

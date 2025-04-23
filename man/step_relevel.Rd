@@ -78,9 +78,9 @@ The underlying operation does not allow for case weights.
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(Sacramento, package = "modeldata")
-rec <- recipe(~ city + zip, data = Sacramento) \%>\%
-  step_unknown(city, new_level = "UNKNOWN") \%>\%
-  step_relevel(city, ref_level = "UNKNOWN") \%>\%
+rec <- recipe(~ city + zip, data = Sacramento) |>
+  step_unknown(city, new_level = "UNKNOWN") |>
+  step_relevel(city, ref_level = "UNKNOWN") |>
   prep()
 
 data <- bake(rec, Sacramento)

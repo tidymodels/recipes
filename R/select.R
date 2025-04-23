@@ -53,8 +53,8 @@
 #' dplyr_train <- select(iris_train, Species, starts_with("Sepal"))
 #' dplyr_test <- select(iris_test, Species, starts_with("Sepal"))
 #'
-#' rec <- recipe(~., data = iris_train) %>%
-#'   step_select(Species, starts_with("Sepal")) %>%
+#' rec <- recipe(~., data = iris_train) |>
+#'   step_select(Species, starts_with("Sepal")) |>
 #'   prep(training = iris_train)
 #'
 #' rec_train <- bake(rec, new_data = NULL)
@@ -67,9 +67,9 @@
 #' sepal_vars <- c("Sepal.Width", "Sepal.Length")
 #'
 #' qq_rec <-
-#'   recipe(~., data = iris_train) %>%
+#'   recipe(~., data = iris_train) |>
 #'   # fine for interactive usage
-#'   step_select(Species, all_of(sepal_vars)) %>%
+#'   step_select(Species, all_of(sepal_vars)) |>
 #'   # best approach for saving a recipe to disk
 #'   step_select(Species, all_of(!!sepal_vars))
 #'

@@ -36,9 +36,9 @@
 #'   data = biomass_tr
 #' )
 #'
-#' ilogit_trans <- rec %>%
-#'   step_center(carbon, hydrogen) %>%
-#'   step_scale(carbon, hydrogen) %>%
+#' ilogit_trans <- rec |>
+#'   step_center(carbon, hydrogen) |>
+#'   step_scale(carbon, hydrogen) |>
 #'   step_invlogit(carbon, hydrogen)
 #'
 #' ilogit_obj <- prep(ilogit_trans, training = biomass_tr)

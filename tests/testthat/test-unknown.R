@@ -12,8 +12,8 @@ sacr_te <- Sacramento[-(1:800), ]
 rec <- recipe(~., data = sacr_tr)
 
 test_that("basic functionality", {
-  rec_1 <- rec %>%
-    step_unknown(city, zip) %>%
+  rec_1 <- rec |>
+    step_unknown(city, zip) |>
     prep()
 
   tr_1 <- bake(rec_1, new_data = NULL)
@@ -43,8 +43,8 @@ test_that("basic functionality", {
   expect_true(all(te_loc == "unknown"))
   expect_equal(loc_lvl, levels(te_1$zip))
 
-  rec_2 <- rec %>%
-    step_unknown(city, new_level = "potato-based") %>%
+  rec_2 <- rec |>
+    step_unknown(city, new_level = "potato-based") |>
     prep()
   tr_2 <- bake(rec_2, new_data = NULL)
   tr_city <- tr_2$city[is.na(sacr_tr$city)]
@@ -57,26 +57,26 @@ test_that("basic functionality", {
 test_that("bad args", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = sacr_tr) %>%
-      step_unknown(sqft) %>%
+    recipe(~., data = sacr_tr) |>
+      step_unknown(sqft) |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = sacr_tr) %>%
-      step_unknown(city, new_level = "FAIR_OAKS") %>%
+    recipe(~., data = sacr_tr) |>
+      step_unknown(city, new_level = "FAIR_OAKS") |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = sacr_tr) %>%
-      step_unknown(city, new_level = 2) %>%
+    recipe(~., data = sacr_tr) |>
+      step_unknown(city, new_level = 2) |>
       prep()
   )
 })
 
 test_that("tidy methods", {
-  rec_raw <- rec %>%
+  rec_raw <- rec |>
     step_unknown(all_nominal(), new_level = "cake", id = "cheese")
 
   expect_equal(
@@ -92,10 +92,10 @@ test_that("tidy methods", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec_1 <- rec %>%
-    step_unknown(city, zip) %>%
-    update_role(city, zip, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec_1 <- rec |>
+    step_unknown(city, zip) |>
+    update_role(city, zip, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep()
 
   expect_snapshot(error = TRUE, bake(rec_1, sacr_te[3:ncol(sacr_te)]))
@@ -139,7 +139,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = sacr_tr) %>%
+  rec <- recipe(~., data = sacr_tr) |>
     step_unknown(city, zip)
 
   expect_snapshot(print(rec))
@@ -148,8 +148,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_unknown(Species) %>%
+  rec <- recipe(~., data) |>
+    step_unknown(Species) |>
     prep()
 
   expect_identical(

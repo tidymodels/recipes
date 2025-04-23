@@ -30,11 +30,11 @@ When a recipe is created using the formula interface, this defines the roles for
 ```{r formula-roles}
 library(recipes)
 
-recipe(Species ~ ., data = iris) %>% summary()
+recipe(Species ~ ., data = iris) |> summary()
 
-recipe( ~ Species, data = iris) %>% summary()
+recipe( ~ Species, data = iris) |> summary()
 
-recipe(Sepal.Length + Sepal.Width ~ ., data = iris) %>% summary()
+recipe(Sepal.Length + Sepal.Width ~ ., data = iris) |> summary()
 ```
 
 These roles can be updated despite this initial assignment. `update_role()` can modify a single existing role:
@@ -43,56 +43,56 @@ These roles can be updated despite this initial assignment. `update_role()` can 
 library(modeldata)
 data(biomass)
 
-recipe(HHV ~ ., data = biomass) %>% 
-  update_role(dataset, new_role = "dataset split variable") %>% 
-  update_role(sample, new_role = "sample ID") %>% 
+recipe(HHV ~ ., data = biomass) |> 
+  update_role(dataset, new_role = "dataset split variable") |> 
+  update_role(sample, new_role = "sample ID") |> 
   summary()
 ```
 
 When you want to get rid of a role for a column, use `remove_role()`. 
 
 ```{r formula-rm}
-recipe(HHV ~ ., data = biomass) %>% 
-  remove_role(sample, old_role = "predictor") %>% 
+recipe(HHV ~ ., data = biomass) |> 
+  remove_role(sample, old_role = "predictor") |> 
   summary()
 ```
 
 It represents the lack of a role as `NA`, which means that the variable is used in the recipe, but does not yet have a declared role. Setting the role manually to `NA` is not allowed:
 
 ```{r formula-rm-fail, error=TRUE}
-recipe(HHV ~ ., data = biomass) %>% 
+recipe(HHV ~ ., data = biomass) |> 
   update_role(sample, new_role = NA_character_)
 ```
 
 When there are cases when a column will be used in more than one context, `add_role()` can create additional roles:
 
 ```{r formula-add}
-multi_role <- recipe(HHV ~ ., data = biomass) %>% 
-  update_role(dataset, new_role = "dataset split variable") %>% 
-  update_role(sample, new_role = "sample ID") %>% 
+multi_role <- recipe(HHV ~ ., data = biomass) |> 
+  update_role(dataset, new_role = "dataset split variable") |> 
+  update_role(sample, new_role = "sample ID") |> 
   # Roles below from https://wordcounter.net/random-word-generator
   add_role(sample, new_role = "jellyfish") 
 
-multi_role %>% 
+multi_role |> 
   summary()
 ```
 
 If a variable has multiple existing roles and you want to update one of them, the additional `old_role` argument to `update_role()` must be used to resolve any ambiguity.
 
 ```{r}
-multi_role %>%
-  update_role(sample, new_role = "flounder", old_role = "jellyfish") %>%
+multi_role |>
+  update_role(sample, new_role = "flounder", old_role = "jellyfish") |>
   summary()
 ```
 
 Additional variable roles allow you to use `has_role()` in combination with other selection methods (see `?selections`) to target specific variables in subsequent processing steps. For example, in the following recipe, by adding the role `"nocenter"` to the `HHV` predictor, you can use `-has_role("nocenter")` to exclude `HHV` when centering `all_predictors()`.
 
 ```{r}
-multi_role %>% 
-  add_role(HHV, new_role = "nocenter") %>% 
-  step_center(all_predictors(), -has_role("nocenter")) %>% 
-  prep(training = biomass, retain = TRUE) %>% 
-  bake(new_data = NULL) %>% 
+multi_role |> 
+  add_role(HHV, new_role = "nocenter") |> 
+  step_center(all_predictors(), -has_role("nocenter")) |> 
+  prep(training = biomass, retain = TRUE) |> 
+  bake(new_data = NULL) |> 
   head()
 ```
 
@@ -103,16 +103,16 @@ The selector `all_numeric_predictors()` can also be used in place of the compoun
 You can start a recipe without any roles:
 
 ```{r x-none}
-recipe(biomass) %>% 
+recipe(biomass) |> 
   summary()
 ```
 
 and roles can be added in bulk as needed:
 
 ```{r x-none-updated}
-recipe(biomass) %>% 
-  update_role(contains("gen"), new_role = "lunchroom") %>% 
-  update_role(sample, HHV, new_role = "snail") %>% 
+recipe(biomass) |> 
+  update_role(contains("gen"), new_role = "lunchroom") |> 
+  update_role(sample, HHV, new_role = "snail") |> 
   summary()
 ```
 
@@ -129,17 +129,17 @@ In other cases, the roles are defaulted to a relevant value based the context. F
 So, by default, they are predictors but don't have to be:
 
 ```{r dummy}
-recipe( ~ ., data = iris) %>% 
-  step_dummy(Species) %>% 
-  prep() %>% 
-  bake(new_data = NULL, all_predictors()) %>% 
-  dplyr::select(starts_with("Species")) %>% 
+recipe( ~ ., data = iris) |> 
+  step_dummy(Species) |> 
+  prep() |> 
+  bake(new_data = NULL, all_predictors()) |> 
+  dplyr::select(starts_with("Species")) |> 
   names()
 
 # or something else
-recipe( ~ ., data = iris) %>% 
-  step_dummy(Species, role = "trousers") %>% 
-  prep() %>% 
-  bake(new_data = NULL, has_role("trousers")) %>% 
+recipe( ~ ., data = iris) |> 
+  step_dummy(Species, role = "trousers") |> 
+  prep() |> 
+  bake(new_data = NULL, has_role("trousers")) |> 
   names()
 ```

@@ -48,8 +48,8 @@
 # multiple column prefix
 
     Code
-      recipe(~., data = example_data) %>% step_discretize(x1, x2, options = list(
-        prefix = "hello")) %>% prep()
+      prep(step_discretize(recipe(~., data = example_data), x1, x2, options = list(
+        prefix = "hello")))
     Condition
       Warning:
       Note that the options `prefix` and `labels` will be applied to all variables.
@@ -70,7 +70,7 @@
 # bad args
 
     Code
-      recipe(~., data = ex_tr) %>% step_discretize(x1, num_breaks = 1) %>% prep()
+      prep(step_discretize(recipe(~., data = ex_tr), x1, num_breaks = 1))
     Condition
       Error in `step_discretize()`:
       Caused by error in `recipes::discretize()`:
@@ -79,7 +79,7 @@
 ---
 
     Code
-      recipe(~., data = ex_tr) %>% step_discretize(x1, num_breaks = 100) %>% prep()
+      prep(step_discretize(recipe(~., data = ex_tr), x1, num_breaks = 100))
     Condition
       Warning:
       Data not binned; too few unique values per bin. Adjust `min_unique` as needed.
@@ -100,8 +100,7 @@
 ---
 
     Code
-      recipe(~., data = ex_tr) %>% step_discretize(x1, options = list(prefix = "@$")) %>%
-        prep()
+      prep(step_discretize(recipe(~., data = ex_tr), x1, options = list(prefix = "@$")))
     Condition
       Warning:
       The prefix "@$" is not a valid R name. It has been changed to "X..".
@@ -122,8 +121,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_discretize(disp, num_breaks = 0) %>%
-        prep()
+      prep(step_discretize(recipe(mpg ~ ., data = mtcars), disp, num_breaks = 0))
     Condition
       Error in `step_discretize()`:
       Caused by error in `prep()`:
@@ -132,8 +130,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_discretize(disp, min_unique = -1) %>%
-        prep()
+      prep(step_discretize(recipe(mpg ~ ., data = mtcars), disp, min_unique = -1))
     Condition
       Error in `step_discretize()`:
       Caused by error in `prep()`:
@@ -150,7 +147,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_discretize(mpg, options = TRUE) %>% prep()
+      prep(step_discretize(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_discretize()`:
       Caused by error in `prep()`:

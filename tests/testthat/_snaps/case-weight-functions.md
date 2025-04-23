@@ -18,7 +18,7 @@
 # get_case_weights() catches non-numeric case weights
 
     Code
-      recipe(~., data = mtcars) %>% step_normalize(all_predictors()) %>% prep()
+      prep(step_normalize(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_normalize()`:
       Caused by error in `prep()`:

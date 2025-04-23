@@ -1,8 +1,8 @@
 test_that("tune_args() errors on multiple tune()s in same arg", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_pca(all_predictors(), num_comp = ~ tune() + tune()) %>%
+    recipe(~., data = mtcars) |>
+      step_pca(all_predictors(), num_comp = ~ tune() + tune()) |>
       tune_args()
   )
 })
@@ -23,7 +23,7 @@ test_that("tune_tbl() errors on duplicate ids", {
 })
 
 test_that("tune_args() returns all arguments marked for tuning (#1296)", {
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_impute_bag(
       all_predictors(),
       # tunable
@@ -59,8 +59,8 @@ test_that("tune_args() doesn't error on namespaced selectors", {
   )
 
   expect_identical(
-    recipe(~., data = mtcars) %>%
-      step_pca(dplyr::contains("a")) %>%
+    recipe(~., data = mtcars) |>
+      step_pca(dplyr::contains("a")) |>
       tune_args(),
     exp
   )

@@ -1,8 +1,8 @@
 # na_rm argument works for step_normalize
 
     Code
-      rec_no_na_rm <- recipe(~., data = mtcars_na) %>% step_normalize(all_predictors(),
-      na_rm = FALSE) %>% prep()
+      rec_no_na_rm <- prep(step_normalize(recipe(~., data = mtcars_na),
+      all_predictors(), na_rm = FALSE))
     Condition
       Warning:
       Columns `mpg`, `cyl`, `disp`, and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
@@ -10,8 +10,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars_na) %>% step_normalize(all_predictors(), na_rm = 2) %>%
-        prep()
+      prep(step_normalize(recipe(~., data = mtcars_na), all_predictors(), na_rm = 2))
     Condition
       Error in `step_normalize()`:
       Caused by error in `prep()`:

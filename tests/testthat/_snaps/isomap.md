@@ -19,10 +19,10 @@
 # ISOmap fails gracefully
 
     Code
-      recipe(Sepal.Length ~ ., data = iris) %>% step_bs(Sepal.Width, deg_free = 1,
-        degree = 1) %>% step_bs(Sepal.Length, deg_free = 1, degree = 1) %>%
-        step_other(Species, threshold = 1e-09) %>% step_isomap(all_numeric_predictors(),
-      num_terms = 1, neighbors = 1) %>% prep()
+      prep(step_isomap(step_other(step_bs(step_bs(recipe(Sepal.Length ~ ., data = iris),
+      Sepal.Width, deg_free = 1, degree = 1), Sepal.Length, deg_free = 1, degree = 1),
+      Species, threshold = 1e-09), all_numeric_predictors(), num_terms = 1,
+      neighbors = 1))
     Message
     Condition
       Error in `step_isomap()`:
@@ -45,7 +45,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_isomap(mpg, options = TRUE) %>% prep()
+      prep(step_isomap(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_isomap()`:
       Caused by error in `prep()`:
@@ -140,8 +140,8 @@
 # bad args
 
     Code
-      recipe(~., data = mtcars) %>% step_isomap(all_predictors(), num_terms = 2,
-      neighbors = -1 / 3) %>% prep()
+      prep(step_isomap(recipe(~., data = mtcars), all_predictors(), num_terms = 2,
+      neighbors = -1 / 3))
     Condition
       Error in `step_isomap()`:
       Caused by error in `prep()`:
@@ -150,8 +150,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_isomap(all_predictors(), prefix = NULL) %>%
-        prep()
+      prep(step_isomap(recipe(~., data = mtcars), all_predictors(), prefix = NULL))
     Condition
       Error in `step_isomap()`:
       Caused by error in `prep()`:

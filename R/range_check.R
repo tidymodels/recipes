@@ -34,25 +34,25 @@
 #'
 #' # this will fail the check both ends
 #' \dontrun{
-#' recipe(slack_df) %>%
-#'   check_range(x) %>%
-#'   prep() %>%
+#' recipe(slack_df) |>
+#'   check_range(x) |>
+#'   prep() |>
 #'   bake(slack_new_data)
 #' }
 #'
 #' # this will fail the check only at the upper end
 #' \dontrun{
-#' recipe(slack_df) %>%
-#'   check_range(x, slack_prop = c(0.1, 0.05)) %>%
-#'   prep() %>%
+#' recipe(slack_df) |>
+#'   check_range(x, slack_prop = c(0.1, 0.05)) |>
+#'   prep() |>
 #'   bake(slack_new_data)
 #' }
 #'
 #' # give a warning instead of an error
 #' \dontrun{
-#' recipe(slack_df) %>%
-#'   check_range(x, warn = TRUE) %>%
-#'   prep() %>%
+#' recipe(slack_df) |>
+#'   check_range(x, warn = TRUE) |>
+#'   prep() |>
 #'   bake(slack_new_data)
 #' }
 check_range <-

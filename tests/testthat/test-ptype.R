@@ -30,8 +30,8 @@ test_that("recipes_ptype() isn't affected by prepping recipe", {
     cw = hardhat::importance_weights(1:10)
   )
 
-  rec_spec <- recipe(y ~ ., data = data_orig) %>%
-    step_dummy(all_nominal_predictors()) %>%
+  rec_spec <- recipe(y ~ ., data = data_orig) |>
+    step_dummy(all_nominal_predictors()) |>
     prep()
 
   exp_ptype <- vctrs::vec_ptype(data_orig)
@@ -55,7 +55,7 @@ test_that("recipes_ptype() works with update_role()", {
     cw = hardhat::importance_weights(1:10)
   )
 
-  rec_spec <- recipe(y ~ ., data = data_orig) %>%
+  rec_spec <- recipe(y ~ ., data = data_orig) |>
     update_role(id, new_role = "id")
 
   exp_ptype <- vctrs::vec_ptype(data_orig)
@@ -79,8 +79,8 @@ test_that("recipes_ptype() works with update_role_requirements()", {
     cw = hardhat::importance_weights(1:10)
   )
 
-  rec_spec <- recipe(y ~ ., data = data_orig) %>%
-    update_role(id, new_role = "id") %>%
+  rec_spec <- recipe(y ~ ., data = data_orig) |>
+    update_role(id, new_role = "id") |>
     update_role_requirements("id", bake = FALSE)
 
   exp_ptype <- vctrs::vec_ptype(data_orig)

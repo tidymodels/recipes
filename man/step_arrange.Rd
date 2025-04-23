@@ -75,29 +75,29 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-rec <- recipe(~., data = iris) \%>\%
+rec <- recipe(~., data = iris) |>
   step_arrange(desc(Sepal.Length), 1 / Petal.Length)
 
-prepped <- prep(rec, training = iris \%>\% slice(1:75))
+prepped <- prep(rec, training = iris |> slice(1:75))
 tidy(prepped, number = 1)
 
 library(dplyr)
 
 dplyr_train <-
-  iris \%>\%
-  as_tibble() \%>\%
-  slice(1:75) \%>\%
+  iris |>
+  as_tibble() |>
+  slice(1:75) |>
   dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 
 rec_train <- bake(prepped, new_data = NULL)
 all.equal(dplyr_train, rec_train)
 
 dplyr_test <-
-  iris \%>\%
-  as_tibble() \%>\%
-  slice(76:150) \%>\%
+  iris |>
+  as_tibble() |>
+  slice(76:150) |>
   dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
-rec_test <- bake(prepped, iris \%>\% slice(76:150))
+rec_test <- bake(prepped, iris |> slice(76:150))
 all.equal(dplyr_test, rec_test)
 
 # When you have variables/expressions, you can create a
@@ -107,9 +107,9 @@ all.equal(dplyr_test, rec_test)
 sort_vars <- c("Sepal.Length", "Petal.Length")
 
 qq_rec <-
-  recipe(~., data = iris) \%>\%
+  recipe(~., data = iris) |>
   # Embed the `values` object in the call using !!!
-  step_arrange(!!!syms(sort_vars)) \%>\%
+  step_arrange(!!!syms(sort_vars)) |>
   prep(training = iris)
 
 tidy(qq_rec, number = 1)

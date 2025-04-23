@@ -32,7 +32,7 @@
 # validate_training_data errors are thrown
 
     Code
-      recipe(~., data = mtcars) %>% prep(fresh = TRUE)
+      prep(recipe(~., data = mtcars), fresh = TRUE)
     Condition
       Error in `prep()`:
       ! A training set must be supplied to the `training` argument when `fresh = TRUE`.
@@ -40,7 +40,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% prep(mtcars[, 1:2], fresh = TRUE)
+      prep(recipe(~., data = mtcars), mtcars[, 1:2], fresh = TRUE)
     Condition
       Error in `prep()`:
       ! Not all variables in the recipe are present in the supplied training set: `disp`, `hp`, `drat`, `wt`, `qsec`, `vs`, `am`, `gear`, and `carb`.
@@ -48,8 +48,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_center(disp) %>% prep(retain = FALSE) %>%
-        prep(mtcars, fresh = FALSE)
+      prep(prep(step_center(recipe(~., data = mtcars), disp), retain = FALSE), mtcars,
+      fresh = FALSE)
     Condition
       Error in `prep()`:
       ! To prep new steps after prepping the original recipe, `retain = TRUE` must be set each time that the recipe is trained.
@@ -57,8 +57,7 @@
 ---
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_center(disp) %>% prep() %>% prep(
-        mtcars)
+      tmp <- prep(prep(step_center(recipe(~., data = mtcars), disp)), mtcars)
     Condition
       Warning in `prep()`:
       ! The previous data will be used by `prep()`.
@@ -67,7 +66,7 @@
 # spline error messages
 
     Code
-      recipe(. ~ disp, data = mtcars) %>% step_spline_convex(disp) %>% prep()
+      prep(step_spline_convex(recipe(. ~ disp, data = mtcars), disp))
     Condition
       Error in `step_spline_convex()`:
       Caused by error in `spline2_create()`:

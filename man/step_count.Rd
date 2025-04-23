@@ -109,8 +109,8 @@ The underlying operation does not allow for case weights.
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(covers, package = "modeldata")
 
-rec <- recipe(~description, covers) \%>\%
-  step_count(description, pattern = "(rock|stony)", result = "rocks") \%>\%
+rec <- recipe(~description, covers) |>
+  step_count(description, pattern = "(rock|stony)", result = "rocks") |>
   step_count(description, pattern = "famil", normalize = TRUE)
 
 rec2 <- prep(rec, training = covers)

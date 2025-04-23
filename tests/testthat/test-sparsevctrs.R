@@ -60,7 +60,7 @@ test_that("bake() accepts sparse tibbles", {
 
   hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
-  rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data) %>%
+  rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data) |>
     prep()
 
   expect_no_condition(
@@ -142,7 +142,7 @@ test_that("bake() accepts sparse matrices", {
 
   hotel_data <- sparse_hotel_rates()
 
-  rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data) %>%
+  rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data) |>
     prep()
 
   expect_no_condition(
@@ -183,8 +183,8 @@ test_that(".recipes_toggle_sparse_args works", {
   skip_if_not_installed("modeldata")
   data("ames", package = "modeldata")
 
-  rec_spec <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_center(all_numeric_predictors()) %>%
+  rec_spec <- recipe(Sale_Price ~ ., data = ames) |>
+    step_center(all_numeric_predictors()) |>
     step_center(all_numeric_predictors())
 
   expect_identical(
@@ -200,53 +200,53 @@ test_that(".recipes_toggle_sparse_args works", {
     x
   }
 
-  rec_spec_yes_yes <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "yes", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_yes_yes <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
-  rec_spec_no_no <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "no", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "no", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_no_no <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
-  rec_spec_yes_no <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "yes", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "no", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_yes_no <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
-  rec_spec_no_yes <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "no", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_no_yes <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
-  rec_spec_auto_yes <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_auto_yes <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
-  rec_spec_auto_no <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "no", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_auto_no <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
-  rec_spec_auto_auto <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), sparse = "auto", id = "") %>%
-    step_center(all_numeric_predictors(), id = "") %>%
+  rec_spec_auto_auto <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "auto", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
     clean_environments()
 
   expect_identical(
@@ -303,19 +303,19 @@ test_that(".recipes_toggle_sparse_args works", {
     sparsevctrs::sparsity(mtcars)
   )
 
-  rec <- recipe(~., iris) %>%
-    step_normalize(all_numeric_predictors()) %>%
+  rec <- recipe(~., iris) |>
+    step_normalize(all_numeric_predictors()) |>
     step_dummy(all_nominal_predictors(), sparse = "auto")
 
-  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+  exp <- rec |> prep() |> bake(NULL) |> sparsevctrs::sparsity()
 
   expect_equal(
     .recipes_estimate_sparsity(rec),
     exp
   )
 
-  rec <- recipe(~., iris[0, ]) %>%
-    step_normalize(all_numeric_predictors()) %>%
+  rec <- recipe(~., iris[0, ]) |>
+    step_normalize(all_numeric_predictors()) |>
     step_dummy(all_nominal_predictors(), sparse = "auto")
 
   expect_equal(
@@ -325,7 +325,7 @@ test_that(".recipes_toggle_sparse_args works", {
 })
 
 test_that(".recipes_toggle_sparse_args works", {
-  rec <- recipe(~., mtcars) %>%
+  rec <- recipe(~., mtcars) |>
     step_dummy()
 
   expect_false(
@@ -334,8 +334,8 @@ test_that(".recipes_toggle_sparse_args works", {
 })
 
 test_that(".recipes_estimate_sparsity doesn't error on created vars (#1448)", {
-  rec <- recipe(~., iris) %>%
-    step_mutate(Species2 = Species) %>%
+  rec <- recipe(~., iris) |>
+    step_mutate(Species2 = Species) |>
     step_dummy(Species2)
 
   expect_no_error(

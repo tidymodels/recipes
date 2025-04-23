@@ -132,7 +132,7 @@ rec <- recipe(
   data = biomass_tr
 )
 
-ratio_recipe <- rec \%>\%
+ratio_recipe <- rec |>
   step_impute_knn(all_predictors(), neighbors = 3)
 ratio_recipe2 <- prep(ratio_recipe, training = biomass_tr)
 imputed <- bake(ratio_recipe2, biomass_te)

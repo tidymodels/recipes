@@ -1,7 +1,7 @@
 # error when neither sep or pattern is specified
 
     Code
-      recipe(~medium, data = tate_text) %>% step_dummy_extract(medium) %>% prep()
+      prep(step_dummy_extract(recipe(~medium, data = tate_text), medium))
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `prep()`:
@@ -143,8 +143,8 @@
 # bad args
 
     Code
-      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
-        other = 2) %>% prep()
+      prep(step_dummy_extract(recipe(~colors, data = color_examples), colors,
+      pattern = "(?<=')[^',]+(?=')", other = 2))
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `prep()`:
@@ -153,8 +153,8 @@
 ---
 
     Code
-      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
-        other = 2) %>% prep()
+      prep(step_dummy_extract(recipe(~colors, data = color_examples), colors,
+      pattern = "(?<=')[^',]+(?=')", other = 2))
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `prep()`:
@@ -163,8 +163,8 @@
 ---
 
     Code
-      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
-        sep = 2) %>% prep()
+      prep(step_dummy_extract(recipe(~colors, data = color_examples), colors,
+      pattern = "(?<=')[^',]+(?=')", sep = 2))
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `prep()`:
@@ -173,8 +173,8 @@
 ---
 
     Code
-      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = 2) %>%
-        prep()
+      prep(step_dummy_extract(recipe(~colors, data = color_examples), colors,
+      pattern = 2))
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `prep()`:
@@ -183,8 +183,8 @@
 ---
 
     Code
-      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
-        naming = NULL) %>% prep()
+      prep(step_dummy_extract(recipe(~colors, data = color_examples), colors,
+      pattern = "(?<=')[^',]+(?=')", naming = NULL))
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `prep()`:

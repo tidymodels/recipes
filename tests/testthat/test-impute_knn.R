@@ -20,9 +20,9 @@ biomass_te$carbon[carb_missing] <- NA
 biomass_te$nitrogen[nitro_missing] <- NA
 
 test_that("imputation values", {
-  discr_rec <- rec %>%
+  discr_rec <- rec |>
     step_discretize(nitrogen, options = list(keep_na = FALSE))
-  impute_rec <- discr_rec %>%
+  impute_rec <- discr_rec |>
     step_impute_knn(
       carbon,
       nitrogen,
@@ -43,7 +43,7 @@ test_that("imputation values", {
   )
   discr_rec <- prep(discr_rec, training = biomass_tr, verbose = FALSE)
   tr_data <- bake(discr_rec, new_data = biomass_tr)
-  te_data <- bake(discr_rec, new_data = biomass_te) %>%
+  te_data <- bake(discr_rec, new_data = biomass_te) |>
     dplyr::select(hydrogen, oxygen, nitrogen, carbon)
 
   nn <- gower_topn(
@@ -75,14 +75,14 @@ test_that("imputation values", {
     predictors = c("hydrogen", "oxygen", "nitrogen")
   )
   imp_exp_tr <- imp_exp_tr[imp_exp_tr$terms != imp_exp_tr$predictors, ]
-  imp_exp_tr <- as_tibble(imp_exp_tr) %>%
+  imp_exp_tr <- as_tibble(imp_exp_tr) |>
     mutate(
       neighbors = 3,
       id = ""
     )
   expect_identical(
     imp_exp_tr,
-    tidy(impute_rec, number = 2) %>% arrange(terms, predictors)
+    tidy(impute_rec, number = 2) |> arrange(terms, predictors)
   )
 })
 
@@ -90,21 +90,21 @@ test_that("All NA values", {
   imputed <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
-  ) %>%
+  ) |>
     step_impute_knn(
       carbon,
       nitrogen,
       impute_with = c(hydrogen, oxygen, nitrogen),
       neighbors = 3
-    ) %>%
+    ) |>
     prep(biomass_tr)
 
-  imputed_te <- bake(imputed, biomass_te %>% mutate(carbon = NA))
+  imputed_te <- bake(imputed, biomass_te |> mutate(carbon = NA))
   expect_equal(sum(is.na(imputed_te$carbon)), 0)
 })
 
 test_that("options", {
-  rec_1 <- rec %>%
+  rec_1 <- rec |>
     step_impute_knn(
       carbon,
       nitrogen,
@@ -112,11 +112,11 @@ test_that("options", {
       neighbors = 3,
       options = list(),
       id = ""
-    ) %>%
+    ) |>
     prep()
   expect_equal(rec_1$steps[[1]]$options, list(nthread = 1, eps = 1e-08))
 
-  rec_2 <- rec %>%
+  rec_2 <- rec |>
     step_impute_knn(
       carbon,
       nitrogen,
@@ -124,11 +124,11 @@ test_that("options", {
       neighbors = 3,
       options = list(nthread = 10),
       id = ""
-    ) %>%
+    ) |>
     prep()
   expect_equal(rec_2$steps[[1]]$options, list(nthread = 10, eps = 1e-08))
 
-  rec_3 <- rec %>%
+  rec_3 <- rec |>
     step_impute_knn(
       carbon,
       nitrogen,
@@ -136,7 +136,7 @@ test_that("options", {
       neighbors = 3,
       options = list(eps = 10),
       id = ""
-    ) %>%
+    ) |>
     prep()
   expect_equal(rec_3$steps[[1]]$options, list(eps = 10, nthread = 1))
 
@@ -184,7 +184,7 @@ test_that("options", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_impute_knn(all_predictors())
   rec_param <- tunable.step_impute_knn(rec$steps[[1]])
   expect_equal(rec_param$name, c("neighbors"))
@@ -200,8 +200,8 @@ test_that("tunable", {
 test_that("impute_with errors with nothing selected", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_impute_knn(all_predictors(), impute_with = NULL) %>%
+    recipe(~., data = mtcars) |>
+      step_impute_knn(all_predictors(), impute_with = NULL) |>
       prep()
   )
 })
@@ -213,22 +213,22 @@ test_that("Warns when impute_with contains all NAs in a row", {
   mtcars[c(2, 3, 10), 9:10] <- NA_real_
 
   expect_snapshot(
-    tmp <- recipe(~., data = mtcars) %>%
-      step_impute_knn(mpg, disp, vs, impute_with = c(am, gear)) %>%
+    tmp <- recipe(~., data = mtcars) |>
+      step_impute_knn(mpg, disp, vs, impute_with = c(am, gear)) |>
       prep()
   )
 })
 test_that("error on wrong options argument", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_impute_knn(all_predictors(), options = list(wrong = "wrong")) %>%
+    recipe(~., data = mtcars) |>
+      step_impute_knn(all_predictors(), options = list(wrong = "wrong")) |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_impute_knn(all_predictors(), options = c(wrong = "wrong")) %>%
+    recipe(~., data = mtcars) |>
+      step_impute_knn(all_predictors(), options = c(wrong = "wrong")) |>
       prep()
   )
 })
@@ -249,7 +249,7 @@ test_that("step_impute_knn() can prep with character vectors (#926)", {
   dat[sample(1:nrow(dat), 2), 2] <- NA
   dat[sample(1:nrow(dat), 2), 3] <- NA
 
-  rec <- recipe(criterion ~ ., data = dat, strings_as_factors = TRUE) %>%
+  rec <- recipe(criterion ~ ., data = dat, strings_as_factors = TRUE) |>
     step_impute_knn(all_predictors())
 
   rec_prepped <- prep(rec, dat)
@@ -262,8 +262,8 @@ test_that("step_impute_knn() can prep with character vectors (#926)", {
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_impute_knn(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_impute_knn(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -271,15 +271,15 @@ test_that("check_options() is used", {
 test_that("recipes_argument_select() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_impute_knn(disp, impute_with = NULL) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_impute_knn(disp, impute_with = NULL) |>
       prep()
   )
 })
 
 test_that("addition of recipes_argument_select() is backwards compatible", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_impute_knn(disp) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
+    step_impute_knn(disp) |>
     prep()
 
   exp <- bake(rec, mtcars)
@@ -297,8 +297,8 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  rec_old <- recipe(mpg ~ ., data = mtcars) %>%
-    step_impute_knn(disp, impute_with = imp_vars(all_predictors())) %>%
+  rec_old <- recipe(mpg ~ ., data = mtcars) |>
+    step_impute_knn(disp, impute_with = imp_vars(all_predictors())) |>
     prep()
 
   expect_identical(
@@ -311,9 +311,9 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   imputed <-
-    recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) %>%
-    step_impute_knn(carbon, impute_with = c(hydrogen, oxygen)) %>%
-    update_role(hydrogen, new_role = "potato") %>%
+    recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) |>
+    step_impute_knn(carbon, impute_with = c(hydrogen, oxygen)) |>
+    update_role(hydrogen, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
@@ -370,7 +370,7 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass
-  ) %>%
+  ) |>
     step_impute_knn(
       carbon,
       nitrogen,
@@ -383,7 +383,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_impute_knn(
       all_predictors(),
       neighbors = hardhat::tune()
@@ -397,11 +397,11 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
+    recipe(~., data = mtcars) |>
       step_impute_knn(
         all_predictors(),
         neighbors = 0L
-      ) %>%
+      ) |>
       prep(),
     error = TRUE
   )
@@ -409,8 +409,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_impute_knn(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_impute_knn(disp, mpg) |>
     prep()
 
   expect_identical(

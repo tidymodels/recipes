@@ -28,7 +28,7 @@ vars <- names(pct_uni)
 
 test_that("nzv filtering", {
   rec <- recipe(y ~ ., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_nzv(x1, x2, x3, x4, id = "")
 
   exp_tidy_un <- tibble(terms = c("x1", "x2", "x3", "x4"), id = "")
@@ -50,7 +50,7 @@ test_that("nzv filtering", {
 test_that("altered freq_cut and unique_cut", {
   rec <- recipe(y ~ ., data = dat)
 
-  filtering <- rec %>%
+  filtering <- rec |>
     step_nzv(x1, x2, x3, x4, freq_cut = 50, unique_cut = 10)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -63,7 +63,7 @@ test_that("altered freq_cut and unique_cut", {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 
   expect_snapshot_error(
-    rec %>%
+    rec |>
       step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10))
   )
 })
@@ -71,14 +71,14 @@ test_that("altered freq_cut and unique_cut", {
 test_that("Deprecation warning", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
+    recipe(~., data = mtcars) |>
       step_nzv(options = list(freq_cut = 95 / 5, unique_cut = 20))
   )
 })
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_nzv(all_predictors())
   rec_param <- tunable.step_nzv(rec$steps[[1]])
   expect_equal(rec_param$name, c("freq_cut", "unique_cut"))
@@ -92,92 +92,92 @@ test_that("tunable", {
 })
 
 test_that("nzv with case weights", {
-  weighted_int_counts <- dat %>% count(x3, wt = x2, sort = TRUE)
+  weighted_int_counts <- dat |> count(x3, wt = x2, sort = TRUE)
   exp_freq_cut_int <- weighted_int_counts$n[1] / weighted_int_counts$n[2]
 
-  dat_caseweights_x2 <- dat %>%
+  dat_caseweights_x2 <- dat |>
     mutate(x2 = frequency_weights(x2))
 
   expect_equal(
-    recipe(~., dat_caseweights_x2) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
-      prep() %>%
-      tidy(1) %>%
+    recipe(~., dat_caseweights_x2) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) |>
+      prep() |>
+      tidy(1) |>
       pull(terms),
     c("x4")
   )
 
   expect_equal(
-    recipe(~., dat_caseweights_x2) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int - 0.0001) %>%
-      prep() %>%
-      tidy(1) %>%
+    recipe(~., dat_caseweights_x2) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int - 0.0001) |>
+      prep() |>
+      tidy(1) |>
       pull(terms),
     c("x3", "x4")
   )
 
-  weighted_frag_counts <- dat %>% count(x3, wt = y, sort = TRUE)
+  weighted_frag_counts <- dat |> count(x3, wt = y, sort = TRUE)
   exp_freq_cut_frag <- weighted_frag_counts$n[1] / weighted_frag_counts$n[2]
 
   expect_snapshot(
-    recipe(~., dat_caseweights_x2) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
+    recipe(~., dat_caseweights_x2) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) |>
       prep()
   )
 
   # ----------------------------------------------------------------------------
 
-  weighted_int_counts <- dat %>% count(x3, wt = x2, sort = TRUE)
+  weighted_int_counts <- dat |> count(x3, wt = x2, sort = TRUE)
   exp_freq_cut_int <- weighted_int_counts$n[1] / weighted_int_counts$n[2]
 
-  dat_caseweights_x2 <- dat %>%
+  dat_caseweights_x2 <- dat |>
     mutate(x2 = importance_weights(x2))
 
   expect_equal(
-    recipe(~., dat_caseweights_x2) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
-      prep() %>%
-      tidy(1) %>%
+    recipe(~., dat_caseweights_x2) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) |>
+      prep() |>
+      tidy(1) |>
       pull(terms),
     c("x4")
   )
 
   expect_equal(
-    recipe(~., dat_caseweights_x2) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int - 0.0001) %>%
-      prep() %>%
-      tidy(1) %>%
+    recipe(~., dat_caseweights_x2) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int - 0.0001) |>
+      prep() |>
+      tidy(1) |>
       pull(terms),
     c("x4")
   )
 
-  weighted_frag_counts <- dat %>% count(x3, wt = y, sort = TRUE)
+  weighted_frag_counts <- dat |> count(x3, wt = y, sort = TRUE)
   exp_freq_cut_frag <- weighted_frag_counts$n[1] / weighted_frag_counts$n[2]
 
-  dat_caseweights_y <- dat %>%
+  dat_caseweights_y <- dat |>
     mutate(y = importance_weights(y))
 
   expect_equal(
-    recipe(~., dat_caseweights_y) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag) %>%
-      prep() %>%
-      tidy(1) %>%
+    recipe(~., dat_caseweights_y) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag) |>
+      prep() |>
+      tidy(1) |>
       pull(terms),
     c("x3", "x4")
   )
 
   expect_equal(
-    recipe(~., dat_caseweights_y) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag - 0.0001) %>%
-      prep() %>%
-      tidy(1) %>%
+    recipe(~., dat_caseweights_y) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag - 0.0001) |>
+      prep() |>
+      tidy(1) |>
       pull(terms),
     c("x3", "x4")
   )
 
   expect_snapshot(
-    recipe(~., dat_caseweights_y) %>%
-      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag - 0.0001) %>%
+    recipe(~., dat_caseweights_y) |>
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag - 0.0001) |>
       prep()
   )
 })
@@ -228,7 +228,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(y ~ ., data = dat) %>%
+  rec <- recipe(y ~ ., data = dat) |>
     step_nzv(x1, x2, x3, x4)
 
   expect_snapshot(print(rec))
@@ -237,7 +237,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_nzv(
       all_predictors(),
       freq_cut = hardhat::tune(),
@@ -252,14 +252,14 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(y ~ ., data = dat) %>%
-      step_nzv(x1, freq_cut = -1) %>%
+    recipe(y ~ ., data = dat) |>
+      step_nzv(x1, freq_cut = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(y ~ ., data = dat) %>%
-      step_nzv(x1, unique_cut = 101) %>%
+    recipe(y ~ ., data = dat) |>
+      step_nzv(x1, unique_cut = 101) |>
       prep(),
     error = TRUE
   )
@@ -267,8 +267,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_nzv(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_nzv(all_predictors()) |>
     prep()
 
   expect_identical(

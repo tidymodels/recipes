@@ -1,7 +1,7 @@
 # bad values
 
     Code
-      sacr_rec %>% step_profile(all_predictors(), profile = sqft) %>% prep(data = Sacramento)
+      prep(step_profile(sacr_rec, all_predictors(), profile = sqft), data = Sacramento)
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
@@ -10,8 +10,7 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(sqft, beds, price, profile = c(zip, beds)) %>% prep(
-        data = Sacramento)
+      prep(step_profile(sacr_rec, sqft, beds, price, profile = c(zip, beds)), data = Sacramento)
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
@@ -20,7 +19,7 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(city, profile = sqft, pct = -1) %>% prep(data = Sacramento)
+      prep(step_profile(sacr_rec, city, profile = sqft, pct = -1), data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `pct` must be a number between 0 and 1, not the number -1.
@@ -28,7 +27,7 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(city, profile = sqft, grid = 1:3) %>% prep(data = Sacramento)
+      prep(step_profile(sacr_rec, city, profile = sqft, grid = 1:3), data = Sacramento)
     Condition
       Error in `step_profile()`:
       x `grid` should have 2 elements, not 3.
@@ -37,8 +36,8 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(city, profile = sqft, grid = list(pctl = 1, len = 2)) %>%
-        prep(data = Sacramento)
+      prep(step_profile(sacr_rec, city, profile = sqft, grid = list(pctl = 1, len = 2)),
+      data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `grid$pctl` must be `TRUE` or `FALSE`, not the number 1.
@@ -54,7 +53,7 @@
 # error on wrong grid names
 
     Code
-      recipe(~., data = mtcars) %>% step_profile(grid = list(pctl = TRUE, not_len = 100))
+      step_profile(recipe(~., data = mtcars), grid = list(pctl = TRUE, not_len = 100))
     Condition
       Error in `step_profile()`:
       x `grid` should have two named elements len and pctl, not "not_len" and "pctl".
@@ -63,7 +62,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_profile(disp, profile = NULL) %>% prep()
+      prep(step_profile(recipe(mpg ~ ., data = mtcars), disp, profile = NULL))
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:

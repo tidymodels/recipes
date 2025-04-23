@@ -5,18 +5,18 @@ iris_rec <- recipe(~., data = iris)
 
 test_that("basic usage", {
   rec <-
-    iris_rec %>%
+    iris_rec |>
     step_rename(
       popcorn = Sepal.Width,
       plum = Sepal.Length
     )
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     rename(
       popcorn = Sepal.Width,
       plum = Sepal.Length
@@ -26,22 +26,22 @@ test_that("basic usage", {
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
-    iris %>%
-    as_tibble() %>%
-    slice(76:150) %>%
+    iris |>
+    as_tibble() |>
+    slice(76:150) |>
     rename(
       popcorn = Sepal.Width,
       plum = Sepal.Length
     )
-  rec_test <- bake(prepped, iris %>% slice(76:150))
+  rec_test <- bake(prepped, iris |> slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("no input", {
   no_inputs <-
-    iris_rec %>%
-    step_rename() %>%
-    prep(training = iris) %>%
+    iris_rec |>
+    step_rename() |>
+    prep(training = iris) |>
     bake(new_data = NULL, composition = "data.frame")
   expect_equal(no_inputs, iris)
 })
@@ -50,8 +50,8 @@ test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
 
-  rec <- recipe(~., mtcars) %>%
-    step_rename(new_vs = vs) %>%
+  rec <- recipe(~., mtcars) |>
+    step_rename(new_vs = vs) |>
     prep()
 
   expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
@@ -106,7 +106,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = iris) %>%
+  rec <- recipe(~., data = iris) |>
     step_rename(wat = Species)
 
   expect_snapshot(print(rec))
@@ -115,8 +115,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_rename(MPG = mpg) %>%
+  rec <- recipe(~., data) |>
+    step_rename(MPG = mpg) |>
     prep()
 
   expect_identical(

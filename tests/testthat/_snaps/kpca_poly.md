@@ -30,7 +30,7 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_kpca_poly(all_predictors()) %>% prep()
+      prep(step_kpca_poly(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:
@@ -122,8 +122,8 @@
 # bad args
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(),
-      num_comp = -1) %>% prep()
+      prep(step_kpca_poly(recipe(~., data = tr_dat), all_numeric_predictors(),
+      num_comp = -1))
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:
@@ -132,8 +132,8 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
-        prep()
+      prep(step_kpca_poly(recipe(~., data = tr_dat), all_numeric_predictors(),
+      degree = 1.1))
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:
@@ -142,8 +142,8 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(),
-      scale_factor = -1.1) %>% prep()
+      prep(step_kpca_poly(recipe(~., data = tr_dat), all_numeric_predictors(),
+      scale_factor = -1.1))
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:
@@ -152,8 +152,8 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), offset = "a") %>%
-        prep()
+      prep(step_kpca_poly(recipe(~., data = tr_dat), all_numeric_predictors(),
+      offset = "a"))
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:
@@ -162,8 +162,8 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), prefix = 1) %>%
-        prep()
+      prep(step_kpca_poly(recipe(~., data = tr_dat), all_numeric_predictors(),
+      prefix = 1))
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:

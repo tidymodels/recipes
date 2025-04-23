@@ -99,7 +99,7 @@ information, see the documentation in \link{case_weights} and the examples on
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(credit_data, package = "modeldata")
 
-rec <- recipe(Status ~ ., data = credit_data) \%>\%
+rec <- recipe(Status ~ ., data = credit_data) |>
   step_filter_missing(all_predictors(), threshold = 0)
 
 filter_obj <- prep(rec)
