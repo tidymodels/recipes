@@ -175,7 +175,7 @@ needs to be done for this to happen as it is done automatically.</p>
 <span class="r-in"><span>data <span class="op">=</span> <span class="va">biomass_tr</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">zv_filter</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">zv_filter</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_zv</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">filter_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">zv_filter</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span></span>

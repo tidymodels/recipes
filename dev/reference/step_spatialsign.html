@@ -145,7 +145,7 @@ the documentation in <a href="case_weights.html">case_weights</a> and the exampl
 <p>Unlike most, this step requires the case weights to be available when new
 samples are processed (e.g., when <code><a href="bake.html">bake()</a></code> is used or <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> with a
 workflow). To tell recipes that the case weights are required at bake time,
-use <code>recipe %&gt;% update_role_requirements(role = "case_weights", bake = TRUE)</code>. See <code><a href="update_role_requirements.html">update_role_requirements()</a></code> for more information.</p>
+use <code>recipe |&gt; update_role_requirements(role = "case_weights", bake = TRUE)</code>. See <code><a href="update_role_requirements.html">update_role_requirements()</a></code> for more information.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -186,9 +186,9 @@ estimators. <em>Journal of Chemical Information and Modeling</em>, 46(3),
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">biomass_tr</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ss_trans</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">ss_trans</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_spatialsign</span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ss_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">ss_trans</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span></span>

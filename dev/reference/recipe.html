@@ -166,8 +166,8 @@ These can be used in combination with the above ways, or by themselves
 since <code>recipe(data)</code> will consume all the data as undeclared roles. Note
 that <code><a href="roles.html">update_role()</a></code>, <code><a href="roles.html">add_role()</a></code>, and <code><a href="roles.html">remove_role()</a></code> are applied
 before steps and checks, regardless of where they are in the pipeline.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">class</span>, new_role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">class</span>, new_role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, new_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>There are two different types of operations that can be sequentially
 added to a recipe.</p><ul><li><p><strong>Steps</strong> can include operations like scaling a variable, creating
@@ -215,8 +215,8 @@ predictions.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># split data</span></span>
-<span><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span><span class="op">)</span></span>
-<span><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span><span class="op">)</span></span>
+<span><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span><span class="op">)</span></span>
+<span><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># With only predictors and outcomes, use a formula:</span></span>
 <span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
@@ -224,8 +224,8 @@ predictions.</p>
 <span></span>
 <span><span class="co"># Now add preprocessing steps to the recipe:</span></span>
 <span><span class="va">sp_signed</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">rec</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_spatialsign.html">step_spatialsign</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sp_signed</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">##</span></span>
@@ -253,8 +253,8 @@ model and recipe:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">linear_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">linear_sp_sign_wflow</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/workflow.html" class="external-link">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_model.html" class="external-link">add_model</a></span><span class="op">(</span><span class="va">linear_mod</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/workflow.html" class="external-link">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_model.html" class="external-link">add_model</a></span><span class="op">(</span><span class="va">linear_mod</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_recipe.html" class="external-link">add_recipe</a></span><span class="op">(</span><span class="va">sp_signed</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">linear_sp_sign_wflow</span></span></code></pre><p></p></div>
@@ -304,8 +304,8 @@ used to estimate quantities required for the operations using a data set
 <p>As an example of using PCA (perhaps to produce a plot):</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Define the recipe</span></span>
 <span><span class="va">pca_rec</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="va">rec</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_pca.html">step_pca</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Now to estimate the normalization statistics and the PCA loadings:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pca_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">pca_rec</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span>
@@ -333,7 +333,7 @@ used to estimate quantities required for the operations using a data set
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
 <span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="do">## -- Operations</span></span>
 <span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="do">## * Centering and scaling for: carbon and hydrogen, ... | Trained</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="do">## * Centering and scaling for: carbon hydrogen, ... | Trained</span></span>
 <span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="do">## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained</span></span></code></pre><p></p></div>
 <p>Note that the estimated recipe shows the actual column names captured by
@@ -417,8 +417,8 @@ will be taken as <code>TRUE</code>.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Now add preprocessing steps to the recipe</span></span></span>
-<span class="r-in"><span><span class="va">sp_signed</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">sp_signed</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="step_spatialsign.html">step_spatialsign</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sp_signed</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -439,19 +439,19 @@ will be taken as <code>TRUE</code>.</p>
 <span class="r-in"><span><span class="va">multi_y</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">~</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">biomass_tr</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">multi_y</span> <span class="op">&lt;-</span> <span class="va">multi_y</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">multi_y</span> <span class="op">&lt;-</span> <span class="va">multi_y</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># example using `update_role` instead of formula:</span></span></span>
 <span class="r-in"><span><span class="co"># best choice for high-dimensional data</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">biomass_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">biomass_tr</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span>, <span class="va">oxygen</span>, <span class="va">nitrogen</span>, <span class="va">sulfur</span>,</span></span>
 <span class="r-in"><span>    new_role <span class="op">=</span> <span class="st">"predictor"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">HHV</span>, new_role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"id variable"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">HHV</span>, new_role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"id variable"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">dataset</span>, new_role <span class="op">=</span> <span class="st">"splitting indicator"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rec</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>

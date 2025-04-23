@@ -164,7 +164,7 @@ integer variables. A full hierarchy of types can be seen in
 <code><a href="../reference/has_role.html">?has_role</a></code>.</p>
 <p>We can add a step to normalize numeric data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This will capture <em>any</em> variables that are either character
 integers or doubles: <code>bill_length_mm</code>,
 <code>bill_depth_mm</code>, <code>flipper_length_mm</code> and
@@ -172,17 +172,17 @@ integers or doubles: <code>bill_length_mm</code>,
 outcome, we might want to keep it as a factor so we can
 <em>subtract</em> that variable out either by name or by role:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="va">bill_length_mm</span>, <span class="va">bill_depth_mm</span>, </span>
+<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="va">bill_length_mm</span>, <span class="va">bill_depth_mm</span>, </span>
 <span>                                  <span class="va">flipper_length_mm</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="va">body_mass_g</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># recommended</span></span></code></pre></div>
+<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="va">body_mass_g</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># recommended</span></span></code></pre></div>
 <p>Whenever possible, it is recommended to use the more specific
 <code>*_predictors()</code> variants to avoid accidentally selecting the
 outcomes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">rec</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> There are new levels in `sex`: <span style="color: #0000BB;">NA</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Consider using step_unknown() (`?recipes::step_unknown()`) before</span></span>

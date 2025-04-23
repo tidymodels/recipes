@@ -108,8 +108,8 @@ adapt them somewhat.</p>
 * [ ] Add test to make sure you didn't mess up the above tasks.
     ```
     test_that("backwards compatible for new_arg", {
-      rec &lt;- recipe(~ ., data = data_set_of_your_choice) %&gt;%
-        step_name(all_predictors()) %&gt;%
+      rec &lt;- recipe(~ ., data = data_set_of_your_choice) |&gt;
+        step_name(all_predictors()) |&gt;
         prep()
   
       exp &lt;- bake(rec, data_set_of_your_choice)

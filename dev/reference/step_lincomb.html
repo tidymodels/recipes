@@ -181,7 +181,7 @@ columns <code>terms</code> and <code>id</code>:</p>
 <span class="r-in"><span>data <span class="op">=</span> <span class="va">biomass_tr</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lincomb_filter</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">lincomb_filter</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_lincomb</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">lincomb_filter_trained</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">lincomb_filter</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span></span>

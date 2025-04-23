@@ -254,8 +254,8 @@ and there will be times when you want to manually overwrite by setting
 <span class="r-in"><span>  <span class="cn">NA</span>,         <span class="cn">NA</span>,        <span class="cn">NA</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dummy_multi_choice_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">languages</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">step_dummy_multi_choice</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"lang"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">dummy_multi_choice_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">languages</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">step_dummy_multi_choice</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"lang"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummy_multi_choice_rec</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
@@ -277,11 +277,11 @@ and there will be times when you want to manually overwrite by setting
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> lang_1 Italian  dummy_multi_choice_Cb4Qi</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> lang_1 Spanish  dummy_multi_choice_Cb4Qi</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dummy_multi_choice_rec2</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">languages</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">dummy_multi_choice_rec2</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">languages</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_dummy_multi_choice</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"lang"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    prefix <span class="op">=</span> <span class="st">"lang"</span>,</span></span>
 <span class="r-in"><span>    threshold <span class="op">=</span> <span class="fl">0.2</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummy_multi_choice_rec2</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>

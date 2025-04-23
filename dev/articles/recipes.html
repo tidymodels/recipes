@@ -167,7 +167,7 @@ be added later.)</p>
 <p>From here, preprocessing steps for some step <em>X</em> can be added
 sequentially in one of two ways:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> step_{X}(rec_obj, arguments)    <span class="do">## or</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> rec_obj <span class="sc">%&gt;%</span> step_{X}(arguments)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> rec_obj <span class="sc">|&gt;</span> step_{X}(arguments)</span></code></pre></div>
 <p><code>step_dummy</code> and the other functions will always return
 updated recipes.</p>
 <p>One other important facet of the code is the method for specifying
@@ -207,7 +207,7 @@ for both numeric and non-numeric predictors and defaults <em>K</em> to
 five To do this, it selects all predictors and then removes those that
 are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_impute_knn.html">step_impute_knn</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">imputed</span></span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have
@@ -219,14 +219,14 @@ would make sense to convert these factor predictors into numeric dummy
 variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To
 do this, the step selects all non-numeric predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">ind_vars</span></span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded
 as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">standardized</span></span></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can
@@ -350,7 +350,7 @@ variables selected for validation have missing values. This check is
 done when the recipe is prepared as well as when any data are baked.
 Checks are added in the same way as steps:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
 <pre><code><span><span class="co">#&gt; [1] "check_class"      "check_cols"       "check_missing"   </span></span>

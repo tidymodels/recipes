@@ -207,7 +207,7 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 <span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_other</span><span class="op">(</span><span class="va">city</span>, <span class="va">zip</span>, threshold <span class="op">=</span> <span class="fl">.1</span>, other <span class="op">=</span> <span class="st">"other values"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -277,7 +277,7 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 <span class="r-in"><span><span class="co"># threshold as a frequency</span></span></span>
 <span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_other</span><span class="op">(</span><span class="va">city</span>, <span class="va">zip</span>, threshold <span class="op">=</span> <span class="fl">2000</span>, other <span class="op">=</span> <span class="st">"other values"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -288,8 +288,8 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> city  SACRAMENTO other_2VUP1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> zip   z95823     other_2VUP1</span>
 <span class="r-in"><span><span class="co"># compare it to</span></span></span>
-<span class="r-in"><span><span class="co"># sacr_tr %&gt;% count(city, sort = TRUE) %&gt;% top_n(4)</span></span></span>
-<span class="r-in"><span><span class="co"># sacr_tr %&gt;% count(zip, sort = TRUE) %&gt;% top_n(3)</span></span></span>
+<span class="r-in"><span><span class="co"># sacr_tr |&gt; count(city, sort = TRUE) |&gt; top_n(4)</span></span></span>
+<span class="r-in"><span><span class="co"># sacr_tr |&gt; count(zip, sort = TRUE) |&gt; top_n(3)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
