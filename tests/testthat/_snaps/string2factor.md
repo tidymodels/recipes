@@ -1,7 +1,7 @@
 # bad args
 
     Code
-      rec %>% step_string2factor(w, n) %>% prep(ex_dat)
+      prep(step_string2factor(rec, w, n), ex_dat)
     Condition
       Error in `step_string2factor()`:
       Caused by error in `prep()`:
@@ -11,7 +11,7 @@
 ---
 
     Code
-      rec %>% step_string2factor(w, x, ordered = "yes") %>% prep(ex_dat)
+      prep(step_string2factor(rec, w, x, ordered = "yes"), ex_dat)
     Condition
       Error in `step_string2factor()`:
       Caused by error in `prep()`:

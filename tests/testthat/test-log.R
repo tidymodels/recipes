@@ -11,7 +11,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple log trans", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_log(x1, x2, x3, x4)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -23,7 +23,7 @@ test_that("simple log trans", {
 })
 
 test_that("alt base", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_log(x1, x2, x3, x4, base = pi)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -35,7 +35,7 @@ test_that("alt base", {
 })
 
 test_that("alt offset", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_log(x1, x2, x3, x4, base = pi, offset = 0.1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -48,10 +48,10 @@ test_that("alt offset", {
 
 test_that("signed arg", {
   ex_with_neg <- data.frame(x = c(-1 * exp(2), -0.5, 0.5, exp(2)))
-  rec <- recipe(ex_with_neg, ~x) %>%
-    step_log(x, signed = TRUE) %>%
+  rec <- recipe(ex_with_neg, ~x) |>
+    step_log(x, signed = TRUE) |>
     prep()
-  rec2 <- recipe(ex_with_neg, ~x) %>%
+  rec2 <- recipe(ex_with_neg, ~x) |>
     step_log(x, offset = 2, signed = TRUE)
   expect_equal(bake(rec, ex_with_neg), tibble(x = c(-2, 0, 0, 2)))
   expect_snapshot(prep(rec2))
@@ -60,9 +60,9 @@ test_that("signed arg", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_log(x1, x2, x3, x4) %>%
-    update_role(x1, x2, x3, x4, new_role = "potato") %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_log(x1, x2, x3, x4) |>
+    update_role(x1, x2, x3, x4, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -108,7 +108,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_log(x1, x2, x3, x4)
 
   expect_snapshot(print(rec))
@@ -117,20 +117,20 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_log(x1, base = -1) %>%
+    recipe(~., data = ex_dat) |>
+      step_log(x1, base = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_log(x1, offset = "none") %>%
+    recipe(~., data = ex_dat) |>
+      step_log(x1, offset = "none") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_log(x1, signed = "yes") %>%
+    recipe(~., data = ex_dat) |>
+      step_log(x1, signed = "yes") |>
       prep(),
     error = TRUE
   )
@@ -138,8 +138,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_log(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_log(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

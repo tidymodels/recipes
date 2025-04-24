@@ -20,7 +20,7 @@ rec_zv <- recipe(
 )
 
 test_that("correct means and std devs for step_normalize", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "norm")
 
   vrs <- c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur")
@@ -48,7 +48,7 @@ test_that("correct means and std devs for step_normalize", {
 })
 
 test_that("step_normalize works with 1 column (#963)", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_normalize(carbon, id = "norm")
 
   standardized_trained <- prep(standardized, training = biomass)
@@ -69,20 +69,20 @@ test_that("na_rm argument works for step_normalize", {
   mtcars_na[1, 1:4] <- NA
 
   expect_snapshot(
-    rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
-      step_normalize(all_predictors(), na_rm = FALSE) %>%
+    rec_no_na_rm <- recipe(~., data = mtcars_na) |>
+      step_normalize(all_predictors(), na_rm = FALSE) |>
       prep()
   )
 
   expect_snapshot(
-    recipe(~., data = mtcars_na) %>%
-      step_normalize(all_predictors(), na_rm = 2) %>%
+    recipe(~., data = mtcars_na) |>
+      step_normalize(all_predictors(), na_rm = 2) |>
       prep(),
     error = TRUE
   )
 
-  rec_na_rm <- recipe(~., data = mtcars_na) %>%
-    step_normalize(all_predictors(), na_rm = TRUE) %>%
+  rec_na_rm <- recipe(~., data = mtcars_na) |>
+    step_normalize(all_predictors(), na_rm = TRUE) |>
     prep()
 
   exp_no_na_rm <- c(
@@ -115,8 +115,8 @@ test_that("normalizing with case weights", {
   mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars_freq) %>%
-    step_normalize(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_freq) |>
+    step_normalize(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -135,8 +135,8 @@ test_that("normalizing with case weights", {
   mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
 
   rec <-
-    recipe(mpg ~ ., mtcars_imp) %>%
-    step_normalize(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_imp) |>
+    step_normalize(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -153,11 +153,11 @@ test_that("normalizing with case weights", {
 })
 
 test_that("warns when NaN is returned due to Inf or -Inf", {
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) %>%
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) |>
     step_normalize(x)
   expect_snapshot(prep(rec))
 
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) %>%
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) |>
     step_normalize(x)
   expect_snapshot(prep(rec))
 })
@@ -165,8 +165,8 @@ test_that("warns when NaN is returned due to Inf or -Inf", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  std <- rec %>%
-    step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  std <- rec |>
+    step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     update_role(
       carbon,
       hydrogen,
@@ -174,7 +174,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
       nitrogen,
       sulfur,
       new_role = "potato"
-    ) %>%
+    ) |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   std_trained <- prep(std, training = biomass)
@@ -225,7 +225,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
     step_normalize(disp, wt)
 
   expect_snapshot(print(rec))
@@ -234,8 +234,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_normalize(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_normalize(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

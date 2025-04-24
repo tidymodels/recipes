@@ -16,8 +16,8 @@
 ---
 
     Code
-      rec %>% step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>% prep(
-        training = biomass) %>% step_rm(sulfur) %>% prep(training = biomass)
+      prep(step_rm(prep(step_center(rec, carbon, hydrogen, oxygen, nitrogen, sulfur),
+      training = biomass), sulfur), training = biomass)
     Condition
       Warning in `prep()`:
       ! The previous data will be used by `prep()`.

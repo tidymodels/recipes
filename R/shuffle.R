@@ -28,7 +28,7 @@
 #' integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
 #'
 #' library(dplyr)
-#' rec <- recipe(~ A + B + C, data = integers) %>%
+#' rec <- recipe(~ A + B + C, data = integers) |>
 #'   step_shuffle(A, B)
 #'
 #' rand_set <- prep(rec, training = integers)

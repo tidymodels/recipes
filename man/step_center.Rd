@@ -87,7 +87,7 @@ rec <- recipe(
   data = biomass_tr
 )
 
-center_trans <- rec \%>\%
+center_trans <- rec |>
   step_center(carbon, contains("gen"), -hydrogen)
 
 center_obj <- prep(center_trans, training = biomass_tr)

@@ -19,7 +19,7 @@
 # error when selecting case weights
 
     Code
-      recipe(~., data = mtcars) %>% step_normalize(hp) %>% prep()
+      prep(step_normalize(recipe(~., data = mtcars), hp))
     Condition
       Error in `step_normalize()`:
       Caused by error in `prep()`:

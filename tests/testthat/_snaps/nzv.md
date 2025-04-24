@@ -6,7 +6,7 @@
 # Deprecation warning
 
     Code
-      recipe(~., data = mtcars) %>% step_nzv(options = list(freq_cut = 95 / 5,
+      step_nzv(recipe(~., data = mtcars), options = list(freq_cut = 95 / 5,
       unique_cut = 20))
     Condition
       Error:
@@ -16,8 +16,7 @@
 # nzv with case weights
 
     Code
-      recipe(~., dat_caseweights_x2) %>% step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
-        prep()
+      prep(step_nzv(recipe(~., dat_caseweights_x2), all_predictors(), freq_cut = exp_freq_cut_int))
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -36,8 +35,8 @@
 ---
 
     Code
-      recipe(~., dat_caseweights_y) %>% step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag -
-        1e-04) %>% prep()
+      prep(step_nzv(recipe(~., dat_caseweights_y), all_predictors(), freq_cut = exp_freq_cut_frag -
+        1e-04))
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -126,7 +125,7 @@
 # bad args
 
     Code
-      recipe(y ~ ., data = dat) %>% step_nzv(x1, freq_cut = -1) %>% prep()
+      prep(step_nzv(recipe(y ~ ., data = dat), x1, freq_cut = -1))
     Condition
       Error in `step_nzv()`:
       Caused by error in `prep()`:
@@ -135,7 +134,7 @@
 ---
 
     Code
-      recipe(y ~ ., data = dat) %>% step_nzv(x1, unique_cut = 101) %>% prep()
+      prep(step_nzv(recipe(y ~ ., data = dat), x1, unique_cut = 101))
     Condition
       Error in `step_nzv()`:
       Caused by error in `prep()`:

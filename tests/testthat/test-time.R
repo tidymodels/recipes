@@ -10,7 +10,7 @@ test_that("default option", {
 
   feats <- c("am", "hour", "hour12", "minute", "second", "decimal_day")
 
-  date_rec <- recipe(~times, examples) %>%
+  date_rec <- recipe(~times, examples) |>
     step_time(all_predictors(), features = feats)
 
   date_rec <- prep(date_rec, training = examples)
@@ -41,7 +41,7 @@ test_that("returns integers", {
 
   feats <- c("hour", "hour12", "minute")
 
-  date_rec <- recipe(~times, examples) %>%
+  date_rec <- recipe(~times, examples) |>
     step_time(all_predictors(), features = feats, keep_original_cols = FALSE)
 
   date_rec <- prep(date_rec, training = examples)
@@ -58,7 +58,7 @@ test_that("nondefault options", {
       lubridate::seconds(1:5)
   )
 
-  date_rec <- recipe(~times, examples) %>%
+  date_rec <- recipe(~times, examples) |>
     step_time(all_predictors(), features = c("minute", "second"))
 
   date_rec <- prep(date_rec, training = examples)
@@ -79,7 +79,7 @@ test_that("custom hour12 metric is correct", {
       lubridate::seconds(seq(0, 60 * 60 * 24))
   )
 
-  date_rec <- recipe(~time, full_day) %>%
+  date_rec <- recipe(~time, full_day) |>
     step_time(all_predictors(), features = c("hour12"))
 
   date_rec <- prep(date_rec, training = full_day)
@@ -104,7 +104,7 @@ test_that("check_name() is used", {
   )
   dat$time_hour <- dat$time
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_time(time)
 
   expect_snapshot(
@@ -123,8 +123,8 @@ test_that("errors on wrong values of features", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~times, examples) %>%
-      step_time(all_predictors(), features = "hourly") %>%
+    recipe(~times, examples) |>
+      step_time(all_predictors(), features = "hourly") |>
       prep()
   )
 })
@@ -141,9 +141,9 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   feats <- c("am", "hour", "hour12", "minute", "second", "decimal_day")
 
-  rec <- recipe(examples) %>%
-    step_time(times) %>%
-    update_role(times, new_role = "potato") %>%
+  rec <- recipe(examples) |>
+    step_time(times) |>
+    update_role(times, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = examples)
@@ -198,7 +198,7 @@ test_that("keep_original_cols works", {
 
   new_names <- c("times_hour", "times_minute", "times_second")
 
-  rec <- recipe(~times, examples) %>%
+  rec <- recipe(~times, examples) |>
     step_time(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -209,7 +209,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~times, examples) %>%
+  rec <- recipe(~times, examples) |>
     step_time(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -229,7 +229,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
       lubridate::seconds(1:5)
   )
 
-  rec <- recipe(~times, examples) %>%
+  rec <- recipe(~times, examples) |>
     step_time(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -251,7 +251,7 @@ test_that("printing", {
       lubridate::seconds(1:5)
   )
 
-  rec <- recipe(~times, examples) %>%
+  rec <- recipe(~times, examples) |>
     step_time(all_predictors())
 
   expect_snapshot(print(rec))
@@ -266,8 +266,8 @@ test_that("0 and 1 rows data work in bake method", {
       lubridate::seconds(1:5)
   )
 
-  rec <- recipe(~., data) %>%
-    step_time(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_time(all_predictors()) |>
     prep()
 
   expect_identical(

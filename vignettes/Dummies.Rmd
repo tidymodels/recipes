@@ -31,7 +31,7 @@ Let's start, of course, with `iris` data. This has four numeric columns and a si
 library(recipes)
 
 # make a copy for use below
-iris <- iris %>% mutate(original = Species)
+iris <- iris |> mutate(original = Species)
 
 iris_rec <- recipe( ~ ., data = iris)
 summary(iris_rec)
@@ -43,13 +43,13 @@ The default approach is to create dummy variables using the "reference cell" par
 
 ```{r iris-ref-cell}
 ref_cell <- 
-  iris_rec %>% 
-  step_dummy(Species) %>%
+  iris_rec |> 
+  step_dummy(Species) |>
   prep(training = iris)
 summary(ref_cell)
 
 # Get a row for each factor level
-bake(ref_cell, new_data = NULL, original, starts_with("Species")) %>% distinct()
+bake(ref_cell, new_data = NULL, original, starts_with("Species")) |> distinct()
 ```
 
 Note that the column that was used to make the new columns (`Species`) is no longer there. See the section below on obtaining the entire set of _C_ columns. 
@@ -65,12 +65,12 @@ To get this encoding you can use the `contrasts` argument like so:, the global o
 ```{r iris-helmert}
 # now make dummy variables with new parameterization
 helmert <- 
-  iris_rec %>% 
-  step_dummy(Species, contrasts = "contr.helmert") %>%
+  iris_rec |> 
+  step_dummy(Species, contrasts = "contr.helmert") |>
   prep(training = iris)
 summary(helmert)
 
-bake(helmert, new_data = NULL, original, starts_with("Species")) %>% distinct()
+bake(helmert, new_data = NULL, original, starts_with("Species")) |> distinct()
 ```
 
 Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn't make sense. 
@@ -85,8 +85,8 @@ Creating interactions with recipes requires the use of a model formula, such as
 
 ```{r iris-2int}
 iris_int <- 
-  iris_rec %>%
-  step_interact( ~ Sepal.Width:Sepal.Length) %>%
+  iris_rec |>
+  step_interact( ~ Sepal.Width:Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 ```
@@ -98,10 +98,10 @@ One thing that `recipes` does differently than base R is it constructs the desig
 For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:
 
 ```{r mm-int}
-model.matrix(~ Species*Sepal.Length, data = iris) %>% 
-  as.data.frame() %>% 
+model.matrix(~ Species*Sepal.Length, data = iris) |> 
+  as.data.frame() |> 
   # show a few specific rows
-  slice(c(1, 51, 101)) %>% 
+  slice(c(1, 51, 101)) |> 
   as.data.frame()
 ```
 
@@ -109,7 +109,7 @@ With recipes, you create them sequentially. This raises an issue: do I have to t
 
 ```{r nope, eval = FALSE}
 # Must I do this?
-iris_rec %>%
+iris_rec |>
   step_interact( ~ Species_versicolor:Sepal.Length + 
                    Species_virginica:Sepal.Length) 
 ```
@@ -120,9 +120,9 @@ The solution is to use a selector:
 
 ```{r iris-sel}
 iris_int <- 
-  iris_rec %>% 
-  step_dummy(Species) %>%
-  step_interact( ~ starts_with("Species"):Sepal.Length) %>%
+  iris_rec |> 
+  step_dummy(Species) |>
+  step_interact( ~ starts_with("Species"):Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 ```
@@ -153,8 +153,8 @@ Would it work if I didn't convert species to a factor and used the interactions 
 
 ```{r iris-dont}
 iris_int <- 
-  iris_rec %>% 
-  step_interact( ~ Species:Sepal.Length) %>%
+  iris_rec |> 
+  step_interact( ~ Species:Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 ```
@@ -171,10 +171,10 @@ Historically, _C_ - 1 are used so that a linear dependency is avoided in the des
 There are models (e.g. `glmnet` and others) that can avoid this issue so you might want to get all of the columns. To do this, `step_dummy` has an option called `one_hot` that will make sure that all _C_ are produced:
 
 ```{r one-hot}
-iris_rec %>% 
-  step_dummy(Species, one_hot = TRUE) %>%
-  prep(training = iris) %>%
-  bake(original, new_data = NULL, starts_with("Species")) %>%
+iris_rec |> 
+  step_dummy(Species, one_hot = TRUE) |>
+  prep(training = iris) |>
+  bake(original, new_data = NULL, starts_with("Species")) |>
   distinct()
 ```
 
@@ -186,19 +186,19 @@ This will give you the full set of indicators and, when you use the typical cont
 
 ```{r one-hot-two}
 hot_reference <- 
-  iris_rec %>% 
-  step_dummy(Species, one_hot = TRUE) %>%
-  prep(training = iris) %>%
-  bake(original, new_data = NULL, starts_with("Species")) %>%
+  iris_rec |> 
+  step_dummy(Species, one_hot = TRUE) |>
+  prep(training = iris) |>
+  bake(original, new_data = NULL, starts_with("Species")) |>
   distinct()
 
 hot_reference
 
 hot_helmert <- 
-  iris_rec %>% 
-  step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") %>%
-  prep(training = iris) %>%
-  bake(original, new_data = NULL, starts_with("Species")) %>%
+  iris_rec |> 
+  step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") |>
+  prep(training = iris) |>
+  bake(original, new_data = NULL, starts_with("Species")) |>
   distinct()
 
 hot_helmert

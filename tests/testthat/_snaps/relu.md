@@ -1,7 +1,7 @@
 # input checking
 
     Code
-      recipe(~., data = df) %>% step_relu(val1, shift = TRUE) %>% prep(df, verbose = FALSE)
+      prep(step_relu(recipe(~., data = df), val1, shift = TRUE), df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
       Caused by error in `prep()`:
@@ -10,7 +10,7 @@
 ---
 
     Code
-      recipe(~., data = df) %>% step_relu(val1, reverse = 3) %>% prep(df, verbose = FALSE)
+      prep(step_relu(recipe(~., data = df), val1, reverse = 3), df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
       Caused by error in `prep()`:
@@ -19,7 +19,7 @@
 ---
 
     Code
-      recipe(~., data = df) %>% step_relu(val1, smooth = "cat") %>% prep(df, verbose = FALSE)
+      prep(step_relu(recipe(~., data = df), val1, smooth = "cat"), df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
       Caused by error in `prep()`:
@@ -28,7 +28,7 @@
 ---
 
     Code
-      recipe(~., data = df) %>% step_relu(val2) %>% prep(df, verbose = FALSE)
+      prep(step_relu(recipe(~., data = df), val2), df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
       Caused by error in `prep()`:

@@ -45,8 +45,8 @@
 #' # We typically recommend that you remove this column before passing the
 #' # `data` to `recipe()`, but for now let's pass it through and assign it an
 #' # `"id"` role.
-#' rec <- recipe(y ~ ., df) %>%
-#'   update_role(var, new_role = "id") %>%
+#' rec <- recipe(y ~ ., df) |>
+#'   update_role(var, new_role = "id") |>
 #'   step_center(x)
 #'
 #' prepped <- prep(rec, df)

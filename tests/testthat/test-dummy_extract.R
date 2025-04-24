@@ -44,7 +44,7 @@ mini_tate_result <- tibble(
 
 test_that("dummy variables", {
   # Using `sep` argument
-  dummy <- recipe(~medium, data = mini_tate) %>%
+  dummy <- recipe(~medium, data = mini_tate) |>
     step_dummy_extract(medium, sep = "( and )|( on )", id = "")
 
   dummy_prepped <- prep(dummy)
@@ -61,7 +61,7 @@ test_that("dummy variables", {
   )
 
   # Using `pattern` argument
-  dummy <- recipe(~colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "")
 
   dummy_prepped <- prep(dummy)
@@ -80,7 +80,7 @@ test_that("dummy variables", {
 
 test_that("other argument", {
   # Using `sep` argument
-  dummy <- recipe(~medium, data = mini_tate) %>%
+  dummy <- recipe(~medium, data = mini_tate) |>
     step_dummy_extract(medium, sep = "( and )|( on )", id = "", other = "cake")
 
   dummy_prepped <- prep(dummy)
@@ -92,15 +92,15 @@ test_that("other argument", {
 test_that("error when neither sep or pattern is specified", {
   expect_snapshot(
     error = TRUE,
-    recipe(~medium, data = tate_text) %>%
-      step_dummy_extract(medium) %>%
+    recipe(~medium, data = tate_text) |>
+      step_dummy_extract(medium) |>
       prep()
   )
 })
 
 test_that("dummy variables with threshold", {
   # threshold = 0.5
-  dummy <- recipe(~colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -113,8 +113,8 @@ test_that("dummy variables with threshold", {
 
   expect_identical(
     dummy_pred,
-    color_result %>%
-      mutate(colors_other = colors_other + colors_white) %>%
+    color_result |>
+      mutate(colors_other = colors_other + colors_white) |>
       select(-colors_white)
   )
 
@@ -128,7 +128,7 @@ test_that("dummy variables with threshold", {
   )
 
   # threshold = 0.8
-  dummy <- recipe(~colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -141,8 +141,8 @@ test_that("dummy variables with threshold", {
 
   expect_identical(
     dummy_pred,
-    color_result %>%
-      mutate(colors_other = colors_other + colors_white + colors_red) %>%
+    color_result |>
+      mutate(colors_other = colors_other + colors_white + colors_red) |>
       select(-colors_white, -colors_red)
   )
 
@@ -158,7 +158,7 @@ test_that("dummy variables with threshold", {
 
 test_that("dummy variables with integer threshold", {
   # threshold = 1
-  dummy <- recipe(~colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -184,7 +184,7 @@ test_that("dummy variables with integer threshold", {
   )
 
   # threshold = 2
-  dummy <- recipe(~colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -197,8 +197,8 @@ test_that("dummy variables with integer threshold", {
 
   expect_identical(
     dummy_pred,
-    color_result %>%
-      mutate(colors_other = colors_other + colors_white) %>%
+    color_result |>
+      mutate(colors_other = colors_other + colors_white) |>
       select(-colors_white)
   )
 
@@ -212,7 +212,7 @@ test_that("dummy variables with integer threshold", {
   )
 
   # threshold = 3
-  dummy <- recipe(~colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -225,8 +225,8 @@ test_that("dummy variables with integer threshold", {
 
   expect_identical(
     dummy_pred,
-    color_result %>%
-      mutate(colors_other = colors_other + colors_white + colors_red) %>%
+    color_result |>
+      mutate(colors_other = colors_other + colors_white + colors_red) |>
       select(-colors_white, -colors_red)
   )
 
@@ -244,7 +244,7 @@ test_that("check_name() is used", {
   dat <- iris
   dat$Species_setosa <- dat$Species
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_dummy_extract(Species, sep = " ")
 
   expect_snapshot(
@@ -265,10 +265,10 @@ test_that("naming function", {
 })
 
 test_that("case weights", {
-  mini_tate_cw <- mini_tate %>%
+  mini_tate_cw <- mini_tate |>
     mutate(wts = frequency_weights(c(1, 1, 1, 5)))
 
-  dummy <- recipe(~ medium + wts, data = mini_tate_cw) %>%
+  dummy <- recipe(~ medium + wts, data = mini_tate_cw) |>
     step_dummy_extract(medium, sep = "( and )|( on )", id = "", threshold = 6)
 
   dummy_prepped <- prep(dummy)
@@ -292,10 +292,10 @@ test_that("case weights", {
   expect_snapshot(dummy_prepped)
 
   # importance weights are not considered
-  mini_tate_cw <- mini_tate %>%
+  mini_tate_cw <- mini_tate |>
     mutate(wts = importance_weights(c(1, 1, 1, 5)))
 
-  dummy <- recipe(~ medium + wts, data = mini_tate_cw) %>%
+  dummy <- recipe(~ medium + wts, data = mini_tate_cw) |>
     step_dummy_extract(medium, sep = "( and )|( on )", id = "", threshold = 6)
 
   dummy_prepped <- prep(dummy)
@@ -321,14 +321,14 @@ test_that("case weights", {
 test_that("sparse = 'yes' works", {
   rec <- recipe(~medium, data = mini_tate)
 
-  dense <- rec %>%
-    step_dummy_extract(medium, sep = "( and )|( on )", sparse = "no") %>%
-    prep() %>%
+  dense <- rec |>
+    step_dummy_extract(medium, sep = "( and )|( on )", sparse = "no") |>
+    prep() |>
     bake(NULL)
-  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
-  sparse <- rec %>%
-    step_dummy_extract(medium, sep = "( and )|( on )", sparse = "yes") %>%
-    prep() %>%
+  dense <- purrr::map(dense, as.integer) |> tibble::new_tibble()
+  sparse <- rec |>
+    step_dummy_extract(medium, sep = "( and )|( on )", sparse = "yes") |>
+    prep() |>
     bake(NULL)
 
   expect_identical(dense, sparse)
@@ -338,8 +338,8 @@ test_that("sparse = 'yes' works", {
 })
 
 test_that("sparse argument is backwards compatible", {
-  rec <- recipe(~medium, data = mini_tate) %>%
-    step_dummy_extract(medium, sep = "( and )|( on )") %>%
+  rec <- recipe(~medium, data = mini_tate) |>
+    step_dummy_extract(medium, sep = "( and )|( on )") |>
     prep()
 
   exp <- bake(rec, mini_tate)
@@ -354,10 +354,10 @@ test_that("sparse argument is backwards compatible", {
 })
 
 test_that(".recipes_toggle_sparse_args works", {
-  rec <- recipe(~medium, data = mini_tate) %>%
+  rec <- recipe(~medium, data = mini_tate) |>
     step_dummy_extract(medium, sep = "( and )|( on )", sparse = "auto")
 
-  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+  exp <- rec |> prep() |> bake(NULL) |> sparsevctrs::sparsity()
 
   expect_true(
     .recipes_estimate_sparsity(rec) > exp
@@ -367,9 +367,9 @@ test_that(".recipes_toggle_sparse_args works", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  dummy <- recipe(~medium, data = mini_tate) %>%
-    step_dummy_extract(medium, sep = "( and )|( on )", id = "") %>%
-    update_role(medium, new_role = "potato") %>%
+  dummy <- recipe(~medium, data = mini_tate) |>
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "") |>
+    update_role(medium, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   dummy_prepped <- prep(dummy)
@@ -420,7 +420,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("colors_", c("blue", "red", "white", "other"))
 
-  rec <- recipe(~colors, data = color_examples) %>%
+  rec <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -435,7 +435,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~colors, data = color_examples) %>%
+  rec <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(
       colors,
       pattern = "(?<=')[^',]+(?=')",
@@ -452,7 +452,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~colors, data = color_examples) %>%
+  rec <- recipe(~colors, data = color_examples) |>
     step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')")
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -467,7 +467,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~medium, data = tate_text) %>%
+  rec <- recipe(~medium, data = tate_text) |>
     step_dummy_extract(all_predictors(), sep = ", ")
 
   expect_snapshot(print(rec))
@@ -476,36 +476,36 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~colors, data = color_examples) %>%
-      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", other = 2) %>%
+    recipe(~colors, data = color_examples) |>
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", other = 2) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~colors, data = color_examples) %>%
-      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", other = 2) %>%
+    recipe(~colors, data = color_examples) |>
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", other = 2) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~colors, data = color_examples) %>%
-      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", sep = 2) %>%
+    recipe(~colors, data = color_examples) |>
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", sep = 2) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~colors, data = color_examples) %>%
-      step_dummy_extract(colors, pattern = 2) %>%
+    recipe(~colors, data = color_examples) |>
+      step_dummy_extract(colors, pattern = 2) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~colors, data = color_examples) %>%
+    recipe(~colors, data = color_examples) |>
       step_dummy_extract(
         colors,
         pattern = "(?<=')[^',]+(?=')",
         naming = NULL
-      ) %>%
+      ) |>
       prep(),
     error = TRUE
   )
@@ -513,8 +513,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- color_examples
-  rec <- recipe(~., data) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") %>%
+  rec <- recipe(~., data) |>
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") |>
     prep()
 
   expect_identical(

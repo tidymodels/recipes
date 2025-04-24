@@ -118,12 +118,12 @@ The underlying operation does not allow for case weights.
 \dontshow{if (rlang::is_installed("ddalpha")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # halfspace depth is the default
-rec <- recipe(Species ~ ., data = iris) \%>\%
+rec <- recipe(Species ~ ., data = iris) |>
   step_depth(all_numeric_predictors(), class = Species)
 
 # use zonoid metric instead
 # also, define naming convention for new columns
-rec <- recipe(Species ~ ., data = iris) \%>\%
+rec <- recipe(Species ~ ., data = iris) |>
   step_depth(all_numeric_predictors(),
     class = Species,
     metric = "zonoid", prefix = "zonoid_"

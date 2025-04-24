@@ -5,7 +5,7 @@ test_that("prepper uses fresh = TRUE", {
   train1 <- mtcars[1:20, ]
   train2 <- mtcars[21:32, ]
 
-  rec <- recipe(cyl ~ mpg, train1) %>%
+  rec <- recipe(cyl ~ mpg, train1) |>
     step_center(mpg)
 
   prepped_rec <- prep(rec, train1)

@@ -1,8 +1,7 @@
 # works with logicals
 
     Code
-      recipe(~., data = mtcars) %>% step_bin2factor(all_logical_predictors(),
-      ref_first = 1)
+      step_bin2factor(recipe(~., data = mtcars), all_logical_predictors(), ref_first = 1)
     Condition
       Error in `step_bin2factor()`:
       ! `ref_first` must be `TRUE` or `FALSE`, not the number 1.
@@ -20,7 +19,7 @@
 ---
 
     Code
-      rec %>% step_bin2factor(rocks, levels = letters[1:5])
+      step_bin2factor(rec, rocks, levels = letters[1:5])
     Condition
       Error in `step_bin2factor()`:
       x `levels` should be a 2-element character string.
@@ -29,7 +28,7 @@
 ---
 
     Code
-      rec %>% step_bin2factor(rocks, levels = 1:2)
+      step_bin2factor(rec, rocks, levels = 1:2)
     Condition
       Error in `step_bin2factor()`:
       x `levels` should be a 2-element character string.

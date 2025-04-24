@@ -17,7 +17,7 @@ dists <-
   )
 
 test_that("basic functionality", {
-  rec <- recipe(~ x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -34,7 +34,7 @@ test_that("basic functionality", {
   expect_equal(tr_int[["geo_dist"]], dists)
   expect_equal(te_int[["geo_dist"]], dists)
 
-  rec_log <- recipe(~ x + y, data = rand_data) %>%
+  rec_log <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -54,7 +54,7 @@ test_that("basic functionality", {
 
 test_that("lat lon", {
   postal <- tibble(latitude = 0, longitude = 0)
-  near_station <- recipe(~., data = postal) %>%
+  near_station <- recipe(~., data = postal) |>
     step_geodist(
       lat = latitude,
       lon = longitude,
@@ -62,13 +62,13 @@ test_that("lat lon", {
       ref_lat = 0,
       ref_lon = 0,
       is_lat_lon = TRUE
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     bake(new_data = NULL)
   expect_equal(near_station[["geo_dist"]], 0)
 
   postal <- tibble(latitude = 38.8981014, longitude = -77.0104265)
-  near_station <- recipe(~., data = postal) %>%
+  near_station <- recipe(~., data = postal) |>
     step_geodist(
       lat = latitude,
       lon = longitude,
@@ -76,15 +76,15 @@ test_that("lat lon", {
       ref_lat = 38.8986312,
       ref_lon = -77.0062457,
       is_lat_lon = TRUE
-    ) %>%
-    prep() %>%
+    ) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_equal(near_station[["geo_dist"]], 367, tolerance = 1)
 
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -92,13 +92,13 @@ test_that("lat lon", {
         ref_lat = 100,
         ref_lon = 100,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -106,13 +106,13 @@ test_that("lat lon", {
         ref_lat = 0,
         ref_lon = 190,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -120,13 +120,13 @@ test_that("lat lon", {
         ref_lat = -100,
         ref_lon = 0,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -134,14 +134,14 @@ test_that("lat lon", {
         ref_lat = 0,
         ref_lon = -190,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 
   postal <- tibble(latitude = 100, longitude = 0)
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -149,14 +149,14 @@ test_that("lat lon", {
         ref_lat = 38.8986312,
         ref_lon = -77.0062457,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 
   postal <- tibble(latitude = 0, longitude = 190)
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -164,13 +164,13 @@ test_that("lat lon", {
         ref_lat = 38.8986312,
         ref_lon = -77.0062457,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
   postal <- tibble(latitude = -100, longitude = 0)
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -178,14 +178,14 @@ test_that("lat lon", {
         ref_lat = 38.8986312,
         ref_lon = -77.0062457,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 
   postal <- tibble(latitude = 0, longitude = -190)
   expect_snapshot(
     error = TRUE,
-    near_station <- recipe(~., data = postal) %>%
+    near_station <- recipe(~., data = postal) |>
       step_geodist(
         lat = latitude,
         lon = longitude,
@@ -193,7 +193,7 @@ test_that("lat lon", {
         ref_lat = 38.8986312,
         ref_lon = -77.0062457,
         is_lat_lon = TRUE
-      ) %>%
+      ) |>
       prep()
   )
 })
@@ -202,7 +202,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$geo_dist <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_geodist(vs, am, ref_lat = 0, ref_lon = 0)
 
   expect_snapshot(
@@ -219,43 +219,43 @@ test_that("bad args", {
 
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_geodist(starts_with("x"), y, ref_lat = 0.5, ref_lon = 0.25) %>%
+    rec |>
+      step_geodist(starts_with("x"), y, ref_lat = 0.5, ref_lon = 0.25) |>
       prep(training = rand_data_2)
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_geodist(x, starts_with("y"), ref_lat = 0.5, ref_lon = 0.25) %>%
+    rec |>
+      step_geodist(x, starts_with("y"), ref_lat = 0.5, ref_lon = 0.25) |>
       prep(training = rand_data_2)
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_geodist(x, y, ref_lat = letters[1:2], ref_lon = 0.25) %>%
+    rec |>
+      step_geodist(x, y, ref_lat = letters[1:2], ref_lon = 0.25) |>
       prep(training = rand_data_2)
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_geodist(x, y, ref_lon = letters[1:2], ref_lat = 0.25) %>%
+    rec |>
+      step_geodist(x, y, ref_lon = letters[1:2], ref_lat = 0.25) |>
       prep(training = rand_data_2)
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, name = 1) %>%
+    rec |>
+      step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, name = 1) |>
       prep(training = rand_data_2)
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, log = exp(1)) %>%
+    rec |>
+      step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, log = exp(1)) |>
       prep(training = rand_data_2)
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ x + y, data = rand_data) %>%
+    recipe(~ x + y, data = rand_data) |>
       step_geodist(
         x,
         y,
@@ -263,12 +263,12 @@ test_that("bad args", {
         ref_lon = 0.25,
         is_lat_lon = "no",
         log = FALSE
-      ) %>%
+      ) |>
       prep(training = rand_data)
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ x + y, data = rand_data) %>%
+    recipe(~ x + y, data = rand_data) |>
       step_geodist(
         x,
         y,
@@ -276,7 +276,7 @@ test_that("bad args", {
         ref_lon = 0.25,
         is_lat_lon = c(TRUE, TRUE),
         log = FALSE
-      ) %>%
+      ) |>
       prep(training = rand_data)
   )
 })
@@ -284,7 +284,7 @@ test_that("bad args", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~ x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -292,8 +292,8 @@ test_that("bake method errors when needed non-standard role columns are missing"
       ref_lon = 0.25,
       is_lat_lon = FALSE,
       log = FALSE
-    ) %>%
-    update_role(x, y, new_role = "potato") %>%
+    ) |>
+    update_role(x, y, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   rec_trained <- prep(rec, rand_data)
 
@@ -351,7 +351,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("geo_dist")
 
-  rec <- recipe(~ x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -369,7 +369,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -389,7 +389,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -410,7 +410,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ x + y, data = rand_data) %>%
+  rec <- recipe(~ x + y, data = rand_data) |>
     step_geodist(
       x,
       y,
@@ -426,7 +426,7 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- rand_data
-  rec <- recipe(~., data) %>%
+  rec <- recipe(~., data) |>
     step_geodist(
       x,
       y,
@@ -434,7 +434,7 @@ test_that("0 and 1 rows data work in bake method", {
       ref_lon = 0.25,
       is_lat_lon = FALSE,
       log = FALSE
-    ) %>%
+    ) |>
     prep()
 
   expect_identical(

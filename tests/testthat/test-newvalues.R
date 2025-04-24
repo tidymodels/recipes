@@ -65,9 +65,9 @@ test_that("new_values_func correctly prints only non na-values when also NA as n
 
 test_that("check_new_values does nothing when no new values", {
   expect_no_error(
-    x <- recipe(credit_data) %>%
-      check_new_values(Home) %>%
-      prep() %>%
+    x <- recipe(credit_data) |>
+      check_new_values(Home) |>
+      prep() |>
       bake(credit_data)
   )
   expect_equal(x, as_tibble(credit_data))
@@ -79,60 +79,60 @@ test_that("check_new_values breaks with new values", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(x1) %>%
-      check_new_values(a) %>%
-      prep() %>%
+    recipe(x1) |>
+      check_new_values(a) |>
+      prep() |>
       bake(x2[1:4, , drop = FALSE])
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+    recipe(x1) |> check_new_values(a) |> prep() |> bake(x2)
   )
 })
 
 test_that("check_new_values ignores NA by default", {
   x1 <- data.frame(a = letters[1:3])
-  x2 <- data.frame(a = letters[1:4] %>% c(NA))
+  x2 <- data.frame(a = letters[1:4] |> c(NA))
   expect_no_error(
-    recipe(x1) %>%
-      check_new_values(a) %>%
-      prep() %>%
+    recipe(x1) |>
+      check_new_values(a) |>
+      prep() |>
       bake(x2[-4, , drop = FALSE])
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+    recipe(x1) |> check_new_values(a) |> prep() |> bake(x2)
   )
 })
 
 test_that("check_new_values not ignoring NA argument", {
   x1 <- data.frame(a = letters[1:3])
-  x2 <- data.frame(a = letters[1:4] %>% c(NA))
+  x2 <- data.frame(a = letters[1:4] |> c(NA))
 
   expect_snapshot(
     error = TRUE,
-    recipe(x1) %>%
-      check_new_values(a, ignore_NA = FALSE) %>%
-      prep() %>%
+    recipe(x1) |>
+      check_new_values(a, ignore_NA = FALSE) |>
+      prep() |>
       bake(x2[-4, , drop = FALSE])
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(x1) %>%
-      check_new_values(a, ignore_NA = FALSE) %>%
-      prep() %>%
+    recipe(x1) |>
+      check_new_values(a, ignore_NA = FALSE) |>
+      prep() |>
       bake(x2)
   )
 })
 
 check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
   expect_no_error(
-    res <- recipe(x1, strings_as_factors = saf) %>%
-      check_new_values(a) %>%
-      prep() %>%
+    res <- recipe(x1, strings_as_factors = saf) |>
+      check_new_values(a) |>
+      prep() |>
       bake(x1)
   )
 
@@ -140,7 +140,7 @@ check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
 
   expect_snapshot(
     error = TRUE,
-    recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
+    recipe(x1) |> check_new_values(a) |> prep() |> bake(x2)
   )
 }
 
@@ -177,9 +177,9 @@ test_that("check_new_values works on logicals", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(mtcars) %>%
-    check_new_values(disp) %>%
-    update_role(disp, new_role = "potato") %>%
+  rec <- recipe(mtcars) |>
+    check_new_values(disp) |>
+    update_role(disp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mtcars)
@@ -225,7 +225,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., mtcars) %>%
+  rec <- recipe(mpg ~ ., mtcars) |>
     check_new_values(disp)
 
   expect_snapshot(print(rec))
@@ -234,8 +234,8 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      check_new_values(disp, ignore_NA = 2) %>%
+    recipe(mpg ~ ., mtcars) |>
+      check_new_values(disp, ignore_NA = 2) |>
       prep(),
     error = TRUE
   )
@@ -243,8 +243,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    check_new_values(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    check_new_values(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

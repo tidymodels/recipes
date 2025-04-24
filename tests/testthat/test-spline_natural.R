@@ -18,7 +18,7 @@ test_that("correct basis functions", {
     data = biomass_tr
   )
 
-  with_ns <- rec %>%
+  with_ns <- rec |>
     step_spline_natural(carbon, hydrogen, deg_free = 5)
 
   with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
@@ -86,7 +86,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_01 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_spline_natural(mpg)
 
   expect_snapshot(
@@ -105,7 +105,7 @@ test_that("tunable", {
   )
 
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_spline_natural(all_predictors())
   rec_param <- tunable.step_spline_natural(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free"))
@@ -119,8 +119,8 @@ test_that("tunable", {
 })
 
 test_that("works when baked with 1 row", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_spline_natural(disp) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
+    step_spline_natural(disp) |>
     prep()
 
   expect_no_error(
@@ -136,8 +136,8 @@ test_that("errors with zero variance predictors (#1455)", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_spline_natural(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_spline_natural(all_numeric_predictors()) |>
       prep()
   )
 })
@@ -147,8 +147,8 @@ test_that("check_options() is used", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_spline_natural(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_spline_natural(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -156,9 +156,9 @@ test_that("check_options() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(mtcars) %>%
-    step_spline_natural(disp) %>%
-    update_role(disp, new_role = "potato") %>%
+  rec <- recipe(mtcars) |>
+    step_spline_natural(disp) |>
+    update_role(disp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mtcars)
@@ -206,7 +206,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("mpg_", formatC(1:10, width = 2, flag = "0"))
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_spline_natural(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -217,7 +217,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_spline_natural(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -239,7 +239,7 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass
-  ) %>%
+  ) |>
     step_spline_natural(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -248,7 +248,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_spline_natural(
       all_predictors(),
       deg_free = hardhat::tune()
@@ -264,14 +264,14 @@ test_that("bad args", {
   skip_if_not_installed("splines2")
 
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_spline_natural(disp, deg_free = "a") %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_spline_natural(disp, deg_free = "a") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_spline_natural(disp, complete_set = 1) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_spline_natural(disp, complete_set = 1) |>
       prep(),
     error = TRUE
   )
@@ -281,8 +281,8 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("splines2")
 
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_spline_natural(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_spline_natural(mpg, disp) |>
     prep()
 
   expect_identical(

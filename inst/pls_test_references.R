@@ -5,20 +5,20 @@ library(stringr)
 
 data(biomass, package = "modeldata")
 
-biom_tr <- biomass %>%
-  dplyr::filter(dataset == "Training") %>%
+biom_tr <- biomass |>
+  dplyr::filter(dataset == "Training") |>
   dplyr::select(-dataset, -sample)
-biom_te <- biomass %>%
-  dplyr::filter(dataset == "Testing") %>%
+biom_te <- biomass |>
+  dplyr::filter(dataset == "Testing") |>
   dplyr::select(-dataset, -sample, -HHV)
 
 data(cells, package = "modeldata")
 
-cell_tr <- cells %>%
-  dplyr::filter(case == "Train") %>%
+cell_tr <- cells |>
+  dplyr::filter(case == "Train") |>
   dplyr::select(-case)
-cell_te <- cells %>%
-  dplyr::filter(case == "Test") %>%
+cell_te <- cells |>
+  dplyr::filter(case == "Test") |>
   dplyr::select(-case, -class)
 
 # pls 1 outcome ----------------------------------------------------------------
@@ -29,12 +29,12 @@ bm_pls_fit <- pls(
   scale = TRUE
 )
 
-bm_pls_tr <- bm_pls_fit$variates$X %>%
-  as_tibble() %>%
+bm_pls_tr <- bm_pls_fit$variates$X |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "comp", replacement = "PLS")
 
-bm_pls_te <- predict(bm_pls_fit, biom_te[, -6])$variates %>%
-  as_tibble() %>%
+bm_pls_te <- predict(bm_pls_fit, biom_te[, -6])$variates |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "dim", replacement = "PLS")
 
 # pls 2 outcomes ---------------------------------------------------------------
@@ -45,12 +45,12 @@ bm_pls_multi_fit <- pls(
   scale = TRUE
 )
 
-bm_pls_multi_tr <- bm_pls_multi_fit$variates$X %>%
-  as_tibble() %>%
+bm_pls_multi_tr <- bm_pls_multi_fit$variates$X |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "comp", replacement = "PLS")
 
-bm_pls_multi_te <- predict(bm_pls_multi_fit, biom_te[, -c(1, 6)])$variates %>%
-  as_tibble() %>%
+bm_pls_multi_te <- predict(bm_pls_multi_fit, biom_te[, -c(1, 6)])$variates |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "dim", replacement = "PLS")
 
 # spls 1 outcome ---------------------------------------------------------------
@@ -62,12 +62,12 @@ bm_spls_fit <- spls(
   scale = TRUE
 )
 
-bm_spls_tr <- bm_spls_fit$variates$X %>%
-  as_tibble() %>%
+bm_spls_tr <- bm_spls_fit$variates$X |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "comp", replacement = "PLS")
 
-bm_spls_te <- predict(bm_spls_fit, biom_te[, -6])$variates %>%
-  as_tibble() %>%
+bm_spls_te <- predict(bm_spls_fit, biom_te[, -6])$variates |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "dim", replacement = "PLS")
 
 # spls 2 outcomes --------------------------------------------------------------
@@ -79,12 +79,12 @@ bm_spls_multi_fit <- spls(
   scale = TRUE
 )
 
-bm_spls_multi_tr <- bm_spls_multi_fit$variates$X %>%
-  as_tibble() %>%
+bm_spls_multi_tr <- bm_spls_multi_fit$variates$X |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "comp", replacement = "PLS")
 
-bm_spls_multi_te <- predict(bm_spls_multi_fit, biom_te[, -c(1, 6)])$variates %>%
-  as_tibble() %>%
+bm_spls_multi_te <- predict(bm_spls_multi_fit, biom_te[, -c(1, 6)])$variates |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "dim", replacement = "PLS")
 
 # plsda 1 outcome --------------------------------------------------------------
@@ -95,12 +95,12 @@ cell_plsda_fit <- plsda(
   scale = TRUE
 )
 
-cell_plsda_tr <- cell_plsda_fit$variates$X %>%
-  as_tibble() %>%
+cell_plsda_tr <- cell_plsda_fit$variates$X |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "comp", replacement = "PLS")
 
-cell_plsda_te <- predict(cell_plsda_fit, cell_te)$variates %>%
-  as_tibble() %>%
+cell_plsda_te <- predict(cell_plsda_fit, cell_te)$variates |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "dim", replacement = "PLS")
 
 # splsda 1 outcome -------------------------------------------------------------
@@ -112,12 +112,12 @@ cell_splsda_fit <- splsda(
   scale = TRUE
 )
 
-cell_splsda_tr <- cell_splsda_fit$variates$X %>%
-  as_tibble() %>%
+cell_splsda_tr <- cell_splsda_fit$variates$X |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "comp", replacement = "PLS")
 
-cell_splsda_te <- predict(cell_splsda_fit, cell_te)$variates %>%
-  as_tibble() %>%
+cell_splsda_te <- predict(cell_splsda_fit, cell_te)$variates |>
+  as_tibble() |>
   rename_with(str_replace, pattern = "dim", replacement = "PLS")
 
 # Saving -----------------------------------------------------------------------

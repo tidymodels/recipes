@@ -1,7 +1,7 @@
 # deals with bad input
 
     Code
-      recipe(~., data = ex_dat) %>% step_intercept(value = "Pie") %>% prep()
+      prep(step_intercept(recipe(~., data = ex_dat), value = "Pie"))
     Condition
       Error in `step_intercept()`:
       ! `value` must be a number, not the string "Pie".
@@ -9,7 +9,7 @@
 ---
 
     Code
-      recipe(~., data = ex_dat) %>% step_intercept(name = 4) %>% prep()
+      prep(step_intercept(recipe(~., data = ex_dat), name = 4))
     Condition
       Error in `step_intercept()`:
       ! `name` must be a single string, not the number 4.
@@ -17,7 +17,7 @@
 ---
 
     Code
-      recipe(~., data = ex_dat) %>% step_intercept(all_predictors()) %>% prep()
+      prep(step_intercept(recipe(~., data = ex_dat), all_predictors()))
     Condition
       Warning:
       Selectors are not used for this step.

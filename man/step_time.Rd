@@ -89,7 +89,7 @@ examples <- data.frame(
   times = ymd_hms("2022-05-06 23:51:07") +
   hours(1:5) + minutes(1:5) + seconds(1:5)
 )
-time_rec <- recipe(~ times, examples) \%>\%
+time_rec <- recipe(~ times, examples) |>
   step_time(all_predictors())
 
 tidy(time_rec, number = 1)

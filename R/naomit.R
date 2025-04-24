@@ -32,9 +32,9 @@
 #'
 #' @examples
 #'
-#' recipe(Ozone ~ ., data = airquality) %>%
-#'   step_naomit(Solar.R) %>%
-#'   prep(airquality, verbose = FALSE) %>%
+#' recipe(Ozone ~ ., data = airquality) |>
+#'   step_naomit(Solar.R) |>
+#'   prep(airquality, verbose = FALSE) |>
 #'   bake(new_data = NULL)
 step_naomit <- function(
   recipe,

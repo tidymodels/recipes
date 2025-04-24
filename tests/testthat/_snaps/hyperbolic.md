@@ -1,7 +1,7 @@
 # wrong arguments
 
     Code
-      step_hyperbolic(rec, func = "cos") %>% prep()
+      prep(step_hyperbolic(rec, func = "cos"))
     Condition
       Error in `step_hyperbolic()`:
       ! `func` must be one of "sinh", "cosh", or "tanh", not "cos".
@@ -10,7 +10,7 @@
 ---
 
     Code
-      step_hyperbolic(rec, inverse = 2) %>% prep()
+      prep(step_hyperbolic(rec, inverse = 2))
     Condition
       Error in `step_hyperbolic()`:
       Caused by error in `prep()`:

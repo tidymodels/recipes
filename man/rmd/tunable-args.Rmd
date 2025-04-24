@@ -10,7 +10,7 @@ get_dials <- function(x) {
 
 get_param_list <- function(x) {
   args <- formals(x)
-  params <- getS3method("tunable", x)(list()) %>%
+  params <- getS3method("tunable", x)(list()) |>
     dplyr::mutate(
       default = args[name],
       dials = purrr::map(call_info, get_dials),

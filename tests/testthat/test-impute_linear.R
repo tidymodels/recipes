@@ -3,26 +3,27 @@ skip_if_not_installed("modeldata")
 
 data(ames, package = "modeldata")
 
-ames_dat <- ames %>%
-  select(Lot_Frontage, Lot_Area, Total_Bsmt_SF) %>%
-  mutate(Lot_Frontage = na_if(Lot_Frontage, 0)) %>%
+ames_dat <- ames |>
+  select(Lot_Frontage, Lot_Area, Total_Bsmt_SF) |>
+  mutate(Lot_Frontage = na_if(Lot_Frontage, 0)) |>
   mutate(Total_Bsmt_SF = na_if(Total_Bsmt_SF, 0))
 
-tg_dat <- ToothGrowth %>%
+tg_dat <- ToothGrowth |>
   mutate(dose = na_if(dose, 0.5))
 
 test_that("Does the imputation (no NAs), and does it correctly.", {
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
-  imputed <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
-    prep(ames_dat) %>%
-    bake(new_data = NULL) %>%
-    pull(Lot_Frontage) %>%
-    .[missing_ind]
+  imputed <- recipe(head(ames_dat)) |>
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) |>
+    prep(ames_dat) |>
+    bake(new_data = NULL) |>
+    pull(Lot_Frontage)
 
-  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
-    predict(newdata = ames_dat[missing_ind, ]) %>%
+  imputed <- imputed[missing_ind]
+
+  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) |>
+    predict(newdata = ames_dat[missing_ind, ]) |>
     unname()
 
   expect_equal(imputed, lm_predicted)
@@ -30,14 +31,14 @@ test_that("Does the imputation (no NAs), and does it correctly.", {
 })
 
 test_that("All NA values", {
-  imputed <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
+  imputed <- recipe(head(ames_dat)) |>
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) |>
     prep(ames_dat)
 
-  imputed_te <- bake(imputed, ames_dat %>% mutate(Lot_Frontage = NA))
+  imputed_te <- bake(imputed, ames_dat |> mutate(Lot_Frontage = NA))
 
-  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
-    predict(newdata = ames_dat) %>%
+  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) |>
+    predict(newdata = ames_dat) |>
     unname()
 
   expect_equal(unname(imputed_te$Lot_Frontage), lm_predicted)
@@ -45,12 +46,12 @@ test_that("All NA values", {
 })
 
 test_that("Returns correct models.", {
-  imputed <- recipe(head(ames_dat)) %>%
+  imputed <- recipe(head(ames_dat)) |>
     step_impute_linear(
       Lot_Frontage,
       Total_Bsmt_SF,
       impute_with = Lot_Area
-    ) %>%
+    ) |>
     prep(ames_dat)
 
   expect_equal(length(imputed$steps[[1]]$models), 2)
@@ -63,14 +64,14 @@ test_that("Returns correct models.", {
 test_that("Fails when one of the variables to impute is non-numeric.", {
   expect_snapshot(
     error = TRUE,
-    recipe(tg_dat) %>%
-      step_impute_linear(supp, impute_with = len) %>%
+    recipe(tg_dat) |>
+      step_impute_linear(supp, impute_with = len) |>
       prep(tg_dat)
   )
   expect_snapshot(
     error = TRUE,
-    recipe(tg_dat) %>%
-      step_impute_linear(supp, dose, impute_with = len) %>%
+    recipe(tg_dat) |>
+      step_impute_linear(supp, dose, impute_with = len) |>
       prep(tg_dat)
   )
 })
@@ -78,15 +79,15 @@ test_that("Fails when one of the variables to impute is non-numeric.", {
 test_that("Maintain data type", {
   ames_integer <- ames
   ames_integer$TotRms_AbvGrd[1:10] <- NA_integer_
-  integer_rec <- recipe(~., data = ames_integer) %>%
+  integer_rec <- recipe(~., data = ames_integer) |>
     step_impute_linear(
       TotRms_AbvGrd,
       impute_with = c(Bedroom_AbvGr, Gr_Liv_Area)
-    ) %>%
+    ) |>
     prep()
   expect_true(
     is.integer(
-      bake(integer_rec, ames_integer, TotRms_AbvGrd) %>% pull(TotRms_AbvGrd)
+      bake(integer_rec, ames_integer, TotRms_AbvGrd) |> pull(TotRms_AbvGrd)
     )
   )
 })
@@ -94,24 +95,25 @@ test_that("Maintain data type", {
 test_that("case weights", {
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
-  ames_dat_cw <- ames_dat %>%
+  ames_dat_cw <- ames_dat |>
     mutate(Total_Bsmt_SF = frequency_weights(Total_Bsmt_SF))
 
-  rec_prepped <- recipe(head(ames_dat_cw)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
+  rec_prepped <- recipe(head(ames_dat_cw)) |>
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) |>
     prep(ames_dat_cw)
 
-  imputed <- rec_prepped %>%
-    bake(new_data = NULL) %>%
-    pull(Lot_Frontage) %>%
-    .[missing_ind]
+  imputed <- rec_prepped |>
+    bake(new_data = NULL) |>
+    pull(Lot_Frontage)
+
+  imputed <- imputed[missing_ind]
 
   lm_predicted <- lm(
     Lot_Frontage ~ Lot_Area,
     data = ames_dat,
     weights = Total_Bsmt_SF
-  ) %>%
-    predict(newdata = ames_dat[missing_ind, ]) %>%
+  ) |>
+    predict(newdata = ames_dat[missing_ind, ]) |>
     unname()
 
   expect_equal(imputed, lm_predicted)
@@ -123,20 +125,21 @@ test_that("case weights", {
 
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
-  ames_dat_cw <- ames_dat %>%
+  ames_dat_cw <- ames_dat |>
     mutate(Total_Bsmt_SF = importance_weights(Total_Bsmt_SF))
 
-  rec_prepped <- recipe(head(ames_dat_cw)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
+  rec_prepped <- recipe(head(ames_dat_cw)) |>
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) |>
     prep(ames_dat_cw)
 
-  imputed <- rec_prepped %>%
-    bake(new_data = NULL) %>%
-    pull(Lot_Frontage) %>%
-    .[missing_ind]
+  imputed <- rec_prepped |>
+    bake(new_data = NULL) |>
+    pull(Lot_Frontage)
 
-  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
-    predict(newdata = ames_dat[missing_ind, ]) %>%
+  imputed <- imputed[missing_ind]
+
+  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) |>
+    predict(newdata = ames_dat[missing_ind, ]) |>
     unname()
 
   expect_equal(imputed, lm_predicted)
@@ -148,8 +151,8 @@ test_that("case weights", {
 test_that("impute_with errors with nothing selected", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_impute_linear(all_predictors(), impute_with = NULL) %>%
+    recipe(~., data = mtcars) |>
+      step_impute_linear(all_predictors(), impute_with = NULL) |>
       prep()
   )
 })
@@ -158,8 +161,8 @@ test_that("warns if impute_with columns contains missing values", {
   mtcars$mpg[3] <- NA
   mtcars$disp[3] <- NA
   expect_snapshot(
-    tmp <- recipe(~., data = mtcars) %>%
-      step_impute_linear(mpg, impute_with = disp) %>%
+    tmp <- recipe(~., data = mtcars) |>
+      step_impute_linear(mpg, impute_with = disp) |>
       prep()
   )
 })
@@ -168,8 +171,8 @@ test_that("errors if there are no rows without missing values", {
   mtcars$am <- NA
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_impute_linear(all_predictors()) %>%
+    recipe(~., data = mtcars) |>
+      step_impute_linear(all_predictors()) |>
       prep()
   )
 })
@@ -177,15 +180,15 @@ test_that("errors if there are no rows without missing values", {
 test_that("recipes_argument_select() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_impute_linear(disp, impute_with = NULL) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_impute_linear(disp, impute_with = NULL) |>
       prep()
   )
 })
 
 test_that("addition of recipes_argument_select() is backwards compatible", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_impute_linear(disp) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
+    step_impute_linear(disp) |>
     prep()
 
   exp <- bake(rec, mtcars)
@@ -203,8 +206,8 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  rec_old <- recipe(mpg ~ ., data = mtcars) %>%
-    step_impute_linear(disp, impute_with = imp_vars(all_predictors())) %>%
+  rec_old <- recipe(mpg ~ ., data = mtcars) |>
+    step_impute_linear(disp, impute_with = imp_vars(all_predictors())) |>
     prep()
 
   expect_identical(
@@ -216,10 +219,10 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
-    update_role(Lot_Frontage, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec <- recipe(head(ames_dat)) |>
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) |>
+    update_role(Lot_Frontage, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep(ames_dat)
 
   expect_snapshot(
@@ -266,7 +269,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(ames_dat) %>%
+  rec <- recipe(ames_dat) |>
     step_impute_linear(Lot_Frontage, impute_with = Lot_Area)
 
   expect_snapshot(print(rec))
@@ -275,8 +278,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_impute_linear(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_impute_linear(disp, mpg) |>
     prep()
 
   expect_identical(

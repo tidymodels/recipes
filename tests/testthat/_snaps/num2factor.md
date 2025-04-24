@@ -1,7 +1,7 @@
 # bad args
 
     Code
-      rec %>% step_num2factor(w, x, levels = c("one", "two")) %>% prep(ex_dat)
+      prep(step_num2factor(rec, w, x, levels = c("one", "two")), ex_dat)
     Condition
       Error in `step_num2factor()`:
       Caused by error in `prep()`:
@@ -11,7 +11,7 @@
 ---
 
     Code
-      rec %>% step_num2factor(w, x) %>% prep(ex_dat)
+      prep(step_num2factor(rec, w, x), ex_dat)
     Condition
       Error in `step_num2factor()`:
       ! Please provide a character vector of appropriate length for `levels`.
@@ -19,7 +19,7 @@
 ---
 
     Code
-      rec %>% step_num2factor(z, levels = rev(LETTERS[1:10]), transform = 2) %>% prep()
+      prep(step_num2factor(rec, z, levels = rev(LETTERS[1:10]), transform = 2))
     Condition
       Error in `step_num2factor()`:
       Caused by error in `prep()`:

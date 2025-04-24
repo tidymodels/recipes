@@ -123,7 +123,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
 data = biomass_tr
 )
 
-nzv_filter <- rec \%>\%
+nzv_filter <- rec |>
   step_nzv(all_predictors())
 
 filter_obj <- prep(nzv_filter, training = biomass_tr)

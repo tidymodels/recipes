@@ -11,7 +11,7 @@ dat$V6 <- -dat$V2 + runif(n) * .2
 test_that("high filter", {
   set.seed(1)
   rec <- recipe(~., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_corr(all_predictors(), threshold = .5)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -23,7 +23,7 @@ test_that("high filter", {
 
 test_that("low filter", {
   rec <- recipe(~., data = dat)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_corr(all_predictors(), threshold = 1)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -35,7 +35,7 @@ test_that("many missing values", {
   dat2 <- dat
   dat2$V4 <- NA_real_
   rec <- recipe(~., data = dat2)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_corr(all_predictors(), threshold = .25)
 
   expect_snapshot(
@@ -50,7 +50,7 @@ test_that("occasional missing values", {
   dat3$V1[1] <- NA_real_
   dat3$V4[10] <- NA_real_
   rec <- recipe(~., data = dat3)
-  filtering <- rec %>%
+  filtering <- rec |>
     step_corr(all_predictors(), threshold = .25, use = "everything")
 
   expect_snapshot(
@@ -62,7 +62,7 @@ test_that("occasional missing values", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_corr(all_predictors())
   rec_param <- tunable.step_corr(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -76,7 +76,7 @@ test_that("tunable", {
 })
 
 test_that("case weights", {
-  dat_caseweights <- dat %>%
+  dat_caseweights <- dat |>
     mutate(
       V3_dup = V3 + rep(c(0, 1), c(50, 50)),
       wts = rep(c(1, 2), c(50, 50)),
@@ -84,7 +84,7 @@ test_that("case weights", {
     )
 
   # low filter
-  filtering <- recipe(~., data = dat_caseweights) %>%
+  filtering <- recipe(~., data = dat_caseweights) |>
     step_corr(all_predictors(), threshold = 0.92)
 
   filtering_trained <- prep(filtering)
@@ -94,7 +94,7 @@ test_that("case weights", {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 
   # high filter
-  filtering <- recipe(~., data = dat_caseweights) %>%
+  filtering <- recipe(~., data = dat_caseweights) |>
     step_corr(all_predictors(), threshold = 0.9)
 
   filtering_trained <- prep(filtering)
@@ -106,7 +106,7 @@ test_that("case weights", {
   expect_snapshot(filtering_trained)
 
   # ----------------------------------------------------------------------------
-  dat_caseweights <- dat %>%
+  dat_caseweights <- dat |>
     mutate(
       V3_dup = V3 + rep(c(0, 1), c(50, 50)),
       wts = rep(c(1, 2), c(50, 50)),
@@ -114,7 +114,7 @@ test_that("case weights", {
     )
 
   # low filter
-  filtering <- recipe(~., data = dat_caseweights) %>%
+  filtering <- recipe(~., data = dat_caseweights) |>
     step_corr(all_predictors(), threshold = 0.92)
 
   filtering_trained <- prep(filtering)
@@ -124,7 +124,7 @@ test_that("case weights", {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 
   # high filter
-  filtering <- recipe(~., data = dat_caseweights) %>%
+  filtering <- recipe(~., data = dat_caseweights) |>
     step_corr(all_predictors(), threshold = 0.9)
 
   filtering_trained <- prep(filtering)
@@ -140,8 +140,8 @@ test_that("corr_filter() warns on many NA values", {
   mtcars[, 1:10] <- NA_real_
 
   expect_snapshot(
-    tmp <- recipe(~., data = mtcars) %>%
-      step_corr(all_predictors()) %>%
+    tmp <- recipe(~., data = mtcars) |>
+      step_corr(all_predictors()) |>
       prep()
   )
 })
@@ -193,7 +193,7 @@ test_that("empty selection tidy method works", {
 
 test_that("printing", {
   set.seed(1)
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_corr(all_predictors())
 
   expect_snapshot(print(rec))
@@ -202,7 +202,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_corr(all_predictors(), threshold = hardhat::tune())
 
   params <- extract_parameter_set_dials(rec)
@@ -213,20 +213,20 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      step_corr(all_predictors(), threshold = 2) %>%
+    recipe(mpg ~ ., mtcars) |>
+      step_corr(all_predictors(), threshold = 2) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      step_corr(all_predictors(), use = "this") %>%
+    recipe(mpg ~ ., mtcars) |>
+      step_corr(all_predictors(), use = "this") |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
-      step_corr(all_predictors(), method = "my dissertation") %>%
+    recipe(mpg ~ ., mtcars) |>
+      step_corr(all_predictors(), method = "my dissertation") |>
       prep(),
     error = TRUE
   )
@@ -234,8 +234,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_corr(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_corr(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

@@ -54,7 +54,7 @@
 #'   data = biomass_tr
 #' )
 #'
-#' with_splines <- rec %>%
+#' with_splines <- rec |>
 #'   step_ns(carbon, hydrogen)
 #' with_splines <- prep(with_splines, training = biomass_tr)
 #'

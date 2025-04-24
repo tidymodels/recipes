@@ -12,7 +12,7 @@ dat <- data.frame(
 )
 
 test_that("numeric data", {
-  rec1 <- recipe(y ~ ., data = dat) %>%
+  rec1 <- recipe(y ~ ., data = dat) |>
     step_shuffle(all_numeric())
 
   rec1 <- prep(rec1, training = dat, verbose = FALSE)
@@ -28,7 +28,7 @@ test_that("numeric data", {
 })
 
 test_that("nominal data", {
-  rec2 <- recipe(y ~ ., data = dat) %>%
+  rec2 <- recipe(y ~ ., data = dat) |>
     step_shuffle(all_nominal())
 
   rec2 <- prep(rec2, training = dat, verbose = FALSE)
@@ -44,7 +44,7 @@ test_that("nominal data", {
 })
 
 test_that("all data", {
-  rec3 <- recipe(y ~ ., data = dat) %>%
+  rec3 <- recipe(y ~ ., data = dat) |>
     step_shuffle(all_predictors())
 
   rec3 <- prep(rec3, training = dat, verbose = FALSE)
@@ -60,7 +60,7 @@ test_that("all data", {
 })
 
 test_that("bake a single row", {
-  rec4 <- recipe(y ~ ., data = dat) %>%
+  rec4 <- recipe(y ~ ., data = dat) |>
     step_shuffle(all_predictors())
 
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
@@ -72,8 +72,8 @@ test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
 
-  rec <- recipe(~., mtcars) %>%
-    step_shuffle(vs, am) %>%
+  rec <- recipe(~., mtcars) |>
+    step_shuffle(vs, am) |>
     prep()
 
   expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
@@ -84,9 +84,9 @@ test_that("doesn't destroy sparsity", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(all_numeric()) %>%
-    update_role(all_numeric(), new_role = "potato") %>%
+  rec1 <- recipe(y ~ ., data = dat) |>
+    step_shuffle(all_numeric()) |>
+    update_role(all_numeric(), new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec1 <- prep(rec1, training = dat, verbose = FALSE)
@@ -132,7 +132,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(y ~ ., data = dat) %>%
+  rec <- recipe(y ~ ., data = dat) |>
     step_shuffle(all_predictors())
 
   expect_snapshot(print(rec))
@@ -141,8 +141,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_shuffle(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_shuffle(all_predictors()) |>
     prep()
 
   suppressWarnings(

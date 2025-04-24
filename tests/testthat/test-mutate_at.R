@@ -5,15 +5,15 @@ iris_rec <- recipe(~., data = iris)
 
 test_that("basic usage", {
   rec <-
-    iris_rec %>%
+    iris_rec |>
     step_mutate_at(contains("Length"), fn = log)
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     mutate(
       Sepal.Length = log(Sepal.Length),
       Petal.Length = log(Petal.Length)
@@ -23,28 +23,28 @@ test_that("basic usage", {
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
-    iris %>%
-    as_tibble() %>%
-    slice(76:150) %>%
+    iris |>
+    as_tibble() |>
+    slice(76:150) |>
     mutate(
       Sepal.Length = log(Sepal.Length),
       Petal.Length = log(Petal.Length)
     )
-  rec_test <- bake(prepped, iris %>% slice(76:150))
+  rec_test <- bake(prepped, iris |> slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("mulitple functions", {
   rec <-
-    iris_rec %>%
+    iris_rec |>
     step_mutate_at(contains("Length"), fn = list(a = log, b = sqrt))
 
-  prepped <- prep(rec, training = iris %>% slice(1:75))
+  prepped <- prep(rec, training = iris |> slice(1:75))
 
   dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
+    iris |>
+    as_tibble() |>
+    slice(1:75) |>
     mutate(
       Sepal.Length_a = log(Sepal.Length),
       Petal.Length_a = log(Petal.Length),
@@ -56,25 +56,25 @@ test_that("mulitple functions", {
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
-    iris %>%
-    as_tibble() %>%
-    slice(76:150) %>%
+    iris |>
+    as_tibble() |>
+    slice(76:150) |>
     mutate(
       Sepal.Length_a = log(Sepal.Length),
       Petal.Length_a = log(Petal.Length),
       Sepal.Length_b = sqrt(Sepal.Length),
       Petal.Length_b = sqrt(Petal.Length)
     )
-  rec_test <- bake(prepped, iris %>% slice(76:150))
+  rec_test <- bake(prepped, iris |> slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
 test_that("no input", {
   expect_snapshot(
     error = TRUE,
-    iris_rec %>%
-      step_mutate_at() %>%
-      prep(training = iris) %>%
+    iris_rec |>
+      step_mutate_at() |>
+      prep(training = iris) |>
       bake(new_data = NULL, composition = "data.frame")
   )
 })
@@ -126,7 +126,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = iris) %>%
+  rec <- recipe(~., data = iris) |>
     step_mutate_at(contains("Sepal"), fn = log)
 
   expect_snapshot(print(rec))
@@ -135,8 +135,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_mutate_at(all_numeric_predictors(), fn = abs) %>%
+  rec <- recipe(~., data) |>
+    step_mutate_at(all_numeric_predictors(), fn = abs) |>
     prep()
 
   expect_identical(

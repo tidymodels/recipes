@@ -41,7 +41,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_ratio(disp, denom = NULL) %>% prep()
+      prep(step_ratio(recipe(mpg ~ ., data = mtcars), disp, denom = NULL))
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
@@ -135,8 +135,7 @@
 # bad args
 
     Code
-      recipe(~ mpg + disp, mtcars) %>% step_ratio(mpg, denom = disp, naming = NULL) %>%
-        prep()
+      prep(step_ratio(recipe(~ mpg + disp, mtcars), mpg, denom = disp, naming = NULL))
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:

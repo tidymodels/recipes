@@ -90,7 +90,7 @@ rec <- recipe(
   data = biomass_tr
 )
 
-ranged_trans <- rec \%>\%
+ranged_trans <- rec |>
   step_range(carbon, hydrogen)
 
 ranged_obj <- prep(ranged_trans, training = biomass_tr)

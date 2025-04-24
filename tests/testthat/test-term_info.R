@@ -424,10 +424,10 @@ test_that("issue #", {
 skip_if_not_installed("modeldata")
 data(credit_data, package = "modeldata")
 #
-# recipe(Status ~ Seniority + Job + Price + Age, data = credit_data) %>%
-#   step_dummy(Job) %>%
-#   step_poly(Price) %>%
-#   step_rm(Age) %>%
+# recipe(Status ~ Seniority + Job + Price + Age, data = credit_data) |>
+#   step_dummy(Job) |>
+#   step_poly(Price) |>
+#   step_rm(Age) |>
 #   prep(credit_data)
 
 dummy_old <-

@@ -12,7 +12,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple inverse trans", {
-  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) %>%
+  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) |>
     step_inverse(x1, x2, x3, x4)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -24,7 +24,7 @@ test_that("simple inverse trans", {
 })
 
 test_that("alt offset", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_inverse(x1, x2, x3, x4, x5, offset = 0.1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -38,9 +38,9 @@ test_that("alt offset", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) %>%
-    step_inverse(x1, x2, x3, x4) %>%
-    update_role(x1, x2, x3, x4, new_role = "potato") %>%
+  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) |>
+    step_inverse(x1, x2, x3, x4) |>
+    update_role(x1, x2, x3, x4, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -86,7 +86,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_inverse(x1, x2, x3, x4)
 
   expect_snapshot(print(rec))
@@ -95,8 +95,8 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_inverse(x1, x2, x3, x4, offset = function(x) x / 3) %>%
+    recipe(~., data = ex_dat) |>
+      step_inverse(x1, x2, x3, x4, offset = function(x) x / 3) |>
       prep(),
     error = TRUE
   )
@@ -104,8 +104,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_inverse(mpg, disp) %>%
+  rec <- recipe(~., data) |>
+    step_inverse(mpg, disp) |>
     prep()
 
   expect_identical(

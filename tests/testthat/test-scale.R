@@ -20,7 +20,7 @@ rec_zv <- recipe(
 )
 
 test_that("works correctly", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
 
   scal_tibble_un <-
@@ -51,7 +51,7 @@ test_that("works correctly", {
 })
 
 test_that("scale by factor of 1 or 2", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_scale(
       carbon,
       hydrogen,
@@ -76,14 +76,14 @@ test_that("scale by factor of 1 or 2", {
   expect_equal(standardized_trained$steps[[1]]$sds, 2 * sds)
 
   expect_snapshot(
-    not_recommended_standardized_input <- rec %>%
-      step_scale(carbon, id = "scale", factor = 3) %>%
+    not_recommended_standardized_input <- rec |>
+      step_scale(carbon, id = "scale", factor = 3) |>
       prep(training = biomass)
   )
 })
 
 test_that("single predictor", {
-  standardized <- rec %>%
+  standardized <- rec |>
     step_scale(hydrogen)
 
   standardized_trained <- prep(standardized, training = biomass)
@@ -100,13 +100,13 @@ test_that("na_rm argument works for step_scale", {
   mtcars_na[1, 1:4] <- NA
 
   expect_snapshot({
-    rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
-      step_scale(all_predictors(), na_rm = FALSE) %>%
+    rec_no_na_rm <- recipe(~., data = mtcars_na) |>
+      step_scale(all_predictors(), na_rm = FALSE) |>
       prep()
   })
 
-  rec_na_rm <- recipe(~., data = mtcars_na) %>%
-    step_scale(all_predictors(), na_rm = TRUE) %>%
+  rec_na_rm <- recipe(~., data = mtcars_na) |>
+    step_scale(all_predictors(), na_rm = TRUE) |>
     prep()
 
   exp_no_na_rm <- vapply(mtcars_na, FUN = sd, FUN.VALUE = numeric(1))
@@ -122,8 +122,8 @@ test_that("na_rm argument works for step_scale", {
     unname(exp_na_rm)
   )
   expect_snapshot(
-    rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
-      step_scale(all_predictors(), na_rm = "FALSE") %>%
+    rec_no_na_rm <- recipe(~., data = mtcars_na) |>
+      step_scale(all_predictors(), na_rm = "FALSE") |>
       prep(),
     error = TRUE
   )
@@ -135,8 +135,8 @@ test_that("warns on zv", {
 })
 
 test_that("warns when NaN is returned", {
-  rec1 <- rec %>%
-    step_log(sulfur) %>%
+  rec1 <- rec |>
+    step_log(sulfur) |>
     step_scale(sulfur)
   expect_snapshot(prep(rec1))
 })
@@ -146,8 +146,8 @@ test_that("scaling with case weights", {
   mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars_freq) %>%
-    step_scale(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_freq) |>
+    step_scale(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -161,8 +161,8 @@ test_that("scaling with case weights", {
   mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
 
   rec <-
-    recipe(mpg ~ ., mtcars_imp) %>%
-    step_scale(all_numeric_predictors()) %>%
+    recipe(mpg ~ ., mtcars_imp) |>
+    step_scale(all_numeric_predictors()) |>
     prep()
 
   expect_equal(
@@ -176,7 +176,7 @@ test_that("scaling with case weights", {
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
-  rec <- recipe(~ am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) |>
     step_scale(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -190,8 +190,8 @@ test_that("doesn't destroy sparsity", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  std <- rec %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  std <- rec |>
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     update_role(
       carbon,
       hydrogen,
@@ -199,7 +199,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
       nitrogen,
       sulfur,
       new_role = "potato"
-    ) %>%
+    ) |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   std_trained <- prep(std, training = biomass)
@@ -245,7 +245,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec <- recipe(mpg ~ ., data = mtcars) |>
     step_scale(disp, wt)
 
   expect_snapshot(print(rec))
@@ -254,8 +254,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_scale(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_scale(all_predictors()) |>
     prep()
 
   expect_identical(

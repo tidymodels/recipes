@@ -50,7 +50,7 @@
 #'
 #' rec <- recipe(Price ~ ., data = credit_tr)
 #'
-#' impute_rec <- rec %>%
+#' impute_rec <- rec |>
 #'   step_impute_mode(Status, Home, Marital)
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)

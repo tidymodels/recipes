@@ -114,9 +114,9 @@ example_data$x1[c(1, 5, 6)] <- NA
 example_data$x2[c(1:4, 10)] <- NA
 
 library(recipes)
-seven_pt <- recipe(~., data = example_data) \%>\%
-  update_role(day, new_role = "time_index") \%>\%
-  step_impute_roll(all_numeric_predictors(), window = 7) \%>\%
+seven_pt <- recipe(~., data = example_data) |>
+  update_role(day, new_role = "time_index") |>
+  step_impute_roll(all_numeric_predictors(), window = 7) |>
   prep(training = example_data)
 
 # The training set:

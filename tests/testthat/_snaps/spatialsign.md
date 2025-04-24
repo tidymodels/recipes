@@ -1,7 +1,7 @@
 # spatial sign
 
     Code
-      rec %>% step_spatialsign(carbon, hydrogen, na_rm = 12) %>% prep()
+      prep(step_spatialsign(rec, carbon, hydrogen, na_rm = 12))
     Condition
       Error in `step_spatialsign()`:
       Caused by error in `prep()`:

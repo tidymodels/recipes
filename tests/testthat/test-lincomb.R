@@ -37,7 +37,7 @@ biomass_rec <- recipe(
 ###################################################################
 
 test_that("example 1", {
-  dum_filtered <- dum_rec %>%
+  dum_filtered <- dum_rec |>
     step_lincomb(all_predictors())
   dum_filtered <- prep(dum_filtered, training = dummies, verbose = FALSE)
   removed <- c("N1", "P1", "K1")
@@ -45,7 +45,7 @@ test_that("example 1", {
 })
 
 test_that("example 2", {
-  lincomb_filter <- biomass_rec %>%
+  lincomb_filter <- biomass_rec |>
     step_lincomb(all_predictors())
 
   filtering_trained <- prep(lincomb_filter, training = biomass_tr)
@@ -56,7 +56,7 @@ test_that("example 2", {
 
 test_that("no exclusions", {
   biomass_rec_2 <- recipe(HHV ~ carbon + hydrogen, data = biomass_tr)
-  lincomb_filter_2 <- biomass_rec_2 %>%
+  lincomb_filter_2 <- biomass_rec_2 |>
     step_lincomb(all_predictors())
 
   filtering_trained_2 <- prep(lincomb_filter_2, training = biomass_tr)
@@ -75,8 +75,8 @@ test_that("doesn't remove both variables if identical (#1357)", {
   exp <- mtcars
   mtcars$mpg_copy <- mtcars$mpg
 
-  res <- recipe(~., data = mtcars) %>%
-    step_lincomb(all_numeric_predictors()) %>%
+  res <- recipe(~., data = mtcars) |>
+    step_lincomb(all_numeric_predictors()) |>
     prep() |>
     bake(NULL)
 
@@ -130,7 +130,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(yield ~ ., data = dummies) %>%
+  rec <- recipe(yield ~ ., data = dummies) |>
     step_lincomb(all_predictors())
 
   expect_snapshot(print(rec))
@@ -139,8 +139,8 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    dum_rec %>%
-      step_lincomb(all_predictors(), max_steps = 0) %>%
+    dum_rec |>
+      step_lincomb(all_predictors(), max_steps = 0) |>
       prep(),
     error = TRUE
   )
@@ -148,8 +148,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_lincomb(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_lincomb(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

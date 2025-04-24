@@ -98,7 +98,7 @@
 # bad args
 
     Code
-      recipe(~., data = ex_dat) %>% step_log(x1, base = -1) %>% prep()
+      prep(step_log(recipe(~., data = ex_dat), x1, base = -1))
     Condition
       Error in `step_log()`:
       Caused by error in `prep()`:
@@ -107,7 +107,7 @@
 ---
 
     Code
-      recipe(~., data = ex_dat) %>% step_log(x1, offset = "none") %>% prep()
+      prep(step_log(recipe(~., data = ex_dat), x1, offset = "none"))
     Condition
       Error in `step_log()`:
       Caused by error in `prep()`:
@@ -116,7 +116,7 @@
 ---
 
     Code
-      recipe(~., data = ex_dat) %>% step_log(x1, signed = "yes") %>% prep()
+      prep(step_log(recipe(~., data = ex_dat), x1, signed = "yes"))
     Condition
       Error in `step_log()`:
       Caused by error in `prep()`:

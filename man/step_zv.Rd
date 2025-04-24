@@ -95,7 +95,7 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
 data = biomass_tr
 )
 
-zv_filter <- rec \%>\%
+zv_filter <- rec |>
   step_zv(all_predictors())
 
 filter_obj <- prep(zv_filter, training = biomass_tr)

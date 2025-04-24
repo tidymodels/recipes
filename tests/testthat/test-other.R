@@ -16,7 +16,7 @@ rec <- recipe(~ city + zip, data = sacr_tr)
 # all(sort(unique(sacr_tr$zip)) == sort(unique(Sacramento$zip)))
 
 test_that("default inputs", {
-  others <- rec %>% step_other(city, zip, other = "another", id = "")
+  others <- rec |> step_other(city, zip, other = "another", id = "")
 
   tidy_exp_un <- tibble(
     terms = c("city", "zip"),
@@ -68,7 +68,7 @@ test_that("default inputs", {
 })
 
 test_that("high threshold - much removals", {
-  others <- rec %>% step_other(city, zip, threshold = .5)
+  others <- rec |> step_other(city, zip, threshold = .5)
   others <- prep(others, training = sacr_tr)
   others_te <- bake(others, new_data = sacr_te)
 
@@ -105,7 +105,7 @@ test_that("high threshold - much removals", {
 test_that("low threshold - no removals", {
   sacr_te_chr <- sacr_te
 
-  others <- recipe(~ city + zip, data = sacr_tr, strings_as_factors = FALSE) %>%
+  others <- recipe(~ city + zip, data = sacr_tr, strings_as_factors = FALSE) |>
     step_other(city, zip, threshold = 10^-30, other = "another")
   others <- prep(others, training = sacr_te_chr)
   others_te <- bake(others, new_data = sacr_te_chr)
@@ -120,7 +120,7 @@ test_that("low threshold - no removals", {
 test_that("zero threshold - no removals", {
   sacr_te_chr <- sacr_te
 
-  others <- recipe(~ city + zip, data = sacr_tr, strings_as_factors = FALSE) %>%
+  others <- recipe(~ city + zip, data = sacr_tr, strings_as_factors = FALSE) |>
     step_other(city, zip, threshold = 0, other = "another")
   others <- prep(others, training = sacr_te_chr)
   others_te <- bake(others, new_data = sacr_te_chr)
@@ -141,7 +141,7 @@ test_that("factor inputs", {
 
   rec <- recipe(~ city + zip, data = sacr_tr)
 
-  others <- rec %>% step_other(city, zip)
+  others <- rec |> step_other(city, zip)
   others <- prep(others, training = sacr_tr)
   others_te <- bake(others, new_data = sacr_te)
 
@@ -211,7 +211,7 @@ test_that("novel levels", {
   testing$y <- as.factor(testing$y)
   testing$x1 <- as.factor(testing$x1)
 
-  novel_level <- recipe(y ~ ., data = training) %>%
+  novel_level <- recipe(y ~ ., data = training) |>
     step_other(x1)
 
   novel_level <- prep(novel_level, training = training)
@@ -227,7 +227,7 @@ test_that("novel levels", {
   testing$y <- as.factor(testing$y)
   testing$x1 <- as.factor(testing$x1)
 
-  novel_level <- recipe(y ~ ., data = training) %>%
+  novel_level <- recipe(y ~ ., data = training) |>
     step_other(x1, threshold = .1)
 
   novel_level <- prep(novel_level, training = training)
@@ -238,7 +238,7 @@ test_that("novel levels", {
 })
 
 test_that("'other' already in use", {
-  sacr_tr_chr <- sacr_tr %>%
+  sacr_tr_chr <- sacr_tr |>
     dplyr::mutate(
       city = as.character(city),
       zip = as.character(zip),
@@ -249,7 +249,7 @@ test_that("'other' already in use", {
 
   rec <- recipe(~ city + zip, data = sacr_tr_chr, strings_as_factors = FALSE)
 
-  others <- rec %>% step_other(city, zip, threshold = 10^-10)
+  others <- rec |> step_other(city, zip, threshold = 10^-10)
   expect_snapshot(
     error = TRUE,
     prep(others, training = sacr_tr_chr)
@@ -258,7 +258,7 @@ test_that("'other' already in use", {
 
 test_that(desc = "if threshold argument is an integer greater than one
           then it's treated as a frequency", code = {
-  others <- rec %>%
+  others <- rec |>
     step_other(city, zip, threshold = 80, other = "another", id = "")
 
   tidy_exp_un <- tibble(
@@ -282,14 +282,14 @@ test_that(desc = "if threshold argument is an integer greater than one
 test_that(desc = "if the threshold argument is greather than one then it should be an integer(ish)", code = {
   expect_snapshot(
     error = TRUE,
-    rec %>% step_other(city, zip, threshold = 3.14) %>% prep()
+    rec |> step_other(city, zip, threshold = 3.14) |> prep()
   )
 })
 
 test_that(desc = "bad values of threshold are treated correctly", code = {
   expect_snapshot(
     error = TRUE,
-    rec %>% step_other(city, zip, threshold = letters) %>% prep()
+    rec |> step_other(city, zip, threshold = letters) |> prep()
   )
 })
 
@@ -300,8 +300,8 @@ test_that(desc = "if threshold is equal to 1 then the function removes every fac
   )
 
   rec <- recipe(~test_factor, data = fake_data)
-  others <- rec %>%
-    step_other(test_factor, threshold = 1, id = "") %>%
+  others <- rec |>
+    step_other(test_factor, threshold = 1, id = "") |>
     prep()
 
   tidy_exp_tr <- tibble(
@@ -314,7 +314,7 @@ test_that(desc = "if threshold is equal to 1 then the function removes every fac
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_other(all_predictors())
   rec_param <- tunable.step_other(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -343,15 +343,15 @@ test_that("issue #415 -  strings to factor conversion", {
 })
 
 test_that("othering with case weights", {
-  weighted_props <- sacr_tr %>%
-    mutate(sqft = as.double(sqft)) %>%
-    count(city, wt = sqft, sort = TRUE) %>%
+  weighted_props <- sacr_tr |>
+    mutate(sqft = as.double(sqft)) |>
+    count(city, wt = sqft, sort = TRUE) |>
     mutate(prop = n / sum(n))
-  sacr_tr_caseweights <- sacr_tr %>%
+  sacr_tr_caseweights <- sacr_tr |>
     mutate(sqft = frequency_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) |>
       step_other(
         city,
         other = "another",
@@ -367,14 +367,14 @@ test_that("othering with case weights", {
 
   # ----------------------------------------------------------------------------
 
-  unweighted_props <- sacr_tr %>%
-    count(city, sort = TRUE) %>%
+  unweighted_props <- sacr_tr |>
+    count(city, sort = TRUE) |>
     mutate(prop = n / sum(n))
-  sacr_tr_caseweights <- sacr_tr %>%
+  sacr_tr_caseweights <- sacr_tr |>
     mutate(sqft = importance_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) |>
       step_other(
         city,
         other = "another",
@@ -392,9 +392,9 @@ test_that("othering with case weights", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  others <- rec %>%
-    step_other(city, zip, other = "another", id = "") %>%
-    update_role(city, zip, new_role = "potato") %>%
+  others <- rec |>
+    step_other(city, zip, other = "another", id = "") |>
+    update_role(city, zip, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   tidy_exp_un <- tibble(
@@ -450,7 +450,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ city + zip, data = sacr_tr) %>%
+  rec <- recipe(~ city + zip, data = sacr_tr) |>
     step_other(city, zip)
 
   expect_snapshot(print(rec))
@@ -459,7 +459,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_other(
       all_predictors(),
       threshold = hardhat::tune()
@@ -473,8 +473,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_other(Species) %>%
+  rec <- recipe(~., data) |>
+    step_other(Species) |>
     prep()
 
   expect_identical(

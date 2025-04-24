@@ -101,7 +101,7 @@ The underlying operation does not allow for case weights.
 library(lubridate)
 
 examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
-holiday_rec <- recipe(~someday, examples) \%>\%
+holiday_rec <- recipe(~someday, examples) |>
   step_holiday(all_predictors())
 
 holiday_rec <- prep(holiday_rec, training = examples)

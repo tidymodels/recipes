@@ -15,10 +15,10 @@ sacr_te <- Sacramento[(401:800), ]
 
 ###################################################################
 
-rec <- recipe(~., data = sacr_tr) %>%
-  step_impute_mode(all_nominal()) %>%
-  step_impute_mean(all_numeric()) %>%
-  step_dummy(zip, city) %>%
+rec <- recipe(~., data = sacr_tr) |>
+  step_impute_mode(all_nominal()) |>
+  step_impute_mean(all_numeric()) |>
+  step_dummy(zip, city) |>
   prep(training = sacr_tr)
 
 ###################################################################
@@ -64,8 +64,8 @@ test_that("bad args", {
   data("ames", package = "modeldata")
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = ames) %>%
-      prep() %>%
+    recipe(~., data = ames) |>
+      prep() |>
       bake(new_data = NULL, composition = "dgCMatrix")
   )
 })
@@ -73,8 +73,8 @@ test_that("bad args", {
 test_that("issue 206 - NA values are kept when requesting matrix composition", {
   df <- data.frame(x = factor(c("x", "x", "y")), x2 = c(NA, 1, NA))
 
-  rec <- recipe(x2 ~ ., data = df) %>%
-    step_dummy(x) %>%
+  rec <- recipe(x2 ~ ., data = df) |>
+    step_dummy(x) |>
     prep(df)
 
   res_mat <- bake(rec, df, composition = "matrix")

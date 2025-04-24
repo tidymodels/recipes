@@ -5,50 +5,50 @@ rp1 <- recipe(mtcars, cyl ~ .)
 rp2 <- recipe(mtcars, cyl ~ mpg + drat)
 
 test_that("check_col works in the prep stage", {
-  expect_no_error(rp1 %>% check_cols(all_predictors()) %>% prep())
-  expect_no_error(rp2 %>% check_cols(all_predictors()) %>% prep())
-  expect_no_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep())
-  expect_no_error(rp2 %>% check_cols(cyl, mpg) %>% prep())
+  expect_no_error(rp1 |> check_cols(all_predictors()) |> prep())
+  expect_no_error(rp2 |> check_cols(all_predictors()) |> prep())
+  expect_no_error(rp2 |> check_cols(cyl, mpg, drat) |> prep())
+  expect_no_error(rp2 |> check_cols(cyl, mpg) |> prep())
 })
 
 test_that("check_col works in the bake stage", {
   expect_no_error(
-    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars)
+    rp1 |> check_cols(all_predictors()) |> prep() |> bake(mtcars)
   )
   expect_equal(
-    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars),
+    rp1 |> check_cols(all_predictors()) |> prep() |> bake(mtcars),
     tibble(mtcars[, c(1, 3:11, 2)])
   )
 
   expect_no_error(
-    rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars)
+    rp2 |> check_cols(cyl, mpg, drat) |> prep() |> bake(mtcars)
   )
   expect_equal(
-    rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars),
+    rp2 |> check_cols(cyl, mpg, drat) |> prep() |> bake(mtcars),
     tibble(mtcars[, c(1, 5, 2)])
   )
 
   expect_no_error(
-    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars)
+    rp1 |> check_cols(all_predictors()) |> prep() |> bake(mtcars)
   )
   expect_equal(
-    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars),
+    rp1 |> check_cols(all_predictors()) |> prep() |> bake(mtcars),
     tibble(mtcars[, c(1, 3:11, 2)])
   )
   expect_no_error(
-    rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars)
+    rp2 |> check_cols(cyl, mpg, drat) |> prep() |> bake(mtcars)
   )
   expect_equal(
-    rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars),
+    rp2 |> check_cols(cyl, mpg, drat) |> prep() |> bake(mtcars),
     tibble(mtcars[, c(1, 5, 2)])
   )
   expect_snapshot(
     error = TRUE,
-    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars[-1])
+    rp1 |> check_cols(all_predictors()) |> prep() |> bake(mtcars[-1])
   )
   expect_snapshot(
     error = TRUE,
-    rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars[, c(2, 5)])
+    rp2 |> check_cols(cyl, mpg, drat) |> prep() |> bake(mtcars[, c(2, 5)])
   )
 })
 
@@ -68,7 +68,7 @@ test_that("non-standard roles during bake/predict", {
 
   data(Chicago, package = "modeldata", envir = current_env())
 
-  Chicago <- Chicago %>% dplyr::select(ridership, date, Austin, Belmont)
+  Chicago <- Chicago |> dplyr::select(ridership, date, Austin, Belmont)
 
   set.seed(1)
   Chicago$wts <- importance_weights(runif(nrow(Chicago)))
@@ -76,7 +76,7 @@ test_that("non-standard roles during bake/predict", {
   # ----------------------------------------------------------------------------
 
   base_wflow <-
-    workflow() %>%
+    workflow() |>
     add_model(linear_reg())
 
   # ----------------------------------------------------------------------------
@@ -84,12 +84,12 @@ test_that("non-standard roles during bake/predict", {
 
   ## no case weights, default blueprint
   role_rec <-
-    recipe(ridership ~ date + Austin + Belmont, data = Chicago) %>%
-    update_role(date, new_role = "date") %>%
+    recipe(ridership ~ date + Austin + Belmont, data = Chicago) |>
+    update_role(date, new_role = "date") |>
     step_date(date)
 
   role_wflow <-
-    base_wflow %>%
+    base_wflow |>
     add_recipe(role_rec)
 
   role_fit <- fit(role_wflow, data = Chicago)
@@ -99,41 +99,41 @@ test_that("non-standard roles during bake/predict", {
   # This should require 'date' to predict.
   # The error comes from hardhat, so we don't snapshot it because we don't own it.
   expect_error(
-    predict(role_fit, Chicago %>% select(-date))
+    predict(role_fit, Chicago |> select(-date))
   )
 
   # ----------------------------------------------------------------------------
   # non-standard role used in a step and case weights
 
   role_wts_rec <-
-    recipe(ridership ~ ., data = Chicago) %>%
-    update_role(date, new_role = "date") %>%
+    recipe(ridership ~ ., data = Chicago) |>
+    update_role(date, new_role = "date") |>
     step_date(date)
 
   role_wts_wflow <-
-    base_wflow %>%
-    add_recipe(role_wts_rec) %>%
+    base_wflow |>
+    add_recipe(role_wts_rec) |>
     add_case_weights(wts)
 
   role_wts_fit <- fit(role_wts_wflow, data = Chicago)
 
   # This should require 'date' but not 'wts' to predict
   expect_no_error(predict(role_wts_fit, head(Chicago)))
-  expect_no_error(predict(role_wts_fit, head(Chicago) %>% select(-wts)))
+  expect_no_error(predict(role_wts_fit, head(Chicago) |> select(-wts)))
   expect_snapshot(
     error = TRUE,
-    predict(role_wts_fit, head(Chicago) %>% select(-date))
+    predict(role_wts_fit, head(Chicago) |> select(-date))
   )
 
   # ----------------------------------------------------------------------------
   # Removing variable after use
 
   rm_rec <-
-    recipe(ridership ~ date + Austin + Belmont, data = Chicago) %>%
+    recipe(ridership ~ date + Austin + Belmont, data = Chicago) |>
     step_date(date, keep_original_cols = FALSE)
 
   rm_wflow <-
-    base_wflow %>%
+    base_wflow |>
     add_recipe(rm_rec)
 
   rm_fit <- fit(rm_wflow, data = Chicago)
@@ -141,28 +141,28 @@ test_that("non-standard roles during bake/predict", {
   # This should require 'date' to predict
   expect_snapshot(
     error = TRUE,
-    predict(rm_fit, Chicago %>% select(-date))
+    predict(rm_fit, Chicago |> select(-date))
   )
 
   # ----------------------------------------------------------------------------
   # Removing variable after use, with case weights
 
   rm_wts_rec <-
-    recipe(ridership ~ ., data = Chicago) %>%
+    recipe(ridership ~ ., data = Chicago) |>
     step_date(date, keep_original_cols = FALSE)
 
   rm_wts_wflow <-
-    base_wflow %>%
-    add_recipe(rm_wts_rec) %>%
+    base_wflow |>
+    add_recipe(rm_wts_rec) |>
     add_case_weights(wts)
 
   rm_wts_fit <- fit(rm_wts_wflow, data = Chicago)
 
   # This should require 'date' but not 'wts' to predict
-  expect_no_error(predict(rm_fit, Chicago %>% select(-wts)))
+  expect_no_error(predict(rm_fit, Chicago |> select(-wts)))
   expect_snapshot(
     error = TRUE,
-    predict(rm_fit, Chicago %>% select(-date))
+    predict(rm_fit, Chicago |> select(-date))
   )
 })
 
@@ -213,7 +213,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., mtcars) %>%
+  rec <- recipe(mpg ~ ., mtcars) |>
     check_cols(all_predictors())
 
   expect_snapshot(print(rec))
@@ -222,8 +222,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    check_cols(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    check_cols(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

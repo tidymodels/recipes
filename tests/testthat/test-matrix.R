@@ -15,10 +15,10 @@ sacr_te <- Sacramento[(401:800), ]
 
 ###################################################################
 
-rec <- recipe(~., data = sacr_tr) %>%
-  step_impute_mode(all_nominal()) %>%
-  step_impute_mean(all_numeric()) %>%
-  step_dummy(zip, city) %>%
+rec <- recipe(~., data = sacr_tr) |>
+  step_impute_mode(all_nominal()) |>
+  step_impute_mean(all_numeric()) |>
+  step_dummy(zip, city) |>
   prep(training = sacr_tr)
 
 ###################################################################

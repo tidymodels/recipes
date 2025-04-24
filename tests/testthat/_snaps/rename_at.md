@@ -1,7 +1,7 @@
 # mulitple functions
 
     Code
-      prep(rec, training = iris %>% slice(1:75))
+      prep(rec, training = slice(iris, 1:75))
     Condition
       Error in `step_rename_at()`:
       Caused by error in `dplyr::rename_at()`:
@@ -10,8 +10,8 @@
 # no input
 
     Code
-      iris_rec %>% step_rename_at() %>% prep(training = iris) %>% bake(new_data = NULL,
-        composition = "data.frame")
+      bake(prep(step_rename_at(iris_rec), training = iris), new_data = NULL,
+      composition = "data.frame")
     Condition
       Error in `step_rename_at()`:
       ! Argument `fn` must be specified.
@@ -19,8 +19,8 @@
 ---
 
     Code
-      iris_rec %>% step_rename_at(fn = ":=O") %>% prep(training = iris) %>% bake(
-        new_data = NULL, composition = "data.frame")
+      bake(prep(step_rename_at(iris_rec, fn = ":=O"), training = iris), new_data = NULL,
+      composition = "data.frame")
     Condition
       Error in `step_rename_at()`:
       Caused by error in `get()`:

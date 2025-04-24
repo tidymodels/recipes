@@ -11,8 +11,7 @@
 # No kPCA comps
 
     Code
-      pca_extract <- rec %>% step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
-        prep()
+      pca_extract <- prep(step_kpca(rec, X2, X3, X4, X5, X6, num_comp = 0, id = ""))
 
 ---
 
@@ -36,7 +35,7 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_kpca(all_predictors()) %>% prep()
+      prep(step_kpca(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_kpca()`:
       Caused by error in `prep()`:
@@ -47,7 +46,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_kpca(mpg, options = TRUE) %>% prep()
+      prep(step_kpca(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_kpca()`:
       Caused by error in `prep()`:
@@ -143,8 +142,8 @@
 # bad args
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca(all_numeric_predictors(), num_comp = -1) %>%
-        prep()
+      prep(step_kpca(recipe(~., data = tr_dat), all_numeric_predictors(), num_comp = -
+      1))
     Condition
       Error in `step_kpca()`:
       Caused by error in `prep()`:
@@ -153,8 +152,7 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca(all_numeric_predictors(), prefix = 1) %>%
-        prep()
+      prep(step_kpca(recipe(~., data = tr_dat), all_numeric_predictors(), prefix = 1))
     Condition
       Error in `step_kpca()`:
       Caused by error in `prep()`:

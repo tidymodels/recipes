@@ -20,7 +20,7 @@ get_exp <- function(x, f) {
 
 test_that("simple hyperbolic trans", {
   for (func in c("sinh", "cosh", "tanh")) {
-    rec <- recipe(~., data = ex_dat) %>%
+    rec <- recipe(~., data = ex_dat) |>
       step_hyperbolic(x1, x2, func = func, inverse = FALSE)
 
     rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -32,7 +32,7 @@ test_that("simple hyperbolic trans", {
   }
 
   for (func in c("sinh", "tanh")) {
-    rec <- recipe(~., data = ex_dat) %>%
+    rec <- recipe(~., data = ex_dat) |>
       step_hyperbolic(x1, x2, func = func, inverse = TRUE)
 
     rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -43,7 +43,7 @@ test_that("simple hyperbolic trans", {
     expect_equal(rec_trans, exp_res)
   }
 
-  rec <- recipe(~., data = ex_dat1) %>%
+  rec <- recipe(~., data = ex_dat1) |>
     step_hyperbolic(x1, x2, func = "cosh", inverse = TRUE)
   rec_trained <- prep(rec, training = ex_dat1, verbose = FALSE)
   rec_trans <- bake(rec_trained, new_data = ex_dat1)
@@ -53,16 +53,16 @@ test_that("simple hyperbolic trans", {
 
 test_that("wrong arguments", {
   rec <- recipe(mpg ~ ., mtcars)
-  expect_snapshot(step_hyperbolic(rec, func = "cos") %>% prep(), error = TRUE)
-  expect_snapshot(step_hyperbolic(rec, inverse = 2) %>% prep(), error = TRUE)
+  expect_snapshot(step_hyperbolic(rec, func = "cos") |> prep(), error = TRUE)
+  expect_snapshot(step_hyperbolic(rec, inverse = 2) |> prep(), error = TRUE)
 })
 
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_hyperbolic(x1, x2, func = "sinh", inverse = FALSE) %>%
-    update_role(x1, x2, new_role = "potato") %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_hyperbolic(x1, x2, func = "sinh", inverse = FALSE) |>
+    update_role(x1, x2, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -116,7 +116,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_hyperbolic(x1, x2)
 
   expect_snapshot(print(rec))
@@ -125,8 +125,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_hyperbolic(disp) %>%
+  rec <- recipe(~., data) |>
+    step_hyperbolic(disp) |>
     prep()
 
   expect_identical(

@@ -69,14 +69,14 @@
 #' penguins$sex <- NULL
 #'
 #' # define naming convention
-#' rec <- recipe(species ~ ., data = penguins) %>%
+#' rec <- recipe(species ~ ., data = penguins) |>
 #'   step_classdist_shrunken(all_numeric_predictors(),
 #'     class = species,
 #'     threshold = 1 / 4, prefix = "centroid_"
 #'   )
 #'
 #' # default naming
-#' rec <- recipe(species ~ ., data = penguins) %>%
+#' rec <- recipe(species ~ ., data = penguins) |>
 #'   step_classdist_shrunken(all_numeric_predictors(),
 #'     class = species,
 #'     threshold = 3 / 4
@@ -192,7 +192,7 @@ centroid_class <- function(x, y, wts = NULL, sd_offset = 1 / 2) {
   x <- tidyr::pivot_longer(x, cols = c(-..y, -..wts), names_to = "variable")
 
   centroids <-
-    x %>%
+    x |>
     dplyr::summarize(
       by_class = stats::weighted.mean(value, ..wts, na.rm = TRUE),
       class_n = sum(..wts),
@@ -202,22 +202,22 @@ centroid_class <- function(x, y, wts = NULL, sd_offset = 1 / 2) {
   # ------------------------------------------------------------------------------
 
   std_dev_est <-
-    centroids[, c("variable", "..y", "by_class")] %>%
-    dplyr::full_join(x, by = c("variable", "..y")) %>%
-    dplyr::mutate(sq_df = (value - by_class)^2) %>%
+    centroids[, c("variable", "..y", "by_class")] |>
+    dplyr::full_join(x, by = c("variable", "..y")) |>
+    dplyr::mutate(sq_df = (value - by_class)^2) |>
     dplyr::summarize(
       # use mean * n for weighted sum
       msq = (stats::weighted.mean(sq_df, ..wts, na.rm = TRUE) * n) /
         (n - num_class),
       .by = "variable"
-    ) %>%
+    ) |>
     dplyr::mutate(std_dev = sqrt(msq))
   std_dev_off <- stats::quantile(std_dev_est$std_dev, prob = sd_offset)
   std_dev_est$std_dev <- std_dev_est$std_dev + unname(std_dev_off)
 
   # ------------------------------------------------------------------------------
 
-  dplyr::full_join(centroids, std_dev_est, by = c("variable")) %>%
+  dplyr::full_join(centroids, std_dev_est, by = c("variable")) |>
     dplyr::select(variable, class = ..y, by_class, std_dev, class_n)
 }
 
@@ -239,7 +239,7 @@ compute_shrunken_centroids <- function(
   wts_sum <- sum(wts)
 
   centroids <-
-    dplyr::full_join(cent_global, cent_class, by = "variable") %>%
+    dplyr::full_join(cent_global, cent_class, by = "variable") |>
     dplyr::mutate(
       delta = (by_class - global) / std_dev,
       delta_wts = sqrt((1 / class_n) - (1 / !!wts_sum)),
@@ -250,7 +250,7 @@ compute_shrunken_centroids <- function(
   threshold <- threshold * max_delta
 
   shrunken <-
-    centroids %>%
+    centroids |>
     dplyr::mutate(
       threshold = !!threshold,
       shrink = abs(delta) - threshold,
@@ -258,7 +258,7 @@ compute_shrunken_centroids <- function(
     )
 
   shrunken <-
-    shrunken %>%
+    shrunken |>
     dplyr::select(variable, class, global, by_class, shrunken, std_dev)
   list(centroids = shrunken, threshold = threshold, max_delta = max_delta)
 }
@@ -271,23 +271,23 @@ new_shrunken_scores <- function(
 ) {
   preds <- unique(unique(object$variable))
   res <-
-    new_data %>%
-    dplyr::select(dplyr::all_of(preds)) %>%
-    dplyr::mutate(.row = dplyr::row_number()) %>%
+    new_data |>
+    dplyr::select(dplyr::all_of(preds)) |>
+    dplyr::mutate(.row = dplyr::row_number()) |>
     tidyr::pivot_longer(
       c(-.row),
       names_to = "variable",
       values_to = "value"
-    ) %>%
+    ) |>
     dplyr::right_join(
       object,
       by = "variable",
       relationship = "many-to-many"
-    ) %>%
+    ) |>
     dplyr::mutate(
       scaled_value = (value - global) / std_dev,
       sq_diff = (scaled_value - shrunken)^2
-    ) %>%
+    ) |>
     dplyr::summarize(
       distance = sum(sq_diff),
       .by = c(.row, class)
@@ -298,12 +298,12 @@ new_shrunken_scores <- function(
   }
 
   res <-
-    res %>%
+    res |>
     tidyr::pivot_wider(
       id_cols = ".row",
       names_from = class,
       values_from = distance
-    ) %>%
+    ) |>
     dplyr::select(-.row)
 
   names(res) <- paste0(prefix, names(res))
@@ -388,7 +388,7 @@ bake.step_classdist_shrunken <- function(object, new_data, ...) {
   new_cols <-
     new_shrunken_scores(
       object$objects,
-      new_data %>% dplyr::select(dplyr::all_of(col_names)),
+      new_data |> dplyr::select(dplyr::all_of(col_names)),
       object$prefix,
       object$log
     )
@@ -412,14 +412,14 @@ print.step_classdist_shrunken <-
 tidy.step_classdist_shrunken <- function(x, ...) {
   if (is_trained(x)) {
     res <-
-      x$object %>%
-      dplyr::select(terms = variable, class, global, by_class, shrunken) %>%
+      x$object |>
+      dplyr::select(terms = variable, class, global, by_class, shrunken) |>
       tidyr::pivot_longer(
         cols = c(global, by_class, shrunken),
         names_to = "type",
         values_to = "value"
-      ) %>%
-      dplyr::relocate(terms, value, class, type) %>%
+      ) |>
+      dplyr::relocate(terms, value, class, type) |>
       dplyr::mutate(threshold = x$threshold)
   } else {
     term_names <- sel2char(x$terms)

@@ -12,7 +12,7 @@ credit_te <- credit_data[-in_training, ]
 test_that("simple mean", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mean(Age, Assets, Income, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
@@ -66,7 +66,7 @@ test_that("simple mean", {
 test_that("trimmed mean", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mean(Assets, trim = .1)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
@@ -82,7 +82,7 @@ test_that("trimmed mean", {
 test_that("non-numeric", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mean(Assets, Job)
   expect_snapshot(
     error = TRUE,
@@ -93,17 +93,17 @@ test_that("non-numeric", {
 test_that("all NA values", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
+  impute_rec <- rec |>
     step_impute_mean(Age, Assets)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
-  imputed_te <- bake(imputed, new_data = credit_te %>% mutate(Age = NA))
+  imputed_te <- bake(imputed, new_data = credit_te |> mutate(Age = NA))
 
   expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$means$Age)
 })
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_impute_mean(all_predictors())
   rec_param <- tunable.step_impute_mean(rec$steps[[1]])
   expect_equal(rec_param$name, c("trim"))
@@ -123,21 +123,21 @@ test_that("trim works", {
 
   expect_equal(
     purrr::map(seq(0, 1, by = 0.1), ~ mean(x, trim = .x, na.rm = TRUE)),
-    purrr::map(seq(0, 1, by = 0.1), ~ trim(x, trim = .x) %>% mean(na.rm = TRUE))
+    purrr::map(seq(0, 1, by = 0.1), ~ trim(x, trim = .x) |> mean(na.rm = TRUE))
   )
 })
 
 test_that("case weights", {
-  credit_tr_cw <- credit_tr %>%
+  credit_tr_cw <- credit_tr |>
     mutate(Amount = frequency_weights(Amount))
 
-  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
-    step_impute_mean(Age, Assets, Income) %>%
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) |>
+    step_impute_mean(Age, Assets, Income) |>
     prep()
 
-  ref_means <- credit_tr %>%
-    select(Age, Assets, Income) %>%
-    averages(wts = credit_tr_cw$Amount) %>%
+  ref_means <- credit_tr |>
+    select(Age, Assets, Income) |>
+    averages(wts = credit_tr_cw$Amount) |>
     purrr::map(round, 0)
 
   expect_equal(
@@ -146,18 +146,18 @@ test_that("case weights", {
   )
 
   # Trimmed
-  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
-    step_impute_mean(Age, Assets, Income, trim = 0.2) %>%
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) |>
+    step_impute_mean(Age, Assets, Income, trim = 0.2) |>
     prep()
 
-  ref_means <- credit_tr %>%
-    dplyr::select(Age, Assets, Income) %>%
-    purrr::map(trim, trim = 0.2) %>%
+  ref_means <- credit_tr |>
+    dplyr::select(Age, Assets, Income) |>
+    purrr::map(trim, trim = 0.2) |>
     purrr::map(
       weighted.mean,
       w = as.numeric(credit_tr_cw$Amount),
       na.rm = TRUE
-    ) %>%
+    ) |>
     purrr::map(round, 0)
 
   expect_equal(
@@ -169,16 +169,16 @@ test_that("case weights", {
 
   # ----------------------------------------------------------------------------
 
-  credit_tr_cw <- credit_tr %>%
+  credit_tr_cw <- credit_tr |>
     mutate(Amount = importance_weights(Amount))
 
-  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
-    step_impute_mean(Age, Assets, Income) %>%
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) |>
+    step_impute_mean(Age, Assets, Income) |>
     prep()
 
-  ref_means <- credit_tr %>%
-    select(Age, Assets, Income) %>%
-    averages(wts = NULL) %>%
+  ref_means <- credit_tr |>
+    select(Age, Assets, Income) |>
+    averages(wts = NULL) |>
     purrr::map(round, 0)
 
   expect_equal(
@@ -187,14 +187,14 @@ test_that("case weights", {
   )
 
   # Trimmed
-  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
-    step_impute_mean(Age, Assets, Income, trim = 0.2) %>%
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) |>
+    step_impute_mean(Age, Assets, Income, trim = 0.2) |>
     prep()
 
-  ref_means <- credit_tr %>%
-    dplyr::select(Age, Assets, Income) %>%
-    purrr::map(trim, trim = 0.2) %>%
-    purrr::map(~ weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) %>%
+  ref_means <- credit_tr |>
+    dplyr::select(Age, Assets, Income) |>
+    purrr::map(trim, trim = 0.2) |>
+    purrr::map(~ weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) |>
     purrr::map(round, 0)
 
   expect_equal(
@@ -207,7 +207,7 @@ test_that("case weights", {
 
 test_that("doesn't destroy sparsity", {
   credit_tr$Debt <- sparsevctrs::as_sparse_double(credit_tr$Debt)
-  rec <- recipe(~Debt, data = credit_tr) %>%
+  rec <- recipe(~Debt, data = credit_tr) |>
     step_impute_mean(Debt)
 
   rec_trained <- prep(rec, training = credit_tr, verbose = FALSE)
@@ -223,9 +223,9 @@ test_that("doesn't destroy sparsity", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
-  impute_rec <- rec %>%
-    step_impute_mean(Age) %>%
-    update_role(Age, new_role = "potato") %>%
+  impute_rec <- rec |>
+    step_impute_mean(Age) |>
+    update_role(Age, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
@@ -270,7 +270,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(Price ~ ., data = credit_tr) %>%
+  rec <- recipe(Price ~ ., data = credit_tr) |>
     step_impute_mean(Age, Assets, Income)
 
   expect_snapshot(print(rec))
@@ -279,7 +279,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_impute_mean(
       all_predictors(),
       trim = hardhat::tune()
@@ -293,11 +293,11 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
+    recipe(~., data = mtcars) |>
       step_impute_mean(
         all_predictors(),
         trim = 0.6
-      ) %>%
+      ) |>
       prep(),
     error = TRUE
   )
@@ -305,8 +305,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_impute_mean(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_impute_mean(disp, mpg) |>
     prep()
 
   expect_identical(

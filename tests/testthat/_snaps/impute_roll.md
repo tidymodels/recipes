@@ -1,8 +1,8 @@
 # bad args
 
     Code
-      recipe(~., data = example_data) %>% step_impute_roll(all_predictors(), window = 3) %>%
-        prep(training = example_data)
+      prep(step_impute_roll(recipe(~., data = example_data), all_predictors(),
+      window = 3), training = example_data)
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
@@ -12,8 +12,8 @@
 ---
 
     Code
-      recipe(~., data = example_data) %>% update_role(day, new_role = "time_index") %>%
-        step_impute_roll(all_predictors(), window = 4) %>% prep(training = example_data)
+      prep(step_impute_roll(update_role(recipe(~., data = example_data), day,
+      new_role = "time_index"), all_predictors(), window = 4), training = example_data)
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
@@ -22,8 +22,8 @@
 ---
 
     Code
-      recipe(~., data = example_data) %>% update_role(day, new_role = "time_index") %>%
-        step_impute_roll(all_predictors(), window = 3) %>% prep(training = example_data)
+      prep(step_impute_roll(update_role(recipe(~., data = example_data), day,
+      new_role = "time_index"), all_predictors(), window = 3), training = example_data)
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
@@ -33,8 +33,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_roll(all_predictors(), statistic = mean,
-      window = 1) %>% prep()
+      prep(step_impute_roll(recipe(~., data = mtcars), all_predictors(), statistic = mean,
+      window = 1))
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
@@ -43,8 +43,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_roll(all_predictors(), statistic = mean,
-      window = 4) %>% prep()
+      prep(step_impute_roll(recipe(~., data = mtcars), all_predictors(), statistic = mean,
+      window = 4))
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
@@ -53,8 +53,7 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_roll(all_predictors(), statistic = NULL) %>%
-        prep()
+      prep(step_impute_roll(recipe(~., data = mtcars), all_predictors(), statistic = NULL))
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:

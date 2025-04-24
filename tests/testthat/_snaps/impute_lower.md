@@ -1,7 +1,7 @@
 # bad data
 
     Code
-      rec %>% step_impute_lower(carbon, hydrogen, has_neg) %>% prep()
+      prep(step_impute_lower(rec, carbon, hydrogen, has_neg))
     Condition
       Error in `step_impute_lower()`:
       Caused by error in `prep()`:

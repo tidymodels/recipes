@@ -26,8 +26,8 @@ test_that("bake_check_class helper function gives expected output", {
 })
 
 test_that("check_class works when class is learned", {
-  rec1 <- recipe(~., x) %>%
-    check_class(all_predictors()) %>%
+  rec1 <- recipe(~., x) |>
+    check_class(all_predictors()) |>
     prep()
 
   expect_no_error(bake(rec1, x))
@@ -37,28 +37,28 @@ test_that("check_class works when class is learned", {
 })
 
 test_that("check_class works when class is provided", {
-  rec2 <- recipe(x) %>%
-    check_class(x1, class_nm = "numeric") %>%
+  rec2 <- recipe(x) |>
+    check_class(x1, class_nm = "numeric") |>
     prep()
 
   expect_no_error(bake(rec2, x))
   expect_equal(bake(rec2, x), x)
   expect_snapshot(error = TRUE, bake(rec2, x_newdata))
 
-  rec3 <- recipe(x) %>%
-    check_class(x2, class_nm = c("POSIXct", "POSIXt")) %>%
+  rec3 <- recipe(x) |>
+    check_class(x2, class_nm = c("POSIXct", "POSIXt")) |>
     prep()
 
   expect_no_error(bake(rec3, x))
   expect_equal(bake(rec3, x), x)
   expect_snapshot(error = TRUE, bake(rec3, x_newdata_2))
 
-  rec4 <- recipe(x) %>%
+  rec4 <- recipe(x) |>
     check_class(
       x2,
       class_nm = c("POSIXct", "POSIXt"),
       allow_additional = TRUE
-    ) %>%
+    ) |>
     prep()
   expect_no_error(bake(rec4, x_newdata_2))
 })
@@ -69,8 +69,8 @@ test_that("characters are handled correctly", {
     Sacramento[1:10, ],
     sqft ~ .,
     strings_as_factors = FALSE
-  ) %>%
-    check_class(all_predictors()) %>%
+  ) |>
+    check_class(all_predictors()) |>
     prep(Sacramento[1:10, ])
 
   expect_no_error(bake(rec5_NULL, Sacramento[11:20, ]))
@@ -79,8 +79,8 @@ test_that("characters are handled correctly", {
     Sacramento[1:10, ],
     sqft ~ .,
     strings_as_factors = FALSE
-  ) %>%
-    check_class(city, zip) %>%
+  ) |>
+    check_class(city, zip) |>
     prep(Sacramento[1:10, ])
 
   expect_no_error(bake(rec5_man, Sacramento[11:20, ]))
@@ -93,14 +93,14 @@ test_that("characters are handled correctly", {
       type = as.character(type)
     )
 
-  rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ ., strings_as_factors = TRUE) %>%
-    check_class(all_predictors()) %>%
+  rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ ., strings_as_factors = TRUE) |>
+    check_class(all_predictors()) |>
     prep(sacr_fac[1:10, ])
 
   expect_snapshot(error = TRUE, bake(rec6_NULL, sacr_fac[11:20, ]))
 
-  rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ ., strings_as_factors = TRUE) %>%
-    check_class(type) %>%
+  rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ ., strings_as_factors = TRUE) |>
+    check_class(type) |>
     prep(sacr_fac[1:10, ])
 
   expect_snapshot(error = TRUE, bake(rec6_man, sacr_fac[11:20, ]))
@@ -109,9 +109,9 @@ test_that("characters are handled correctly", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(x) %>%
-    check_class(x1, x2) %>%
-    update_role(x1, new_role = "potato") %>%
+  rec <- recipe(x) |>
+    check_class(x1, x2) |>
+    update_role(x1, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec)
@@ -157,7 +157,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec7 <- recipe(mpg ~ ., mtcars) %>%
+  rec7 <- recipe(mpg ~ ., mtcars) |>
     check_class(all_predictors())
 
   expect_snapshot(print(rec7))
@@ -166,11 +166,11 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), class_nm = 1),
+    recipe(mpg ~ ., mtcars) |> check_class(all_predictors(), class_nm = 1),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>%
+    recipe(mpg ~ ., mtcars) |>
       check_class(all_predictors(), allow_additional = "yes"),
     error = TRUE
   )
@@ -178,8 +178,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- x
-  rec <- recipe(~., data) %>%
-    check_class(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    check_class(all_predictors()) |>
     prep()
 
   expect_identical(

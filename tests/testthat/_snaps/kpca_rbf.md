@@ -30,7 +30,7 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_kpca_rbf(all_predictors()) %>% prep()
+      prep(step_kpca_rbf(recipe(~., data = mtcars), all_predictors()))
     Condition
       Error in `step_kpca_rbf()`:
       Caused by error in `prep()`:
@@ -122,8 +122,8 @@
 # bad args
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_rbf(all_numeric_predictors(), num_comp = -
-      1) %>% prep()
+      prep(step_kpca_rbf(recipe(~., data = tr_dat), all_numeric_predictors(),
+      num_comp = -1))
     Condition
       Error in `step_kpca_rbf()`:
       Caused by error in `prep()`:
@@ -132,8 +132,7 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_rbf(all_numeric_predictors(), sigma = 0) %>%
-        prep()
+      prep(step_kpca_rbf(recipe(~., data = tr_dat), all_numeric_predictors(), sigma = 0))
     Condition
       Error in `step_kpca_rbf()`:
       Caused by error in `prep()`:
@@ -142,8 +141,7 @@
 ---
 
     Code
-      recipe(~., data = tr_dat) %>% step_kpca_rbf(all_numeric_predictors(), prefix = 1) %>%
-        prep()
+      prep(step_kpca_rbf(recipe(~., data = tr_dat), all_numeric_predictors(), prefix = 1))
     Condition
       Error in `step_kpca_rbf()`:
       Caused by error in `prep()`:

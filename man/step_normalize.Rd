@@ -95,7 +95,7 @@ rec <- recipe(
   data = biomass_tr
 )
 
-norm_trans <- rec \%>\%
+norm_trans <- rec |>
   step_normalize(carbon, hydrogen)
 
 norm_obj <- prep(norm_trans, training = biomass_tr)
@@ -108,8 +108,8 @@ tidy(norm_trans, number = 1)
 tidy(norm_obj, number = 1)
 
 # To keep the original variables in the output, use `step_mutate_at`:
-norm_keep_orig <- rec \%>\%
-  step_mutate_at(all_numeric_predictors(), fn = list(orig = ~.)) \%>\%
+norm_keep_orig <- rec |>
+  step_mutate_at(all_numeric_predictors(), fn = list(orig = ~.)) |>
   step_normalize(-contains("orig"), -all_outcomes())
 
 keep_orig_obj <- prep(norm_keep_orig, training = biomass_tr)

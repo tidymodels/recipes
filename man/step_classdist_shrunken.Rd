@@ -128,14 +128,14 @@ penguins$island <- NULL
 penguins$sex <- NULL
 
 # define naming convention
-rec <- recipe(species ~ ., data = penguins) \%>\%
+rec <- recipe(species ~ ., data = penguins) |>
   step_classdist_shrunken(all_numeric_predictors(),
     class = species,
     threshold = 1 / 4, prefix = "centroid_"
   )
 
 # default naming
-rec <- recipe(species ~ ., data = penguins) \%>\%
+rec <- recipe(species ~ ., data = penguins) |>
   step_classdist_shrunken(all_numeric_predictors(),
     class = species,
     threshold = 3 / 4

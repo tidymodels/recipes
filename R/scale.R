@@ -51,7 +51,7 @@
 #'   data = biomass_tr
 #' )
 #'
-#' scaled_trans <- rec %>%
+#' scaled_trans <- rec |>
 #'   step_scale(carbon, hydrogen)
 #'
 #' scaled_obj <- prep(scaled_trans, training = biomass_tr)

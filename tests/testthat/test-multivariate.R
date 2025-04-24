@@ -8,8 +8,8 @@ test_that("multivariate outcome", {
     carbon + hydrogen ~ oxygen + nitrogen + sulfur,
     data = biomass
   )
-  rec <- raw_recipe %>%
-    step_center(all_outcomes()) %>%
+  rec <- raw_recipe |>
+    step_center(all_outcomes()) |>
     step_scale(all_predictors())
 
   rec_trained <- prep(rec, training = biomass)

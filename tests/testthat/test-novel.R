@@ -32,8 +32,8 @@ te_miss$z[1] <- NA
 rec <- recipe(~., data = tr_dat)
 
 test_that("basic functionality", {
-  ex_1 <- recipe(~., data = tr_dat, strings_as_factors = FALSE) %>%
-    step_novel(all_predictors()) %>%
+  ex_1 <- recipe(~., data = tr_dat, strings_as_factors = FALSE) |>
+    step_novel(all_predictors()) |>
     prep(tr_dat)
 
   ex_1_tr <- bake(ex_1, new_data = tr_dat)
@@ -76,27 +76,27 @@ test_that("basic functionality", {
 test_that("bad args", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = iris) %>%
-      step_novel(all_predictors()) %>%
+    recipe(~., data = iris) |>
+      step_novel(all_predictors()) |>
       prep(iris)
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = tr_bad) %>%
-      step_novel(all_predictors()) %>%
+    recipe(~., data = tr_bad) |>
+      step_novel(all_predictors()) |>
       prep(tr_bad)
   )
   expect_snapshot(
-    rec %>%
-      step_novel(all_predictors(), new_level = letters) %>%
+    rec |>
+      step_novel(all_predictors(), new_level = letters) |>
       prep(),
     error = TRUE
   )
 })
 
 test_that("missing values", {
-  ex_2 <- rec %>%
-    step_novel(all_predictors()) %>%
+  ex_2 <- rec |>
+    step_novel(all_predictors()) |>
     prep(training = tr_dat)
   ex_2_te <- bake(ex_2, new_data = te_miss)
   expect_equal(which(is.na(te_miss$y)), which(is.na(ex_2_te$y)))
@@ -106,10 +106,10 @@ test_that("missing values", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  ex_1 <- recipe(~., data = tr_dat, strings_as_factors = FALSE) %>%
-    step_novel(x) %>%
-    update_role(x, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  ex_1 <- recipe(~., data = tr_dat, strings_as_factors = FALSE) |>
+    step_novel(x) |>
+    update_role(x, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep(tr_dat)
 
   expect_snapshot(error = TRUE, bake(ex_1, new_data = tr_dat[, c(-3)]))
@@ -153,7 +153,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = tr_dat) %>%
+  rec <- recipe(~., data = tr_dat) |>
     step_novel(all_predictors())
 
   expect_snapshot(print(rec))
@@ -162,8 +162,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_novel(all_nominal_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_novel(all_nominal_predictors()) |>
     prep()
 
   expect_identical(

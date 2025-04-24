@@ -96,18 +96,18 @@ ames_missing <- ames
 ames_missing$Longitude[sample(1:nrow(ames), 200)] <- NA
 
 imputed_ames <-
-  recipe(Sale_Price ~ ., data = ames_missing) \%>\%
+  recipe(Sale_Price ~ ., data = ames_missing) |>
   step_impute_linear(
     Longitude,
     impute_with = c(Latitude, Neighborhood, MS_Zoning, Alley)
-  ) \%>\%
+  ) |>
   prep(ames_missing)
 
 imputed <-
-  bake(imputed_ames, new_data = ames_missing) \%>\%
-  dplyr::rename(imputed = Longitude) \%>\%
-  bind_cols(ames \%>\% dplyr::select(original = Longitude)) \%>\%
-  bind_cols(ames_missing \%>\% dplyr::select(Longitude)) \%>\%
+  bake(imputed_ames, new_data = ames_missing) |>
+  dplyr::rename(imputed = Longitude) |>
+  bind_cols(ames |> dplyr::select(original = Longitude)) |>
+  bind_cols(ames_missing |> dplyr::select(Longitude)) |>
   dplyr::filter(is.na(Longitude))
 
 library(ggplot2)

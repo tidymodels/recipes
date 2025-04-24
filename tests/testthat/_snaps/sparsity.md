@@ -19,7 +19,7 @@
 ---
 
     Code
-      recipe(~., data = ames) %>% prep() %>% bake(new_data = NULL, composition = "dgCMatrix")
+      bake(prep(recipe(~., data = ames)), new_data = NULL, composition = "dgCMatrix")
     Condition
       Error in `juice()`:
       ! `data` must only contain numeric columns.

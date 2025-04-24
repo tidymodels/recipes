@@ -80,16 +80,16 @@ The underlying operation does not allow for case weights.
 data(Sacramento, package = "modeldata")
 
 rec <-
-  recipe(~ city + zip, data = Sacramento) \%>\%
-  step_unknown(city, new_level = "unknown city") \%>\%
-  step_unknown(zip, new_level = "unknown zip") \%>\%
+  recipe(~ city + zip, data = Sacramento) |>
+  step_unknown(city, new_level = "unknown city") |>
+  step_unknown(zip, new_level = "unknown zip") |>
   prep()
 
-table(bake(rec, new_data = NULL) \%>\% pull(city),
-  Sacramento \%>\% pull(city),
+table(bake(rec, new_data = NULL) |> pull(city),
+  Sacramento |> pull(city),
   useNA = "always"
-) \%>\%
-  as.data.frame() \%>\%
+) |>
+  as.data.frame() |>
   dplyr::filter(Freq > 0)
 
 tidy(rec, number = 1)

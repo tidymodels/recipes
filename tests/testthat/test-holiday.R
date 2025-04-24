@@ -16,7 +16,7 @@ is_equal_1 <- function(x) {
 }
 
 test_that("Date class", {
-  holiday_rec <- recipe(~day, test_data) %>%
+  holiday_rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   holiday_rec <- prep(holiday_rec, training = test_data)
@@ -53,7 +53,7 @@ test_that("Date class", {
 })
 
 test_that("Date class", {
-  holiday_rec <- recipe(~day, test_data) %>%
+  holiday_rec <- recipe(~day, test_data) |>
     step_holiday(
       all_predictors(),
       holidays = exp_dates$holiday,
@@ -69,7 +69,7 @@ test_that("Date class", {
 test_that("works with no missing values - Date class", {
   test_data <- na.omit(test_data)
 
-  holiday_rec <- recipe(~day, test_data) %>%
+  holiday_rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   holiday_rec <- prep(holiday_rec, training = test_data)
@@ -93,7 +93,7 @@ test_that("POSIXct class", {
   test_data$day <- lubridate::as_datetime(test_data$day, tz = "UTC")
   exp_dates$date <- lubridate::as_datetime(exp_dates$date, tz = "UTC")
 
-  holiday_rec <- recipe(~day, test_data) %>%
+  holiday_rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   holiday_rec <- prep(holiday_rec, training = test_data)
@@ -133,7 +133,7 @@ test_that("Date class", {
   test_data$day <- as.POSIXct(test_data$day)
   exp_dates$date <- as.POSIXct(exp_dates$date)
 
-  holiday_rec <- recipe(~day, test_data) %>%
+  holiday_rec <- recipe(~day, test_data) |>
     step_holiday(
       all_predictors(),
       holidays = exp_dates$holiday,
@@ -152,7 +152,7 @@ test_that("works with no missing values - POSIXct class", {
   test_data$day <- as.POSIXct(test_data$day)
   exp_dates$date <- as.POSIXct(exp_dates$date)
 
-  holiday_rec <- recipe(~day, test_data) %>%
+  holiday_rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   holiday_rec <- prep(holiday_rec, training = test_data)
@@ -176,7 +176,7 @@ test_that("check_name() is used", {
   dat <- test_data
   dat$day_Easter <- dat$day
 
-  rec <- recipe(~., dat) %>%
+  rec <- recipe(~., dat) |>
     step_holiday(day, holidays = exp_dates$holiday)
 
   expect_snapshot(
@@ -188,7 +188,7 @@ test_that("check_name() is used", {
 test_that("error on incorrect holidays argument", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., mtcars) %>%
+    recipe(~., mtcars) |>
       step_holiday(holidays = c("Invalid Holiday", "NewYearsDay"))
   )
 })
@@ -196,14 +196,14 @@ test_that("error on incorrect holidays argument", {
 test_that("sparse = 'yes' works", {
   rec <- recipe(~., data = test_data)
 
-  dense <- rec %>%
-    step_holiday(day, sparse = "no", keep_original_cols = FALSE) %>%
-    prep() %>%
+  dense <- rec |>
+    step_holiday(day, sparse = "no", keep_original_cols = FALSE) |>
+    prep() |>
     bake(NULL)
-  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
-  sparse <- rec %>%
-    step_holiday(day, sparse = "yes", keep_original_cols = FALSE) %>%
-    prep() %>%
+  dense <- purrr::map(dense, as.integer) |> tibble::new_tibble()
+  sparse <- rec |>
+    step_holiday(day, sparse = "yes", keep_original_cols = FALSE) |>
+    prep() |>
     bake(NULL)
 
   expect_identical(dense, sparse)
@@ -213,8 +213,8 @@ test_that("sparse = 'yes' works", {
 })
 
 test_that("sparse argument is backwards compatible", {
-  rec <- recipe(~., data = test_data) %>%
-    step_holiday(day) %>%
+  rec <- recipe(~., data = test_data) |>
+    step_holiday(day) |>
     prep()
 
   exp <- bake(rec, test_data)
@@ -229,7 +229,7 @@ test_that("sparse argument is backwards compatible", {
 })
 
 test_that(".recipes_toggle_sparse_args works", {
-  rec <- recipe(~., data = test_data) %>%
+  rec <- recipe(~., data = test_data) |>
     step_holiday(day, sparse = "auto", keep_original_cols = TRUE)
 
   expect_equal(
@@ -241,9 +241,9 @@ test_that(".recipes_toggle_sparse_args works", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  holiday_rec <- recipe(~day, test_data) %>%
-    step_holiday(day, holidays = exp_dates$holiday) %>%
-    update_role(day, new_role = "potato") %>%
+  holiday_rec <- recipe(~day, test_data) |>
+    step_holiday(day, holidays = exp_dates$holiday) |>
+    update_role(day, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   holiday_rec <- prep(holiday_rec, training = test_data)
@@ -291,7 +291,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("day_ChristmasDay", "day_USMemorialDay", "day_Easter")
 
-  rec <- recipe(~day, test_data) %>%
+  rec <- recipe(~day, test_data) |>
     step_holiday(
       all_predictors(),
       holidays = exp_dates$holiday,
@@ -306,7 +306,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~day, test_data) %>%
+  rec <- recipe(~day, test_data) |>
     step_holiday(
       all_predictors(),
       holidays = exp_dates$holiday,
@@ -323,7 +323,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~day, test_data) %>%
+  rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -338,7 +338,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~day, test_data) %>%
+  rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
 
   expect_snapshot(print(rec))
@@ -347,8 +347,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- test_data
-  rec <- recipe(~., data) %>%
-    step_holiday(day, holidays = exp_dates$holiday) %>%
+  rec <- recipe(~., data) |>
+    step_holiday(day, holidays = exp_dates$holiday) |>
     prep()
 
   expect_identical(

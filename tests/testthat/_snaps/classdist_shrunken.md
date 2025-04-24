@@ -73,8 +73,8 @@
 ---
 
     Code
-      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
-        all_numeric_predictors(), class = class, threshold = -1) %>% prep()
+      prep(step_classdist_shrunken(recipe(class ~ x + y, data = nsc_test),
+      all_numeric_predictors(), class = class, threshold = -1))
     Condition
       Error in `step_classdist_shrunken()`:
       Caused by error in `prep()`:
@@ -83,8 +83,8 @@
 ---
 
     Code
-      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
-        all_numeric_predictors(), class = class, sd_offset = -1) %>% prep()
+      prep(step_classdist_shrunken(recipe(class ~ x + y, data = nsc_test),
+      all_numeric_predictors(), class = class, sd_offset = -1))
     Condition
       Error in `step_classdist_shrunken()`:
       Caused by error in `prep()`:
@@ -93,8 +93,8 @@
 ---
 
     Code
-      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
-        all_numeric_predictors(), class = class, log = 2) %>% prep()
+      prep(step_classdist_shrunken(recipe(class ~ x + y, data = nsc_test),
+      all_numeric_predictors(), class = class, log = 2))
     Condition
       Error in `step_classdist_shrunken()`:
       Caused by error in `prep()`:
@@ -103,8 +103,8 @@
 ---
 
     Code
-      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
-        all_numeric_predictors(), class = class, prefix = 2) %>% prep()
+      prep(step_classdist_shrunken(recipe(class ~ x + y, data = nsc_test),
+      all_numeric_predictors(), class = class, prefix = 2))
     Condition
       Error in `step_classdist_shrunken()`:
       Caused by error in `prep()`:
@@ -113,8 +113,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_classdist_shrunken(disp, class = NULL) %>%
-        prep()
+      prep(step_classdist_shrunken(recipe(mpg ~ ., data = mtcars), disp, class = NULL))
     Condition
       Error in `step_classdist_shrunken()`:
       Caused by error in `prep()`:

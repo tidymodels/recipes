@@ -59,7 +59,7 @@
 #'
 #' rec <- recipe(~ city + zip, data = sacr_tr)
 #'
-#' rec <- rec %>%
+#' rec <- rec |>
 #'   step_novel(city, zip)
 #' rec <- prep(rec, training = sacr_tr)
 #'

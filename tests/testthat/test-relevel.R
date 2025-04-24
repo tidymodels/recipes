@@ -10,8 +10,8 @@ sacr_te <- Sacramento[-(1:800), ]
 rec <- recipe(~., data = sacr_tr)
 
 test_that("basic functionality", {
-  rec_1 <- rec %>%
-    step_relevel(zip, ref_level = "z95838") %>%
+  rec_1 <- rec |>
+    step_relevel(zip, ref_level = "z95838") |>
     prep()
 
   tr_1 <- bake(rec_1, new_data = NULL)
@@ -24,26 +24,26 @@ test_that("basic functionality", {
 test_that("bad args", {
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_relevel(sqft, ref_level = 23) %>%
+    rec |>
+      step_relevel(sqft, ref_level = 23) |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_relevel(city, ref_level = "missing_level") %>%
+    rec |>
+      step_relevel(city, ref_level = "missing_level") |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    rec %>%
-      step_relevel(city, ref_level = character(0)) %>%
+    rec |>
+      step_relevel(city, ref_level = character(0)) |>
       prep()
   )
 })
 
 test_that("tidy methods", {
-  rec_raw <- rec %>% step_relevel(zip, ref_level = "z95838", id = "city")
+  rec_raw <- rec |> step_relevel(zip, ref_level = "z95838", id = "city")
   expect_equal(
     tidy(rec_raw, 1),
     tibble(terms = "zip", value = "z95838", id = "city")
@@ -57,10 +57,10 @@ test_that("tidy methods", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec_1 <- rec %>%
-    step_relevel(zip, ref_level = "z95838") %>%
-    update_role(zip, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec_1 <- rec |>
+    step_relevel(zip, ref_level = "z95838") |>
+    update_role(zip, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep()
 
   expect_snapshot(error = TRUE, bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]))
@@ -104,7 +104,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = sacr_tr) %>%
+  rec <- recipe(~., data = sacr_tr) |>
     step_relevel(zip, ref_level = "z95838")
 
   expect_snapshot(print(rec))
@@ -113,8 +113,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
-  rec <- recipe(~., data) %>%
-    step_relevel(Species, ref_level = "virginica") %>%
+  rec <- recipe(~., data) |>
+    step_relevel(Species, ref_level = "virginica") |>
     prep()
 
   expect_identical(

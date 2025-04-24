@@ -44,8 +44,8 @@
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(covers, package = "modeldata")
 #'
-#' rec <- recipe(~description, covers) %>%
-#'   step_count(description, pattern = "(rock|stony)", result = "rocks") %>%
+#' rec <- recipe(~description, covers) |>
+#'   step_count(description, pattern = "(rock|stony)", result = "rocks") |>
 #'   step_count(description, pattern = "famil", normalize = TRUE)
 #'
 #' rec2 <- prep(rec, training = covers)

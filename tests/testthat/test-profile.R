@@ -11,9 +11,9 @@ sacr_rec <- recipe(~., data = Sacramento)
 is_unq <- function(x) length(unique(x)) == 1
 
 test_that("numeric profile", {
-  num_rec <- sacr_rec %>%
-    step_profile(-sqft, profile = sqft) %>%
-    prep(Sacramento) %>%
+  num_rec <- sacr_rec |>
+    step_profile(-sqft, profile = sqft) |>
+    prep(Sacramento) |>
     bake(new_data = NULL)
   expect_true(is_unq(num_rec$city))
   expect_true(is_unq(num_rec$price))
@@ -31,9 +31,9 @@ test_that("numeric profile", {
 })
 
 test_that("factor profile", {
-  fact_rec <- sacr_rec %>%
-    step_profile(-city, profile = city) %>%
-    prep(Sacramento) %>%
+  fact_rec <- sacr_rec |>
+    step_profile(-city, profile = city) |>
+    prep(Sacramento) |>
     bake(new_data = NULL)
   expect_false(is_unq(fact_rec$city))
   expect_true(is_unq(fact_rec$price))
@@ -43,9 +43,9 @@ test_that("factor profile", {
 })
 
 test_that("beds profile", {
-  beds_rec <- sacr_rec %>%
-    step_profile(-beds, profile = beds) %>%
-    prep(Sacramento) %>%
+  beds_rec <- sacr_rec |>
+    step_profile(-beds, profile = beds) |>
+    prep(Sacramento) |>
     bake(new_data = NULL)
   expect_true(is_unq(beds_rec$city))
   expect_true(is_unq(beds_rec$price))
@@ -55,9 +55,9 @@ test_that("beds profile", {
 })
 
 test_that("character profile", {
-  chr_rec <- recipe(~., data = Sacramento, strings_as_factors = FALSE) %>%
-    step_profile(-zip, profile = zip) %>%
-    prep(Sacramento) %>%
+  chr_rec <- recipe(~., data = Sacramento, strings_as_factors = FALSE) |>
+    step_profile(-zip, profile = zip) |>
+    prep(Sacramento) |>
     bake(new_data = NULL)
   expect_true(is_unq(chr_rec$city))
   expect_true(is_unq(chr_rec$price))
@@ -69,43 +69,43 @@ test_that("character profile", {
 test_that("bad values", {
   expect_snapshot(
     error = TRUE,
-    sacr_rec %>%
-      step_profile(all_predictors(), profile = sqft) %>%
+    sacr_rec |>
+      step_profile(all_predictors(), profile = sqft) |>
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
-    sacr_rec %>%
-      step_profile(sqft, beds, price, profile = c(zip, beds)) %>%
+    sacr_rec |>
+      step_profile(sqft, beds, price, profile = c(zip, beds)) |>
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
-    sacr_rec %>%
-      step_profile(city, profile = sqft, pct = -1) %>%
+    sacr_rec |>
+      step_profile(city, profile = sqft, pct = -1) |>
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
-    sacr_rec %>%
-      step_profile(city, profile = sqft, grid = 1:3) %>%
+    sacr_rec |>
+      step_profile(city, profile = sqft, grid = 1:3) |>
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
-    sacr_rec %>%
+    sacr_rec |>
       step_profile(
         city,
         profile = sqft,
         grid = list(pctl = 1, len = 2)
-      ) %>%
+      ) |>
       prep(data = Sacramento)
   )
   expect_snapshot(error = TRUE, fixed(rep(c(TRUE, FALSE), each = 5)))
 })
 
 test_that("tidy", {
-  num_rec_3 <- sacr_rec %>%
+  num_rec_3 <- sacr_rec |>
     step_profile(-sqft, profile = contains("sqft"), id = "")
   num_rec_4 <- prep(num_rec_3, Sacramento)
 
@@ -140,7 +140,7 @@ test_that("tidy", {
 test_that("error on wrong grid names", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
+    recipe(~., data = mtcars) |>
       step_profile(grid = list(pctl = TRUE, not_len = 100))
   )
 })
@@ -148,15 +148,15 @@ test_that("error on wrong grid names", {
 test_that("recipes_argument_select() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_profile(disp, profile = NULL) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_profile(disp, profile = NULL) |>
       prep()
   )
 })
 
 test_that("addition of recipes_argument_select() is backwards compatible", {
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_profile(all_predictors(), profile = Species) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
+    step_profile(all_predictors(), profile = Species) |>
     prep()
 
   exp <- bake(rec, iris)
@@ -170,8 +170,8 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  rec_old <- recipe(Species ~ ., data = iris) %>%
-    step_profile(all_predictors(), profile = vars(Species)) %>%
+  rec_old <- recipe(Species ~ ., data = iris) |>
+    step_profile(all_predictors(), profile = vars(Species)) |>
     prep()
 
   expect_identical(
@@ -224,7 +224,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = Sacramento) %>%
+  rec <- recipe(~., data = Sacramento) |>
     step_profile(-sqft, profile = sqft)
 
   expect_snapshot(print(rec))

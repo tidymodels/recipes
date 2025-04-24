@@ -12,25 +12,25 @@ test_that("default lag works on a single feature", {
   df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
 
   # lags numeric data
-  baked <- recipe(~., data = df) %>%
-    step_lag(t, lag = 2) %>%
-    prep(df) %>%
+  baked <- recipe(~., data = df) |>
+    step_lag(t, lag = 2) |>
+    prep(df) |>
     bake(df)
   expected <- mutate(df, lag_2_t = dplyr::lag(t, 2))
   expect_equal(baked, expected)
 
   # lags date data
-  baked <- recipe(~., data = df) %>%
-    step_lag(t, lag = 2) %>%
-    prep(df) %>%
+  baked <- recipe(~., data = df) |>
+    step_lag(t, lag = 2) |>
+    prep(df) |>
     bake(df)
   expected <- mutate(df, lag_2_t = dplyr::lag(t, 2))
   expect_equal(baked, expected)
 
   # default argument works as expect
-  baked <- recipe(~., data = df) %>%
-    step_lag(t, lag = 2, default = start) %>%
-    prep(df) %>%
+  baked <- recipe(~., data = df) |>
+    step_lag(t, lag = 2, default = start) |>
+    prep(df) |>
     bake(df)
   expected <- df
   expected$lag_2_t <- dplyr::lag(expected$t, 2, default = start)
@@ -39,14 +39,14 @@ test_that("default lag works on a single feature", {
   # errors out on non-integer lag
   expect_snapshot(
     error = TRUE,
-    prepped_rec <- recipe(~., data = df) %>%
-      step_lag(x, lag = 0.5) %>%
+    prepped_rec <- recipe(~., data = df) |>
+      step_lag(x, lag = 0.5) |>
       prep(df)
   )
 
   expect_snapshot(
-    recipe(~., data = df) %>%
-      step_lag(x, prefix = 2) %>%
+    recipe(~., data = df) |>
+      step_lag(x, prefix = 2) |>
       prep(),
     error = TRUE
   )
@@ -59,12 +59,12 @@ test_that("specification of multiple lags in a vector", {
     tt = sample(seq(start, end, by = "day"), n)
   )
 
-  baked <- recipe(~., data = df) %>%
-    step_lag(t, tt, lag = c(1, 2)) %>%
-    prep(df) %>%
+  baked <- recipe(~., data = df) |>
+    step_lag(t, tt, lag = c(1, 2)) |>
+    prep(df) |>
     bake(df)
 
-  expected <- df %>%
+  expected <- df |>
     mutate(
       lag_1_t = dplyr::lag(t, 1),
       lag_2_t = dplyr::lag(t, 2),
@@ -80,7 +80,7 @@ rm(n, start, end)
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_double(mtcars$am)
-  rec <- recipe(~ am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) |>
     step_lag(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -103,10 +103,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
   df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
 
   # lags numeric data
-  rec <- recipe(~., data = df) %>%
-    step_lag(t, lag = 2) %>%
-    update_role(t, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec <- recipe(~., data = df) |>
+    step_lag(t, lag = 2) |>
+    update_role(t, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep(df)
 
   expect_snapshot(error = TRUE, bake(rec, new_data = df[, 1, drop = FALSE]))
@@ -152,7 +152,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("lag_1_mpg")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_lag(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -163,7 +163,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_lag(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -176,7 +176,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_lag(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -191,7 +191,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_lag(disp)
 
   expect_snapshot(print(rec))
@@ -200,8 +200,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_lag(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_lag(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

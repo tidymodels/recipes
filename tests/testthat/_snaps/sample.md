@@ -1,7 +1,7 @@
 # bad input
 
     Code
-      iris_rec %>% step_sample(size = -1) %>% prep()
+      prep(step_sample(iris_rec, size = -1))
     Condition
       Error in `step_sample()`:
       Caused by error in `prep()`:
@@ -10,7 +10,7 @@
 ---
 
     Code
-      iris_rec %>% step_sample(size = "a") %>% prep()
+      prep(step_sample(iris_rec, size = "a"))
     Condition
       Error in `step_sample()`:
       Caused by error in `prep()`:
@@ -19,7 +19,7 @@
 ---
 
     Code
-      iris_rec %>% step_sample(replace = "a") %>% prep()
+      prep(step_sample(iris_rec, replace = "a"))
     Condition
       Error in `step_sample()`:
       Caused by error in `prep()`:
@@ -66,7 +66,7 @@
 # warn when selectors are provided
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_sample(all_predictors())
+      tmp <- step_sample(recipe(~., data = mtcars), all_predictors())
     Condition
       Warning:
       Selectors are not used for this step.

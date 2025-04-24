@@ -32,10 +32,10 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~., data = iris) %>%
-#'   step_rename_at(all_predictors(), fn = ~ gsub(".", "_", ., fixed = TRUE)) %>%
-#'   prep() %>%
-#'   bake(new_data = NULL) %>%
+#' recipe(~., data = iris) |>
+#'   step_rename_at(all_predictors(), fn = ~ gsub(".", "_", ., fixed = TRUE)) |>
+#'   prep() |>
+#'   bake(new_data = NULL) |>
 #'   slice(1:10)
 #' @export
 step_rename_at <- function(

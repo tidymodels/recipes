@@ -15,9 +15,9 @@ rec <- recipe(
 # https://github.com/tidyverse/dplyr/issues/2751
 
 test_that("correct PCA values", {
-  pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  pca_extract <- rec |>
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     step_pca(
       carbon,
       hydrogen,
@@ -104,9 +104,9 @@ test_that("correct PCA values", {
 })
 
 test_that("correct PCA values with threshold", {
-  pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  pca_extract <- rec |>
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, threshold = .5)
 
   pca_extract_trained <- prep(
@@ -126,9 +126,9 @@ test_that("correct PCA values with threshold", {
 })
 
 test_that("Reduced rotation size", {
-  pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  pca_extract <- rec |>
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 3)
 
   pca_extract_trained <- prep(
@@ -156,7 +156,7 @@ test_that("Reduced rotation size", {
 })
 
 test_that("No PCA comps", {
-  pca_extract <- rec %>%
+  pca_extract <- rec |>
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr)
@@ -170,9 +170,9 @@ test_that("No PCA comps", {
 })
 
 test_that("backwards compatible with 0.1.17", {
-  pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+  pca_extract <- rec |>
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) |>
     step_pca(
       carbon,
       hydrogen,
@@ -181,7 +181,7 @@ test_that("backwards compatible with 0.1.17", {
       sulfur,
       options = list(retx = TRUE),
       id = ""
-    ) %>%
+    ) |>
     prep()
 
   exp_res <- bake(pca_extract, biomass_tr)
@@ -203,7 +203,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$PC1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_pca(mpg, disp, vs)
 
   expect_snapshot(
@@ -214,7 +214,7 @@ test_that("check_name() is used", {
 
 test_that("tunable", {
   rec <-
-    recipe(~., data = iris) %>%
+    recipe(~., data = iris) |>
     step_pca(all_predictors())
   rec_param <- tunable.step_pca(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "threshold"))
@@ -228,11 +228,11 @@ test_that("tunable", {
 })
 
 test_that("case weights", {
-  biomass_tr_cw <- biomass_tr %>%
-    mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
+  biomass_tr_cw <- biomass_tr |>
+    mutate(nitrogen = frequency_weights(round(nitrogen))) |>
     select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  pca_extract <- recipe(HHV ~ ., data = biomass_tr_cw) %>%
+  pca_extract <- recipe(HHV ~ ., data = biomass_tr_cw) |>
     step_pca(all_numeric_predictors())
 
   pca_extract_trained <- prep(pca_extract)
@@ -257,11 +257,11 @@ test_that("case weights", {
 
   # ----------------------------------------------------------------------------
 
-  biomass_tr_cw <- biomass_tr %>%
-    mutate(nitrogen = importance_weights(nitrogen)) %>%
+  biomass_tr_cw <- biomass_tr |>
+    mutate(nitrogen = importance_weights(nitrogen)) |>
     select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  pca_extract <- recipe(HHV ~ ., data = biomass_tr_cw) %>%
+  pca_extract <- recipe(HHV ~ ., data = biomass_tr_cw) |>
     step_pca(all_numeric_predictors())
 
   pca_extract_trained <- prep(pca_extract)
@@ -288,8 +288,8 @@ test_that("case weights", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(~., data = mtcars) %>%
-    step_pca(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
+  rec <- recipe(~., data = mtcars) |>
+    step_pca(all_predictors(), num_comp = 0, keep_original_cols = FALSE) |>
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -300,8 +300,8 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(~mpg, data = mtcars) %>%
-      step_pca(mpg, options = TRUE) %>%
+    recipe(~mpg, data = mtcars) |>
+      step_pca(mpg, options = TRUE) |>
       prep()
   )
 })
@@ -309,7 +309,7 @@ test_that("check_options() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  pca_extract <- rec %>%
+  pca_extract <- rec |>
     step_pca(
       carbon,
       hydrogen,
@@ -318,7 +318,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
       sulfur,
       options = list(retx = TRUE),
       id = ""
-    ) %>%
+    ) |>
     update_role(
       carbon,
       hydrogen,
@@ -326,7 +326,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
       nitrogen,
       sulfur,
       new_role = "potato"
-    ) %>%
+    ) |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   pca_extract_trained <- prep(
@@ -386,7 +386,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("PC1")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_pca(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -397,7 +397,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_pca(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -410,7 +410,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_pca(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -428,7 +428,7 @@ test_that("printing", {
   rec <- recipe(
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
-  ) %>%
+  ) |>
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
   expect_snapshot(print(rec))
@@ -437,7 +437,7 @@ test_that("printing", {
 
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) |>
     step_pca(
       all_predictors(),
       num_comp = hardhat::tune(),
@@ -452,20 +452,20 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
-      step_pca(all_numeric_predictors(), num_comp = -1) %>%
+    recipe(~., data = mtcars) |>
+      step_pca(all_numeric_predictors(), num_comp = -1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
-      step_pca(all_numeric_predictors(), prefix = 1) %>%
+    recipe(~., data = mtcars) |>
+      step_pca(all_numeric_predictors(), prefix = 1) |>
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., data = mtcars) %>%
-      step_pca(all_numeric_predictors(), threshold = -1) %>%
+    recipe(~., data = mtcars) |>
+      step_pca(all_numeric_predictors(), threshold = -1) |>
       prep(),
     error = TRUE
   )
@@ -473,8 +473,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_pca(all_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_pca(all_predictors()) |>
     prep()
 
   expect_identical(

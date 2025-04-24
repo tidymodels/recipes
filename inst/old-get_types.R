@@ -19,9 +19,9 @@ Sacramento$datetime2 <- as.POSIXct(
 
 old_rec_sac <- recipe(~., data = Sacramento)
 
-old_pca_rec_sac <- old_rec_sac %>%
-  step_normalize(all_numeric_predictors()) %>%
-  step_pca(beds, baths, sqft) %>%
+old_pca_rec_sac <- old_rec_sac |>
+  step_normalize(all_numeric_predictors()) |>
+  step_pca(beds, baths, sqft) |>
   prep()
 
 # Saving -----------------------------------------------------------------------

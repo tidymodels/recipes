@@ -2,9 +2,9 @@ library(testthat)
 library(recipes)
 
 test_that("step_naomit on all columns", {
-  baked <- recipe(~., data = airquality) %>%
-    step_naomit(all_predictors()) %>%
-    prep(airquality, verbose = FALSE) %>%
+  baked <- recipe(~., data = airquality) |>
+    step_naomit(all_predictors()) |>
+    prep(airquality, verbose = FALSE) |>
     bake(new_data = NULL)
 
   na_res <- tibble(na.omit(airquality))
@@ -14,18 +14,18 @@ test_that("step_naomit on all columns", {
 })
 
 test_that("step_naomit on subset of columns", {
-  baked <- recipe(Ozone ~ ., data = airquality) %>%
-    step_naomit(Ozone, Solar.R) %>%
-    prep(airquality, verbose = FALSE) %>%
+  baked <- recipe(Ozone ~ ., data = airquality) |>
+    step_naomit(Ozone, Solar.R) |>
+    prep(airquality, verbose = FALSE) |>
     bake(new_data = NULL)
 
   na_res <- tibble(tidyr::drop_na(airquality, Ozone, Solar.R))
 
   expect_equal(baked, na_res[, c(2:6, 1)])
 
-  baked2 <- recipe(Ozone ~ ., data = airquality) %>%
-    step_naomit(Solar.R) %>%
-    prep(airquality, verbose = FALSE) %>%
+  baked2 <- recipe(Ozone ~ ., data = airquality) |>
+    step_naomit(Solar.R) |>
+    prep(airquality, verbose = FALSE) |>
     bake(new_data = NULL)
 
   na_res2 <- tibble(tidyr::drop_na(airquality, Solar.R))
@@ -37,7 +37,7 @@ test_that("doesn't destroy sparsity", {
   mtcars$vs[c(1, 5, 7)] <- NA
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_double(mtcars$am)
-  rec <- recipe(~ am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) |>
     step_naomit(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -51,9 +51,9 @@ test_that("doesn't destroy sparsity", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(airquality) %>%
-    step_naomit(Wind, Temp, skip = FALSE) %>%
-    update_role(Wind, Temp, new_role = "potato") %>%
+  rec <- recipe(airquality) |>
+    step_naomit(Wind, Temp, skip = FALSE) |>
+    update_role(Wind, Temp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = airquality)
@@ -99,7 +99,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(Ozone ~ ., data = airquality) %>%
+  rec <- recipe(Ozone ~ ., data = airquality) |>
     step_naomit(all_predictors())
 
   expect_snapshot(print(rec))
@@ -108,8 +108,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_naomit(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    step_naomit(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

@@ -9,8 +9,7 @@
 # impute_with errors with nothing selected
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), impute_with = NULL) %>%
-        prep()
+      prep(step_impute_knn(recipe(~., data = mtcars), all_predictors(), impute_with = NULL))
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
@@ -19,8 +18,8 @@
 # Warns when impute_with contains all NAs in a row
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_impute_knn(mpg, disp, vs,
-        impute_with = c(am, gear)) %>% prep()
+      tmp <- prep(step_impute_knn(recipe(~., data = mtcars), mpg, disp, vs,
+      impute_with = c(am, gear)))
     Condition
       Warning:
       The `impute_with` variables for `mpg` only contains missing values for row: 2 and 3. Cannot impute for those rows.
@@ -30,8 +29,8 @@
 # error on wrong options argument
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), options = list(
-        wrong = "wrong")) %>% prep()
+      prep(step_impute_knn(recipe(~., data = mtcars), all_predictors(), options = list(
+        wrong = "wrong")))
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
@@ -40,8 +39,8 @@
 ---
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), options = c(
-        wrong = "wrong")) %>% prep()
+      prep(step_impute_knn(recipe(~., data = mtcars), all_predictors(), options = c(
+        wrong = "wrong")))
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
@@ -50,7 +49,7 @@
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_impute_knn(mpg, options = TRUE) %>% prep()
+      prep(step_impute_knn(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
@@ -59,8 +58,7 @@
 # recipes_argument_select() is used
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_impute_knn(disp, impute_with = NULL) %>%
-        prep()
+      prep(step_impute_knn(recipe(mpg ~ ., data = mtcars), disp, impute_with = NULL))
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
@@ -147,8 +145,7 @@
 # bad args
 
     Code
-      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), neighbors = 0L) %>%
-        prep()
+      prep(step_impute_knn(recipe(~., data = mtcars), all_predictors(), neighbors = 0L))
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:

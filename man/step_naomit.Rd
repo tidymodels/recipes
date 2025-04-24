@@ -82,9 +82,9 @@ The underlying operation does not allow for case weights.
 
 \examples{
 
-recipe(Ozone ~ ., data = airquality) \%>\%
-  step_naomit(Solar.R) \%>\%
-  prep(airquality, verbose = FALSE) \%>\%
+recipe(Ozone ~ ., data = airquality) |>
+  step_naomit(Solar.R) |>
+  prep(airquality, verbose = FALSE) |>
   bake(new_data = NULL)
 }
 \seealso{

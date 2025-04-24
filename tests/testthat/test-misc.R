@@ -3,9 +3,9 @@ test_that("check_new_data works", {
   examples <- matrix(exp(rnorm(40)), ncol = 4)
   examples <- as.data.frame(examples)
 
-  log_trans <- recipe(~ V1 + V2 + V3 + V4, data = examples) %>%
-    step_log(V1, V2, V3) %>%
-    update_role(V1, V2, V3, new_role = "potato") %>%
+  log_trans <- recipe(~ V1 + V2 + V3 + V4, data = examples) |>
+    step_log(V1, V2, V3) |>
+    update_role(V1, V2, V3, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   log_obj <- prep(log_trans, training = examples)
@@ -19,8 +19,8 @@ test_that("conditionMessage method for recipes errors works", {
   res <-
     try(
       {
-        recipe(~., data = mtcars) %>%
-          step_dummy(all_numeric_predictors()) %>%
+        recipe(~., data = mtcars) |>
+          step_dummy(all_numeric_predictors()) |>
           prep()
       },
       silent = TRUE
@@ -34,26 +34,26 @@ test_that("conditionMessage method for recipes errors works", {
 test_that("validate_training_data errors are thrown", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>% prep(fresh = TRUE)
+    recipe(~., data = mtcars) |> prep(fresh = TRUE)
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>% prep(mtcars[, 1:2], fresh = TRUE)
+    recipe(~., data = mtcars) |> prep(mtcars[, 1:2], fresh = TRUE)
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_center(disp) %>%
-      prep(retain = FALSE) %>%
+    recipe(~., data = mtcars) |>
+      step_center(disp) |>
+      prep(retain = FALSE) |>
       prep(mtcars, fresh = FALSE)
   )
 
   expect_snapshot(
-    tmp <- recipe(~., data = mtcars) %>%
-      step_center(disp) %>%
-      prep() %>%
+    tmp <- recipe(~., data = mtcars) |>
+      step_center(disp) |>
+      prep() |>
       prep(mtcars)
   )
 })
@@ -71,7 +71,7 @@ test_that("vars without role in predictor/outcome avoid string processing", {
   var_info$role <- c("predictor", "predictor", "outcome", "lemon", "lime")
   additional_row <- var_info[2, ]
   additional_row$role <- "lime"
-  var_info <- var_info %>% add_row(additional_row)
+  var_info <- var_info |> add_row(additional_row)
 
   orig_lvls <- lapply(x, get_levels)
   training <- strings2factors(x, orig_lvls)
@@ -121,8 +121,8 @@ test_that("spline error messages", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(. ~ disp, data = mtcars) %>%
-      step_spline_convex(disp) %>%
+    recipe(. ~ disp, data = mtcars) |>
+      step_spline_convex(disp) |>
       prep()
   )
 })

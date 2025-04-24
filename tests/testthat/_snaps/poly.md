@@ -11,15 +11,15 @@
 # old option argument
 
     Code
-      res <- recipe(~., data = iris) %>% step_poly(Sepal.Width, options = list(
-        degree = 3)) %>% prep() %>% bake(new_data = NULL)
+      res <- bake(prep(step_poly(recipe(~., data = iris), Sepal.Width, options = list(
+        degree = 3))), new_data = NULL)
     Message
       The `degree` argument is now a main argument instead of being within `options`.
 
 # check_options() is used
 
     Code
-      recipe(~mpg, data = mtcars) %>% step_poly(mpg, options = TRUE) %>% prep()
+      prep(step_poly(recipe(~mpg, data = mtcars), mpg, options = TRUE))
     Condition
       Error in `step_poly()`:
       Caused by error in `prep()`:
@@ -115,7 +115,7 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_poly(disp, degree = 0) %>% prep()
+      prep(step_poly(recipe(mpg ~ ., data = mtcars), disp, degree = 0))
     Condition
       Error in `step_poly()`:
       Caused by error in `prep()`:

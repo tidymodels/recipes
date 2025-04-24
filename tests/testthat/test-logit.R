@@ -10,7 +10,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple logit trans", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_logit(x1)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -20,12 +20,12 @@ test_that("simple logit trans", {
   exp_res$x1 <- binomial()$linkfun(exp_res$x1)
   expect_equal(rec_trans, exp_res)
 
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_logit(x3, offset = 0.1)
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, new_data = ex_dat)
   exp_res <-
-    as_tibble(ex_dat) %>%
+    as_tibble(ex_dat) |>
     mutate(
       x3 = case_when(
         x3 == 1.0 ~ 1 - 0.1,
@@ -38,7 +38,7 @@ test_that("simple logit trans", {
 })
 
 test_that("out of bounds logit trans", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_logit(x1, x2)
 
   expect_snapshot(error = TRUE, prep(rec, training = ex_dat, verbose = FALSE))
@@ -47,9 +47,9 @@ test_that("out of bounds logit trans", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_logit(x1) %>%
-    update_role(x1, new_role = "potato") %>%
+  rec <- recipe(~., data = ex_dat) |>
+    step_logit(x1) |>
+    update_role(x1, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -95,7 +95,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
+  rec <- recipe(~., data = ex_dat) |>
     step_logit(x1)
 
   expect_snapshot(print(rec))
@@ -104,8 +104,8 @@ test_that("printing", {
 
 test_that("bad args", {
   expect_snapshot(
-    recipe(~., data = ex_dat) %>%
-      step_logit(x1, offset = "sure") %>%
+    recipe(~., data = ex_dat) |>
+      step_logit(x1, offset = "sure") |>
       prep(),
     error = TRUE
   )
@@ -113,8 +113,8 @@ test_that("bad args", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_logit(vs, am) %>%
+  rec <- recipe(~., data) |>
+    step_logit(vs, am) |>
     prep()
 
   expect_identical(

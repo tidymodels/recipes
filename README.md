@@ -20,7 +20,7 @@ predictors:
 library(recipes)
 data(ad_data, package = "modeldata")
 
-ad_rec <- recipe(Class ~ tau + VEGF, data = ad_data) %>%
+ad_rec <- recipe(Class ~ tau + VEGF, data = ad_data) |>
   step_normalize(all_numeric_predictors())
 
 ad_rec

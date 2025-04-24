@@ -48,7 +48,7 @@
 #' data = biomass_tr
 #' )
 #'
-#' ratio_recipe <- rec %>%
+#' ratio_recipe <- rec |>
 #'   # all predictors over total
 #'   step_ratio(all_numeric_predictors(), denom = total,
 #'              keep_original_cols = FALSE)

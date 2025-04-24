@@ -10,15 +10,15 @@ set_with_na <- tibble(
 
 tst <- function(...) {
   cols <- quos(...)
-  recipe(~., set_with_na) %>%
-    check_missing(!!!cols) %>%
-    prep() %>%
+  recipe(~., set_with_na) |>
+    check_missing(!!!cols) |>
+    prep() |>
     bake(set_with_na)
 }
 
 test_that("check_missing passes silently when no NA", {
-  no_na_rp <- recipe(mtcars) %>%
-    check_missing(all_numeric()) %>%
+  no_na_rp <- recipe(mtcars) |>
+    check_missing(all_numeric()) |>
     prep()
   expect_no_error(bake(no_na_rp, mtcars))
   expect_equal(bake(no_na_rp, mtcars), tibble(mtcars))
@@ -39,8 +39,8 @@ test_that("check_missing works on multiple columns simultaneously", {
 test_that("check_missing on a new set", {
   no_na <- tibble(a = 1:3)
   na <- tibble(a = c(1, NA))
-  rp <- recipe(no_na) %>%
-    check_missing(a) %>%
+  rp <- recipe(no_na) |>
+    check_missing(a) |>
     prep(no_na)
   expect_snapshot(error = TRUE, bake(rp, na))
 })
@@ -48,9 +48,9 @@ test_that("check_missing on a new set", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(mtcars) %>%
-    check_missing(all_numeric()) %>%
-    update_role(disp, new_role = "potato") %>%
+  rec <- recipe(mtcars) |>
+    check_missing(all_numeric()) |>
+    update_role(disp, new_role = "potato") |>
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mtcars)
@@ -96,7 +96,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mtcars) %>%
+  rec <- recipe(mtcars) |>
     check_missing(all_numeric())
 
   expect_snapshot(print(rec))
@@ -105,8 +105,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    check_missing(all_numeric_predictors()) %>%
+  rec <- recipe(~., data) |>
+    check_missing(all_numeric_predictors()) |>
     prep()
 
   expect_identical(

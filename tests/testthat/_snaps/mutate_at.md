@@ -1,8 +1,8 @@
 # no input
 
     Code
-      iris_rec %>% step_mutate_at() %>% prep(training = iris) %>% bake(new_data = NULL,
-        composition = "data.frame")
+      bake(prep(step_mutate_at(iris_rec), training = iris), new_data = NULL,
+      composition = "data.frame")
     Condition
       Error in `step_mutate_at()`:
       ! Argument `fn` must be specified.

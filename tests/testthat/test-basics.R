@@ -26,7 +26,7 @@ test_that("recipe specifications works - formula", {
 
   rec <- recipe(~., data = mtcars)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -36,7 +36,7 @@ test_that("recipe specifications works - formula", {
 
   rec <- recipe(data = mtcars, ~.)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -63,7 +63,7 @@ test_that("recipe specifications works - formula", {
 
   rec <- recipe(mpg ~ ., data = mtcars)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -73,7 +73,7 @@ test_that("recipe specifications works - formula", {
 
   rec <- recipe(data = mtcars, mpg ~ .)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -92,7 +92,7 @@ test_that("recipe specifications works - formula", {
 
   rec <- recipe(mpg ~ vs + am, data = mtcars)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -102,7 +102,7 @@ test_that("recipe specifications works - formula", {
 
   rec <- recipe(data = mtcars, mpg ~ vs + am)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -135,7 +135,7 @@ test_that("recipe specifications works - vars and roles arguments", {
     roles = exp_all_predictors$role
   )
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -166,7 +166,7 @@ test_that("recipe specifications works - vars and roles arguments", {
     roles = exp_outcomes_predictors$role
   )
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -189,7 +189,7 @@ test_that("recipe specifications works - vars and roles arguments", {
     roles = exp_just_some$role
   )
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -218,7 +218,7 @@ test_that("recipe specifications works - update_role()", {
 
   rec <- recipe(mtcars)
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -243,10 +243,10 @@ test_that("recipe specifications works - update_role()", {
     role = "predictor"
   )
 
-  rec <- recipe(mtcars) %>%
+  rec <- recipe(mtcars) |>
     update_role(everything())
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -271,11 +271,11 @@ test_that("recipe specifications works - update_role()", {
     role = c("outcome", rep("predictor", 10)),
   )
 
-  rec <- recipe(mtcars) %>%
-    update_role(everything()) %>%
+  rec <- recipe(mtcars) |>
+    update_role(everything()) |>
     update_role(mpg, new_role = "outcome")
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -300,11 +300,11 @@ test_that("recipe specifications works - update_role()", {
     role = rep(c("outcome", NA, "predictor", NA), c(1L, 6L, 2L, 2L))
   )
 
-  rec <- recipe(mtcars) %>%
-    update_role(vs, am) %>%
+  rec <- recipe(mtcars) |>
+    update_role(vs, am) |>
     update_role(mpg, new_role = "outcome")
 
-  var_info <- summary(rec) %>%
+  var_info <- summary(rec) |>
     select(variable, role)
 
   expect_identical(
@@ -347,7 +347,7 @@ test_that("Recipe on missspelled variables in formulas", {
 })
 
 test_that("return character or factor values", {
-  rec_spec <- recipe(HHV ~ ., data = biomass, strings_as_factors = FALSE) %>%
+  rec_spec <- recipe(HHV ~ ., data = biomass, strings_as_factors = FALSE) |>
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
   centered_char <- prep(
@@ -357,7 +357,7 @@ test_that("return character or factor values", {
   char_var <- bake(centered_char, new_data = head(biomass))
   expect_equal(class(char_var$sample), "character")
 
-  rec_spec <- recipe(HHV ~ ., data = biomass, strings_as_factors = TRUE) %>%
+  rec_spec <- recipe(HHV ~ ., data = biomass, strings_as_factors = TRUE) |>
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
   centered_fac <- prep(rec_spec, training = biomass)
@@ -398,10 +398,10 @@ test_that("Multiple variables on lhs of formula", {
 })
 
 test_that("detect_step function works", {
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_center(all_predictors()) %>%
-    step_scale(Sepal.Width) %>%
-    step_relu(Sepal.Length) %>%
+  rec <- recipe(Species ~ ., data = iris) |>
+    step_center(all_predictors()) |>
+    step_scale(Sepal.Width) |>
+    step_relu(Sepal.Length) |>
     step_intercept()
 
   prepped_rec <- prep(rec, iris)
@@ -428,9 +428,9 @@ test_that("detect_step function works", {
 })
 
 test_that("bake without prep", {
-  sp_signed <- recipe(HHV ~ ., data = biomass) %>%
-    step_center(all_predictors()) %>%
-    step_scale(all_predictors()) %>%
+  sp_signed <- recipe(HHV ~ ., data = biomass) |>
+    step_center(all_predictors()) |>
+    step_scale(all_predictors()) |>
     step_spatialsign(all_predictors())
   expect_snapshot(error = TRUE, bake(sp_signed, new_data = biomass_te))
   expect_snapshot(error = TRUE, juice(sp_signed))
@@ -440,8 +440,8 @@ test_that("prep with fresh = TRUE", {
   test_data <- data.frame(x = factor(c(1, 2), levels = 1:2), y = c(1, 2))
 
   rec <-
-    recipe(y ~ ., data = test_data) %>%
-    step_dummy(x, id = "") %>%
+    recipe(y ~ ., data = test_data) |>
+    step_dummy(x, id = "") |>
     prep()
 
   new_rec <- prep(rec, training = test_data, fresh = TRUE)
@@ -467,9 +467,9 @@ test_that("prep with fresh = TRUE", {
 })
 
 test_that("bake without newdata", {
-  rec <- recipe(HHV ~ ., data = biomass) %>%
-    step_center(all_numeric()) %>%
-    step_scale(all_numeric()) %>%
+  rec <- recipe(HHV ~ ., data = biomass) |>
+    step_center(all_numeric()) |>
+    step_scale(all_numeric()) |>
     prep(training = biomass)
 
   expect_snapshot(error = TRUE, bake(rec, newdata = biomass))
@@ -500,34 +500,34 @@ test_that("tunable arguments at prep-time", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(Species ~ ., data = iris) %>%
-      step_ns(all_predictors(), deg_free = .tune()) %>%
+    recipe(Species ~ ., data = iris) |>
+      step_ns(all_predictors(), deg_free = .tune()) |>
       prep()
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_pca(all_predictors(), threshold = .tune()) %>%
-      step_kpca(all_predictors(), num_comp = .tune()) %>%
-      step_bs(all_predictors(), deg_free = .tune()) %>%
+    recipe(~., data = mtcars) |>
+      step_pca(all_predictors(), threshold = .tune()) |>
+      step_kpca(all_predictors(), num_comp = .tune()) |>
+      step_bs(all_predictors(), deg_free = .tune()) |>
       prep()
   )
 })
 
 test_that("logging", {
   expect_snapshot(
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_ns(disp, deg_free = 2, id = "splines!") %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_ns(disp, deg_free = 2, id = "splines!") |>
       prep(log_changes = TRUE)
   )
 })
 
 test_that("`bake(new_data = NULL)` same as `juice()`", {
   rec <-
-    recipe(mpg ~ ., data = mtcars) %>%
-    step_filter(gear == 4) %>%
-    step_center(all_predictors()) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+    step_filter(gear == 4) |>
+    step_center(all_predictors()) |>
     prep()
 
   juiced <- juice(rec)
@@ -540,7 +540,7 @@ test_that("`bake(new_data = NULL)` same as `juice()`", {
 })
 
 test_that("`retain flag in prep should return data when TRUE and zero rows when FALSE", {
-  rec <- recipe(mpg ~ ., data = mtcars %>% head(20))
+  rec <- recipe(mpg ~ ., data = mtcars |> head(20))
 
   # flag TRUE but no training data
   prec_1 <- prep(rec, retain = TRUE)
@@ -551,11 +551,11 @@ test_that("`retain flag in prep should return data when TRUE and zero rows when 
   expect_equal(nrow(prec_2$template), 0)
 
   # flag TRUE with training data
-  prec_3 <- prep(rec, training = mtcars %>% tail(12), retain = TRUE)
+  prec_3 <- prep(rec, training = mtcars |> tail(12), retain = TRUE)
   expect_equal(nrow(prec_3$template), 12)
 
   # flag FALSE with training data
-  prec_4 <- prep(rec, training = mtcars %>% tail(12), retain = FALSE)
+  prec_4 <- prep(rec, training = mtcars |> tail(12), retain = FALSE)
   expect_equal(nrow(prec_4$template), 0)
 })
 
@@ -608,15 +608,15 @@ test_that("case weights are being infered correctly for x interface", {
 })
 
 test_that("verbose when printing", {
-  standardized <- recipe(~., mtcars) %>%
-    step_center(all_predictors()) %>%
-    step_scale(all_predictors()) %>%
+  standardized <- recipe(~., mtcars) |>
+    step_center(all_predictors()) |>
+    step_scale(all_predictors()) |>
     step_normalize(all_predictors())
   expect_snapshot(tmp <- prep(standardized, verbose = TRUE))
 })
 
 test_that("`internal data is kept as tibbles when prepping", {
-  rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec_spec <- recipe(mpg ~ ., data = mtcars) |>
     step_testthat_helper()
 
   expect_true(
@@ -624,11 +624,11 @@ test_that("`internal data is kept as tibbles when prepping", {
   )
 
   expect_true(
-    tibble::is_tibble(rec_spec %>% prep() %>% bake(new_data = NULL))
+    tibble::is_tibble(rec_spec |> prep() |> bake(new_data = NULL))
   )
 
   expect_true(
-    tibble::is_tibble(rec_spec %>% prep() %>% bake(new_data = mtcars))
+    tibble::is_tibble(rec_spec |> prep() |> bake(new_data = mtcars))
   )
 
   rec_prepped <- prep(rec_spec)
@@ -643,7 +643,7 @@ test_that("`internal data is kept as tibbles when prepping", {
   # Will ignore new_data and return `output`
   expect_snapshot(error = TRUE, bake(rec_prepped, new_data = as_tibble(mtcars)))
 
-  rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
+  rec_spec <- recipe(mpg ~ ., data = mtcars) |>
     step_testthat_helper(output = mtcars)
 
   expect_snapshot(error = TRUE, prep(rec_spec))
@@ -658,8 +658,8 @@ test_that("NAs aren't dropped in strings2factor() (#1291)", {
     x = factor(c("a", NA, "c"), exclude = NULL)
   )
 
-  rec_res <- recipe(~., data = ex_data) %>%
-    prep() %>%
+  rec_res <- recipe(~., data = ex_data) |>
+    prep() |>
     bake(new_data = NULL)
 
   expect_identical(rec_res, ex_data)
@@ -697,14 +697,14 @@ test_that("recipe() works with odd formula usage (#1283)", {
 test_that("steps give errors when arguments are misspelled", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_pca(vs, am, gear, number = 2) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_pca(vs, am, gear, number = 2) |>
       prep()
   )
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>%
-      step_normalize(vs, AM = am, GEAR = gear) %>%
+    recipe(mpg ~ ., data = mtcars) |>
+      step_normalize(vs, AM = am, GEAR = gear) |>
       prep()
   )
 })
@@ -732,23 +732,23 @@ test_that("step constructor", {
     }
 
   expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(trained = "yes"),
+    recipe(~., mtcars) |> step_normalize(trained = "yes"),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(id = TRUE),
+    recipe(~., mtcars) |> step_normalize(id = TRUE),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(skip = "you betcha"),
+    recipe(~., mtcars) |> step_normalize(skip = "you betcha"),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(role = 13),
+    recipe(~., mtcars) |> step_normalize(role = 13),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0),
+    recipe(~., mtcars) |> step_pca(all_predictors(), keep_original_cols = 0),
     error = TRUE
   )
   expect_snapshot(
@@ -764,8 +764,8 @@ test_that("step constructor", {
 test_that("bake() error on wrong composition", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      prep() %>%
+    recipe(~., data = mtcars) |>
+      prep() |>
       bake(mtcars, composition = "wrong")
   )
 })
@@ -773,8 +773,8 @@ test_that("bake() error on wrong composition", {
 test_that("juice() error on wrong composition", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      prep() %>%
+    recipe(~., data = mtcars) |>
+      prep() |>
       juice(composition = "wrong")
   )
 })
@@ -782,8 +782,8 @@ test_that("juice() error on wrong composition", {
 test_that("juice() error if prep(retain = FALSE)", {
   expect_snapshot(
     error = TRUE,
-    recipe(~., data = mtcars) %>%
-      prep(retain = FALSE) %>%
+    recipe(~., data = mtcars) |>
+      prep(retain = FALSE) |>
       juice()
   )
 })
@@ -895,20 +895,20 @@ test_that("strings_as_factors in `recipe()` for different roles", {
     undeclared_factor = factor(letters)
   )
 
-  res_false <- recipe(ex_dat, strings_as_factors = FALSE) %>%
-    update_role(starts_with("outcome"), new_role = "outcome") %>%
-    update_role(starts_with("predictor"), new_role = "predictor") %>%
-    update_role(starts_with("id"), new_role = "id") %>%
-    prep() %>%
+  res_false <- recipe(ex_dat, strings_as_factors = FALSE) |>
+    update_role(starts_with("outcome"), new_role = "outcome") |>
+    update_role(starts_with("predictor"), new_role = "predictor") |>
+    update_role(starts_with("id"), new_role = "id") |>
+    prep() |>
     bake(NULL)
 
   expect_identical(vctrs::vec_ptype(ex_dat), vctrs::vec_ptype(res_false))
 
-  res_true <- recipe(ex_dat, strings_as_factors = TRUE) %>%
-    update_role(starts_with("outcome"), new_role = "outcome") %>%
-    update_role(starts_with("predictor"), new_role = "predictor") %>%
-    update_role(starts_with("id"), new_role = "id") %>%
-    prep() %>%
+  res_true <- recipe(ex_dat, strings_as_factors = TRUE) |>
+    update_role(starts_with("outcome"), new_role = "outcome") |>
+    update_role(starts_with("predictor"), new_role = "predictor") |>
+    update_role(starts_with("id"), new_role = "id") |>
+    prep() |>
     bake(NULL)
 
   exp_true_classes <- list(

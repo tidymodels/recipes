@@ -26,10 +26,10 @@
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(Sacramento, package = "modeldata")
 #'
-#' Sacramento_rec <- recipe(~., data = Sacramento) %>%
-#'   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-#'   step_center(all_numeric()) %>%
-#'   step_dummy(all_nominal()) %>%
+#' Sacramento_rec <- recipe(~., data = Sacramento) |>
+#'   step_other(all_nominal(), threshold = 0.05, other = "another") |>
+#'   step_center(all_numeric()) |>
+#'   step_dummy(all_nominal()) |>
 #'   check_cols(ends_with("ude"), sqft, price)
 #'
 #' tidy(Sacramento_rec)

@@ -54,8 +54,8 @@
 #' sacr_te$city[1] <- "whoville"
 #' sacr_te$city[2] <- NA
 #'
-#' rec <- recipe(type ~ ., data = sacr_tr) %>%
-#'   step_integer(all_predictors()) %>%
+#' rec <- recipe(type ~ ., data = sacr_tr) |>
+#'   step_integer(all_predictors()) |>
 #'   prep(training = sacr_tr)
 #'
 #' bake(rec, sacr_te, all_predictors())

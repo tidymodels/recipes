@@ -16,8 +16,8 @@ test <-
   )
 
 test_that("step_indicate_na populates binaries correctly", {
-  rec1 <- recipe(train) %>%
-    step_indicate_na(col1) %>%
+  rec1 <- recipe(train) |>
+    step_indicate_na(col1) |>
     prep(train, verbose = FALSE, retain = TRUE)
 
   expect_identical(
@@ -30,8 +30,8 @@ test_that("step_indicate_na populates binaries correctly", {
     c(1L, 1L, 1L)
   )
 
-  rec2 <- recipe(train) %>%
-    step_indicate_na(col2, col3) %>%
+  rec2 <- recipe(train) |>
+    step_indicate_na(col2, col3) |>
     prep(train, verbose = FALSE, retain = TRUE)
 
   expect_equal(bake(rec2, train)$na_ind_col2, c(1, 0, 0))
@@ -42,9 +42,9 @@ test_that("step_indicate_na populates binaries correctly", {
 })
 
 test_that("step_indicate_na on all columns", {
-  baked <- recipe(Ozone ~ ., data = airquality) %>%
-    step_indicate_na(all_predictors()) %>%
-    prep(airquality, verbose = FALSE, retain = TRUE) %>%
+  baked <- recipe(Ozone ~ ., data = airquality) |>
+    step_indicate_na(all_predictors()) |>
+    prep(airquality, verbose = FALSE, retain = TRUE) |>
     bake(new_data = NULL)
 
   expect_named(
@@ -66,9 +66,9 @@ test_that("step_indicate_na on all columns", {
 })
 
 test_that("step_indicate_na on subset of columns", {
-  baked <- recipe(Ozone ~ ., data = airquality) %>%
-    step_indicate_na(Ozone, Solar.R) %>%
-    prep(airquality, verbose = FALSE, retain = TRUE) %>%
+  baked <- recipe(Ozone ~ ., data = airquality) |>
+    step_indicate_na(Ozone, Solar.R) |>
+    prep(airquality, verbose = FALSE, retain = TRUE) |>
     bake(new_data = NULL)
 
   expect_named(
@@ -85,9 +85,9 @@ test_that("step_indicate_na on subset of columns", {
     )
   )
 
-  baked2 <- recipe(Ozone ~ ., data = airquality) %>%
-    step_indicate_na(Solar.R) %>%
-    prep(airquality, verbose = FALSE, retain = TRUE) %>%
+  baked2 <- recipe(Ozone ~ ., data = airquality) |>
+    step_indicate_na(Solar.R) |>
+    prep(airquality, verbose = FALSE, retain = TRUE) |>
     bake(new_data = NULL)
 
   expect_named(
@@ -108,7 +108,7 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(mtcars)
   dat$na_ind_mpg <- dat$mpg
 
-  rec <- recipe(~., data = dat) %>%
+  rec <- recipe(~., data = dat) |>
     step_indicate_na(mpg)
 
   expect_snapshot(
@@ -120,13 +120,13 @@ test_that("check_name() is used", {
 test_that("sparse = 'yes' works", {
   rec <- recipe(~., data = tibble(x = c(NA, letters)))
 
-  dense <- rec %>%
-    step_indicate_na(x, sparse = "no", keep_original_cols = FALSE) %>%
-    prep() %>%
+  dense <- rec |>
+    step_indicate_na(x, sparse = "no", keep_original_cols = FALSE) |>
+    prep() |>
     bake(NULL)
-  sparse <- rec %>%
-    step_indicate_na(x, sparse = "yes", keep_original_cols = FALSE) %>%
-    prep() %>%
+  sparse <- rec |>
+    step_indicate_na(x, sparse = "yes", keep_original_cols = FALSE) |>
+    prep() |>
     bake(NULL)
 
   expect_identical(dense, sparse)
@@ -137,8 +137,8 @@ test_that("sparse = 'yes' works", {
 
 test_that("sparse argument is backwards compatible", {
   dat <- tibble(x = c(letters))
-  rec <- recipe(~., data = dat) %>%
-    step_indicate_na(x) %>%
+  rec <- recipe(~., data = dat) |>
+    step_indicate_na(x) |>
     prep()
 
   exp <- bake(rec, dat)
@@ -153,10 +153,10 @@ test_that("sparse argument is backwards compatible", {
 })
 
 test_that(".recipes_toggle_sparse_args works", {
-  rec <- recipe(~., mtcars) %>%
+  rec <- recipe(~., mtcars) |>
     step_indicate_na(all_numeric_predictors(), sparse = "auto")
 
-  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+  exp <- rec |> prep() |> bake(NULL) |> sparsevctrs::sparsity()
 
   expect_equal(
     .recipes_estimate_sparsity(rec),
@@ -167,10 +167,10 @@ test_that(".recipes_toggle_sparse_args works", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- recipe(train) %>%
-    step_indicate_na(col1) %>%
-    update_role(col1, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
+  rec1 <- recipe(train) |>
+    step_indicate_na(col1) |>
+    update_role(col1, new_role = "potato") |>
+    update_role_requirements(role = "potato", bake = FALSE) |>
     prep(train, verbose = FALSE, retain = TRUE)
 
   expect_snapshot(error = TRUE, bake(rec1, new_data = test[, 2:3]))
@@ -216,7 +216,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("na_ind_mpg")
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_indicate_na(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -227,7 +227,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_indicate_na(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -240,7 +240,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) |>
     step_indicate_na(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -255,7 +255,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(Ozone ~ ., data = airquality) %>%
+  rec <- recipe(Ozone ~ ., data = airquality) |>
     step_indicate_na(all_predictors())
 
   expect_snapshot(print(rec))
@@ -264,8 +264,8 @@ test_that("printing", {
 
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
-  rec <- recipe(~., data) %>%
-    step_indicate_na(disp, mpg) %>%
+  rec <- recipe(~., data) |>
+    step_indicate_na(disp, mpg) |>
     prep()
 
   expect_identical(

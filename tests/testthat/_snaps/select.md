@@ -1,7 +1,7 @@
 # step_select() throws deprecating warning
 
     Code
-      tmp <- recipe(~., mtcars) %>% step_select(vs, mpg, disp)
+      tmp <- step_select(recipe(~., mtcars), vs, mpg, disp)
     Condition
       Warning:
       `step_select()` was deprecated in recipes 1.3.0.

@@ -1,7 +1,7 @@
 # bad selector(s)
 
     Code
-      rec %>% step_regex(description, rows, pattern = "(rock|stony)")
+      step_regex(rec, description, rows, pattern = "(rock|stony)")
     Condition
       Error in `step_regex()`:
       x For this step, only a single selector can be used.
@@ -30,7 +30,7 @@
 # error on multiple selections
 
     Code
-      recipe(~., data = mtcars) %>% step_regex(vs, am)
+      step_regex(recipe(~., data = mtcars), vs, am)
     Condition
       Error in `step_regex()`:
       x For this step, only a single selector can be used.
@@ -39,7 +39,7 @@
 # checks for grepl arguments
 
     Code
-      recipe(~., data = mtcars) %>% step_regex(options = list(not_real_option = TRUE))
+      step_regex(recipe(~., data = mtcars), options = list(not_real_option = TRUE))
     Condition
       Error in `step_regex()`:
       x The following elements of `options` are not allowed:
@@ -49,7 +49,7 @@
 # check_options() is used
 
     Code
-      recipe(~Species, data = iris) %>% step_regex(Species, options = TRUE) %>% prep()
+      prep(step_regex(recipe(~Species, data = iris), Species, options = TRUE))
     Condition
       Error in `step_regex()`:
       Caused by error in `prep()`:
@@ -143,7 +143,7 @@
 # bad args
 
     Code
-      rec %>% step_regex(description, pattern = character(0)) %>% prep()
+      prep(step_regex(rec, description, pattern = character(0)))
     Condition
       Error in `step_regex()`:
       Caused by error in `prep()`:
