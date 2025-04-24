@@ -14,8 +14,8 @@ get_param_list <- function(x) {
     dplyr::mutate(
       default = args[name],
       dials = purrr::map(call_info, get_dials),
-      label = purrr::map_chr(dials, ~ .x$label),
-      type = purrr::map_chr(dials, ~ .x$type),
+      label = purrr::map_chr(dials, \(.x) .x$label),
+      type = purrr::map_chr(dials, \(.x) .x$type),
       item = glue::glue("- `{name}`: {label} (type: {type}, default: {default})\n\n")
     )
 

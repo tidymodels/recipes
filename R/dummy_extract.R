@@ -205,7 +205,11 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
       if (is.null(wts)) {
         wts_tab <- NULL
       } else {
-        wts_tab <- purrr::map2(lvls, as.double(wts), ~ rep(.y, length(.x)))
+        wts_tab <- purrr::map2(
+          lvls,
+          as.double(wts),
+          \(.x, .y) rep(.y, length(.x))
+        )
         wts_tab <- unlist(wts_tab)
       }
 
@@ -354,7 +358,7 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map(x$levels, ~ tibble(columns = .x), FALSE)
+      res <- purrr::map(x$levels, \(.x) tibble(columns = .x))
       res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
