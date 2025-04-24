@@ -10,7 +10,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(
   message = FALSE,
   digits = 3,
@@ -27,7 +29,8 @@ Recipes can be different from their base R counterparts such as `model.matrix`. 
 
 Let's start, of course, with `iris` data. This has four numeric columns and a single factor column with three levels: `'setosa'`, `'versicolor'`, and `'virginica'`. Our initial recipe will have no outcome:
 
-```{r iris-base-rec}
+```{r}
+#| label: iris-base-rec
 library(recipes)
 
 # make a copy for use below
@@ -41,7 +44,8 @@ A [contrast function](https://en.wikipedia.org/wiki/Contrast_(statistics)) in R 
 
 The default approach is to create dummy variables using the "reference cell" parameterization. This means that, if there are _C_ levels of the factor, there will be _C_ - 1 dummy variables created and all but the first factor level are made into new columns:
 
-```{r iris-ref-cell}
+```{r}
+#| label: iris-ref-cell
 ref_cell <- 
   iris_rec |> 
   step_dummy(Species) |>
@@ -62,7 +66,8 @@ Looking at `?contrast`, there are other options. One alternative is the little k
 
 To get this encoding you can use the `contrasts` argument like so:, the global option for the contrasts can be changed and saved. [`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html) picks up on this and makes the correct calculations:
 
-```{r iris-helmert}
+```{r}
+#| label: iris-helmert
 # now make dummy variables with new parameterization
 helmert <- 
   iris_rec |> 
@@ -83,7 +88,8 @@ Finally, `step_dummy()` has an option called `keep_original_cols` that can be us
 
 Creating interactions with recipes requires the use of a model formula, such as
 
-```{r iris-2int}
+```{r}
+#| label: iris-2int
 iris_int <- 
   iris_rec |>
   step_interact( ~ Sepal.Width:Sepal.Length) |>
@@ -97,7 +103,8 @@ One thing that `recipes` does differently than base R is it constructs the desig
 
 For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:
 
-```{r mm-int}
+```{r}
+#| label: mm-int
 model.matrix(~ Species*Sepal.Length, data = iris) |> 
   as.data.frame() |> 
   # show a few specific rows
@@ -107,7 +114,9 @@ model.matrix(~ Species*Sepal.Length, data = iris) |>
 
 With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variables? 
 
-```{r nope, eval = FALSE}
+```{r}
+#| label: nope
+#| eval: false
 # Must I do this?
 iris_rec |>
   step_interact( ~ Species_versicolor:Sepal.Length + 
@@ -118,7 +127,8 @@ Not only is this a pain, but it may not be obvious what dummy variables are avai
 
 The solution is to use a selector:
 
-```{r iris-sel}
+```{r}
+#| label: iris-sel
 iris_int <- 
   iris_rec |> 
   step_dummy(Species) |>
@@ -129,19 +139,24 @@ summary(iris_int)
 
 What happens here is that `starts_with("Species")` is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selector are then translated to an additive function of the results. In this case, that means that 
 
-```{r sel-input, eval = FALSE}
+```{r}
+#| label: sel-input
+#| eval: false
 starts_with("Species")
 ```
 
 becomes
 
-```{r sel-output, eval = FALSE}
+```{r}
+#| label: sel-output
+#| eval: false
 (Species_versicolor + Species_virginica)
 ```
 
 The entire interaction formula is shown here:
 
-```{r int-form}
+```{r}
+#| label: int-form
 iris_int
 ```
 
@@ -151,7 +166,8 @@ For interactions between multiple sets of dummy variables, the formula could inc
 
 Would it work if I didn't convert species to a factor and used the interactions step? 
 
-```{r iris-dont}
+```{r}
+#| label: iris-dont
 iris_int <- 
   iris_rec |> 
   step_interact( ~ Species:Sepal.Length) |>
@@ -170,7 +186,8 @@ Historically, _C_ - 1 are used so that a linear dependency is avoided in the des
 
 There are models (e.g. `glmnet` and others) that can avoid this issue so you might want to get all of the columns. To do this, `step_dummy` has an option called `one_hot` that will make sure that all _C_ are produced:
 
-```{r one-hot}
+```{r}
+#| label: one-hot
 iris_rec |> 
   step_dummy(Species, one_hot = TRUE) |>
   prep(training = iris) |>
@@ -184,7 +201,8 @@ The option is named that way since this is what the computer scientists call ["o
 
 This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:
 
-```{r one-hot-two}
+```{r}
+#| label: one-hot-two
 hot_reference <- 
   iris_rec |> 
   step_dummy(Species, one_hot = TRUE) |>

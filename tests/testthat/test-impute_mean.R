@@ -122,8 +122,11 @@ test_that("trim works", {
   x[sample(seq_along(x), 100)] <- NA
 
   expect_equal(
-    purrr::map(seq(0, 1, by = 0.1), ~ mean(x, trim = .x, na.rm = TRUE)),
-    purrr::map(seq(0, 1, by = 0.1), ~ trim(x, trim = .x) |> mean(na.rm = TRUE))
+    purrr::map(seq(0, 1, by = 0.1), \(.x) mean(x, trim = .x, na.rm = TRUE)),
+    purrr::map(
+      seq(0, 1, by = 0.1),
+      \(.x) trim(x, trim = .x) |> mean(na.rm = TRUE)
+    )
   )
 })
 
@@ -194,7 +197,7 @@ test_that("case weights", {
   ref_means <- credit_tr |>
     dplyr::select(Age, Assets, Income) |>
     purrr::map(trim, trim = 0.2) |>
-    purrr::map(~ weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) |>
+    purrr::map(\(x) weighted.mean(x, w = rep(1, length(x)), na.rm = TRUE)) |>
     purrr::map(round, 0)
 
   expect_equal(

@@ -457,7 +457,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
       types <- "factor or character"
     }
   } else {
-    all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
+    all_good <- purrr::map_lgl(get_types(dat)$type, \(.x) any(.x %in% types))
   }
 
   if (!all(all_good)) {
