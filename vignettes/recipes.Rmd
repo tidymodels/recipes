@@ -10,7 +10,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r ex_setup, include=FALSE}
+```{r}
+#| label: ex_setup
+#| include: false
 knitr::opts_chunk$set(
   message = FALSE,
   digits = 3,
@@ -31,7 +33,8 @@ This document demonstrates some basic uses of recipes. First, some definitions a
 
 The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable `Status` (the outcome). We will first separate the data into a training and test set:
 
-```{r data}
+```{r}
+#| label: data
 library(recipes)
 library(rsample)
 library(modeldata)
@@ -47,7 +50,8 @@ credit_test <- testing(train_test_split)
 
 Note that there are some missing values in these data:
 
-```{r missing}
+```{r}
+#| label: missing
 vapply(credit_train, function(x) mean(!is.na(x)), numeric(1))
 ```
 
@@ -63,7 +67,8 @@ Recipes can be created manually by sequentially adding roles to variables in a d
 
 If the analysis only requires **outcomes** and **predictors**, the easiest way to create the initial recipe is to use the standard formula method:
 
-```{r first_rec}
+```{r}
+#| label: first_rec
 rec_obj <- recipe(Status ~ ., data = credit_train)
 rec_obj
 ```
@@ -76,7 +81,9 @@ The data contained in the `data` argument need not be the training set; this dat
 
 From here, preprocessing steps for some step _X_ can be added sequentially in one of two ways:
 
-```{r step_code, eval = FALSE}
+```{r}
+#| label: step_code
+#| eval: false
 rec_obj <- step_{X}(rec_obj, arguments)    ## or
 rec_obj <- rec_obj |> step_{X}(arguments)
 ```
@@ -96,13 +103,15 @@ Note that the methods listed above are the only ones that can be used to select 
 
 For our data, we can add an operation to impute the predictors. There are many ways to do this and `recipes` includes a few steps for this purpose:
 
-```{r imp-steps}
+```{r}
+#| label: imp-steps
 grep("impute_", ls("package:recipes"), value = TRUE)
 ```
 
 Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors and then removes those that are numeric:
 
-```{r dummy}
+```{r}
+#| label: dummy
 imputed <- rec_obj |>
   step_impute_knn(all_predictors()) 
 imputed
@@ -112,7 +121,8 @@ It is important to realize that the _specific_ variables have not been declared 
 
 Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using `step_dummy()`. To do this, the step selects all non-numeric predictors:
 
-```{r imputing}
+```{r}
+#| label: imputing
 ind_vars <- imputed |>
   step_dummy(all_nominal_predictors()) 
 ind_vars
@@ -120,7 +130,8 @@ ind_vars
 
 At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:
 
-```{r center_scale}
+```{r}
+#| label: center_scale
 standardized <- ind_vars |>
   step_center(all_numeric_predictors()) |>
   step_scale(all_numeric_predictors()) 
@@ -130,7 +141,8 @@ standardized
 
 If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The `prep` function is used with a recipe and a data set:
 
-```{r trained}
+```{r}
+#| label: trained
 trained_rec <- prep(standardized, training = credit_train)
 trained_rec
 ```
@@ -139,12 +151,14 @@ Note that the real variables are listed (e.g. `Home` etc.) instead of the select
 
 Now that the statistics have been estimated, the preprocessing can be _applied_ to the training and test set:
 
-```{r apply}
+```{r}
+#| label: apply
 train_data <- bake(trained_rec, new_data = credit_train)
 test_data  <- bake(trained_rec, new_data = credit_test)
 ```
 `bake` returns a tibble that, by default, includes all of the variables: 
-```{r tibbles}
+```{r}
+#| label: tibbles
 class(test_data)
 test_data
 vapply(test_data, function(x) mean(!is.na(x)), numeric(1))
@@ -154,7 +168,9 @@ Selectors can also be used. For example, if only the predictors are needed, you 
 
 There are a number of other steps included in the package:
 
-```{r step_list, echo = FALSE}
+```{r}
+#| label: step_list
+#| echo: false
 grep("^step_", ls("package:recipes"), value = TRUE)
 ```
 
@@ -164,13 +180,17 @@ Another type of operation that can be added to a recipes is a _check_. Checks co
 
 For example, `check_missing` will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:
 
-```{r check, eval = FALSE}
+```{r}
+#| label: check
+#| eval: false
 trained_rec <- trained_rec |>
   check_missing(contains("Marital"))
 ```
 
 Currently, `recipes` includes:
 
-```{r check_list, echo = FALSE}
+```{r}
+#| label: check_list
+#| echo: false
 grep("^check_", ls("package:recipes"), value = TRUE)
 ```

@@ -9,7 +9,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r ex_setup, include=FALSE}
+```{r}
+#| label: ex_setup
+#| include: false
 knitr::opts_chunk$set(
   message = FALSE,
   digits = 3,
@@ -27,7 +29,8 @@ library(recipes)
 
 When a recipe is created using the formula interface, this defines the roles for all columns of the data set. `summary()` can be used to view a tibble containing information regarding the roles.
 
-```{r formula-roles}
+```{r}
+#| label = "formula-roles"
 library(recipes)
 
 recipe(Species ~ ., data = iris) |> summary()
@@ -39,7 +42,8 @@ recipe(Sepal.Length + Sepal.Width ~ ., data = iris) |> summary()
 
 These roles can be updated despite this initial assignment. `update_role()` can modify a single existing role:
 
-```{r formula-update}
+```{r}
+#| label = "formula-update"
 library(modeldata)
 data(biomass)
 
@@ -51,7 +55,8 @@ recipe(HHV ~ ., data = biomass) |>
 
 When you want to get rid of a role for a column, use `remove_role()`. 
 
-```{r formula-rm}
+```{r}
+#| label = "formula-rm"
 recipe(HHV ~ ., data = biomass) |> 
   remove_role(sample, old_role = "predictor") |> 
   summary()
@@ -59,14 +64,17 @@ recipe(HHV ~ ., data = biomass) |>
 
 It represents the lack of a role as `NA`, which means that the variable is used in the recipe, but does not yet have a declared role. Setting the role manually to `NA` is not allowed:
 
-```{r formula-rm-fail, error=TRUE}
+```{r}
+#| label = "formula-rm-fail",
+#| error = TRUE
 recipe(HHV ~ ., data = biomass) |> 
   update_role(sample, new_role = NA_character_)
 ```
 
 When there are cases when a column will be used in more than one context, `add_role()` can create additional roles:
 
-```{r formula-add}
+```{r}
+#| label = "formula-add"
 multi_role <- recipe(HHV ~ ., data = biomass) |> 
   update_role(dataset, new_role = "dataset split variable") |> 
   update_role(sample, new_role = "sample ID") |> 
@@ -102,14 +110,16 @@ The selector `all_numeric_predictors()` can also be used in place of the compoun
 
 You can start a recipe without any roles:
 
-```{r x-none}
+```{r}
+#| label = "x-none"
 recipe(biomass) |> 
   summary()
 ```
 
 and roles can be added in bulk as needed:
 
-```{r x-none-updated}
+```{r}
+#| label = "x-none-updated"
 recipe(biomass) |> 
   update_role(contains("gen"), new_role = "lunchroom") |> 
   update_role(sample, HHV, new_role = "snail") |> 
@@ -128,7 +138,8 @@ In other cases, the roles are defaulted to a relevant value based the context. F
 
 So, by default, they are predictors but don't have to be:
 
-```{r dummy}
+```{r}
+#| label = "dummy"
 recipe( ~ ., data = iris) |> 
   step_dummy(Species) |> 
   prep() |> 

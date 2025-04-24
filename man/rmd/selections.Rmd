@@ -14,7 +14,8 @@ When creating variable selections:
    
 Some examples:
 
-```{r, error=TRUE}
+```{r}
+#| error: true
 some_vars <- names(mtcars)[4:6]
 
 # No filter steps, OK for not saving the recipe

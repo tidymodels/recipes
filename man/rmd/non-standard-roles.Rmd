@@ -4,7 +4,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(comment = "#>")
 ```
 
@@ -14,7 +16,9 @@ Recipes can label and retain column(s) of your data set that should not be treat
 
 For example, the `modeldata::biomass` dataset has a column named `sample` with information about the specific sample type. We can change that role: 
 
-```{r, message = FALSE, warning = FALSE}
+```{r}
+#| message: false
+#| warning: false
 library(recipes)
 
 data(biomass, package = "modeldata")
@@ -32,7 +36,9 @@ This means that `sample` is no longer treated as a `"predictor"` (the default ro
 
 If you really aren't using `sample` in your recipe, we recommend that you instead remove `sample` from your dataset before passing it to `recipe()`. The reason for this is because recipes assumes that all non-standard roles are required at `bake()` time (or `predict()` time, if you are using a workflow). Since you didn't use `sample` in any steps of the recipe, you might think that you don't need to pass it to `bake()`, but this isn't true because recipes doesn't know that you didn't use it:
 
-```{r, error=TRUE, eval=FALSE}
+```{r}
+#| error: true
+#| eval: false
 biomass_test$sample <- NULL
 
 bake(rec, biomass_test)

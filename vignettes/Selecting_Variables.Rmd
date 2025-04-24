@@ -10,7 +10,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r ex_setup, include=FALSE}
+```{r}
+#| label: ex_setup
+#| include: false
 knitr::opts_chunk$set(
   message = FALSE,
   digits = 3,
@@ -33,7 +35,8 @@ The manual pages for `?selections` and  `?has_role` have details about the avail
  
 To illustrate this, the palmer penguins data will be used: 
 
-```{r penguins}
+```{r}
+#| label: penguins
 library(recipes)
 library(modeldata)
 
@@ -46,13 +49,15 @@ rec
 
 Before any steps are used the information on the original variables is:
 
-```{r var_info_orig}
+```{r}
+#| label: var_info_orig
 summary(rec, original = TRUE)
 ```
 
 This shows the types and roles. Each variable can have one or more types, so we can printing them out seperately
 
-```{r var_info_orig_type}
+```{r}
+#| label: var_info_orig_type
 summary(rec, original = TRUE)$type
 ```
 
@@ -60,13 +65,15 @@ Notice that integer variables have roles `"integer"` and `"numeric"`, and the fa
 
 We can add a step to normalize numeric data:
 
-```{r dummy_1}
+```{r}
+#| label: dummy_1
 dummied <- rec |> step_normalize(all_numeric())
 ```
 
 This will capture _any_ variables that are either character integers or doubles: `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm` and `body_mass_g`. However, since `body_mass_g` is our outcome, we might want to keep it as a factor so we can _subtract_ that variable out either by name or by role:
 
-```{r dummy_2}
+```{r}
+#| label: dummy_2
 dummied <- rec |> step_normalize(bill_length_mm, bill_depth_mm, 
                                   flipper_length_mm) # or
 dummied <- rec |> step_normalize(all_numeric(), - body_mass_g) # or
@@ -85,7 +92,8 @@ rec |>
 
 Using the last definition: 
 
-```{r dummy_3}
+```{r}
+#| label: dummy_3
 dummied <- prep(dummied, training = penguins)
 with_dummy <- bake(dummied, new_data = penguins)
 with_dummy

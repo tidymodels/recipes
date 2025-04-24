@@ -2,7 +2,8 @@
 output: github_document
 ---
 
-```{r, echo = FALSE}
+```{r}
+#| echo: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -22,7 +23,9 @@ knitr::opts_chunk$set(
 
 With recipes, you can use [dplyr](https://dplyr.tidyverse.org/)-like pipeable sequences of feature engineering steps to get your data ready for modeling. For example, to create a recipe containing an outcome plus two numeric predictors and then center and scale ("normalize") the predictors:
 
-```{r simple, message=FALSE}
+```{r}
+#| label: simple
+#| message: false
 library(recipes)
 data(ad_data, package = "modeldata")
 
@@ -40,7 +43,8 @@ You may consider recipes as an alternative method for creating and preprocessing
 
 There are several ways to install recipes:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 # The easiest way to get recipes is to install all of tidymodels:
 install.packages("tidymodels")
 

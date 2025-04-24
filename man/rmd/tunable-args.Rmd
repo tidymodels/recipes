@@ -1,4 +1,5 @@
-```{r, include = FALSE}
+```{r}
+#| include: false
 get_dials <- function(x) {
   if (any(names(x) == "range")) {
     cl <- rlang::call2(x$fun, .ns = x$pkg, range = x$range)
@@ -25,12 +26,15 @@ get_param_list <- function(x) {
 
 # Tuning Parameters
 
-```{r echo = FALSE}
+```{r}
+#| echo: false
 param <- get_param_list(step)
 ```
 
 This step has `r length(param)` tuning parameters:
 
-```{r echo = FALSE, results = "asis"}
+```{r}
+#| echo: false
+#| results: asis
 param
 ```

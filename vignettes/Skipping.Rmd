@@ -11,7 +11,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r ex_setup, include=FALSE}
+```{r}
+#| label: ex_setup
+#| include: false
 knitr::opts_chunk$set(
   message = FALSE,
   digits = 3,
@@ -70,7 +72,8 @@ Skipping is a necessary feature but can be dangerous if used carelessly.
 
 As an example, skipping an operation whose variables are used later might be an issue:
 
-```{r car-pca}
+```{r}
+#| label: car-pca
 library(recipes)
 car_recipe <- recipe(mpg ~ ., data = mtcars) |>
   step_log(disp, skip = TRUE) |>
