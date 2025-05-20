@@ -1,28 +1,24 @@
 # recipes (development version)
 
+## Bug Fixes
+
 * Fixed bug where `tune_args()` would error if argument to step had a parsnip object with tuned arguments. ($1506)
 
 # recipes 1.3.0
 
-* Fixed printing for `step_geodist()` when no variables are selected. (#1423)
-
-* Fixed bug where `extract_fit_time()` would throw warning for when recipe didn't have any steps. (#1475)
-
-* `step_num2factor()` has gotten improved documentation to avoid getting NAs as output. (#575)
+## Deprecation
 
 * `step_select()` has started its deprecation process. See `?step_select()` for alternatives. (#1488)
 
-* `step_interact()` now works with empty selections instead of erroring. (#1417)
+* The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (@smingerson, #331, #287)
 
-* Added developer function `check_options()`. (#1269)
+* `step_mutate_at()` has been superceded in favor of `step_mutate()` when used with `across()`. (#662)
 
-* fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
+## Improvements
 
-* Fixed bug where `recipe()` would error on sf objects. (#1393)
+* `step_num2factor()` has gotten improved documentation to avoid getting NAs as output. (#575)
 
 * `step_impute_bag()` now has a much smaller memory footprint when prepped. (#638)
-
-* `step_cut()` not longer errors on NA values in `bake()`. (#1304)
 
 * The following arguments in steps can now take bare names as input instead of strings, calls to `vars()`, `imp_vars()`, and `denom_vars()`. (#1225)
     - `step_classdist_shrunken(class)`
@@ -35,29 +31,43 @@
     - `step_profile(profile)`
     - `step_ratio(denom)`
 
-* Fixed bug in `step_impute_knn()` would error on character vectors when `strings_as_factors = TRUE`. (#926)
-
-* Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
-
-* The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (@smingerson, #331, #287)
-
-* More informative error for some failures of `step_impute_bag()` (#209)
-
-* Fixed bugs in `step_bs()`, `step_depth()`, `step_harmonic()`, `step_invlogit()`, `step_isomap()`, `step_logit()`, `check_range()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_monotone()`, `step_natural()`, `step_nonnegative()` would error in `bake()` with zero-row data. (#1219)
-
-* Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
+* More informative error for some failures of `step_impute_bag()`. (#209)
 
 * `step_impute_bag()` and `step_impute_knn()` now gives more informative warnings when `impute_with` data contains all NAs. (#1385)
 
 * `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now gives informative errors when applied to zero variance predictors. (#1455)
 
-* fixed bug where `bake.step_discretize()` would error if applied to predictor only containing `NA`s. (#1350)
-
-* Officially deprecate `printer()` in favor of `print_step()`. (#1243)
-
 * `step_dummy()` has gained `contrasts` argument. This change soft deprecates the use of `getOption("contrasts")` with `step_dummy()`. (##1349)
 
-* `step_mutate_at()` has been superceded in favor of `step_mutate()` when used with `across()`. (#662)
+## Bug Fixes
+
+* Fixed printing for `step_geodist()` when no variables are selected. (#1423)
+
+* Fixed bug where `extract_fit_time()` would throw warning for when recipe didn't have any steps. (#1475)
+
+* `step_interact()` now works with empty selections instead of erroring. (#1417)
+
+* fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
+
+* Fixed bug where `recipe()` would error on sf objects. (#1393)
+
+* `step_cut()` not longer errors on NA values in `bake()`. (#1304)
+
+* Fixed bug in `step_impute_knn()` would error on character vectors when `strings_as_factors = TRUE`. (#926)
+
+* Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
+
+* Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
+
+* Fixed bugs in `step_bs()`, `step_depth()`, `step_harmonic()`, `step_invlogit()`, `step_isomap()`, `step_logit()`, `check_range()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_monotone()`, `step_natural()`, `step_nonnegative()` would error in `bake()` with zero-row data. (#1219)
+
+* fixed bug where `bake.step_discretize()` would error if applied to predictor only containing `NA`s. (#1350)
+
+## Developer
+
+* Added developer function `check_options()`. (#1269)
+
+* Officially deprecate `printer()` in favor of `print_step()`. (#1243)
 
 # recipes 1.2.1
 
