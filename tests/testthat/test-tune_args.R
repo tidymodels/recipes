@@ -65,3 +65,21 @@ test_that("tune_args() doesn't error on namespaced selectors", {
     exp
   )
 })
+
+test_that("tune_args() wont detect tune() calls in parsnip objects (#1506)", {
+  skip_if_not_installed("parsnip")
+  skip_if_not_installed("rpart")
+
+  base_model <- parsnip::decision_tree(cost_complexity = hardhat::tune())
+
+  rec_empty <- recipe(mpg ~ ., data = mtcars) |>
+    step_testthat_helper(output = base_model)
+
+  rec_mod <- recipe(mpg ~ ., data = mtcars) |>
+    step_testthat_helper()
+
+  expect_identical(
+    extract_parameter_set_dials(rec_empty),
+    extract_parameter_set_dials(rec_mod)
+  )
+})

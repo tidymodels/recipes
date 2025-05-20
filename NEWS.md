@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where `tune_args()` would error if argument to step had a parsnip object with tuned arguments. ($1506)
+
 # recipes 1.3.0
 
 * Fixed printing for `step_geodist()` when no variables are selected. (#1423)
