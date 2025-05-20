@@ -147,6 +147,9 @@ find_tune_id <- function(x) {
   if (length(x) == 0L) {
     return(NA_character_)
   }
+  if (is.list(x) && !inherits(x, "list")) {
+    return(NA_character_)
+  }
 
   # turn quosures into expressions before continuing
   if (rlang::is_quosures(x)) {
