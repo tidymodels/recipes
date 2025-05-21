@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Introduction to recipes • recipes</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
@@ -36,7 +35,7 @@ basic usage, steps, selectors, and checks.
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,7 +165,7 @@ be added later.)</p>
 <p>From here, preprocessing steps for some step <em>X</em> can be added
 sequentially in one of two ways:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> step_{X}(rec_obj, arguments)    <span class="do">## or</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> rec_obj <span class="sc">%&gt;%</span> step_{X}(arguments)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> rec_obj <span class="sc">|&gt;</span> step_{X}(arguments)</span></code></pre></div>
 <p><code>step_dummy</code> and the other functions will always return
 updated recipes.</p>
 <p>One other important facet of the code is the method for specifying
@@ -206,7 +205,7 @@ for both numeric and non-numeric predictors and defaults <em>K</em> to
 five To do this, it selects all predictors and then removes those that
 are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_impute_knn.html">step_impute_knn</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">imputed</span></span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have
@@ -218,14 +217,14 @@ would make sense to convert these factor predictors into numeric dummy
 variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To
 do this, the step selects all non-numeric predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">ind_vars</span></span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded
 as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">standardized</span></span></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can
@@ -349,7 +348,7 @@ variables selected for validation have missing values. This check is
 done when the recipe is prepared as well as when any data are baked.
 Checks are added in the same way as steps:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
 <pre><code><span><span class="co">#&gt; [1] "check_class"      "check_cols"       "check_missing"   </span></span>
@@ -369,7 +368,7 @@ Checks are added in the same way as steps:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
   </div></footer>
