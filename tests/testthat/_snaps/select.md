@@ -5,7 +5,7 @@
     Condition
       Warning:
       `step_select()` was deprecated in recipes 1.3.0.
-      i See `?select_select()` for recommended alternatives.
+      i See `?step_select()` for recommended alternatives.
 
 # bake method errors when needed non-standard role columns are missing
 
