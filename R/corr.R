@@ -28,6 +28,10 @@
 #' This step attempts to remove variables to keep the largest absolute
 #' correlation between the variables less than `threshold`.
 #'
+#' The filter tries to prioritize predictors for removal based on the global
+#' affect on the overall correlation structure. If you have two identical
+#' predictors, there is no real rule on which one to retain.
+#'
 #' When a column has a single unique value, that column will be excluded from
 #' the correlation analysis. Also, if the data set has sporadic missing values
 #' (and an inappropriate value of `use` is chosen), some columns will also be
@@ -253,6 +257,9 @@ corr_filter <-
     colsToCheck <- ceiling(combsAboveCutoff / nrow(x))
     rowsToCheck <- combsAboveCutoff %% nrow(x)
 
+    # Discard columns based on whether the underlying numeric (integer)
+    # representation of the factor (see above), which is meaningless, is larger
+    # than its corresponding row value.
     colsToDiscard <- averageCorr[colsToCheck] > averageCorr[rowsToCheck]
     rowsToDiscard <- !colsToDiscard
 
