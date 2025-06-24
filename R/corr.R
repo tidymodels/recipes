@@ -30,7 +30,7 @@
 #'
 #' The filter tries to prioritize predictors for removal based on the global
 #' affect on the overall correlation structure. If you have two identical
-#' predictors, there is no real rule on which one to retain.
+#' predictors, the variable ordered first will be removed.
 #'
 #' When a column has a single unique value, that column will be excluded from
 #' the correlation analysis. Also, if the data set has sporadic missing values
@@ -250,17 +250,16 @@ corr_filter <-
       diag(x) <- 1
     }
     averageCorr <- colMeans(abs(x))
-    averageCorr <- as.numeric(as.factor(averageCorr))
+    avgCorrVarsRank <- as.numeric(as.factor(averageCorr))
     x[lower.tri(x, diag = TRUE)] <- NA
     combsAboveCutoff <- which(abs(x) > cutoff)
 
     colsToCheck <- ceiling(combsAboveCutoff / nrow(x))
     rowsToCheck <- combsAboveCutoff %% nrow(x)
 
-    # Discard columns based on whether the underlying numeric (integer)
-    # representation of the factor (see above), which is meaningless, is larger
-    # than its corresponding row value.
-    colsToDiscard <- averageCorr[colsToCheck] > averageCorr[rowsToCheck]
+    # Discard column variable in the correlation pair with the higher average
+    # correlation across all pairwise correlations
+    colsToDiscard <- avgCorrVarsRank[colsToCheck] > avgCorrVarsRank[rowsToCheck]
     rowsToDiscard <- !colsToDiscard
 
     deletecol <- c(colsToCheck[colsToDiscard], rowsToCheck[rowsToDiscard])
