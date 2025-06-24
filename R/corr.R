@@ -28,6 +28,10 @@
 #' This step attempts to remove variables to keep the largest absolute
 #' correlation between the variables less than `threshold`.
 #'
+#' The filter tries to prioritize predictors for removal based on the global
+#' affect on the overall correlation structure. If you have two identical
+#' predictors, the variable ordered first will be removed.
+#'
 #' When a column has a single unique value, that column will be excluded from
 #' the correlation analysis. Also, if the data set has sporadic missing values
 #' (and an inappropriate value of `use` is chosen), some columns will also be
@@ -246,14 +250,16 @@ corr_filter <-
       diag(x) <- 1
     }
     averageCorr <- colMeans(abs(x))
-    averageCorr <- as.numeric(as.factor(averageCorr))
+    avgCorrVarsRank <- as.numeric(as.factor(averageCorr))
     x[lower.tri(x, diag = TRUE)] <- NA
     combsAboveCutoff <- which(abs(x) > cutoff)
 
     colsToCheck <- ceiling(combsAboveCutoff / nrow(x))
     rowsToCheck <- combsAboveCutoff %% nrow(x)
 
-    colsToDiscard <- averageCorr[colsToCheck] > averageCorr[rowsToCheck]
+    # Discard column variable in the correlation pair with the higher average
+    # correlation across all pairwise correlations
+    colsToDiscard <- avgCorrVarsRank[colsToCheck] > avgCorrVarsRank[rowsToCheck]
     rowsToDiscard <- !colsToDiscard
 
     deletecol <- c(colsToCheck[colsToDiscard], rowsToCheck[rowsToDiscard])
