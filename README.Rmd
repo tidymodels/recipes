@@ -13,11 +13,13 @@ knitr::opts_chunk$set(
 
 # recipes <a href='https://recipes.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
+<!-- badges: start -->
 [![R-CMD-check](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes/actions)
-[![Codecov test coverage](https://codecov.io/gh/tidymodels/recipes/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/recipes?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/tidymodels/recipes/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/recipes)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/recipes)](https://CRAN.R-project.org/package=recipes)
 [![Downloads](https://cranlogs.r-pkg.org/badges/recipes)](https://CRAN.R-project.org/package=recipes)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+<!-- badges: end -->
 
 ## Introduction
 
