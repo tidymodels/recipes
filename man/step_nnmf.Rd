@@ -129,7 +129,11 @@ data(biomass, package = "modeldata")
 # rec <- recipe(HHV ~ ., data = biomass) |>
 #   update_role(sample, new_role = "id var") |>
 #   update_role(dataset, new_role = "split variable") |>
-#   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
+#   step_nnmf_sparse(
+#     all_numeric_predictors(),
+#     num_comp = 2,
+#     seed = 473) |>
+#   #step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
 #   prep(training = biomass)
 #
 # bake(rec, new_data = NULL)
@@ -158,3 +162,4 @@ Other multivariate transformation steps:
 \code{\link{step_spatialsign}()}
 }
 \concept{multivariate transformation steps}
+\keyword{internal}
