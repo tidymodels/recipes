@@ -15,6 +15,7 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @keywords internal
 #' @param num_run A positive integer for the number of computations runs used to
 #'   obtain a consensus projection.
 #' @param options A list of options to `nmf()` in the NMF package by way of the
