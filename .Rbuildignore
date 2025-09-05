@@ -24,3 +24,4 @@ tests/testthat/NMF*
 ^\.vscode$
 ^vignettes/articles$
 ^[\.]?air\.toml$
+^[.]?air[.]toml$
