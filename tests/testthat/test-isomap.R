@@ -114,6 +114,48 @@ test_that("ISOmap fails gracefully", {
       prep(),
     transform = scrub_timestamp
   )
+
+})
+
+test_that("ISOmap suppresses only messages, not errors", {
+
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  expect_message(
+    recipe(mpg ~ ., data = mtcars) |>
+      step_isomap(
+        all_numeric_predictors(),
+        neighbors = 31,
+        options = list(.mute = character(0))
+      ) |>
+      prep()
+  )
+
+  expect_no_message(
+    recipe(mpg ~ ., data = mtcars) |>
+      step_isomap(
+        all_numeric_predictors(),
+        neighbors = 31,
+        options = list(.mute = c("message"))
+      ) |>
+      prep()
+  )
+
+  expect_error(
+    recipe(mpg ~ ., data = mtcars) |>
+      step_isomap(
+        all_numeric_predictors(),
+        # number of neighbors has to be < nrow
+        neighbors = 32,
+        options = list(.mute = c("message"))
+      ) |>
+      prep()
+  )
+
 })
 
 test_that("check_name() is used", {

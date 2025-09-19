@@ -10,8 +10,8 @@
 #'   If `num_terms` is greater than the number of columns or the number of
 #'   possible dimensions, a smaller value will be used.
 #' @param neighbors The number of neighbors.
-#' @param options A list of options to `dimRed::Isomap()``.
-#' @param res The `dimRed::Isomap()`` object is stored here once this
+#' @param options A list of options to `dimRed::embed()``.
+#' @param res The `dimRed::embed()`` object is stored here once this
 #'   preprocessing step has be trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
@@ -161,6 +161,14 @@ step_isomap_new <-
     )
   }
 
+embed_mod <- function(..., msg = FALSE) {
+  if (msg) {
+    utils::getFromNamespace("embed", ns = "dimRed")(...)
+  } else {
+    suppressMessages(utils::getFromNamespace("embed", ns = "dimRed")(...))
+  }
+}
+
 #' @export
 prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
@@ -175,23 +183,16 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
     iso_map <- try_fetch_eval_tidy(
       eval_dimred_call(
-        "embed",
+        "embed_mod",
         .data = dimred_data(training[, col_names, drop = FALSE]),
         .method = "Isomap",
         knn = x$neighbors,
         ndim = x$num_terms,
-        .mute = x$options$.mute
+        .mute = setdiff(x$options$.mute, "message"),
+        msg = !"message" %in% x$options$.mute
       )
     )
 
-    if (inherits(iso_map, "try-error")) {
-      cli::cli_abort(
-        c(
-          x = "Failed with error:",
-          i = as.character(iso_map)
-        )
-      )
-    }
   } else {
     iso_map <- NULL
   }
