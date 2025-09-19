@@ -6,9 +6,14 @@ description: |
   However, in some situations we only want to only apply a step to the training 
   data and we want to skip that step on testing data.
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{On skipping steps}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 ```{r}
@@ -19,7 +24,7 @@ knitr::opts_chunk$set(
   digits = 3,
   collapse = TRUE,
   comment = "#>"
-  )
+)
 options(digits = 3)
 library(recipes)
 ```
@@ -81,7 +86,7 @@ car_recipe <- recipe(mpg ~ ., data = mtcars) |>
   prep(training = mtcars)
 
 # These *should* produce the same results (as they do for `hp`)
-bake(car_recipe, new_data = NULL)   |> head() |> select(disp, hp)
+bake(car_recipe, new_data = NULL) |> head() |> select(disp, hp)
 bake(car_recipe, new_data = mtcars) |> head() |> select(disp, hp)
 ```
 

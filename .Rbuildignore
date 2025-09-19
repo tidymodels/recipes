@@ -25,3 +25,5 @@ tests/testthat/NMF*
 ^vignettes/articles$
 ^[\.]?air\.toml$
 ^[.]?air[.]toml$
+^vignettes/\.quarto$
+^vignettes/*_files$
