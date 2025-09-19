@@ -114,7 +114,6 @@ test_that("ISOmap fails gracefully", {
       prep(),
     transform = scrub_timestamp
   )
-
 })
 
 test_that("ISOmap suppresses only messages, not errors", {
