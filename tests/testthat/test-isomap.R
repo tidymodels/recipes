@@ -117,7 +117,6 @@ test_that("ISOmap fails gracefully", {
 })
 
 test_that("ISOmap suppresses only messages, not errors", {
-
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
