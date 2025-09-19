@@ -153,7 +153,6 @@ test_that("ISOmap suppresses only messages, not errors", {
       ) |>
       prep()
   )
-
 })
 
 test_that("check_name() is used", {
