@@ -4,9 +4,14 @@ output: rmarkdown::html_vignette
 description: |
   In recipes, roles provide a way to select variables for different steps.
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Roles in recipes}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 ```{r}

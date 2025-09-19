@@ -53,11 +53,11 @@ Suggests:
     ggplot2,
     igraph (>= 2.1.1),
     kernlab,
-    knitr,
     methods,
     mixOmics,
     modeldata (>= 0.1.1),
     parsnip (>= 1.2.0),
+    quarto,
     RANN,
     RcppRoll,
     rmarkdown,
@@ -69,8 +69,7 @@ Suggests:
     testthat (>= 3.3.0),
     workflows,
     xml2
-VignetteBuilder: 
-    knitr
+VignetteBuilder: quarto
 RdMacros: 
     lifecycle
 Config/Needs/website: tidyverse/tidytemplate, rmarkdown

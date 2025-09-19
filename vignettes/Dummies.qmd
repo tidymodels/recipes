@@ -5,9 +5,14 @@ description: |
   This vignette describes different methods for encoding categorical 
   predictors, with special attention to interaction terms and contrasts.
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Handling categorical predictors}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 ```{r}
@@ -18,7 +23,7 @@ knitr::opts_chunk$set(
   digits = 3,
   collapse = TRUE,
   comment = "#>"
-  )
+)
 options(digits = 3)
 library(recipes)
 ```
@@ -36,7 +41,7 @@ library(recipes)
 # make a copy for use below
 iris <- iris |> mutate(original = Species)
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 summary(iris_rec)
 ```
 
@@ -46,8 +51,8 @@ The default approach is to create dummy variables using the "reference cell" par
 
 ```{r}
 #| label: iris-ref-cell
-ref_cell <- 
-  iris_rec |> 
+ref_cell <-
+  iris_rec |>
   step_dummy(Species) |>
   prep(training = iris)
 summary(ref_cell)
@@ -69,8 +74,8 @@ To get this encoding you can use the `contrasts` argument like so:, the global o
 ```{r}
 #| label: iris-helmert
 # now make dummy variables with new parameterization
-helmert <- 
-  iris_rec |> 
+helmert <-
+  iris_rec |>
   step_dummy(Species, contrasts = "contr.helmert") |>
   prep(training = iris)
 summary(helmert)
@@ -90,9 +95,9 @@ Creating interactions with recipes requires the use of a model formula, such as
 
 ```{r}
 #| label: iris-2int
-iris_int <- 
+iris_int <-
   iris_rec |>
-  step_interact( ~ Sepal.Width:Sepal.Length) |>
+  step_interact(~ Sepal.Width:Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 ```
@@ -105,10 +110,10 @@ For example, if you were to use the standard formula interface, the creation of 
 
 ```{r}
 #| label: mm-int
-model.matrix(~ Species*Sepal.Length, data = iris) |> 
-  as.data.frame() |> 
+model.matrix(~ Species * Sepal.Length, data = iris) |>
+  as.data.frame() |>
   # show a few specific rows
-  slice(c(1, 51, 101)) |> 
+  slice(c(1, 51, 101)) |>
   as.data.frame()
 ```
 
@@ -119,8 +124,10 @@ With recipes, you create them sequentially. This raises an issue: do I have to t
 #| eval: false
 # Must I do this?
 iris_rec |>
-  step_interact( ~ Species_versicolor:Sepal.Length + 
-                   Species_virginica:Sepal.Length) 
+  step_interact(
+    ~ Species_versicolor:Sepal.Length +
+      Species_virginica:Sepal.Length
+  )
 ```
 
 Not only is this a pain, but it may not be obvious what dummy variables are available (especially when [`step_other`](https://recipes.tidymodels.org/reference/step_other.html) is used). 
@@ -129,10 +136,10 @@ The solution is to use a selector:
 
 ```{r}
 #| label: iris-sel
-iris_int <- 
-  iris_rec |> 
+iris_int <-
+  iris_rec |>
   step_dummy(Species) |>
-  step_interact( ~ starts_with("Species"):Sepal.Length) |>
+  step_interact(~ starts_with("Species"):Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 ```
@@ -168,9 +175,9 @@ Would it work if I didn't convert species to a factor and used the interactions 
 
 ```{r}
 #| label: iris-dont
-iris_int <- 
-  iris_rec |> 
-  step_interact( ~ Species:Sepal.Length) |>
+iris_int <-
+  iris_rec |>
+  step_interact(~ Species:Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 ```
@@ -188,7 +195,7 @@ There are models (e.g. `glmnet` and others) that can avoid this issue so you mig
 
 ```{r}
 #| label: one-hot
-iris_rec |> 
+iris_rec |>
   step_dummy(Species, one_hot = TRUE) |>
   prep(training = iris) |>
   bake(original, new_data = NULL, starts_with("Species")) |>
@@ -203,8 +210,8 @@ This will give you the full set of indicators and, when you use the typical cont
 
 ```{r}
 #| label: one-hot-two
-hot_reference <- 
-  iris_rec |> 
+hot_reference <-
+  iris_rec |>
   step_dummy(Species, one_hot = TRUE) |>
   prep(training = iris) |>
   bake(original, new_data = NULL, starts_with("Species")) |>
@@ -212,8 +219,8 @@ hot_reference <-
 
 hot_reference
 
-hot_helmert <- 
-  iris_rec |> 
+hot_helmert <-
+  iris_rec |>
   step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") |>
   prep(training = iris) |>
   bake(original, new_data = NULL, starts_with("Species")) |>

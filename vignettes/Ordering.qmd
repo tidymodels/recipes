@@ -5,9 +5,14 @@ description: |
   The order in which recipe steps are specified matters, and this vignette gives
   some general suggestions that you should consider.
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Ordering of steps}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 In the recipes package, there are no constraints on the order in which steps are added to the recipe; you as a user are free to apply steps in the order appropriate to your data preprocessing needs. However, the **order of steps matters** and there are some general suggestions that you should consider.
