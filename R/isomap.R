@@ -192,7 +192,6 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
         msg = !"message" %in% x$options$.mute
       )
     )
-
   } else {
     iso_map <- NULL
   }
