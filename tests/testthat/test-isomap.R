@@ -123,7 +123,8 @@ test_that("ISOmap suppresses only messages, not errors", {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  expect_message(
+  expect_snapshot(
+    transform = scrub_timestamp,
     recipe(mpg ~ ., data = mtcars) |>
       step_isomap(
         all_numeric_predictors(),
@@ -143,7 +144,9 @@ test_that("ISOmap suppresses only messages, not errors", {
       prep()
   )
 
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
+    transform = scrub_timestamp,
     recipe(mpg ~ ., data = mtcars) |>
       step_isomap(
         all_numeric_predictors(),
