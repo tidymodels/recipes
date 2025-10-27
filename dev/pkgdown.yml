@@ -10,7 +10,7 @@ articles:
   Roles: Roles.html
   Selecting_Variables: Selecting_Variables.html
   Skipping: Skipping.html
-last_built: 2025-09-05T18:20Z
+last_built: 2025-10-27T23:39Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles
