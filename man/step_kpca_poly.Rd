@@ -48,7 +48,7 @@ preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{degree, scale_factor, offset}{Numeric values for the polynomial kernel
-function. See the documentation at \code{\link[kernlab:dots]{kernlab::polydot()}}.}
+function. See the documentation at \code{\link[kernlab:polydot]{kernlab::polydot()}}.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}

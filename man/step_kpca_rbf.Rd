@@ -46,7 +46,7 @@ preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{sigma}{A numeric value for the radial basis function parameter. See the
-documentation at \code{\link[kernlab:dots]{kernlab::rbfdot()}}.}
+documentation at \code{\link[kernlab:rbfdot]{kernlab::rbfdot()}}.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
