@@ -2,7 +2,7 @@ url: https://recipes.tidymodels.org
 
 navbar:
   components:
-    home: ~
+    home:
 
 template:
   package: tidytemplate
@@ -11,8 +11,9 @@ template:
     primary: "#CA225E"
 
   includes:
-      in_header: |
-        <script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
+    in_header: |
+      <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script>
+      <script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
 development:
   mode: auto
@@ -22,184 +23,184 @@ figures:
   fig.height: 5.75
 
 reference:
-  - title: Basic Functions
-    contents:
-    - recipes
-    - recipe
-    - formula.recipe
-    - print.recipe
-    - summary.recipe
-    - prep
-    - bake
-    - juice
-    - selections
-    - has_role
-    - add_role
-    - update_role_requirements
-    - get_case_weights
-    - case_weights
-  - title: Step Functions - Imputation
-    contents:
-    - starts_with("step_impute_")
-    - step_unknown
-  - title: Step Functions - Individual Transformations
-    contents:
-    - step_BoxCox
-    - step_bs
-    - step_harmonic
-    - step_hyperbolic
-    - step_inverse
-    - step_invlogit
-    - step_log
-    - step_logit
-    - step_mutate
-    - step_ns
-    - step_poly
-    - step_poly_bernstein
-    - step_relu
-    - starts_with("step_spline_")
-    - step_sqrt
-    - step_YeoJohnson
-  - title: Step Functions - Discretization
-    contents:
-    - step_discretize
-    - discretize
-    - step_cut
-  - title: Step Functions - Dummy Variables and Encodings
-    contents:
-    - step_bin2factor
-    - step_count
-    - step_dummy
-    - step_dummy_extract
-    - step_dummy_multi_choice
-    - step_factor2string
-    - step_indicate_na
-    - step_integer
-    - step_novel
-    - step_num2factor
-    - step_ordinalscore
-    - step_other
-    - step_percentile
-    - step_regex
-    - step_relevel
-    - step_string2factor
-    - step_unknown
-    - step_unorder
-  - title: Step Functions - Date and Datetime
-    contents:
-    - step_date
-    - step_time
-    - step_holiday
-  - title: Step Functions - Interactions
-    contents:
-    - step_interact
-  - title: Step Functions - Normalization
-    contents:
-    - step_center
-    - step_normalize
-    - step_range
-    - step_scale
-  - title: Step Functions - Multivariate Transformations
-    contents:
-    - starts_with("step_classdist")
-    - step_depth
-    - step_geodist
-    - step_ica
-    - step_isomap
-    - step_kpca
-    - step_kpca_poly
-    - step_kpca_rbf
-    - step_mutate_at
-    - step_nnmf
-    - step_nnmf_sparse
-    - step_pca
-    - step_pls
-    - step_ratio
-    - step_spatialsign
-  - title: Step Functions - Filters
-    contents:
-    - step_corr
-    - step_filter_missing
-    - step_lincomb
-    - step_nzv
-    - step_rm
-    - step_select
-    - step_zv
-  - title: Step Functions - Row Operations
-    contents:
-    - step_arrange
-    - step_filter
-    - step_lag
-    - step_naomit
-    - step_impute_roll
-    - step_sample
-    - step_shuffle
-    - step_slice
-  - title: Step Functions - Others
-    contents:
-    - step_intercept
-    - step_profile
-    - step_rename
-    - step_rename_at
-    - step_window
-  - title: Check Functions
-    contents:
-    - matches("^check_")
-  - title: Developer Functions
-    contents:
-    - developer_functions
-    - add_step
-    - detect_step
-    - fully_trained
-    - .get_data_types
-    - names0
-    - prepper
-    - recipes_argument_select
-    - recipes_eval_select
-    - recipes_extension_check
-    - recipes_ptype
-    - recipes_ptype_validate
-    - recipes-role-indicator
-    - sparse_data
-    - update.step
-  - title: Tidy Methods
-    contents:
-    - tidy.recipe
+- title: Basic Functions
+  contents:
+  - recipes
+  - recipe
+  - formula.recipe
+  - print.recipe
+  - summary.recipe
+  - prep
+  - bake
+  - juice
+  - selections
+  - has_role
+  - add_role
+  - update_role_requirements
+  - get_case_weights
+  - case_weights
+- title: Step Functions - Imputation
+  contents:
+  - starts_with("step_impute_")
+  - step_unknown
+- title: Step Functions - Individual Transformations
+  contents:
+  - step_BoxCox
+  - step_bs
+  - step_harmonic
+  - step_hyperbolic
+  - step_inverse
+  - step_invlogit
+  - step_log
+  - step_logit
+  - step_mutate
+  - step_ns
+  - step_poly
+  - step_poly_bernstein
+  - step_relu
+  - starts_with("step_spline_")
+  - step_sqrt
+  - step_YeoJohnson
+- title: Step Functions - Discretization
+  contents:
+  - step_discretize
+  - discretize
+  - step_cut
+- title: Step Functions - Dummy Variables and Encodings
+  contents:
+  - step_bin2factor
+  - step_count
+  - step_dummy
+  - step_dummy_extract
+  - step_dummy_multi_choice
+  - step_factor2string
+  - step_indicate_na
+  - step_integer
+  - step_novel
+  - step_num2factor
+  - step_ordinalscore
+  - step_other
+  - step_percentile
+  - step_regex
+  - step_relevel
+  - step_string2factor
+  - step_unknown
+  - step_unorder
+- title: Step Functions - Date and Datetime
+  contents:
+  - step_date
+  - step_time
+  - step_holiday
+- title: Step Functions - Interactions
+  contents:
+  - step_interact
+- title: Step Functions - Normalization
+  contents:
+  - step_center
+  - step_normalize
+  - step_range
+  - step_scale
+- title: Step Functions - Multivariate Transformations
+  contents:
+  - starts_with("step_classdist")
+  - step_depth
+  - step_geodist
+  - step_ica
+  - step_isomap
+  - step_kpca
+  - step_kpca_poly
+  - step_kpca_rbf
+  - step_mutate_at
+  - step_nnmf
+  - step_nnmf_sparse
+  - step_pca
+  - step_pls
+  - step_ratio
+  - step_spatialsign
+- title: Step Functions - Filters
+  contents:
+  - step_corr
+  - step_filter_missing
+  - step_lincomb
+  - step_nzv
+  - step_rm
+  - step_select
+  - step_zv
+- title: Step Functions - Row Operations
+  contents:
+  - step_arrange
+  - step_filter
+  - step_lag
+  - step_naomit
+  - step_impute_roll
+  - step_sample
+  - step_shuffle
+  - step_slice
+- title: Step Functions - Others
+  contents:
+  - step_intercept
+  - step_profile
+  - step_rename
+  - step_rename_at
+  - step_window
+- title: Check Functions
+  contents:
+  - matches("^check_")
+- title: Developer Functions
+  contents:
+  - developer_functions
+  - add_step
+  - detect_step
+  - fully_trained
+  - .get_data_types
+  - names0
+  - prepper
+  - recipes_argument_select
+  - recipes_eval_select
+  - recipes_extension_check
+  - recipes_ptype
+  - recipes_ptype_validate
+  - recipes-role-indicator
+  - sparse_data
+  - update.step
+- title: Tidy Methods
+  contents:
+  - tidy.recipe
 
 articles:
-  - title: Get started
-    contents:
-      - recipes
-  - title: Learn more
-    navbar: ~
-    contents:
-      - Dummies
-      - Selecting_Variables
-      - Roles
-      - Skipping
-  - title: Practical advice
-    contents:
-      - Ordering
-  - title: Developer
-    contents:
-      - custom
-      - articles/internals
-      - articles/checklists
-  - title: Examples
-    contents:
-      - subsampling
-      - pls
+- title: Get started
+  contents:
+  - recipes
+- title: Learn more
+  navbar:
+  contents:
+  - Dummies
+  - Selecting_Variables
+  - Roles
+  - Skipping
+- title: Practical advice
+  contents:
+  - Ordering
+- title: Developer
+  contents:
+  - custom
+  - articles/internals
+  - articles/checklists
+- title: Examples
+  contents:
+  - subsampling
+  - pls
 
 external-articles:
-  - name: subsampling
-    title: Subsampling for Class Imbalances
-    description: Improve model performance in imbalanced data sets through undersampling or oversampling.
-    href: https://www.tidymodels.org/learn/models/sub-sampling/
-  - name: pls
-    title: Multivariate Analysis using Partial Least Squares
-    description: Build and fit a predictive model with more than one outcome.
-    href: https://www.tidymodels.org/learn/models/pls/
-  - name: custom 
-    title: Custom Steps
-    description: Write a new recipe step for data preprocessing.
-    href: https://www.tidymodels.org/learn/develop/recipes/
+- name: subsampling
+  title: Subsampling for Class Imbalances
+  description: Improve model performance in imbalanced data sets through undersampling or oversampling.
+  href: https://www.tidymodels.org/learn/models/sub-sampling/
+- name: pls
+  title: Multivariate Analysis using Partial Least Squares
+  description: Build and fit a predictive model with more than one outcome.
+  href: https://www.tidymodels.org/learn/models/pls/
+- name: custom
+  title: Custom Steps
+  description: Write a new recipe step for data preprocessing.
+  href: https://www.tidymodels.org/learn/develop/recipes/
