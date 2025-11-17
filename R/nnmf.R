@@ -15,6 +15,7 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @keywords internal
 #' @param num_run A positive integer for the number of computations runs used to
 #'   obtain a consensus projection.
 #' @param options A list of options to `nmf()` in the NMF package by way of the
@@ -68,7 +69,11 @@
 #' # rec <- recipe(HHV ~ ., data = biomass) |>
 #' #   update_role(sample, new_role = "id var") |>
 #' #   update_role(dataset, new_role = "split variable") |>
-#' #   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
+#' #   step_nnmf_sparse(
+#' #     all_numeric_predictors(),
+#' #     num_comp = 2,
+#' #     seed = 473) |>
+#' #   #step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
 #' #   prep(training = biomass)
 #' #
 #' # bake(rec, new_data = NULL)
