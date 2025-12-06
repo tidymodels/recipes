@@ -48,12 +48,12 @@ Suggests:
     covr,
     ddalpha,
     dials (>= 1.2.0),
+    fastICA,
     ggplot2,
     igraph,
     kernlab,
     knitr,
     methods,
-    mixOmics
     modeldata (>= 0.1.1),
     parsnip (>= 1.2.0),
     RANN,
