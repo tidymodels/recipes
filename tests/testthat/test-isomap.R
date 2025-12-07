@@ -53,7 +53,7 @@ test_that("correct Isomap values", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
+  skip_unless_r("> 3.4.4")
 
   im_rec <- rec |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "")
@@ -78,7 +78,6 @@ test_that("No ISOmap", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   im_rec <- rec |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 0, id = "") |>
@@ -102,7 +101,6 @@ test_that("ISOmap fails gracefully", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   expect_snapshot(
     error = TRUE,
@@ -121,7 +119,6 @@ test_that("ISOmap suppresses only messages, not errors", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   expect_snapshot(
     transform = scrub_timestamp,
@@ -164,7 +161,6 @@ test_that("check_name() is used", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
   dat <- dplyr::as_tibble(dat1)
   dat$Isomap1 <- dat$x1
 
@@ -199,7 +195,6 @@ test_that("check_options() is used", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   expect_snapshot(
     error = TRUE,
@@ -217,7 +212,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   im_rec <- rec |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) |>
@@ -272,7 +266,6 @@ test_that("keep_original_cols works", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   new_names <- c("Isomap1", "Isomap2", "Isomap3")
 
@@ -319,7 +312,6 @@ test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   rec <- recipe(~., data = dat1) |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
@@ -342,7 +334,6 @@ test_that("printing", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   rec <- recipe(~., data = dat1) |>
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
@@ -393,7 +384,6 @@ test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("igraph")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
 
   data <- as_tibble(dat1)
   rec <- recipe(~., data) |>
