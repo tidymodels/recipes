@@ -64,7 +64,7 @@ Suggests:
     rsample,
     RSpectra,
     splines2,
-    testthat (>= 3.0.0),
+    testthat (>= 3.3.0),
     workflows,
     xml2
 VignetteBuilder: 
