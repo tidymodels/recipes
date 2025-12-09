@@ -1,0 +1,203 @@
+# Impute numeric data using the mean
+
+`step_impute_mean()` creates a *specification* of a recipe step that
+will substitute missing values of numeric variables by the training set
+mean of those variables.
+
+## Usage
+
+``` r
+step_impute_mean(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  means = NULL,
+  trim = 0,
+  skip = FALSE,
+  id = rand_id("impute_mean")
+)
+```
+
+## Arguments
+
+- recipe:
+
+  A recipe object. The step will be added to the sequence of operations
+  for this recipe.
+
+- ...:
+
+  One or more selector functions to choose variables for this step. See
+  [`selections()`](https://recipes.tidymodels.org/dev/reference/selections.md)
+  for more details.
+
+- role:
+
+  Not used by this step since no new variables are created.
+
+- trained:
+
+  A logical to indicate if the quantities for preprocessing have been
+  estimated.
+
+- means:
+
+  A named numeric vector of means. This is `NULL` until computed by
+  [`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md). Note
+  that, if the original data are integers, the mean will be converted to
+  an integer to maintain the same data type.
+
+- trim:
+
+  The fraction (0 to 0.5) of observations to be trimmed from each end of
+  the variables before the mean is computed. Values of trim outside that
+  range are taken as the nearest endpoint.
+
+- skip:
+
+  A logical. Should the step be skipped when the recipe is baked by
+  [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)?
+  While all operations are baked when
+  [`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md) is
+  run, some operations may not be able to be conducted on new data (e.g.
+  processing the outcome variable(s)). Care should be taken when using
+  `skip = TRUE` as it may affect the computations for subsequent
+  operations.
+
+- id:
+
+  A character string that is unique to this step to identify it.
+
+## Value
+
+An updated version of `recipe` with the new step added to the sequence
+of any existing operations.
+
+## Details
+
+`step_impute_mean()` estimates the variable means from the data used in
+the `training` argument of
+[`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md).
+[`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md) then
+applies the new values to new data sets using these averages.
+
+As of `recipes` 0.1.16, this function name changed from
+[`step_meanimpute()`](https://recipes.tidymodels.org/dev/reference/step_meanimpute.md)
+to `step_impute_mean()`.
+
+## Tidying
+
+When you
+[`tidy()`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+this step, a tibble is returned with columns `terms`, `value` , and
+`id`:
+
+- terms:
+
+  character, the selectors or variables selected
+
+- value:
+
+  numeric, the mean value
+
+- id:
+
+  character, id of this step
+
+## Tuning Parameters
+
+This step has 1 tuning parameters:
+
+- `trim`: Amount of Trimming (type: double, default: 0)
+
+## Sparse data
+
+This step can be applied to
+[sparse_data](https://recipes.tidymodels.org/dev/reference/sparse_data.md)
+such that it is preserved. Nothing needs to be done for this to happen
+as it is done automatically.
+
+## Case weights
+
+This step performs an unsupervised operation that can utilize case
+weights. As a result, case weights are only used with frequency weights.
+For more information, see the documentation in
+[case_weights](https://recipes.tidymodels.org/dev/reference/case_weights.md)
+and the examples on `tidymodels.org`.
+
+## See also
+
+Other imputation steps:
+[`step_impute_bag()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md),
+[`step_impute_knn()`](https://recipes.tidymodels.org/dev/reference/step_impute_knn.md),
+[`step_impute_linear()`](https://recipes.tidymodels.org/dev/reference/step_impute_linear.md),
+[`step_impute_lower()`](https://recipes.tidymodels.org/dev/reference/step_impute_lower.md),
+[`step_impute_median()`](https://recipes.tidymodels.org/dev/reference/step_impute_median.md),
+[`step_impute_mode()`](https://recipes.tidymodels.org/dev/reference/step_impute_mode.md),
+[`step_impute_roll()`](https://recipes.tidymodels.org/dev/reference/step_impute_roll.md)
+
+## Examples
+
+``` r
+data("credit_data", package = "modeldata")
+
+## missing data per column
+vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
+#>       Status    Seniority         Home         Time          Age 
+#> 0.0000000000 0.0000000000 0.0013471037 0.0000000000 0.0000000000 
+#>      Marital      Records          Job     Expenses       Income 
+#> 0.0002245173 0.0000000000 0.0004490346 0.0000000000 0.0855410867 
+#>       Assets         Debt       Amount        Price 
+#> 0.0105523125 0.0040413112 0.0000000000 0.0000000000 
+
+set.seed(342)
+in_training <- sample(1:nrow(credit_data), 2000)
+
+credit_tr <- credit_data[in_training, ]
+credit_te <- credit_data[-in_training, ]
+missing_examples <- c(14, 394, 565)
+
+rec <- recipe(Price ~ ., data = credit_tr)
+
+impute_rec <- rec |>
+  step_impute_mean(Income, Assets, Debt)
+
+imp_models <- prep(impute_rec, training = credit_tr)
+
+imputed_te <- bake(imp_models, new_data = credit_te)
+
+credit_te[missing_examples, ]
+#>      Status Seniority  Home Time Age Marital Records     Job Expenses
+#> 28     good        15 owner   36  43 married      no   fixed       75
+#> 688    good         2  rent   60  32 married      no partime       87
+#> 1002   good        21  rent   60  39 married      no   fixed      124
+#>      Income Assets Debt Amount Price
+#> 28      251   4000    0   1800  2557
+#> 688     115   2000    0   1250  1517
+#> 1002    191   2000    0   2000  2536
+imputed_te[missing_examples, names(credit_te)]
+#> # A tibble: 3 × 14
+#>   Status Seniority Home   Time   Age Marital Records Job     Expenses
+#>   <fct>      <int> <fct> <int> <int> <fct>   <fct>   <fct>      <int>
+#> 1 good          15 owner    36    43 married no      fixed         75
+#> 2 good           2 rent     60    32 married no      partime       87
+#> 3 good          21 rent     60    39 married no      fixed        124
+#> # ℹ 5 more variables: Income <int>, Assets <int>, Debt <int>,
+#> #   Amount <int>, Price <int>
+
+tidy(impute_rec, number = 1)
+#> # A tibble: 3 × 3
+#>   terms  value id               
+#>   <chr>  <dbl> <chr>            
+#> 1 Income    NA impute_mean_Hlm2y
+#> 2 Assets    NA impute_mean_Hlm2y
+#> 3 Debt      NA impute_mean_Hlm2y
+tidy(imp_models, number = 1)
+#> # A tibble: 3 × 3
+#>   terms  value id               
+#>   <chr>  <dbl> <chr>            
+#> 1 Income   142 impute_mean_Hlm2y
+#> 2 Assets  5378 impute_mean_Hlm2y
+#> 3 Debt     364 impute_mean_Hlm2y
+```

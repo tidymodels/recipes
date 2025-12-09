@@ -1,0 +1,422 @@
+# Handling categorical predictors
+
+Recipes can be different from their base R counterparts such as
+`model.matrix`. This vignette describes the different methods for
+encoding categorical predictors with special attention to interaction
+terms and contrasts.
+
+## Creating Dummy Variables
+
+Let’s start, of course, with `iris` data. This has four numeric columns
+and a single factor column with three levels: `'setosa'`,
+`'versicolor'`, and `'virginica'`. Our initial recipe will have no
+outcome:
+
+``` r
+library(recipes)
+
+# make a copy for use below
+iris <- iris |> mutate(original = Species)
+
+iris_rec <- recipe( ~ ., data = iris)
+summary(iris_rec)
+#> # A tibble: 6 × 4
+#>   variable     type      role      source  
+#>   <chr>        <list>    <chr>     <chr>   
+#> 1 Sepal.Length <chr [2]> predictor original
+#> 2 Sepal.Width  <chr [2]> predictor original
+#> 3 Petal.Length <chr [2]> predictor original
+#> 4 Petal.Width  <chr [2]> predictor original
+#> 5 Species      <chr [3]> predictor original
+#> 6 original     <chr [3]> predictor original
+```
+
+A [contrast
+function](https://en.wikipedia.org/wiki/Contrast_(statistics)) in R is a
+method for translating a column with categorical values into one or more
+numeric columns that take the place of the original. This can also be
+known as an encoding method or a parameterization function.
+
+The default approach is to create dummy variables using the “reference
+cell” parameterization. This means that, if there are *C* levels of the
+factor, there will be *C* - 1 dummy variables created and all but the
+first factor level are made into new columns:
+
+``` r
+ref_cell <- 
+  iris_rec |> 
+  step_dummy(Species) |>
+  prep(training = iris)
+summary(ref_cell)
+#> # A tibble: 7 × 4
+#>   variable           type      role      source  
+#>   <chr>              <list>    <chr>     <chr>   
+#> 1 Sepal.Length       <chr [2]> predictor original
+#> 2 Sepal.Width        <chr [2]> predictor original
+#> 3 Petal.Length       <chr [2]> predictor original
+#> 4 Petal.Width        <chr [2]> predictor original
+#> 5 original           <chr [3]> predictor original
+#> 6 Species_versicolor <chr [2]> predictor derived 
+#> 7 Species_virginica  <chr [2]> predictor derived
+
+# Get a row for each factor level
+bake(ref_cell, new_data = NULL, original, starts_with("Species")) |> distinct()
+#> # A tibble: 3 × 3
+#>   original   Species_versicolor Species_virginica
+#>   <fct>                   <dbl>             <dbl>
+#> 1 setosa                      0                 0
+#> 2 versicolor                  1                 0
+#> 3 virginica                   0                 1
+```
+
+Note that the column that was used to make the new columns (`Species`)
+is no longer there. See the section below on obtaining the entire set of
+*C* columns.
+
+There are different types of contrasts that can be used for different
+types of factors. The defaults are `"contr.treatment"` for unordered and
+`"contr.poly"` for ordered factors.
+
+Looking at `?contrast`, there are other options. One alternative is the
+little known Helmert contrast:
+
+> `contr.helmert` returns Helmert contrasts, which contrast the second
+> level with the first, the third with the average of the first two, and
+> so on.
+
+To get this encoding you can use the `contrasts` argument like so:, the
+global option for the contrasts can be changed and saved.
+[`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html)
+picks up on this and makes the correct calculations:
+
+``` r
+# now make dummy variables with new parameterization
+helmert <- 
+  iris_rec |> 
+  step_dummy(Species, contrasts = "contr.helmert") |>
+  prep(training = iris)
+summary(helmert)
+#> # A tibble: 7 × 4
+#>   variable           type      role      source  
+#>   <chr>              <list>    <chr>     <chr>   
+#> 1 Sepal.Length       <chr [2]> predictor original
+#> 2 Sepal.Width        <chr [2]> predictor original
+#> 3 Petal.Length       <chr [2]> predictor original
+#> 4 Petal.Width        <chr [2]> predictor original
+#> 5 original           <chr [3]> predictor original
+#> 6 Species_versicolor <chr [2]> predictor derived 
+#> 7 Species_virginica  <chr [2]> predictor derived
+
+bake(helmert, new_data = NULL, original, starts_with("Species")) |> distinct()
+#> # A tibble: 3 × 3
+#>   original   Species_versicolor Species_virginica
+#>   <fct>                   <dbl>             <dbl>
+#> 1 setosa                     -1                -1
+#> 2 versicolor                  1                -1
+#> 3 virginica                   0                 2
+```
+
+Note that the column names do not reference a specific level of the
+species variable. This contrast function has columns that can involve
+multiple levels; level-specific columns wouldn’t make sense.
+
+If no columns are selected (perhaps due to an earlier
+[`step_zv()`](https://recipes.tidymodels.org/dev/reference/step_zv.md)),
+the [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)
+function will return the data as-is (e.g. with no dummy variables).
+
+Finally,
+[`step_dummy()`](https://recipes.tidymodels.org/dev/reference/step_dummy.md)
+has an option called `keep_original_cols` that can be used to keep the
+original columns that are being used to create the dummy variables.
+
+## Interactions with Dummy Variables
+
+Creating interactions with recipes requires the use of a model formula,
+such as
+
+``` r
+iris_int <- 
+  iris_rec |>
+  step_interact( ~ Sepal.Width:Sepal.Length) |>
+  prep(training = iris)
+summary(iris_int)
+#> # A tibble: 7 × 4
+#>   variable                   type      role      source  
+#>   <chr>                      <list>    <chr>     <chr>   
+#> 1 Sepal.Length               <chr [2]> predictor original
+#> 2 Sepal.Width                <chr [2]> predictor original
+#> 3 Petal.Length               <chr [2]> predictor original
+#> 4 Petal.Width                <chr [2]> predictor original
+#> 5 Species                    <chr [3]> predictor original
+#> 6 original                   <chr [3]> predictor original
+#> 7 Sepal.Width_x_Sepal.Length <chr [2]> predictor derived
+```
+
+In [R model
+formulae](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html),
+using a `*` between two variables would expand to `a*b = a + b + a:b` so
+that the main effects are included. In
+[`step_interact`](https://recipes.tidymodels.org/reference/step_interact.html),
+you can use `*`, but only the interactions are recorded as columns that
+need to be created.
+
+One thing that `recipes` does differently than base R is it constructs
+the design matrix in sequential iterations. This is relevant when
+thinking about interactions between continuous and categorical
+predictors.
+
+For example, if you were to use the standard formula interface, the
+creation of the dummy variables happens at the same time as the
+interactions are created:
+
+``` r
+model.matrix(~ Species*Sepal.Length, data = iris) |> 
+  as.data.frame() |> 
+  # show a few specific rows
+  slice(c(1, 51, 101)) |> 
+  as.data.frame()
+#>     (Intercept) Speciesversicolor Speciesvirginica Sepal.Length
+#> 1             1                 0                0          5.1
+#> 51            1                 1                0          7.0
+#> 101           1                 0                1          6.3
+#>     Speciesversicolor:Sepal.Length Speciesvirginica:Sepal.Length
+#> 1                                0                           0.0
+#> 51                               7                           0.0
+#> 101                              0                           6.3
+```
+
+With recipes, you create them sequentially. This raises an issue: do I
+have to type out all of the interaction effects by their specific names
+when using dummy variables?
+
+``` r
+# Must I do this?
+iris_rec |>
+  step_interact( ~ Species_versicolor:Sepal.Length + 
+                   Species_virginica:Sepal.Length) 
+```
+
+Not only is this a pain, but it may not be obvious what dummy variables
+are available (especially when
+[`step_other`](https://recipes.tidymodels.org/reference/step_other.html)
+is used).
+
+The solution is to use a selector:
+
+``` r
+iris_int <- 
+  iris_rec |> 
+  step_dummy(Species) |>
+  step_interact( ~ starts_with("Species"):Sepal.Length) |>
+  prep(training = iris)
+summary(iris_int)
+#> # A tibble: 9 × 4
+#>   variable                          type      role      source  
+#>   <chr>                             <list>    <chr>     <chr>   
+#> 1 Sepal.Length                      <chr [2]> predictor original
+#> 2 Sepal.Width                       <chr [2]> predictor original
+#> 3 Petal.Length                      <chr [2]> predictor original
+#> 4 Petal.Width                       <chr [2]> predictor original
+#> 5 original                          <chr [3]> predictor original
+#> 6 Species_versicolor                <chr [2]> predictor derived 
+#> 7 Species_virginica                 <chr [2]> predictor derived 
+#> 8 Species_versicolor_x_Sepal.Length <chr [2]> predictor derived 
+#> 9 Species_virginica_x_Sepal.Length  <chr [2]> predictor derived
+```
+
+What happens here is that `starts_with("Species")` is executed on the
+data that are available when the previous steps have been applied to the
+data. That means that the dummy variable columns are present. The
+results of this selector are then translated to an additive function of
+the results. In this case, that means that
+
+``` r
+starts_with("Species")
+```
+
+becomes
+
+``` r
+(Species_versicolor + Species_virginica)
+```
+
+The entire interaction formula is shown here:
+
+``` r
+iris_int
+```
+
+For interactions between multiple sets of dummy variables, the formula
+could include multiple selectors
+(e.g. `starts_with("x_"):starts_with("y_")`).
+
+## Warning!
+
+Would it work if I didn’t convert species to a factor and used the
+interactions step?
+
+``` r
+iris_int <- 
+  iris_rec |> 
+  step_interact( ~ Species:Sepal.Length) |>
+  prep(training = iris)
+#> Warning: Categorical variables used in `step_interact()` should probably be
+#> avoided; This can lead to differences in dummy variable values that
+#> are produced by ?step_dummy (`?recipes::step_dummy()`). Please convert
+#> all involved variables to dummy variables first.
+summary(iris_int)
+#> # A tibble: 8 × 4
+#>   variable                         type      role      source  
+#>   <chr>                            <list>    <chr>     <chr>   
+#> 1 Sepal.Length                     <chr [2]> predictor original
+#> 2 Sepal.Width                      <chr [2]> predictor original
+#> 3 Petal.Length                     <chr [2]> predictor original
+#> 4 Petal.Width                      <chr [2]> predictor original
+#> 5 Species                          <chr [3]> predictor original
+#> 6 original                         <chr [3]> predictor original
+#> 7 Speciesversicolor_x_Sepal.Length <chr [2]> predictor derived 
+#> 8 Speciesvirginica_x_Sepal.Length  <chr [2]> predictor derived
+```
+
+The columns `Species` isn’t affected and a warning is issued. Basically,
+you only get half of what `model.matrix` does and that could really be
+problematic in subsequent steps.
+
+## Getting All of the Indicator Variables
+
+As mentioned above, if there are *C* levels of the factor, there will be
+*C* - 1 dummy variables created. You might want to get all of them back.
+
+Historically, *C* - 1 are used so that a linear dependency is avoided in
+the design matrix; all *C* dummy variables would add up row-wise to the
+intercept column and the inverse matrix for linear regression can’t be
+computed. This technical term for a the design matrix like this is “less
+than full rank”.
+
+There are models (e.g. `glmnet` and others) that can avoid this issue so
+you might want to get all of the columns. To do this, `step_dummy` has
+an option called `one_hot` that will make sure that all *C* are
+produced:
+
+``` r
+iris_rec |> 
+  step_dummy(Species, one_hot = TRUE) |>
+  prep(training = iris) |>
+  bake(original, new_data = NULL, starts_with("Species")) |>
+  distinct()
+#> # A tibble: 3 × 4
+#>   original   Species_setosa Species_versicolor Species_virginica
+#>   <fct>               <dbl>              <dbl>             <dbl>
+#> 1 setosa                  1                  0                 0
+#> 2 versicolor              0                  1                 0
+#> 3 virginica               0                  0                 1
+```
+
+The option is named that way since this is what the computer scientists
+call [“one-hot
+encoding”](https://www.google.com/search?q=one-hot+encoding).
+
+***Warning!*** (again)
+
+This will give you the full set of indicators and, when you use the
+typical contrast function, it does. It might do some seemingly weird
+(but legitimate) things when used with other contrasts:
+
+``` r
+hot_reference <- 
+  iris_rec |> 
+  step_dummy(Species, one_hot = TRUE) |>
+  prep(training = iris) |>
+  bake(original, new_data = NULL, starts_with("Species")) |>
+  distinct()
+
+hot_reference
+#> # A tibble: 3 × 4
+#>   original   Species_setosa Species_versicolor Species_virginica
+#>   <fct>               <dbl>              <dbl>             <dbl>
+#> 1 setosa                  1                  0                 0
+#> 2 versicolor              0                  1                 0
+#> 3 virginica               0                  0                 1
+
+hot_helmert <- 
+  iris_rec |> 
+  step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") |>
+  prep(training = iris) |>
+  bake(original, new_data = NULL, starts_with("Species")) |>
+  distinct()
+
+hot_helmert
+#> # A tibble: 3 × 4
+#>   original   Species_setosa Species_versicolor Species_virginica
+#>   <fct>               <dbl>              <dbl>             <dbl>
+#> 1 setosa                  1                  0                 0
+#> 2 versicolor              0                  1                 0
+#> 3 virginica               0                  0                 1
+```
+
+Since this contrast doesn’t make sense using all *C* columns, it reverts
+back to the default encoding.
+
+## Novel Levels
+
+When a recipe is used with new samples, some factors may have acquired
+new levels that were not present when `prep` was run. If `step_dummy`
+encounters this situation, a warning is issued (“There are new levels in
+a factor”) and the indicator variables that correspond to the factor are
+assigned missing values.
+
+One way around this is to use `step_other`. This step can convert
+infrequently occurring levels to a new category (that defaults to
+“other”). This step can also be used to convert new factor levels to
+“other” also.
+
+Also, `step_integer` has functionality similar to
+[`LabelEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
+and encodes new values as zero.
+
+The [`embed`](https://github.com/tidymodels/embed) package can also
+handle novel factors levels within a recipe. `step_embed` and
+`step_tfembed` assign a common numeric score to novel levels.
+
+## Other Steps Related to Dummy Variables
+
+There are a bunch of steps related to going in-between factors and dummy
+variables:
+
+- [`step_unknown`](https://recipes.tidymodels.org/reference/step_unknown.html)
+  assigns missing factor values into an `'unknown'` category.
+- [`step_other`](https://recipes.tidymodels.org/reference/step_other.html)
+  can collapse infrequently occurring levels into `'other'`.
+- [`step_regex`](https://recipes.tidymodels.org/reference/step_regex.html)
+  will create a single dummy variable based on applying a regular
+  expression to a text field. Similarly,
+  [`step_count`](https://recipes.tidymodels.org/reference/step_count.html)
+  does the same but counts the occurrences of the pattern in the string.
+- [`step_holiday`](https://recipes.tidymodels.org/reference/step_holiday.html)
+  creates dummy variables from date fields to capture holidays.
+- [`step_lincomb`](https://recipes.tidymodels.org/reference/step_lincomb.html)
+  can be useful if you *over-specify* interactions and need to remove
+  linear dependencies.
+- [`step_zv`](https://recipes.tidymodels.org/reference/step_zv.html) can
+  remove dummy variables that never show a 1 in the column (i.e. is
+  zero-variance).
+- [`step_bin2factor`](https://recipes.tidymodels.org/reference/step_bin2factor.html)
+  takes a binary indicator and makes a factor variable. This can be
+  useful when using naive Bayes models.
+- `step_embed`, `step_lencode_glm`, `step_lencode_bayes` and others in
+  the [`embed`](https://github.com/tidymodels/embed) package can use one
+  or more (non-binary) values to encode factor predictors into a numeric
+  form.
+- `step_dummy_extract` can create binary indicators from strings and is
+  especially useful for multiple choice columns.
+
+[`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html)
+also works with *ordered factors*. As seen above, the default encoding
+is to create a series of polynomial variables. There are also a few
+steps for ordered factors:
+
+- [`step_ordinalscore`](https://recipes.tidymodels.org/reference/step_ordinalscore.html)
+  can translate the levels to a single numeric score.
+- [`step_unorder`](https://recipes.tidymodels.org/reference/step_unorder.html)
+  can convert to an unordered factor.

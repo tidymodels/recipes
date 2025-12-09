@@ -1,0 +1,590 @@
+# recipes
+
+## Introduction
+
+With recipes, you can use [dplyr](https://dplyr.tidyverse.org/)-like
+pipeable sequences of feature engineering steps to get your data ready
+for modeling. For example, to create a recipe containing an outcome plus
+two numeric predictors and then center and scale (“normalize”) the
+predictors:
+
+``` r
+library(recipes)
+data(ad_data, package = "modeldata")
+
+ad_rec <- recipe(Class ~ tau + VEGF, data = ad_data) |>
+  step_normalize(all_numeric_predictors())
+
+ad_rec
+```
+
+More information on recipes can be found at the [*Get
+Started*](https://www.tidymodels.org/start/recipes/) page of
+[tidymodels.org](https://www.tidymodels.org).
+
+You may consider recipes as an alternative method for creating and
+preprocessing design matrices (also known as model matrices) that can be
+used for modeling or visualization. While R already has long-standing
+methods for creating such matrices
+(e.g. [formulas](https://rviews.rstudio.com/2017/02/01/the-r-formula-method-the-good-parts/)
+and `model.matrix`), there are some [limitations to what the existing
+infrastructure can
+do](https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/).
+
+## Installation
+
+There are several ways to install recipes:
+
+``` r
+# The easiest way to get recipes is to install all of tidymodels:
+install.packages("tidymodels")
+
+# Alternatively, install just recipes:
+install.packages("recipes")
+
+# Or the development version from GitHub:
+# install.packages("pak")
+pak::pak("tidymodels/recipes")
+```
+
+## Contributing
+
+- For questions and discussions about tidymodels packages, modeling, and
+  machine learning, please [post on RStudio
+  Community](https://forum.posit.co/c/ml/15).
+
+- If you think you have encountered a bug, please [submit an
+  issue](https://github.com/tidymodels/recipes/issues).
+
+- Either way, learn how to create and share a
+  [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+  (a minimal, reproducible example), to clearly communicate about your
+  code.
+
+- Check out further details on [contributing guidelines for tidymodels
+  packages](https://www.tidymodels.org/contribute/) and [how to get
+  help](https://www.tidymodels.org/help/).
+
+# Package index
+
+## Basic Functions
+
+- [`recipes-package`](https://recipes.tidymodels.org/dev/reference/recipes.md)
+  [`recipes`](https://recipes.tidymodels.org/dev/reference/recipes.md) :
+  recipes: A package for computing and preprocessing design matrices.
+- [`recipe()`](https://recipes.tidymodels.org/dev/reference/recipe.md) :
+  Create a recipe for preprocessing data
+- [`formula(`*`<recipe>`*`)`](https://recipes.tidymodels.org/dev/reference/formula.recipe.md)
+  : Create a formula from a prepared recipe
+- [`print(`*`<recipe>`*`)`](https://recipes.tidymodels.org/dev/reference/print.recipe.md)
+  : Print a Recipe
+- [`summary(`*`<recipe>`*`)`](https://recipes.tidymodels.org/dev/reference/summary.recipe.md)
+  : Summarize a recipe
+- [`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md) :
+  Estimate a preprocessing recipe
+- [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md) :
+  Apply a trained preprocessing recipe
+- [`juice()`](https://recipes.tidymodels.org/dev/reference/juice.md)
+  **\[superseded\]** : Extract transformed training set
+- [`selections`](https://recipes.tidymodels.org/dev/reference/selections.md)
+  [`selection`](https://recipes.tidymodels.org/dev/reference/selections.md)
+  : Methods for selecting variables in step functions
+- [`has_role()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`has_type()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_outcomes()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_date()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_date_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_datetime()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_datetime_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_double()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_double_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_factor()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_factor_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_integer()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_integer_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_logical()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_logical_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_nominal()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_nominal_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_numeric()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_numeric_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_ordered()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_ordered_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_string()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_string_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_unordered()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`all_unordered_predictors()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  [`current_info()`](https://recipes.tidymodels.org/dev/reference/has_role.md)
+  : Role Selection
+- [`add_role()`](https://recipes.tidymodels.org/dev/reference/roles.md)
+  [`update_role()`](https://recipes.tidymodels.org/dev/reference/roles.md)
+  [`remove_role()`](https://recipes.tidymodels.org/dev/reference/roles.md)
+  : Manually alter roles
+- [`update_role_requirements()`](https://recipes.tidymodels.org/dev/reference/update_role_requirements.md)
+  : Update role specific requirements
+- [`get_case_weights()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`averages()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`medians()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`variances()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`correlations()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`covariances()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`pca_wts()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  [`are_weights_used()`](https://recipes.tidymodels.org/dev/reference/case-weight-helpers.md)
+  : Helpers for steps with case weights
+- [`case_weights`](https://recipes.tidymodels.org/dev/reference/case_weights.md)
+  : Using case weights with recipes
+
+## Step Functions - Imputation
+
+- [`step_impute_bag()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md)
+  [`imp_vars()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md)
+  : Impute via bagged trees
+- [`step_impute_knn()`](https://recipes.tidymodels.org/dev/reference/step_impute_knn.md)
+  : Impute via k-nearest neighbors
+- [`step_impute_linear()`](https://recipes.tidymodels.org/dev/reference/step_impute_linear.md)
+  : Impute numeric variables via a linear model
+- [`step_impute_lower()`](https://recipes.tidymodels.org/dev/reference/step_impute_lower.md)
+  : Impute numeric data below the threshold of measurement
+- [`step_impute_mean()`](https://recipes.tidymodels.org/dev/reference/step_impute_mean.md)
+  : Impute numeric data using the mean
+- [`step_impute_median()`](https://recipes.tidymodels.org/dev/reference/step_impute_median.md)
+  : Impute numeric data using the median
+- [`step_impute_mode()`](https://recipes.tidymodels.org/dev/reference/step_impute_mode.md)
+  : Impute nominal data using the most common value
+- [`step_impute_roll()`](https://recipes.tidymodels.org/dev/reference/step_impute_roll.md)
+  : Impute numeric data using a rolling window statistic
+- [`step_unknown()`](https://recipes.tidymodels.org/dev/reference/step_unknown.md)
+  : Assign missing categories to "unknown"
+
+## Step Functions - Individual Transformations
+
+- [`step_BoxCox()`](https://recipes.tidymodels.org/dev/reference/step_BoxCox.md)
+  : Box-Cox transformation for non-negative data
+- [`step_bs()`](https://recipes.tidymodels.org/dev/reference/step_bs.md)
+  : B-spline basis functions
+- [`step_harmonic()`](https://recipes.tidymodels.org/dev/reference/step_harmonic.md)
+  : Add sin and cos terms for harmonic analysis
+- [`step_hyperbolic()`](https://recipes.tidymodels.org/dev/reference/step_hyperbolic.md)
+  : Hyperbolic transformations
+- [`step_inverse()`](https://recipes.tidymodels.org/dev/reference/step_inverse.md)
+  : Inverse transformation
+- [`step_invlogit()`](https://recipes.tidymodels.org/dev/reference/step_invlogit.md)
+  : Inverse logit transformation
+- [`step_log()`](https://recipes.tidymodels.org/dev/reference/step_log.md)
+  : Logarithmic transformation
+- [`step_logit()`](https://recipes.tidymodels.org/dev/reference/step_logit.md)
+  : Logit transformation
+- [`step_mutate()`](https://recipes.tidymodels.org/dev/reference/step_mutate.md)
+  : Add new variables using dplyr
+- [`step_ns()`](https://recipes.tidymodels.org/dev/reference/step_ns.md)
+  : Natural spline basis functions
+- [`step_poly()`](https://recipes.tidymodels.org/dev/reference/step_poly.md)
+  : Orthogonal polynomial basis functions
+- [`step_poly_bernstein()`](https://recipes.tidymodels.org/dev/reference/step_poly_bernstein.md)
+  : Generalized bernstein polynomial basis
+- [`step_relu()`](https://recipes.tidymodels.org/dev/reference/step_relu.md)
+  : Apply (smoothed) rectified linear transformation
+- [`step_spline_b()`](https://recipes.tidymodels.org/dev/reference/step_spline_b.md)
+  : Basis splines
+- [`step_spline_convex()`](https://recipes.tidymodels.org/dev/reference/step_spline_convex.md)
+  : Convex splines
+- [`step_spline_monotone()`](https://recipes.tidymodels.org/dev/reference/step_spline_monotone.md)
+  : Monotone splines
+- [`step_spline_natural()`](https://recipes.tidymodels.org/dev/reference/step_spline_natural.md)
+  : Natural splines
+- [`step_spline_nonnegative()`](https://recipes.tidymodels.org/dev/reference/step_spline_nonnegative.md)
+  : Non-negative splines
+- [`step_sqrt()`](https://recipes.tidymodels.org/dev/reference/step_sqrt.md)
+  : Square root transformation
+- [`step_YeoJohnson()`](https://recipes.tidymodels.org/dev/reference/step_YeoJohnson.md)
+  : Yeo-Johnson transformation
+
+## Step Functions - Discretization
+
+- [`step_discretize()`](https://recipes.tidymodels.org/dev/reference/step_discretize.md)
+  : Discretize Numeric Variables
+- [`discretize()`](https://recipes.tidymodels.org/dev/reference/discretize.md)
+  [`predict(`*`<discretize>`*`)`](https://recipes.tidymodels.org/dev/reference/discretize.md)
+  : Discretize Numeric Variables
+- [`step_cut()`](https://recipes.tidymodels.org/dev/reference/step_cut.md)
+  : Cut a numeric variable into a factor
+
+## Step Functions - Dummy Variables and Encodings
+
+- [`step_bin2factor()`](https://recipes.tidymodels.org/dev/reference/step_bin2factor.md)
+  : Create a factors from A dummy variable
+- [`step_count()`](https://recipes.tidymodels.org/dev/reference/step_count.md)
+  : Create counts of patterns using regular expressions
+- [`step_dummy()`](https://recipes.tidymodels.org/dev/reference/step_dummy.md)
+  : Create traditional dummy variables
+- [`step_dummy_extract()`](https://recipes.tidymodels.org/dev/reference/step_dummy_extract.md)
+  : Extract patterns from nominal data
+- [`step_dummy_multi_choice()`](https://recipes.tidymodels.org/dev/reference/step_dummy_multi_choice.md)
+  : Handle levels in multiple predictors together
+- [`step_factor2string()`](https://recipes.tidymodels.org/dev/reference/step_factor2string.md)
+  : Convert factors to strings
+- [`step_indicate_na()`](https://recipes.tidymodels.org/dev/reference/step_indicate_na.md)
+  : Create missing data column indicators
+- [`step_integer()`](https://recipes.tidymodels.org/dev/reference/step_integer.md)
+  : Convert values to predefined integers
+- [`step_novel()`](https://recipes.tidymodels.org/dev/reference/step_novel.md)
+  : Simple value assignments for novel factor levels
+- [`step_num2factor()`](https://recipes.tidymodels.org/dev/reference/step_num2factor.md)
+  : Convert numbers to factors
+- [`step_ordinalscore()`](https://recipes.tidymodels.org/dev/reference/step_ordinalscore.md)
+  : Convert ordinal factors to numeric scores
+- [`step_other()`](https://recipes.tidymodels.org/dev/reference/step_other.md)
+  : Collapse infrequent categorical levels
+- [`step_percentile()`](https://recipes.tidymodels.org/dev/reference/step_percentile.md)
+  : Percentile transformation
+- [`step_regex()`](https://recipes.tidymodels.org/dev/reference/step_regex.md)
+  : Detect a regular expression
+- [`step_relevel()`](https://recipes.tidymodels.org/dev/reference/step_relevel.md)
+  : Relevel factors to a desired level
+- [`step_string2factor()`](https://recipes.tidymodels.org/dev/reference/step_string2factor.md)
+  : Convert strings to factors
+- [`step_unknown()`](https://recipes.tidymodels.org/dev/reference/step_unknown.md)
+  : Assign missing categories to "unknown"
+- [`step_unorder()`](https://recipes.tidymodels.org/dev/reference/step_unorder.md)
+  : Convert ordered factors to unordered factors
+
+## Step Functions - Date and Datetime
+
+- [`step_date()`](https://recipes.tidymodels.org/dev/reference/step_date.md)
+  : Date feature generator
+- [`step_time()`](https://recipes.tidymodels.org/dev/reference/step_time.md)
+  : Time feature generator
+- [`step_holiday()`](https://recipes.tidymodels.org/dev/reference/step_holiday.md)
+  : Holiday feature generator
+
+## Step Functions - Interactions
+
+- [`step_interact()`](https://recipes.tidymodels.org/dev/reference/step_interact.md)
+  : Create interaction variables
+
+## Step Functions - Normalization
+
+- [`step_center()`](https://recipes.tidymodels.org/dev/reference/step_center.md)
+  : Centering numeric data
+- [`step_normalize()`](https://recipes.tidymodels.org/dev/reference/step_normalize.md)
+  : Center and scale numeric data
+- [`step_range()`](https://recipes.tidymodels.org/dev/reference/step_range.md)
+  : Scaling numeric data to a specific range
+- [`step_scale()`](https://recipes.tidymodels.org/dev/reference/step_scale.md)
+  : Scaling numeric data
+
+## Step Functions - Multivariate Transformations
+
+- [`step_classdist()`](https://recipes.tidymodels.org/dev/reference/step_classdist.md)
+  : Distances to class centroids
+- [`step_classdist_shrunken()`](https://recipes.tidymodels.org/dev/reference/step_classdist_shrunken.md)
+  : Compute shrunken centroid distances for classification models
+- [`step_depth()`](https://recipes.tidymodels.org/dev/reference/step_depth.md)
+  : Data depths
+- [`step_geodist()`](https://recipes.tidymodels.org/dev/reference/step_geodist.md)
+  : Distance between two locations
+- [`step_ica()`](https://recipes.tidymodels.org/dev/reference/step_ica.md)
+  : ICA signal extraction
+- [`step_isomap()`](https://recipes.tidymodels.org/dev/reference/step_isomap.md)
+  : Isomap embedding
+- [`step_kpca()`](https://recipes.tidymodels.org/dev/reference/step_kpca.md)
+  : Kernel PCA signal extraction
+- [`step_kpca_poly()`](https://recipes.tidymodels.org/dev/reference/step_kpca_poly.md)
+  : Polynomial kernel PCA signal extraction
+- [`step_kpca_rbf()`](https://recipes.tidymodels.org/dev/reference/step_kpca_rbf.md)
+  : Radial basis function kernel PCA signal extraction
+- [`step_mutate_at()`](https://recipes.tidymodels.org/dev/reference/step_mutate_at.md)
+  **\[superseded\]** : Mutate multiple columns using dplyr
+- [`step_nnmf()`](https://recipes.tidymodels.org/dev/reference/step_nnmf.md)
+  **\[deprecated\]** : Non-negative matrix factorization signal
+  extraction
+- [`step_nnmf_sparse()`](https://recipes.tidymodels.org/dev/reference/step_nnmf_sparse.md)
+  : Non-negative matrix factorization signal extraction with lasso
+  penalization
+- [`step_pca()`](https://recipes.tidymodels.org/dev/reference/step_pca.md)
+  : PCA signal extraction
+- [`step_pls()`](https://recipes.tidymodels.org/dev/reference/step_pls.md)
+  : Partial least squares feature extraction
+- [`step_ratio()`](https://recipes.tidymodels.org/dev/reference/step_ratio.md)
+  [`denom_vars()`](https://recipes.tidymodels.org/dev/reference/step_ratio.md)
+  : Ratio variable creation
+- [`step_spatialsign()`](https://recipes.tidymodels.org/dev/reference/step_spatialsign.md)
+  : Spatial sign preprocessing
+
+## Step Functions - Filters
+
+- [`step_corr()`](https://recipes.tidymodels.org/dev/reference/step_corr.md)
+  : High correlation filter
+- [`step_filter_missing()`](https://recipes.tidymodels.org/dev/reference/step_filter_missing.md)
+  : Missing value column filter
+- [`step_lincomb()`](https://recipes.tidymodels.org/dev/reference/step_lincomb.md)
+  : Linear combination filter
+- [`step_nzv()`](https://recipes.tidymodels.org/dev/reference/step_nzv.md)
+  : Near-zero variance filter
+- [`step_rm()`](https://recipes.tidymodels.org/dev/reference/step_rm.md)
+  : General variable filter
+- [`step_select()`](https://recipes.tidymodels.org/dev/reference/step_select.md)
+  **\[deprecated\]** : Select variables using dplyr
+- [`step_zv()`](https://recipes.tidymodels.org/dev/reference/step_zv.md)
+  : Zero variance filter
+
+## Step Functions - Row Operations
+
+- [`step_arrange()`](https://recipes.tidymodels.org/dev/reference/step_arrange.md)
+  : Sort rows using dplyr
+- [`step_filter()`](https://recipes.tidymodels.org/dev/reference/step_filter.md)
+  : Filter rows using dplyr
+- [`step_lag()`](https://recipes.tidymodels.org/dev/reference/step_lag.md)
+  : Create a lagged predictor
+- [`step_naomit()`](https://recipes.tidymodels.org/dev/reference/step_naomit.md)
+  : Remove observations with missing values
+- [`step_impute_roll()`](https://recipes.tidymodels.org/dev/reference/step_impute_roll.md)
+  : Impute numeric data using a rolling window statistic
+- [`step_sample()`](https://recipes.tidymodels.org/dev/reference/step_sample.md)
+  : Sample rows using dplyr
+- [`step_shuffle()`](https://recipes.tidymodels.org/dev/reference/step_shuffle.md)
+  : Shuffle variables
+- [`step_slice()`](https://recipes.tidymodels.org/dev/reference/step_slice.md)
+  : Filter rows by position using dplyr
+
+## Step Functions - Others
+
+- [`step_intercept()`](https://recipes.tidymodels.org/dev/reference/step_intercept.md)
+  : Add intercept (or constant) column
+- [`step_profile()`](https://recipes.tidymodels.org/dev/reference/step_profile.md)
+  : Create a profiling version of a data set
+- [`step_rename()`](https://recipes.tidymodels.org/dev/reference/step_rename.md)
+  : Rename variables by name using dplyr
+- [`step_rename_at()`](https://recipes.tidymodels.org/dev/reference/step_rename_at.md)
+  : Rename multiple columns using dplyr
+- [`step_window()`](https://recipes.tidymodels.org/dev/reference/step_window.md)
+  : Moving window functions
+
+## Check Functions
+
+- [`check_class()`](https://recipes.tidymodels.org/dev/reference/check_class.md)
+  : Check variable class
+- [`check_cols()`](https://recipes.tidymodels.org/dev/reference/check_cols.md)
+  : Check if all columns are present
+- [`check_missing()`](https://recipes.tidymodels.org/dev/reference/check_missing.md)
+  : Check for missing values
+- [`check_new_values()`](https://recipes.tidymodels.org/dev/reference/check_new_values.md)
+  : Check for new values
+- [`check_range()`](https://recipes.tidymodels.org/dev/reference/check_range.md)
+  : Check range consistency
+
+## Developer Functions
+
+- [`developer_functions`](https://recipes.tidymodels.org/dev/reference/developer_functions.md)
+  : Developer functions for creating recipes steps
+- [`add_step()`](https://recipes.tidymodels.org/dev/reference/add_step.md)
+  [`add_check()`](https://recipes.tidymodels.org/dev/reference/add_step.md)
+  : Add a New Operation to the Current Recipe
+- [`detect_step()`](https://recipes.tidymodels.org/dev/reference/detect_step.md)
+  : Detect if a particular step or check is used in a recipe
+- [`fully_trained()`](https://recipes.tidymodels.org/dev/reference/fully_trained.md)
+  : Check to see if a recipe is trained/prepared
+- [`.get_data_types()`](https://recipes.tidymodels.org/dev/reference/get_data_types.md)
+  : Get types for use in recipes
+- [`names0()`](https://recipes.tidymodels.org/dev/reference/names0.md)
+  [`dummy_names()`](https://recipes.tidymodels.org/dev/reference/names0.md)
+  [`dummy_extract_names()`](https://recipes.tidymodels.org/dev/reference/names0.md)
+  : Naming Tools
+- [`prepper()`](https://recipes.tidymodels.org/dev/reference/prepper.md)
+  : Wrapper function for preparing recipes within resampling
+- [`recipes_argument_select()`](https://recipes.tidymodels.org/dev/reference/recipes_argument_select.md)
+  : Evaluate a selection with tidyselect semantics for arguments
+- [`recipes_eval_select()`](https://recipes.tidymodels.org/dev/reference/recipes_eval_select.md)
+  : Evaluate a selection with tidyselect semantics specific to recipes
+- [`recipes_extension_check()`](https://recipes.tidymodels.org/dev/reference/recipes_extension_check.md)
+  : Checks that steps have all S3 methods
+- [`recipes_ptype()`](https://recipes.tidymodels.org/dev/reference/recipes_ptype.md)
+  : Prototype of recipe object
+- [`recipes_ptype_validate()`](https://recipes.tidymodels.org/dev/reference/recipes_ptype_validate.md)
+  : Validate prototype of recipe object
+- [`recipes_names_predictors()`](https://recipes.tidymodels.org/dev/reference/recipes-role-indicator.md)
+  [`recipes_names_outcomes()`](https://recipes.tidymodels.org/dev/reference/recipes-role-indicator.md)
+  : Role indicators
+- [`sparse_data`](https://recipes.tidymodels.org/dev/reference/sparse_data.md)
+  : Using sparse data with recipes
+- [`update(`*`<step>`*`)`](https://recipes.tidymodels.org/dev/reference/update.step.md)
+  : Update a recipe step
+
+## Tidy Methods
+
+- [`tidy(`*`<step_BoxCox>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_YeoJohnson>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_arrange>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_bin2factor>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_bs>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_center>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<check_class>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_classdist>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_classdist_shrunken>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<check_cols>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_corr>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_count>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_cut>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_date>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_depth>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_discretize>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_dummy>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_dummy_extract>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_dummy_multi_choice>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_factor2string>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_filter>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_filter_missing>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_geodist>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_harmonic>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_holiday>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_hyperbolic>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_ica>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_bag>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_knn>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_linear>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_lower>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_mean>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_median>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_mode>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_impute_roll>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_indicate_na>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_integer>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_interact>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_intercept>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_inverse>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_invlogit>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_isomap>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_kpca>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_kpca_poly>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_kpca_rbf>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_lag>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_lincomb>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_log>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_logit>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<check_missing>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_mutate>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_mutate_at>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_naomit>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<check_new_values>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_nnmf>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_nnmf_sparse>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_normalize>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_novel>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_ns>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_num2factor>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_nzv>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_ordinalscore>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_other>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_pca>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_percentile>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_pls>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_poly>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_poly_bernstein>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_profile>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_range>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<check_range>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_ratio>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_regex>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_relevel>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_relu>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_rename>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_rename_at>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_rm>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_sample>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_scale>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_select>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_shuffle>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_slice>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_spatialsign>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_spline_b>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_spline_convex>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_spline_monotone>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_spline_natural>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_spline_nonnegative>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_sqrt>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_string2factor>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<recipe>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<check>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_time>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_unknown>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_unorder>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_window>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  [`tidy(`*`<step_zv>`*`)`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)
+  : Tidy the result of a recipe
+
+# Articles
+
+### Get started
+
+- [Introduction to
+  recipes](https://recipes.tidymodels.org/dev/articles/recipes.md):
+
+  Start here if this is your first time using recipes! You will learn
+  about basic usage, steps, selectors, and checks.
+
+### Learn more
+
+- [Handling categorical
+  predictors](https://recipes.tidymodels.org/dev/articles/Dummies.md):
+
+  This vignette describes different methods for encoding categorical
+  predictors, with special attention to interaction terms and contrasts.
+
+- [Selecting
+  variables](https://recipes.tidymodels.org/dev/articles/Selecting_Variables.md):
+
+  You can select which variables or features should be used in recipes.
+  This vignette goes over the basics of using selection functions.
+
+- [Roles in
+  recipes](https://recipes.tidymodels.org/dev/articles/Roles.md):
+
+  In recipes, roles provide a way to select variables for different
+  steps.
+
+- [On skipping
+  steps](https://recipes.tidymodels.org/dev/articles/Skipping.md):
+
+  In recipes, steps are usually applied to both the training and testing
+  sets. However, in some situations we only want to only apply a step to
+  the training data and we want to skip that step on testing data.
+
+### Practical advice
+
+- [Ordering of
+  steps](https://recipes.tidymodels.org/dev/articles/Ordering.md):
+
+  The order in which recipe steps are specified matters, and this
+  vignette gives some general suggestions that you should consider.
+
+### Developer
+
+- [Custom Steps](https://www.tidymodels.org/learn/develop/recipes/):
+
+  Write a new recipe step for data preprocessing.
+
+- [Recipes
+  Internals](https://recipes.tidymodels.org/dev/articles/internals.md):
+
+  Overview and explanation of recipe object internals.
+
+- [Dev
+  checklists](https://recipes.tidymodels.org/dev/articles/checklists.md):
+
+  These are checklists used by the tidymodels team, extension package
+  authors and contributors.
+
+### Examples
+
+- [Subsampling for Class
+  Imbalances](https://www.tidymodels.org/learn/models/sub-sampling/):
+
+  Improve model performance in imbalanced data sets through
+  undersampling or oversampling.
+
+- [Multivariate Analysis using Partial Least
+  Squares](https://www.tidymodels.org/learn/models/pls/):
+
+  Build and fit a predictive model with more than one outcome.
