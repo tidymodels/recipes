@@ -140,6 +140,8 @@
 
 * `prep()` will now error if the ptype of the data doesn't match which was used to define the recipe. (#793)
 
+* Added `ignore_step()` to modify untrained recipes by removing steps from them. (#887)
+
 * Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
 
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
