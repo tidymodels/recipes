@@ -83,7 +83,7 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data("credit_data", package = "modeldata")
 
 ## missing data per column

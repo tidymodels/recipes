@@ -103,7 +103,7 @@ the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()
 default.
 }
 \section{Tuning Parameters}{
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 \itemize{
 \item \code{threshold}: Threshold (type: double, default: 0)
 }

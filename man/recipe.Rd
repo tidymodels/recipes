@@ -376,7 +376,7 @@ will be taken as \code{TRUE}.
 }
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 # formula example with single outcome:
 data(biomass, package = "modeldata")
 

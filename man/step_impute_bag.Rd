@@ -100,7 +100,7 @@ columns \code{terms}, \code{model} , and \code{id}:
 }
 
 \section{Tuning Parameters}{
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 \itemize{
 \item \code{trees}: # Trees (type: integer, default: 25)
 }
@@ -113,7 +113,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data("credit_data", package = "modeldata")
 
 ## missing data per column

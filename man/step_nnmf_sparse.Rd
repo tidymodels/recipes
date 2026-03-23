@@ -87,7 +87,7 @@ The argument \code{num_comp} controls the number of components that will be reta
 the data). The new components will have names that begin with \code{prefix} and a
 sequence of numbers. The variable names are padded with zeros. For example, if
 \code{num_comp < 10}, their names will be \code{NNMF1} - \code{NNMF9}. If \code{num_comp = 101},
-the names would be \code{NNMF1} - \code{NNMF101}.
+the names would be \code{NNMF001} - \code{NNMF101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
@@ -116,7 +116,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (.Platform$OS.type!= "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (.Platform$OS.type!= "windows") withAutoprint(\{ # examplesIf}
 if (rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))) {
 library(Matrix)
 data(biomass, package = "modeldata")
