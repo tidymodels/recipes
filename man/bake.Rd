@@ -48,7 +48,7 @@ Also, any steps with \code{skip = TRUE} will not be applied to the data when
 \code{\link[=bake]{bake()}} is invoked with a data set in \code{new_data}. \code{bake(object, new_data = NULL)} will always have all of the steps applied.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(ames, package = "modeldata")
 
 ames <- mutate(ames, Sale_Price = log10(Sale_Price))

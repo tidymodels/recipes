@@ -96,7 +96,7 @@ The argument \code{num_comp} controls the number of components that will be reta
 the data). The new components will have names that begin with \code{prefix} and a
 sequence of numbers. The variable names are padded with zeros. For example, if
 \code{num_comp < 10}, their names will be \code{PC1} - \code{PC9}. If \code{num_comp = 101},
-the names would be \code{PC1} - \code{PC101}.
+the names would be \code{PC001} - \code{PC101}.
 
 Alternatively, \code{threshold} can be used to determine the number of components
 that are required to capture a specified fraction of the total variance in

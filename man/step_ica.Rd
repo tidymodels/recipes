@@ -96,7 +96,7 @@ The argument \code{num_comp} controls the number of components that will be reta
 the data). The new components will have names that begin with \code{prefix} and a
 sequence of numbers. The variable names are padded with zeros. For example, if
 \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}. If \code{num_comp = 101},
-the names would be \code{IC1} - \code{IC101}.
+the names would be \code{IC001} - \code{IC101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
@@ -111,7 +111,7 @@ columns \code{terms}, \code{component}, \code{value} , and \code{id}:
 }
 
 \section{Tuning Parameters}{
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 \itemize{
 \item \code{num_comp}: # Components (type: integer, default: 5)
 }
@@ -124,7 +124,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 # from fastICA::fastICA
 set.seed(131)
 S <- matrix(runif(400), 200, 2)

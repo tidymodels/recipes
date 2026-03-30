@@ -80,7 +80,7 @@ columns \code{terms} and \code{id}:
 }
 
 \section{Tuning Parameters}{
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 \itemize{
 \item \code{deg_free}: Spline Degrees of Freedom (type: integer, default: 2)
 }
@@ -93,7 +93,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
