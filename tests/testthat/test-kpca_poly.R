@@ -34,6 +34,14 @@ test_that("correct kernel PCA values", {
   rownames(pca_pred) <- NULL
   rownames(pca_pred_exp) <- NULL
 
+  # Make robust to blas changing the signs
+  for (i in seq_len(ncol(pca_pred))) {
+    j <- which.max(abs(pca_pred[, i]))
+    if (sign(pca_pred[j, i]) != sign(pca_pred_exp[j, i])) {
+      pca_pred[, i] <- -pca_pred[, i]
+    }
+  }
+
   expect_equal(pca_pred, pca_pred_exp)
 
   kpca_tibble <-

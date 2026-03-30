@@ -94,7 +94,7 @@ The argument \code{num_comp} controls the number of components that will be reta
 the data). The new components will have names that begin with \code{prefix} and a
 sequence of numbers. The variable names are padded with zeros. For example, if
 \code{num_comp < 10}, their names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101},
-the names would be \code{kPC1} - \code{kPC101}.
+the names would be \code{kPC001} - \code{kPC101}.
 }
 \section{tidy() results}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
@@ -128,7 +128,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2","kernlab"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2","kernlab"))) withAutoprint(\{ # examplesIf}
 library(ggplot2)
 data(biomass, package = "modeldata")
 

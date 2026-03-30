@@ -352,7 +352,7 @@ recipe or operation within the recipe (when a \code{tidy()} method for the
 operation exists).
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(Sacramento, package = "modeldata")
 
 Sacramento_rec <- recipe(~., data = Sacramento) |>

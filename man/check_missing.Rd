@@ -56,7 +56,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with column \co
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(credit_data, package = "modeldata")
 is.na(credit_data) |> colSums()
 
