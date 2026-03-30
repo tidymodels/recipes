@@ -251,7 +251,8 @@ test_that("simple name selections", {
       data = Sacramento,
       info = info_sac
     ),
-    error = TRUE
+    error = TRUE,
+    transform = function(x) gsub(" in `unique.default()`", "", x, fixed = TRUE)
   )
   expect_snapshot(
     recipes_eval_select(data = Sacramento, info = info_sac),

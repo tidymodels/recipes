@@ -139,7 +139,13 @@ test_that("multiple column prefix", {
     error = TRUE,
     recipe(~., data = example_data) |>
       step_discretize(x1, x2, options = list(labels = "hello")) |>
-      prep()
+      prep(),
+    transform = function(x) gsub(
+      "lengths of 'breaks' and 'labels' differ",
+      "number of intervals and length of 'labels' differ",
+      x,
+      fixed = TRUE
+    )
   )
 })
 
