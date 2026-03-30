@@ -175,15 +175,15 @@ tidy(yj_transform, number = 1)
 #> # A tibble: 1 × 3
 #>   terms         value id              
 #>   <chr>         <dbl> <chr>           
-#> 1 all_numeric()    NA YeoJohnson_Z4qwE
+#> 1 all_numeric()    NA YeoJohnson_qjRmV
 tidy(yj_estimates, number = 1)
 #> # A tibble: 6 × 3
 #>   terms      value id              
 #>   <chr>      <dbl> <chr>           
-#> 1 carbon   -0.0225 YeoJohnson_Z4qwE
-#> 2 hydrogen  2.10   YeoJohnson_Z4qwE
-#> 3 oxygen    1.78   YeoJohnson_Z4qwE
-#> 4 nitrogen -0.830  YeoJohnson_Z4qwE
-#> 5 sulfur   -4.09   YeoJohnson_Z4qwE
-#> 6 HHV      -0.388  YeoJohnson_Z4qwE
+#> 1 carbon   -0.0225 YeoJohnson_qjRmV
+#> 2 hydrogen  2.10   YeoJohnson_qjRmV
+#> 3 oxygen    1.78   YeoJohnson_qjRmV
+#> 4 nitrogen -0.830  YeoJohnson_qjRmV
+#> 5 sulfur   -4.09   YeoJohnson_qjRmV
+#> 6 HHV      -0.388  YeoJohnson_qjRmV
 ```

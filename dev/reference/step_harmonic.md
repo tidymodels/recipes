@@ -142,7 +142,7 @@ frequency, for example, a `POSIXct` input column given a `frequency` of
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `frequency`: Harmonic Frequency (type: double, default: NA)
 

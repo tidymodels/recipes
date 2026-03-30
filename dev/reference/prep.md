@@ -154,16 +154,16 @@ prep(ames_rec, verbose = TRUE)
 #> • Natural splines on: Longitude Latitude | Trained
 
 prep(ames_rec, log_changes = TRUE)
-#> step_other (other_slYqj): same number of columns
+#> step_other (other_JgwxH): same number of columns
 #> 
-#> step_dummy (dummy_dHOrD): 
+#> step_dummy (dummy_Fe2kG): 
 #>  new (9): Neighborhood_College_Creek, Neighborhood_Old_Town, ...
 #>  removed (2): Neighborhood, Central_Air
 #> 
-#> step_interact (interact_SrwZQ): 
+#> step_interact (interact_LGGmr): 
 #>  new (1): Central_Air_Y_x_Year_Built
 #> 
-#> step_ns (ns_SSy0I): 
+#> step_ns (ns_lWKqm): 
 #>  new (10): Longitude_ns_1, Longitude_ns_2, Longitude_ns_3, ...
 #>  removed (2): Longitude, Latitude
 #> 

@@ -162,11 +162,11 @@ tidy(lincomb_filter, number = 1)
 #> # A tibble: 1 × 2
 #>   terms                    id           
 #>   <chr>                    <chr>        
-#> 1 all_numeric_predictors() lincomb_jrHEn
+#> 1 all_numeric_predictors() lincomb_IeIAm
 tidy(lincomb_filter_trained, number = 1)
 #> # A tibble: 2 × 2
 #>   terms id           
 #>   <chr> <chr>        
-#> 1 new_1 lincomb_jrHEn
-#> 2 new_2 lincomb_jrHEn
+#> 1 new_1 lincomb_IeIAm
+#> 2 new_2 lincomb_IeIAm
 ```

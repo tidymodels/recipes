@@ -160,6 +160,6 @@ car_rec |>
 #> # A tibble: 2 × 3
 #>   terms value     id          
 #>   <chr> <chr>     <chr>       
-#> 1 var1  "\"cyl\"" rename_xnECM
-#> 2 var2  "\"am\""  rename_xnECM
+#> 1 var1  "\"cyl\"" rename_sfgIN
+#> 2 var2  "\"am\""  rename_sfgIN
 ```

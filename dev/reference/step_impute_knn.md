@@ -145,7 +145,7 @@ this step, a tibble is returned with columns `terms`, `predictors`,
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `neighbors`: \# Nearest Neighbors (type: integer, default: 5)
 

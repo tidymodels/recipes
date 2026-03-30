@@ -102,7 +102,7 @@ this step, a tibble is returned with columns `terms` and `id`:
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `threshold`: Threshold (type: double, default: 0.1)
 
@@ -147,15 +147,15 @@ tidy(rec, number = 1)
 #> # A tibble: 1 × 2
 #>   terms            id                  
 #>   <chr>            <chr>               
-#> 1 all_predictors() filter_missing_tkASb
+#> 1 all_predictors() filter_missing_RJOKO
 tidy(filter_obj, number = 1)
 #> # A tibble: 6 × 2
 #>   terms   id                  
 #>   <chr>   <chr>               
-#> 1 Home    filter_missing_tkASb
-#> 2 Marital filter_missing_tkASb
-#> 3 Job     filter_missing_tkASb
-#> 4 Income  filter_missing_tkASb
-#> 5 Assets  filter_missing_tkASb
-#> 6 Debt    filter_missing_tkASb
+#> 1 Home    filter_missing_RJOKO
+#> 2 Marital filter_missing_RJOKO
+#> 3 Job     filter_missing_RJOKO
+#> 4 Income  filter_missing_RJOKO
+#> 5 Assets  filter_missing_RJOKO
+#> 6 Debt    filter_missing_RJOKO
 ```

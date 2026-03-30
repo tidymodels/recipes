@@ -157,14 +157,14 @@ tidy(rec, 1)
 #> # A tibble: 10 × 3
 #>    terms      value id              
 #>    <chr>      <dbl> <chr>           
-#>  1 carbon   -Inf    discretize_ONQD4
-#>  2 carbon     44.7  discretize_ONQD4
-#>  3 carbon     47.1  discretize_ONQD4
-#>  4 carbon     49.7  discretize_ONQD4
-#>  5 carbon    Inf    discretize_ONQD4
-#>  6 hydrogen -Inf    discretize_ONQD4
-#>  7 hydrogen    5.20 discretize_ONQD4
-#>  8 hydrogen    5.78 discretize_ONQD4
-#>  9 hydrogen    6.05 discretize_ONQD4
-#> 10 hydrogen  Inf    discretize_ONQD4
+#>  1 carbon   -Inf    discretize_hhrhR
+#>  2 carbon     44.7  discretize_hhrhR
+#>  3 carbon     47.1  discretize_hhrhR
+#>  4 carbon     49.7  discretize_hhrhR
+#>  5 carbon    Inf    discretize_hhrhR
+#>  6 hydrogen -Inf    discretize_hhrhR
+#>  7 hydrogen    5.20 discretize_hhrhR
+#>  8 hydrogen    5.78 discretize_hhrhR
+#>  9 hydrogen    6.05 discretize_hhrhR
+#> 10 hydrogen  Inf    discretize_hhrhR
 ```

@@ -362,21 +362,21 @@ tidy(Sacramento_rec)
 #> # A tibble: 4 × 6
 #>   number operation type   trained skip  id          
 #>    <int> <chr>     <chr>  <lgl>   <lgl> <chr>       
-#> 1      1 step      other  FALSE   FALSE other_XZtdD 
-#> 2      2 step      center FALSE   FALSE center_adtTz
-#> 3      3 step      dummy  FALSE   FALSE dummy_VIZ8S 
-#> 4      4 check     cols   FALSE   FALSE cols_HEnNH  
+#> 1      1 step      other  FALSE   FALSE other_rHEnN 
+#> 2      2 step      center FALSE   FALSE center_0byij
+#> 3      3 step      dummy  FALSE   FALSE dummy_GJcNB 
+#> 4      4 check     cols   FALSE   FALSE cols_IeIAm  
 
 tidy(Sacramento_rec, number = 2)
 #> # A tibble: 1 × 3
 #>   terms         value id          
 #>   <chr>         <dbl> <chr>       
-#> 1 all_numeric()    NA center_adtTz
+#> 1 all_numeric()    NA center_0byij
 tidy(Sacramento_rec, number = 3)
 #> # A tibble: 1 × 3
 #>   terms         columns id         
 #>   <chr>         <chr>   <chr>      
-#> 1 all_nominal() NA      dummy_VIZ8S
+#> 1 all_nominal() NA      dummy_GJcNB
 
 Sacramento_rec_trained <- prep(Sacramento_rec, training = Sacramento)
 
@@ -384,26 +384,26 @@ tidy(Sacramento_rec_trained)
 #> # A tibble: 4 × 6
 #>   number operation type   trained skip  id          
 #>    <int> <chr>     <chr>  <lgl>   <lgl> <chr>       
-#> 1      1 step      other  TRUE    FALSE other_XZtdD 
-#> 2      2 step      center TRUE    FALSE center_adtTz
-#> 3      3 step      dummy  TRUE    FALSE dummy_VIZ8S 
-#> 4      4 check     cols   TRUE    FALSE cols_HEnNH  
+#> 1      1 step      other  TRUE    FALSE other_rHEnN 
+#> 2      2 step      center TRUE    FALSE center_0byij
+#> 3      3 step      dummy  TRUE    FALSE dummy_GJcNB 
+#> 4      4 check     cols   TRUE    FALSE cols_IeIAm  
 tidy(Sacramento_rec_trained, number = 3)
 #> # A tibble: 6 × 3
 #>   terms columns     id         
 #>   <chr> <chr>       <chr>      
-#> 1 city  ROSEVILLE   dummy_VIZ8S
-#> 2 city  SACRAMENTO  dummy_VIZ8S
-#> 3 city  another     dummy_VIZ8S
-#> 4 zip   another     dummy_VIZ8S
-#> 5 type  Residential dummy_VIZ8S
-#> 6 type  another     dummy_VIZ8S
+#> 1 city  ROSEVILLE   dummy_GJcNB
+#> 2 city  SACRAMENTO  dummy_GJcNB
+#> 3 city  another     dummy_GJcNB
+#> 4 zip   another     dummy_GJcNB
+#> 5 type  Residential dummy_GJcNB
+#> 6 type  another     dummy_GJcNB
 tidy(Sacramento_rec_trained, number = 4)
 #> # A tibble: 4 × 2
 #>   terms     id        
 #>   <chr>     <chr>     
-#> 1 latitude  cols_HEnNH
-#> 2 longitude cols_HEnNH
-#> 3 sqft      cols_HEnNH
-#> 4 price     cols_HEnNH
+#> 1 latitude  cols_IeIAm
+#> 2 longitude cols_IeIAm
+#> 3 sqft      cols_IeIAm
+#> 4 price     cols_IeIAm
 ```

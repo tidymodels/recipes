@@ -141,8 +141,8 @@ tidy(impute_rec, number = 1)
 #> # A tibble: 2 × 3
 #>   terms    value id                
 #>   <chr>    <dbl> <chr>             
-#> 1 carbon      NA impute_lower_CM3q3
-#> 2 hydrogen    NA impute_lower_CM3q3
+#> 1 carbon      NA impute_lower_b4CM3
+#> 2 hydrogen    NA impute_lower_b4CM3
 
 impute_rec <- prep(impute_rec, training = biomass_tr)
 
@@ -150,8 +150,8 @@ tidy(impute_rec, number = 1)
 #> # A tibble: 2 × 3
 #>   terms    value id                
 #>   <chr>    <dbl> <chr>             
-#> 1 carbon      40 impute_lower_CM3q3
-#> 2 hydrogen     5 impute_lower_CM3q3
+#> 1 carbon      40 impute_lower_b4CM3
+#> 2 hydrogen     5 impute_lower_b4CM3
 
 transformed_te <- bake(impute_rec, biomass_te)
 

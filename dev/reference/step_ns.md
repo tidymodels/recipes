@@ -113,7 +113,7 @@ this step, a tibble is returned with columns `terms` and `id`:
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `deg_free`: Spline Degrees of Freedom (type: integer, default: 2)
 

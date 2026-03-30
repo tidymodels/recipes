@@ -129,7 +129,8 @@ retained (the original variables that are used to derive the components
 are removed from the data). The new components will have names that
 begin with `prefix` and a sequence of numbers. The variable names are
 padded with zeros. For example, if `num_comp < 10`, their names will be
-`IC1` - `IC9`. If `num_comp = 101`, the names would be `IC1` - `IC101`.
+`IC1` - `IC9`. If `num_comp = 101`, the names would be `IC001` -
+`IC101`.
 
 ## Tidying
 
@@ -156,7 +157,7 @@ this step, a tibble is returned with columns `terms`, `component`,
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `num_comp`: \# Components (type: integer, default: 5)
 

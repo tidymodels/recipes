@@ -142,11 +142,11 @@ tidy(factor_trans, number = 1)
 #> # A tibble: 1 × 2
 #>   terms                    id           
 #>   <chr>                    <chr>        
-#> 1 all_nominal_predictors() unorder_qFLhV
+#> 1 all_nominal_predictors() unorder_uevI1
 tidy(factor_obj, number = 1)
 #> # A tibble: 2 × 2
 #>   terms id           
 #>   <chr> <chr>        
-#> 1 X1    unorder_qFLhV
-#> 2 X2    unorder_qFLhV
+#> 1 X1    unorder_uevI1
+#> 2 X2    unorder_uevI1
 ```

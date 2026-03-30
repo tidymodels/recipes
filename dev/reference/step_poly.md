@@ -124,7 +124,7 @@ this step, a tibble is returned with columns `terms`, `degree` , and
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `degree`: Polynomial Degree (type: integer, default: 2)
 
@@ -189,6 +189,6 @@ tidy(quadratic, number = 1)
 #> # A tibble: 2 × 3
 #>   terms    degree id        
 #>   <chr>     <int> <chr>     
-#> 1 carbon        2 poly_95tlS
-#> 2 hydrogen      2 poly_95tlS
+#> 1 carbon        2 poly_R8bgI
+#> 2 hydrogen      2 poly_R8bgI
 ```

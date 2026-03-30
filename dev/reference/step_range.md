@@ -171,12 +171,12 @@ tidy(ranged_trans, number = 1)
 #> # A tibble: 2 × 4
 #>   terms      min   max id         
 #>   <chr>    <dbl> <dbl> <chr>      
-#> 1 carbon      NA    NA range_80cUH
-#> 2 hydrogen    NA    NA range_80cUH
+#> 1 carbon      NA    NA range_RcYYk
+#> 2 hydrogen    NA    NA range_RcYYk
 tidy(ranged_obj, number = 1)
 #> # A tibble: 2 × 4
 #>   terms      min   max id         
 #>   <chr>    <dbl> <dbl> <chr>      
-#> 1 carbon   14.6   97.2 range_80cUH
-#> 2 hydrogen  0.03  11.6 range_80cUH
+#> 1 carbon   14.6   97.2 range_RcYYk
+#> 2 hydrogen  0.03  11.6 range_RcYYk
 ```

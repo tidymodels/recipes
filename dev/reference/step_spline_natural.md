@@ -123,7 +123,7 @@ this step, a tibble is returned with columns `terms` and `id`:
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `deg_free`: Spline Degrees of Freedom (type: integer, default: 10)
 
@@ -152,7 +152,7 @@ tidy(spline_rec, number = 1)
 #> # A tibble: 1 × 2
 #>   terms     id                  
 #>   <chr>     <chr>               
-#> 1 Longitude spline_natural_EUqjM
+#> 1 Longitude spline_natural_g2f22
 
 # Show where each feature is active
 spline_rec |>

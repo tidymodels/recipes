@@ -204,8 +204,8 @@ tidy(qq_rec, number = 1)
 #> # A tibble: 2 × 3
 #>   terms         value               id          
 #>   <chr>         <chr>               <chr>       
-#> 1 bad_approach  Sepal.Width * const mutate_5TXmN
-#> 2 best_approach Sepal.Width * 1.414 mutate_5TXmN
+#> 1 bad_approach  Sepal.Width * const mutate_p75TX
+#> 2 best_approach Sepal.Width * 1.414 mutate_p75TX
 
 # Using across()
 recipe(~., data = iris) |>

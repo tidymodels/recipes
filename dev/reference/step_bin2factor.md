@@ -142,7 +142,7 @@ tidy(rec, number = 3)
 #> # A tibble: 1 × 2
 #>   terms id              
 #>   <chr> <chr>           
-#> 1 rocks bin2factor_CWowK
+#> 1 rocks bin2factor_MkPN1
 
 rec <- prep(rec, training = covers)
 results <- bake(rec, new_data = covers)
@@ -157,5 +157,5 @@ tidy(rec, number = 3)
 #> # A tibble: 1 × 2
 #>   terms id              
 #>   <chr> <chr>           
-#> 1 rocks bin2factor_CWowK
+#> 1 rocks bin2factor_MkPN1
 ```

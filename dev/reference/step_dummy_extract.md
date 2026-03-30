@@ -247,31 +247,31 @@ tidy(dummies, number = 1)
 #> # A tibble: 2,673 × 3
 #>    terms  columns id                 
 #>    <chr>  <chr>   <chr>              
-#>  1 artist Thomas  dummy_extract_RCb4Q
-#>  2 artist Schütte dummy_extract_RCb4Q
-#>  3 artist John    dummy_extract_RCb4Q
-#>  4 artist Akram   dummy_extract_RCb4Q
-#>  5 artist Zaatari dummy_extract_RCb4Q
-#>  6 artist Joseph  dummy_extract_RCb4Q
-#>  7 artist Beuys   dummy_extract_RCb4Q
-#>  8 artist Richard dummy_extract_RCb4Q
-#>  9 artist Ferrari dummy_extract_RCb4Q
-#> 10 artist León    dummy_extract_RCb4Q
+#>  1 artist Thomas  dummy_extract_oEGyP
+#>  2 artist Schütte dummy_extract_oEGyP
+#>  3 artist John    dummy_extract_oEGyP
+#>  4 artist Akram   dummy_extract_oEGyP
+#>  5 artist Zaatari dummy_extract_oEGyP
+#>  6 artist Joseph  dummy_extract_oEGyP
+#>  7 artist Beuys   dummy_extract_oEGyP
+#>  8 artist Richard dummy_extract_oEGyP
+#>  9 artist Ferrari dummy_extract_oEGyP
+#> 10 artist León    dummy_extract_oEGyP
 #> # ℹ 2,663 more rows
 tidy(dummies_specific, number = 1)
 #> # A tibble: 1,216 × 3
 #>    terms  columns              id                 
 #>    <chr>  <chr>                <chr>              
-#>  1 medium paper                dummy_extract_iz73s
-#>  2 medium Etching              dummy_extract_iz73s
-#>  3 medium Photograph           dummy_extract_iz73s
-#>  4 medium colour               dummy_extract_iz73s
-#>  5 medium gelatin silver print dummy_extract_iz73s
-#>  6 medium Screenprint          dummy_extract_iz73s
-#>  7 medium Lithograph           dummy_extract_iz73s
-#>  8 medium on paper             dummy_extract_iz73s
-#>  9 medium canvas               dummy_extract_iz73s
-#> 10 medium aquatint             dummy_extract_iz73s
+#>  1 medium paper                dummy_extract_2Slih
+#>  2 medium Etching              dummy_extract_2Slih
+#>  3 medium Photograph           dummy_extract_2Slih
+#>  4 medium colour               dummy_extract_2Slih
+#>  5 medium gelatin silver print dummy_extract_2Slih
+#>  6 medium Screenprint          dummy_extract_2Slih
+#>  7 medium Lithograph           dummy_extract_2Slih
+#>  8 medium on paper             dummy_extract_2Slih
+#>  9 medium canvas               dummy_extract_2Slih
+#> 10 medium aquatint             dummy_extract_2Slih
 #> # ℹ 1,206 more rows
 
 # pattern argument can be useful to extract harder patterns

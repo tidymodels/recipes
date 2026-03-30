@@ -176,7 +176,7 @@ tidy(spline_rec, number = 1)
 #> # A tibble: 1 × 2
 #>   terms     id                      
 #>   <chr>     <chr>                   
-#> 1 Longitude spline_nonnegative_4LYAz
+#> 1 Longitude spline_nonnegative_KVV9Z
 
 # Show where each feature is active
 spline_rec |>

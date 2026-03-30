@@ -142,7 +142,7 @@ this step, a tibble is returned with columns `terms`, `model` , and
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `trees`: \# Trees (type: integer, default: 25)
 

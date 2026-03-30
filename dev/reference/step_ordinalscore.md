@@ -175,7 +175,7 @@ tidy(nonlin_scores, number = 2)
 #> # A tibble: 1 × 2
 #>   terms         id                
 #>   <chr>         <chr>             
-#> 1 fail_severity ordinalscore_ZtdDf
+#> 1 fail_severity ordinalscore_byijr
 
 nonlin_scores <- prep(nonlin_scores, training = ord_data)
 
@@ -191,5 +191,5 @@ tidy(nonlin_scores, number = 2)
 #> # A tibble: 1 × 2
 #>   terms         id                
 #>   <chr>         <chr>             
-#> 1 fail_severity ordinalscore_ZtdDf
+#> 1 fail_severity ordinalscore_byijr
 ```

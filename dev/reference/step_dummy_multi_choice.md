@@ -140,7 +140,7 @@ is the default.
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `threshold`: Threshold (type: double, default: 0)
 
@@ -234,11 +234,11 @@ tidy(dummy_multi_choice_rec, number = 1)
 #> # A tibble: 5 × 3
 #>   terms  columns  id                      
 #>   <chr>  <chr>    <chr>                   
-#> 1 lang_1 Armenian dummy_multi_choice_sZ4HI
-#> 2 lang_1 English  dummy_multi_choice_sZ4HI
-#> 3 lang_1 French   dummy_multi_choice_sZ4HI
-#> 4 lang_1 Italian  dummy_multi_choice_sZ4HI
-#> 5 lang_1 Spanish  dummy_multi_choice_sZ4HI
+#> 1 lang_1 Armenian dummy_multi_choice_Cb4Qi
+#> 2 lang_1 English  dummy_multi_choice_Cb4Qi
+#> 3 lang_1 French   dummy_multi_choice_Cb4Qi
+#> 4 lang_1 Italian  dummy_multi_choice_Cb4Qi
+#> 5 lang_1 Spanish  dummy_multi_choice_Cb4Qi
 
 dummy_multi_choice_rec2 <- recipe(~., data = languages) |>
   step_dummy_multi_choice(starts_with("lang"),
@@ -259,6 +259,6 @@ tidy(dummy_multi_choice_rec2, number = 1)
 #> # A tibble: 2 × 3
 #>   terms  columns id                      
 #>   <chr>  <chr>   <chr>                   
-#> 1 lang_1 English dummy_multi_choice_YaDdR
-#> 2 lang_1 other   dummy_multi_choice_YaDdR
+#> 1 lang_1 English dummy_multi_choice_z73sI
+#> 2 lang_1 other   dummy_multi_choice_z73sI
 ```

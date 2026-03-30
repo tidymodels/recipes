@@ -230,21 +230,21 @@ tidy(rec, number = 1)
 #> # A tibble: 1 × 4
 #>   terms                    value class id             
 #>   <chr>                    <dbl> <chr> <chr>          
-#> 1 all_numeric_predictors()    NA NA    classdist_Gpw7o
+#> 1 all_numeric_predictors()    NA NA    classdist_s3Z4q
 tidy(rec_dists, number = 1)
 #> # A tibble: 12 × 4
 #>    terms              value class     id             
 #>    <chr>              <dbl> <chr>     <chr>          
-#>  1 bill_length_mm      38.8 Adelie    classdist_Gpw7o
-#>  2 bill_depth_mm       18.3 Adelie    classdist_Gpw7o
-#>  3 flipper_length_mm  190.  Adelie    classdist_Gpw7o
-#>  4 body_mass_g       3706.  Adelie    classdist_Gpw7o
-#>  5 bill_length_mm      48.8 Chinstrap classdist_Gpw7o
-#>  6 bill_depth_mm       18.4 Chinstrap classdist_Gpw7o
-#>  7 flipper_length_mm  196.  Chinstrap classdist_Gpw7o
-#>  8 body_mass_g       3733.  Chinstrap classdist_Gpw7o
-#>  9 bill_length_mm      47.6 Gentoo    classdist_Gpw7o
-#> 10 bill_depth_mm       15.0 Gentoo    classdist_Gpw7o
-#> 11 flipper_length_mm  217.  Gentoo    classdist_Gpw7o
-#> 12 body_mass_g       5092.  Gentoo    classdist_Gpw7o
+#>  1 bill_length_mm      38.8 Adelie    classdist_s3Z4q
+#>  2 bill_depth_mm       18.3 Adelie    classdist_s3Z4q
+#>  3 flipper_length_mm  190.  Adelie    classdist_s3Z4q
+#>  4 body_mass_g       3706.  Adelie    classdist_s3Z4q
+#>  5 bill_length_mm      48.8 Chinstrap classdist_s3Z4q
+#>  6 bill_depth_mm       18.4 Chinstrap classdist_s3Z4q
+#>  7 flipper_length_mm  196.  Chinstrap classdist_s3Z4q
+#>  8 body_mass_g       3733.  Chinstrap classdist_s3Z4q
+#>  9 bill_length_mm      47.6 Gentoo    classdist_s3Z4q
+#> 10 bill_depth_mm       15.0 Gentoo    classdist_s3Z4q
+#> 11 flipper_length_mm  217.  Gentoo    classdist_s3Z4q
+#> 12 body_mass_g       5092.  Gentoo    classdist_s3Z4q
 ```

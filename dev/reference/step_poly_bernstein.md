@@ -120,7 +120,7 @@ this step, a tibble is returned with columns `terms` and `id`:
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `degree`: Polynomial Degree (type: integer, default: 10)
 
@@ -149,7 +149,7 @@ tidy(spline_rec, number = 1)
 #> # A tibble: 1 × 2
 #>   terms     id                  
 #>   <chr>     <chr>               
-#> 1 Longitude poly_bernstein_8WpIs
+#> 1 Longitude poly_bernstein_EVN95
 
 # Show where each feature is active
 spline_rec |>

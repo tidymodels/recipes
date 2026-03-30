@@ -172,12 +172,12 @@ tidy(rec, number = 1)
 #> # A tibble: 8 × 3
 #>   terms     value             id           
 #>   <chr>     <list>            <chr>        
-#> 1 city      <tibble [37 × 2]> integer_ckWIU
-#> 2 zip       <tibble [68 × 2]> integer_ckWIU
-#> 3 beds      <tibble [5 × 2]>  integer_ckWIU
-#> 4 baths     <tibble [4 × 2]>  integer_ckWIU
-#> 5 sqft      <tibble [94 × 2]> integer_ckWIU
-#> 6 price     <tibble [95 × 2]> integer_ckWIU
-#> 7 latitude  <tibble [99 × 2]> integer_ckWIU
-#> 8 longitude <tibble [99 × 2]> integer_ckWIU
+#> 1 city      <tibble [37 × 2]> integer_3IckW
+#> 2 zip       <tibble [68 × 2]> integer_3IckW
+#> 3 beds      <tibble [5 × 2]>  integer_3IckW
+#> 4 baths     <tibble [4 × 2]>  integer_3IckW
+#> 5 sqft      <tibble [94 × 2]> integer_3IckW
+#> 6 price     <tibble [95 × 2]> integer_3IckW
+#> 7 latitude  <tibble [99 × 2]> integer_3IckW
+#> 8 longitude <tibble [99 × 2]> integer_3IckW
 ```

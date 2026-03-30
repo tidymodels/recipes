@@ -126,7 +126,7 @@ this step, a tibble is returned with columns `terms`, `retained` , and
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `threshold`: Threshold (type: double, default: 0.05)
 

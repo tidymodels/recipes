@@ -179,6 +179,6 @@ tidy(rec, number = 1)
 #> # A tibble: 2 × 3
 #>   terms value id         
 #>   <chr> <chr> <chr>      
-#> 1 city  new   novel_1VT1q
-#> 2 zip   new   novel_1VT1q
+#> 1 city  new   novel_B2lWN
+#> 2 zip   new   novel_B2lWN
 ```

@@ -136,7 +136,8 @@ retained (the original variables that are used to derive the components
 are removed from the data). The new components will have names that
 begin with `prefix` and a sequence of numbers. The variable names are
 padded with zeros. For example, if `num_comp < 10`, their names will be
-`PC1` - `PC9`. If `num_comp = 101`, the names would be `PC1` - `PC101`.
+`PC1` - `PC9`. If `num_comp = 101`, the names would be `PC001` -
+`PC101`.
 
 Alternatively, `threshold` can be used to determine the number of
 components that are required to capture a specified fraction of the
@@ -264,45 +265,45 @@ tidy(pca_trans, number = 2)
 #> # A tibble: 1 × 4
 #>   terms         value component id       
 #>   <chr>         <dbl> <chr>     <chr>    
-#> 1 all_numeric()    NA NA        pca_d0Uw3
+#> 1 all_numeric()    NA NA        pca_Esd0U
 tidy(pca_estimates, number = 2)
 #> # A tibble: 16 × 4
 #>    terms      value component id       
 #>    <chr>      <dbl> <chr>     <chr>    
-#>  1 Murder   -0.536  PC1       pca_d0Uw3
-#>  2 Assault  -0.583  PC1       pca_d0Uw3
-#>  3 UrbanPop -0.278  PC1       pca_d0Uw3
-#>  4 Rape     -0.543  PC1       pca_d0Uw3
-#>  5 Murder   -0.418  PC2       pca_d0Uw3
-#>  6 Assault  -0.188  PC2       pca_d0Uw3
-#>  7 UrbanPop  0.873  PC2       pca_d0Uw3
-#>  8 Rape      0.167  PC2       pca_d0Uw3
-#>  9 Murder    0.341  PC3       pca_d0Uw3
-#> 10 Assault   0.268  PC3       pca_d0Uw3
-#> 11 UrbanPop  0.378  PC3       pca_d0Uw3
-#> 12 Rape     -0.818  PC3       pca_d0Uw3
-#> 13 Murder    0.649  PC4       pca_d0Uw3
-#> 14 Assault  -0.743  PC4       pca_d0Uw3
-#> 15 UrbanPop  0.134  PC4       pca_d0Uw3
-#> 16 Rape      0.0890 PC4       pca_d0Uw3
+#>  1 Murder   -0.536  PC1       pca_Esd0U
+#>  2 Assault  -0.583  PC1       pca_Esd0U
+#>  3 UrbanPop -0.278  PC1       pca_Esd0U
+#>  4 Rape     -0.543  PC1       pca_Esd0U
+#>  5 Murder   -0.418  PC2       pca_Esd0U
+#>  6 Assault  -0.188  PC2       pca_Esd0U
+#>  7 UrbanPop  0.873  PC2       pca_Esd0U
+#>  8 Rape      0.167  PC2       pca_Esd0U
+#>  9 Murder    0.341  PC3       pca_Esd0U
+#> 10 Assault   0.268  PC3       pca_Esd0U
+#> 11 UrbanPop  0.378  PC3       pca_Esd0U
+#> 12 Rape     -0.818  PC3       pca_Esd0U
+#> 13 Murder    0.649  PC4       pca_Esd0U
+#> 14 Assault  -0.743  PC4       pca_Esd0U
+#> 15 UrbanPop  0.134  PC4       pca_Esd0U
+#> 16 Rape      0.0890 PC4       pca_Esd0U
 tidy(pca_estimates, number = 2, type = "variance")
 #> # A tibble: 16 × 4
 #>    terms                         value component id       
 #>    <chr>                         <dbl>     <int> <chr>    
-#>  1 variance                      2.48          1 pca_d0Uw3
-#>  2 variance                      0.990         2 pca_d0Uw3
-#>  3 variance                      0.357         3 pca_d0Uw3
-#>  4 variance                      0.173         4 pca_d0Uw3
-#>  5 cumulative variance           2.48          1 pca_d0Uw3
-#>  6 cumulative variance           3.47          2 pca_d0Uw3
-#>  7 cumulative variance           3.83          3 pca_d0Uw3
-#>  8 cumulative variance           4             4 pca_d0Uw3
-#>  9 percent variance             62.0           1 pca_d0Uw3
-#> 10 percent variance             24.7           2 pca_d0Uw3
-#> 11 percent variance              8.91          3 pca_d0Uw3
-#> 12 percent variance              4.34          4 pca_d0Uw3
-#> 13 cumulative percent variance  62.0           1 pca_d0Uw3
-#> 14 cumulative percent variance  86.8           2 pca_d0Uw3
-#> 15 cumulative percent variance  95.7           3 pca_d0Uw3
-#> 16 cumulative percent variance 100             4 pca_d0Uw3
+#>  1 variance                      2.48          1 pca_Esd0U
+#>  2 variance                      0.990         2 pca_Esd0U
+#>  3 variance                      0.357         3 pca_Esd0U
+#>  4 variance                      0.173         4 pca_Esd0U
+#>  5 cumulative variance           2.48          1 pca_Esd0U
+#>  6 cumulative variance           3.47          2 pca_Esd0U
+#>  7 cumulative variance           3.83          3 pca_Esd0U
+#>  8 cumulative variance           4             4 pca_Esd0U
+#>  9 percent variance             62.0           1 pca_Esd0U
+#> 10 percent variance             24.7           2 pca_Esd0U
+#> 11 percent variance              8.91          3 pca_Esd0U
+#> 12 percent variance              4.34          4 pca_Esd0U
+#> 13 cumulative percent variance  62.0           1 pca_Esd0U
+#> 14 cumulative percent variance  86.8           2 pca_Esd0U
+#> 15 cumulative percent variance  95.7           3 pca_Esd0U
+#> 16 cumulative percent variance 100             4 pca_Esd0U
 ```

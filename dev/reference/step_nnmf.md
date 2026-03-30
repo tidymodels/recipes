@@ -133,7 +133,7 @@ retained (the original variables that are used to derive the components
 are removed from the data). The new components will have names that
 begin with `prefix` and a sequence of numbers. The variable names are
 padded with zeros. For example, if `num_comp < 10`, their names will be
-`NNMF1` - `NNMF9`. If `num_comp = 101`, the names would be `NNMF1` -
+`NNMF1` - `NNMF9`. If `num_comp = 101`, the names would be `NNMF001` -
 `NNMF101`.
 
 ## Tidying

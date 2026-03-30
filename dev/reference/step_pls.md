@@ -143,7 +143,7 @@ retained (the original variables that are used to derive the components
 are removed from the data). The new components will have names that
 begin with `prefix` and a sequence of numbers. The variable names are
 padded with zeros. For example, if `num_comp < 10`, their names will be
-`PLS1` - `PLS9`. If `num_comp = 101`, the names would be `PLS1` -
+`PLS1` - `PLS9`. If `num_comp = 101`, the names would be `PLS001` -
 `PLS101`.
 
 Sparsity can be encouraged using the `predictor_prop` parameter. This

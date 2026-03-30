@@ -171,20 +171,20 @@ tidy(rec, 1)
 #> # A tibble: 1 × 4
 #>   terms  value percentile id              
 #>   <chr>  <dbl>      <dbl> <chr>           
-#> 1 carbon    NA         NA percentile_PRBJI
+#> 1 carbon    NA         NA percentile_dwNDP
 tidy(prepped_rec, 1)
 #> # A tibble: 101 × 4
 #>    terms  value percentile id              
 #>    <chr>  <dbl>      <dbl> <chr>           
-#>  1 carbon  14.6          0 percentile_PRBJI
-#>  2 carbon  25.9          1 percentile_PRBJI
-#>  3 carbon  28.4          2 percentile_PRBJI
-#>  4 carbon  31.6          3 percentile_PRBJI
-#>  5 carbon  35.1          4 percentile_PRBJI
-#>  6 carbon  35.9          5 percentile_PRBJI
-#>  7 carbon  37.5          6 percentile_PRBJI
-#>  8 carbon  38.3          7 percentile_PRBJI
-#>  9 carbon  38.9          8 percentile_PRBJI
-#> 10 carbon  39.6          9 percentile_PRBJI
+#>  1 carbon  14.6          0 percentile_dwNDP
+#>  2 carbon  25.9          1 percentile_dwNDP
+#>  3 carbon  28.4          2 percentile_dwNDP
+#>  4 carbon  31.6          3 percentile_dwNDP
+#>  5 carbon  35.1          4 percentile_dwNDP
+#>  6 carbon  35.9          5 percentile_dwNDP
+#>  7 carbon  37.5          6 percentile_dwNDP
+#>  8 carbon  38.3          7 percentile_dwNDP
+#>  9 carbon  38.9          8 percentile_dwNDP
+#> 10 carbon  39.6          9 percentile_dwNDP
 #> # ℹ 91 more rows
 ```

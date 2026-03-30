@@ -171,12 +171,12 @@ tidy(ss_trans, number = 3)
 #> # A tibble: 2 × 2
 #>   terms    id               
 #>   <chr>    <chr>            
-#> 1 carbon   spatialsign_dkh8k
-#> 2 hydrogen spatialsign_dkh8k
+#> 1 carbon   spatialsign_Geidk
+#> 2 hydrogen spatialsign_Geidk
 tidy(ss_obj, number = 3)
 #> # A tibble: 2 × 2
 #>   terms    id               
 #>   <chr>    <chr>            
-#> 1 carbon   spatialsign_dkh8k
-#> 2 hydrogen spatialsign_dkh8k
+#> 1 carbon   spatialsign_Geidk
+#> 2 hydrogen spatialsign_Geidk
 ```

@@ -140,7 +140,7 @@ retained (the original variables that are used to derive the components
 are removed from the data). The new components will have names that
 begin with `prefix` and a sequence of numbers. The variable names are
 padded with zeros. For example, if `num_comp < 10`, their names will be
-`kPC1` - `kPC9`. If `num_comp = 101`, the names would be `kPC1` -
+`kPC1` - `kPC9`. If `num_comp = 101`, the names would be `kPC001` -
 `kPC101`.
 
 ## tidy() results
@@ -228,14 +228,14 @@ tidy(kpca_trans, number = 3)
 #> # A tibble: 1 × 2
 #>   terms                    id        
 #>   <chr>                    <chr>     
-#> 1 all_numeric_predictors() kpca_gVFEe
+#> 1 all_numeric_predictors() kpca_ntsLB
 tidy(kpca_estimates, number = 3)
 #> # A tibble: 5 × 2
 #>   terms    id        
 #>   <chr>    <chr>     
-#> 1 carbon   kpca_gVFEe
-#> 2 hydrogen kpca_gVFEe
-#> 3 oxygen   kpca_gVFEe
-#> 4 nitrogen kpca_gVFEe
-#> 5 sulfur   kpca_gVFEe
+#> 1 carbon   kpca_ntsLB
+#> 2 hydrogen kpca_ntsLB
+#> 3 oxygen   kpca_ntsLB
+#> 4 nitrogen kpca_ntsLB
+#> 5 sulfur   kpca_ntsLB
 ```

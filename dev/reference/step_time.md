@@ -156,9 +156,9 @@ tidy(time_rec, number = 1)
 #> # A tibble: 3 × 3
 #>   terms            value  id        
 #>   <chr>            <chr>  <chr>     
-#> 1 all_predictors() hour   time_0ZB2l
-#> 2 all_predictors() minute time_0ZB2l
-#> 3 all_predictors() second time_0ZB2l
+#> 1 all_predictors() hour   time_wvoo0
+#> 2 all_predictors() minute time_wvoo0
+#> 3 all_predictors() second time_wvoo0
 
 time_rec <- prep(time_rec, training = examples)
 
@@ -177,7 +177,7 @@ tidy(time_rec, number = 1)
 #> # A tibble: 3 × 3
 #>   terms value  id        
 #>   <chr> <chr>  <chr>     
-#> 1 times hour   time_0ZB2l
-#> 2 times minute time_0ZB2l
-#> 3 times second time_0ZB2l
+#> 1 times hour   time_wvoo0
+#> 2 times minute time_wvoo0
+#> 3 times second time_wvoo0
 ```

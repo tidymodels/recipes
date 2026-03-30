@@ -178,16 +178,16 @@ tidy(norm_trans, number = 1)
 #> # A tibble: 2 × 4
 #>   terms    statistic value id             
 #>   <chr>    <chr>     <dbl> <chr>          
-#> 1 carbon   NA           NA normalize_o0ZB2
-#> 2 hydrogen NA           NA normalize_o0ZB2
+#> 1 carbon   NA           NA normalize_hS7oa
+#> 2 hydrogen NA           NA normalize_hS7oa
 tidy(norm_obj, number = 1)
 #> # A tibble: 4 × 4
 #>   terms    statistic value id             
 #>   <chr>    <chr>     <dbl> <chr>          
-#> 1 carbon   mean      48.4  normalize_o0ZB2
-#> 2 hydrogen mean       5.46 normalize_o0ZB2
-#> 3 carbon   sd        10.4  normalize_o0ZB2
-#> 4 hydrogen sd         1.20 normalize_o0ZB2
+#> 1 carbon   mean      48.4  normalize_hS7oa
+#> 2 hydrogen mean       5.46 normalize_hS7oa
+#> 3 carbon   sd        10.4  normalize_hS7oa
+#> 4 hydrogen sd         1.20 normalize_hS7oa
 
 # To keep the original variables in the output, use `step_mutate_at`:
 norm_keep_orig <- rec |>

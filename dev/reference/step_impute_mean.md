@@ -107,7 +107,7 @@ this step, a tibble is returned with columns `terms`, `value` , and
 
 ## Tuning Parameters
 
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 
 - `trim`: Amount of Trimming (type: double, default: 0)
 

@@ -187,12 +187,12 @@ tidy(scaled_trans, number = 1)
 #> # A tibble: 2 × 3
 #>   terms    value id         
 #>   <chr>    <dbl> <chr>      
-#> 1 carbon      NA scale_c85ah
-#> 2 hydrogen    NA scale_c85ah
+#> 1 carbon      NA scale_nNppk
+#> 2 hydrogen    NA scale_nNppk
 tidy(scaled_obj, number = 1)
 #> # A tibble: 2 × 3
 #>   terms    value id         
 #>   <chr>    <dbl> <chr>      
-#> 1 carbon   10.4  scale_c85ah
-#> 2 hydrogen  1.20 scale_c85ah
+#> 1 carbon   10.4  scale_nNppk
+#> 2 hydrogen  1.20 scale_nNppk
 ```

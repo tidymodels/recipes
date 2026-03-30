@@ -177,11 +177,11 @@ tidy(int_mod_1, number = 1)
 #> # A tibble: 1 × 2
 #>   terms                        id            
 #>   <chr>                        <chr>         
-#> 1 bill_depth_mm:bill_length_mm interact_WkM5w
+#> 1 bill_depth_mm:bill_length_mm interact_IUB7W
 tidy(int_mod_2, number = 2)
 #> # A tibble: 2 × 2
 #>   terms                         id            
 #>   <chr>                         <chr>         
-#> 1 body_mass_g:species_Chinstrap interact_7qfjM
-#> 2 body_mass_g:species_Gentoo    interact_7qfjM
+#> 1 body_mass_g:species_Chinstrap interact_kM5w7
+#> 2 body_mass_g:species_Gentoo    interact_kM5w7
 ```

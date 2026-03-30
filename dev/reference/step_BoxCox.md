@@ -163,16 +163,16 @@ tidy(bc_trans, number = 1)
 #> # A tibble: 1 × 3
 #>   terms         value id          
 #>   <chr>         <dbl> <chr>       
-#> 1 all_numeric()    NA BoxCox_rKPRd
+#> 1 all_numeric()    NA BoxCox_rDslY
 tidy(bc_estimates, number = 1)
 #> # A tibble: 7 × 3
 #>   terms          value id          
 #>   <chr>          <dbl> <chr>       
-#> 1 Population  0.000966 BoxCox_rKPRd
-#> 2 Income      0.524    BoxCox_rKPRd
-#> 3 Illiteracy -0.379    BoxCox_rKPRd
-#> 4 Life Exp    4.59     BoxCox_rKPRd
-#> 5 Murder      0.606    BoxCox_rKPRd
-#> 6 HS Grad     1.92     BoxCox_rKPRd
-#> 7 Area        0.250    BoxCox_rKPRd
+#> 1 Population  0.000966 BoxCox_rDslY
+#> 2 Income      0.524    BoxCox_rDslY
+#> 3 Illiteracy -0.379    BoxCox_rDslY
+#> 4 Life Exp    4.59     BoxCox_rDslY
+#> 5 Murder      0.606    BoxCox_rDslY
+#> 6 HS Grad     1.92     BoxCox_rDslY
+#> 7 Area        0.250    BoxCox_rDslY
 ```

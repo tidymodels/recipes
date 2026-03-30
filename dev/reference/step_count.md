@@ -215,10 +215,10 @@ tidy(rec, number = 1)
 #> # A tibble: 1 × 3
 #>   terms       result id         
 #>   <chr>       <chr>  <chr>      
-#> 1 description NA     count_7KJwk
+#> 1 description NA     count_HX7KJ
 tidy(rec2, number = 1)
 #> # A tibble: 1 × 3
 #>   terms       result id         
 #>   <chr>       <chr>  <chr>      
-#> 1 description rocks  count_7KJwk
+#> 1 description rocks  count_HX7KJ
 ```

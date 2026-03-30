@@ -162,7 +162,7 @@ tidy(spline_rec, number = 1)
 #> # A tibble: 1 × 2
 #>   terms     id                 
 #>   <chr>     <chr>              
-#> 1 Longitude spline_convex_g7vg2
+#> 1 Longitude spline_convex_TpMy9
 
 # Show where each feature is active
 spline_rec |>
