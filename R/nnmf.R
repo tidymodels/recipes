@@ -66,21 +66,21 @@
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' data(biomass, package = "modeldata")
 #'
+#' # Old:
 #' # rec <- recipe(HHV ~ ., data = biomass) |>
 #' #   update_role(sample, new_role = "id var") |>
 #' #   update_role(dataset, new_role = "split variable") |>
-#' #   step_nnmf_sparse(
-#' #     all_numeric_predictors(),
-#' #     num_comp = 2,
-#' #     seed = 473) |>
-#' #   #step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
+#' #   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, num_run = 2) |>
+#' #   prep(training = biomass)
+#' #
+#' # New:
+#' # rec <- recipe(HHV ~ ., data = biomass) |>
+#' #   update_role(sample, new_role = "id var") |>
+#' #   update_role(dataset, new_role = "split variable") |>
+#' #   step_nnmf_sparse(all_numeric_predictors(), num_comp = 2, seed = 473) |>
 #' #   prep(training = biomass)
 #' #
 #' # bake(rec, new_data = NULL)
-#' #
-#' # library(ggplot2)
-#' # bake(rec, new_data = NULL) |>
-#' #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 step_nnmf <-
   function(
     recipe,
@@ -98,8 +98,8 @@ step_nnmf <-
     skip = FALSE,
     id = rand_id("nnmf")
   ) {
-    recipes_pkg_check(required_pkgs.step_nnmf())
     lifecycle::deprecate_warn("0.2.0", "step_nnmf()", "step_nnmf_sparse()")
+    recipes_pkg_check(required_pkgs.step_nnmf())
     add_step(
       recipe,
       step_nnmf_new(
