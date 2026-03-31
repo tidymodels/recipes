@@ -562,8 +562,12 @@ test_that("bad args", {
 test_that("PLS works with scale = FALSE (#1512)", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) |>
-    step_pls(all_predictors(), outcome = HHV, num_comp = 3,
-             options = list(scale = FALSE))
+    step_pls(
+      all_predictors(),
+      outcome = HHV,
+      num_comp = 3,
+      options = list(scale = FALSE)
+    )
 
   rec <- prep(rec)
 
