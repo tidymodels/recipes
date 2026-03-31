@@ -318,7 +318,9 @@ pls_project <- function(object, x) {
     x <- as.matrix(x)
   }
   z <- sweep(x, 2, STATS = object$mu, "-")
-  z <- sweep(z, 2, STATS = object$sd, "/")
+  if (!is.null(object$sd)) {
+    z <- sweep(z, 2, STATS = object$sd, "/")
+  }
   res <- z %*% object$coefs
   res <- tibble::as_tibble(res)
   res <- purrr::map2_dfc(res, object$col_norms, \(.x, .y) .x * .y)
