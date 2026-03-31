@@ -51,7 +51,7 @@ Suggests:
     dimRed,
     fastICA,
     ggplot2,
-    igraph,
+    igraph (>= 2.1.1),
     kernlab,
     knitr,
     methods,
@@ -71,6 +71,8 @@ VignetteBuilder:
     knitr
 RdMacros: 
     lifecycle
+biocViews: 
+    mixOmics
 Config/Needs/website: tidyverse/tidytemplate, rmarkdown
 Config/testthat/edition: 3
 Config/usethis/last-upkeep: 2025-04-23
