@@ -48,8 +48,10 @@ Suggests:
     covr,
     ddalpha,
     dials (>= 1.2.0),
+    dimRed,
+    fastICA,
     ggplot2,
-    igraph,
+    igraph (>= 2.1.1),
     kernlab,
     knitr,
     methods,
@@ -62,16 +64,17 @@ Suggests:
     rsample,
     RSpectra,
     splines2,
-    testthat (>= 3.0.0),
+    testthat (>= 3.3.0),
     workflows,
     xml2
 VignetteBuilder: 
     knitr
 RdMacros: 
     lifecycle
+biocViews: mixOmics
 Config/Needs/website: tidyverse/tidytemplate, rmarkdown
 Config/testthat/edition: 3
 Config/usethis/last-upkeep: 2025-04-23
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

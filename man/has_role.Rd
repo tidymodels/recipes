@@ -115,8 +115,8 @@ captures characters, unordered and ordered factors.
 \code{all_integer()} captures integers, \code{all_double()} captures doubles,
 \code{all_numeric()} captures all kinds of numeric.
 
-\code{all_date()} captures \code{\link[=Date]{Date()}} variables, \code{all_datetime()} captures
-\code{\link[=POSIXct]{POSIXct()}} variables.
+\code{all_date()} captures \code{\link[lubridate:date_utils]{lubridate::Date()}} variables, \code{all_datetime()} captures
+\code{\link[lubridate:posix_utils]{lubridate::POSIXct()}} variables.
 
 See \link{selections} for more details.
 
@@ -126,7 +126,7 @@ All of these functions have have limited utility outside of column selection
 in step functions.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(biomass, package = "modeldata")
 
 rec <- recipe(biomass) |>

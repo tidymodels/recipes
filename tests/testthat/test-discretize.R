@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-r_version <- function() paste0("R", getRversion()[, 1:2])
-
 ex_tr <- data.frame(
   x1 = 1:100,
   x2 = rep(1:5, each = 20),
@@ -142,7 +140,14 @@ test_that("multiple column prefix", {
     recipe(~., data = example_data) |>
       step_discretize(x1, x2, options = list(labels = "hello")) |>
       prep(),
-    variant = r_version()
+    transform = function(x) {
+      gsub(
+        "lengths of 'breaks' and 'labels' differ",
+        "number of intervals and length of 'labels' differ",
+        x,
+        fixed = TRUE
+      )
+    }
   )
 })
 

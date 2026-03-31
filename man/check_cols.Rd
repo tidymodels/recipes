@@ -52,7 +52,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns \c
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(biomass, package = "modeldata")
 
 biomass_rec <- recipe(HHV ~ ., data = biomass) |>

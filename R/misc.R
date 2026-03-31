@@ -828,7 +828,12 @@ changelog <- function(show, before, after, x) {
 # ------------------------------------------------------------------------------
 
 eval_dimred_call <- function(fn, ...) {
-  cl <- rlang::call2(fn, .ns = "dimRed", ...)
+  .ns <- if (exists(fn, where = asNamespace("dimRed"), inherits = FALSE)) {
+    "dimRed"
+  } else {
+    NULL
+  }
+  cl <- rlang::call2(fn, .ns = .ns, ...)
   rlang::eval_tidy(cl)
 }
 

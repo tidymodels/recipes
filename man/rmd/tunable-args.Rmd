@@ -31,7 +31,7 @@ get_param_list <- function(x) {
 param <- get_param_list(step)
 ```
 
-This step has `r length(param)` tuning parameters:
+This step has `r length(param)` tuning parameter`r ifelse(length(param) == 1, "", "s")`:
 
 ```{r}
 #| echo: false

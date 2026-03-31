@@ -52,7 +52,7 @@ of these arguments. Will thus accept strings, tidyselect, recipes selections,
 helper functions \code{\link[=imp_vars]{imp_vars()}} in addition to the prefered bare names.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 library(rlang)
 data(scat, package = "modeldata")
 

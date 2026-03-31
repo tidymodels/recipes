@@ -40,9 +40,9 @@ possible dimensions, a smaller value will be used.}
 
 \item{neighbors}{The number of neighbors.}
 
-\item{options}{A list of options to `dimRed::Isomap()``.}
+\item{options}{A list of options to `dimRed::embed()``.}
 
-\item{res}{The `dimRed::Isomap()`` object is stored here once this
+\item{res}{The `dimRed::embed()`` object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
@@ -117,7 +117,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]

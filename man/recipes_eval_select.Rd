@@ -61,7 +61,7 @@ information about the unique recipes selectors.
 This is a developer tool that is only useful for creating new recipes steps.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 library(rlang)
 data(scat, package = "modeldata")
 

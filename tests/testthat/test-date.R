@@ -127,7 +127,7 @@ test_that("check_name() is used", {
 })
 
 test_that("locale argument have recipe work in different locale", {
-  skip_if(getRversion() < "4.3.0")
+  skip_unless_r(">= 4.3.0")
   # Locales on GHA are weird on old versions of R
 
   old_locale <- Sys.getlocale("LC_TIME")
@@ -148,7 +148,7 @@ test_that("locale argument have recipe work in different locale", {
 })
 
 test_that("locale argument works when specified", {
-  skip_if(getRversion() < "4.3.0")
+  skip_unless_r(">= 4.3.0")
   # Locales on GHA are weird on old versions of R
 
   old_locale <- Sys.getlocale("LC_TIME")

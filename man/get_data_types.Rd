@@ -84,7 +84,7 @@ will get data type "other".
 }
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 
 data(Sacramento, package = "modeldata")
 lapply(Sacramento, .get_data_types)

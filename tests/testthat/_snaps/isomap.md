@@ -23,7 +23,6 @@
       Sepal.Width, deg_free = 1, degree = 1), Sepal.Length, deg_free = 1, degree = 1),
       Species, threshold = 1e-09), all_numeric_predictors(), num_terms = 1,
       neighbors = 1))
-    Message
     Condition
       Error in `step_isomap()`:
       Caused by error in `prep()`:
@@ -31,11 +30,42 @@
       Caused by error:
       ! TridiagEigen: eigen decomposition failed
 
+# ISOmap suppresses only messages, not errors
+
+    Code
+      prep(step_isomap(recipe(mpg ~ ., data = mtcars), all_numeric_predictors(),
+      neighbors = 31, options = list(.mute = character(0))))
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Isomap approximation with: cyl, disp, hp, drat, wt, qsec, ... | Trained
+
+---
+
+    Code
+      prep(step_isomap(recipe(mpg ~ ., data = mtcars), all_numeric_predictors(),
+      neighbors = 32, options = list(.mute = c("message"))))
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `prep()`:
+      ! Failed to compute:
+      Caused by error in `RANN::nn2()`:
+      ! Cannot find more nearest neighbours than there are points
+
 # check_name() is used
 
     Code
       prep(rec, training = dat)
-    Message
     Condition
       Error in `step_isomap()`:
       Caused by error in `bake()`:
@@ -98,7 +128,6 @@
 
     Code
       rec <- prep(rec)
-    Message
     Condition
       Warning:
       `keep_original_cols` was added to `step_isomap()` after this recipe was created.

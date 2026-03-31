@@ -80,7 +80,7 @@ first step is to center the data and the second is to scale the data, the
 step for scaling is given the centered data.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(ames, package = "modeldata")
 
 library(dplyr)

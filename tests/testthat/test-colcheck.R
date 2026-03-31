@@ -54,10 +54,8 @@ test_that("check_col works in the bake stage", {
 
 test_that("non-standard roles during bake/predict", {
   skip_if_not_installed("modeldata")
-  skip_if_not_installed("workflows")
-  skip_if_not_installed("parsnip")
-  skip_if(packageVersion("workflows") < "0.2.6.9001")
-  skip_if(packageVersion("parsnip") < "1.0.0")
+  skip_if_not_installed("workflows", "0.2.6.9001")
+  skip_if_not_installed("parsnip", "1.0.0")
 
   # ----------------------------------------------------------------------------
 

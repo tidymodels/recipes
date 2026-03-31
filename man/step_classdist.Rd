@@ -117,7 +117,7 @@ importance weights. For more information,, see the documentation in
 }
 
 \examples{
-\dontshow{if (rlang::is_installed(c("modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("modeldata"))) withAutoprint(\{ # examplesIf}
 data(penguins, package = "modeldata")
 penguins <- penguins[vctrs::vec_detect_complete(penguins), ]
 penguins$island <- NULL

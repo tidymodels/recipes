@@ -115,7 +115,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("ddalpha")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("ddalpha")) withAutoprint(\{ # examplesIf}
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) |>

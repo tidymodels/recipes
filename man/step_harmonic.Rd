@@ -105,7 +105,7 @@ and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of 1.
 \code{cycle_size} equal to 3600.
 }
 \section{Tuning Parameters}{
-This step has 1 tuning parameters:
+This step has 1 tuning parameter:
 \itemize{
 \item \code{frequency}: Harmonic Frequency (type: double, default: NA)
 }
@@ -132,7 +132,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("ggplot2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("ggplot2")) withAutoprint(\{ # examplesIf}
 library(ggplot2, quietly = TRUE)
 library(dplyr)
 

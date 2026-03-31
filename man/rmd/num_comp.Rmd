@@ -1,7 +1,7 @@
 ```{r}
 #| include: false
 low_range <- paste0("\`", prefix, 1, "\` - \`", prefix, 9, "\`")
-high_range <- paste0("\`", prefix, 001, "\` - \`", prefix, 101, "\`")
+high_range <- paste0("\`", prefix, "001", "\` - \`", prefix, "101", "\`")
 ```
 
 The argument `num_comp` controls the number of components that will be retained

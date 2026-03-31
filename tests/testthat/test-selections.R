@@ -1,5 +1,3 @@
-r_version <- function() paste0("R", getRversion()[, 1:2])
-
 skip_if_not_installed("modeldata")
 
 data("Sacramento", package = "modeldata")
@@ -254,7 +252,7 @@ test_that("simple name selections", {
       info = info_sac
     ),
     error = TRUE,
-    variant = r_version()
+    transform = function(x) gsub(" in `unique.default()`", "", x, fixed = TRUE)
   )
   expect_snapshot(
     recipes_eval_select(data = Sacramento, info = info_sac),
