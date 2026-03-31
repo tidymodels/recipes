@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug in `step_pls()` where `bake()` would error when `scale = FALSE` was passed via `options`. (#1512)
+
 # recipes 1.3.1
 
 * Fixed bug where `tune_args()` would error if argument to step had a parsnip object with tuned arguments. (#1506)

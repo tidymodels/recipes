@@ -559,6 +559,18 @@ test_that("bad args", {
   )
 })
 
+test_that("PLS works with scale = FALSE (#1512)", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV ~ ., data = biom_tr) |>
+    step_pls(all_predictors(), outcome = HHV, num_comp = 3,
+             options = list(scale = FALSE))
+
+  rec <- prep(rec)
+
+  expect_null(rec$steps[[1]]$res$sd)
+  expect_no_error(bake(rec, new_data = biom_te))
+})
+
 test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("mixOmics")
 
