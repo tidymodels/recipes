@@ -2,6 +2,11 @@
 
 ## recipes (development version)
 
+- [`step_nnmf()`](https://recipes.tidymodels.org/dev/reference/step_nnmf.md)
+  is deprecated. Use
+  [`step_nnmf_sparse()`](https://recipes.tidymodels.org/dev/reference/step_nnmf_sparse.md)
+  instead. ([\#1497](https://github.com/tidymodels/recipes/issues/1497))
+
 - Fixed bug in
   [`step_pls()`](https://recipes.tidymodels.org/dev/reference/step_pls.md)
   where [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)
