@@ -121,7 +121,9 @@ trim <- function(x, trim) {
   na_ind <- is.na(x)
   n <- length(x[!na_ind])
   if (trim > 0 && n) {
-    if (trim >= 0.5) return(stats::median(x[!na_ind], na.rm = FALSE))
+    if (trim >= 0.5) {
+      return(stats::median(x[!na_ind], na.rm = FALSE))
+    }
     lo <- floor(n * trim) + 1
     hi <- n + 1 - lo
     x[seq(1, lo - 1)] <- NA

@@ -112,7 +112,9 @@ new_values_func <- function(
   if (all(is.na(new_vals)) && ignore_NA) {
     return()
   }
-  if (ignore_NA) new_vals <- new_vals[!is.na(new_vals)]
+  if (ignore_NA) {
+    new_vals <- new_vals[!is.na(new_vals)]
+  }
   cli::cli_abort(
     "{.var {colname}} contains the new \\
     {cli::qty(length(new_vals))}value{?s}: {.val {new_vals}}."
