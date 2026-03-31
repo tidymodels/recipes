@@ -202,14 +202,8 @@ test_that("tidy method", {
 
   tidy_pre <- tidy(rec, number = 1)
   exp_pre <- tibble::tribble(
-    ~terms             ,
-    ~value             ,
-    ~component         ,
-    ~id                ,
-    "all_predictors()" ,
-    NA_real_           ,
-    NA_character_      ,
-    "dork"
+    ~terms             , ~value   , ~component    , ~id    ,
+    "all_predictors()" , NA_real_ , NA_character_ , "dork"
   )
   expect_equal(tidy_pre, exp_pre)
 
