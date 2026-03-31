@@ -12,3 +12,4 @@ revdep/library.noindex
 revdep/data.sqlite
 .httr-oauth
 revdep/cloud.noindex/*
+**/.quarto/
