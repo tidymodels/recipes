@@ -50,7 +50,7 @@ scrub_timestamp <- function(x) {
 test_that("correct Isomap values", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -74,7 +74,7 @@ test_that("correct Isomap values", {
 test_that("No ISOmap", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -97,7 +97,7 @@ test_that("No ISOmap", {
 test_that("ISOmap fails gracefully", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -115,7 +115,7 @@ test_that("ISOmap fails gracefully", {
 
 test_that("ISOmap suppresses only messages, not errors", {
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -157,7 +157,7 @@ test_that("ISOmap suppresses only messages, not errors", {
 test_that("check_name() is used", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
   dat <- dplyr::as_tibble(dat1)
@@ -191,7 +191,7 @@ test_that("tunable", {
 test_that("check_options() is used", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -208,7 +208,7 @@ test_that("check_options() is used", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -262,7 +262,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -308,7 +308,7 @@ test_that("keep_original_cols works", {
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -330,7 +330,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 test_that("printing", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -359,7 +359,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 test_that("bad args", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
@@ -380,7 +380,7 @@ test_that("bad args", {
 test_that("0 and 1 rows data work in bake method", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
+  skip_if_not_installed("igraph", minimum_version = "2.1.1")
   skip_if_not_installed("RANN")
   skip_if_not_installed("dimRed")
 
