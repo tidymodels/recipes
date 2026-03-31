@@ -2,6 +2,12 @@
 
 ## recipes (development version)
 
+- Fixed bug in
+  [`step_pls()`](https://recipes.tidymodels.org/dev/reference/step_pls.md)
+  where [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)
+  would error when `scale = FALSE` was passed via `options`.
+  ([\#1512](https://github.com/tidymodels/recipes/issues/1512))
+
 ## recipes 1.3.1
 
 CRAN release: 2025-05-21
