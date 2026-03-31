@@ -13,21 +13,21 @@ color_examples <- tibble(
 )
 
 color_result <- tribble(
-  ~colors_blue,
-  ~colors_red,
-  ~colors_white,
-  ~colors_other,
-  1L,
-  1L,
-  0L,
-  0L,
-  1L,
-  1L,
-  1L,
-  0L,
-  3L,
-  0L,
-  0L,
+  ~colors_blue  ,
+  ~colors_red   ,
+  ~colors_white ,
+  ~colors_other ,
+  1L            ,
+  1L            ,
+  0L            ,
+  0L            ,
+  1L            ,
+  1L            ,
+  1L            ,
+  0L            ,
+  3L            ,
+  0L            ,
+  0L            ,
   0L
 )
 

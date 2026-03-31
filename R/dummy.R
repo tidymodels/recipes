@@ -502,7 +502,9 @@ print.step_dummy <-
 
 get_dummy_columns <- function(x, one_hot) {
   x <- attr(x, "values")
-  if (!one_hot) x <- x[-1]
+  if (!one_hot) {
+    x <- x[-1]
+  }
   tibble(columns = x)
 }
 
