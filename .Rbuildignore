@@ -25,3 +25,4 @@ tests/testthat/NMF*
 ^vignettes/articles$
 ^[\.]?air\.toml$
 ^[.]?air[.]toml$
+^\.claude$
