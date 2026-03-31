@@ -57,9 +57,10 @@ step_ica(
 
 - options:
 
-  A list of options to `fastICA::fastICA()`. No defaults are set here.
-  **Note** that the arguments `X` and `n.comp` should not be passed
-  here.
+  A list of options to
+  [`fastICA::fastICA()`](https://rdrr.io/pkg/fastICA/man/fastICA.html).
+  No defaults are set here. **Note** that the arguments `X` and `n.comp`
+  should not be passed here.
 
 - seed:
 
@@ -67,8 +68,9 @@ step_ica(
 
 - res:
 
-  The `fastICA::fastICA()` object is stored here once this preprocessing
-  step has be trained by
+  The
+  [`fastICA::fastICA()`](https://rdrr.io/pkg/fastICA/man/fastICA.html)
+  object is stored here once this preprocessing step has be trained by
   [`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md).
 
 - columns:
