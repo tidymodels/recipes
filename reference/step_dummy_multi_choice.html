@@ -3,7 +3,7 @@
 will convert multiple nominal data (e.g. characters or factors) into one or
 more numeric binary model terms for the levels of the original data."><meta property="og:description" content="step_dummy_multi_choice() creates a specification of a recipe step that
 will convert multiple nominal data (e.g. characters or factors) into one or
-more numeric binary model terms for the levels of the original data."><meta property="og:image" content="https://recipes.tidymodels.org/logo.png"><script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+more numeric binary model terms for the levels of the original data."><meta property="og:image" content="https://recipes.tidymodels.org/logo.png"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -11,7 +11,7 @@ more numeric binary model terms for the levels of the original data."><meta prop
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@ more numeric binary model terms for the levels of the original data."><meta prop
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Handle levels in multiple predictors together</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/R/dummy_multi_choice.R" class="external-link"><code>R/dummy_multi_choice.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/v1.3.2/R/dummy_multi_choice.R" class="external-link"><code>R/dummy_multi_choice.R</code></a></small>
       <div class="d-none name"><code>step_dummy_multi_choice.Rd</code></div>
     </div>
 
@@ -181,7 +181,7 @@ default.</p>
     </div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
-    <p>This step has 1 tuning parameters:</p><ul><li><p><code>threshold</code>: Threshold (type: double, default: 0)</p></li>
+    <p>This step has 1 tuning parameter:</p><ul><li><p><code>threshold</code>: Threshold (type: double, default: 0)</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
@@ -222,25 +222,25 @@ and there will be times when you want to manually overwrite by setting
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other dummy variable and encoding steps:
-<code><a href="step_bin2factor.html">step_bin2factor</a>()</code>,
-<code><a href="step_count.html">step_count</a>()</code>,
-<code><a href="step_date.html">step_date</a>()</code>,
-<code><a href="step_dummy.html">step_dummy</a>()</code>,
-<code><a href="step_dummy_extract.html">step_dummy_extract</a>()</code>,
-<code><a href="step_factor2string.html">step_factor2string</a>()</code>,
-<code><a href="step_holiday.html">step_holiday</a>()</code>,
-<code><a href="step_indicate_na.html">step_indicate_na</a>()</code>,
-<code><a href="step_integer.html">step_integer</a>()</code>,
-<code><a href="step_novel.html">step_novel</a>()</code>,
-<code><a href="step_num2factor.html">step_num2factor</a>()</code>,
-<code><a href="step_ordinalscore.html">step_ordinalscore</a>()</code>,
-<code><a href="step_other.html">step_other</a>()</code>,
-<code><a href="step_regex.html">step_regex</a>()</code>,
-<code><a href="step_relevel.html">step_relevel</a>()</code>,
-<code><a href="step_string2factor.html">step_string2factor</a>()</code>,
-<code><a href="step_time.html">step_time</a>()</code>,
-<code><a href="step_unknown.html">step_unknown</a>()</code>,
-<code><a href="step_unorder.html">step_unorder</a>()</code></p></div>
+<code><a href="step_bin2factor.html">step_bin2factor()</a></code>,
+<code><a href="step_count.html">step_count()</a></code>,
+<code><a href="step_date.html">step_date()</a></code>,
+<code><a href="step_dummy.html">step_dummy()</a></code>,
+<code><a href="step_dummy_extract.html">step_dummy_extract()</a></code>,
+<code><a href="step_factor2string.html">step_factor2string()</a></code>,
+<code><a href="step_holiday.html">step_holiday()</a></code>,
+<code><a href="step_indicate_na.html">step_indicate_na()</a></code>,
+<code><a href="step_integer.html">step_integer()</a></code>,
+<code><a href="step_novel.html">step_novel()</a></code>,
+<code><a href="step_num2factor.html">step_num2factor()</a></code>,
+<code><a href="step_ordinalscore.html">step_ordinalscore()</a></code>,
+<code><a href="step_other.html">step_other()</a></code>,
+<code><a href="step_regex.html">step_regex()</a></code>,
+<code><a href="step_relevel.html">step_relevel()</a></code>,
+<code><a href="step_string2factor.html">step_string2factor()</a></code>,
+<code><a href="step_time.html">step_time()</a></code>,
+<code><a href="step_unknown.html">step_unknown()</a></code>,
+<code><a href="step_unorder.html">step_unorder()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -312,7 +312,7 @@ and there will be times when you want to manually overwrite by setting
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer></body></html>

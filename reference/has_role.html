@@ -15,8 +15,8 @@ characters, all_ordered() captures ordered factors, all_nominal()
 captures characters, unordered and ordered factors.
 all_integer() captures integers, all_double() captures doubles,
 all_numeric() captures all kinds of numeric.
-all_date() captures Date() variables, all_datetime() captures
-POSIXct() variables.
+all_date() captures lubridate::Date() variables, all_datetime() captures
+lubridate::POSIXct() variables.
 See selections for more details.
 current_info() is an internal function.
 All of these functions have have limited utility outside of column selection
@@ -36,12 +36,12 @@ characters, all_ordered() captures ordered factors, all_nominal()
 captures characters, unordered and ordered factors.
 all_integer() captures integers, all_double() captures doubles,
 all_numeric() captures all kinds of numeric.
-all_date() captures Date() variables, all_datetime() captures
-POSIXct() variables.
+all_date() captures lubridate::Date() variables, all_datetime() captures
+lubridate::POSIXct() variables.
 See selections for more details.
 current_info() is an internal function.
 All of these functions have have limited utility outside of column selection
-in step functions."><meta property="og:image" content="https://recipes.tidymodels.org/logo.png"><script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+in step functions."><meta property="og:image" content="https://recipes.tidymodels.org/logo.png"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -49,7 +49,7 @@ in step functions."><meta property="og:image" content="https://recipes.tidymodel
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@ in step functions."><meta property="og:image" content="https://recipes.tidymodel
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Role Selection</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/R/selections.R" class="external-link"><code>R/selections.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/v1.3.2/R/selections.R" class="external-link"><code>R/selections.R</code></a></small>
       <div class="d-none name"><code>has_role.Rd</code></div>
     </div>
 
@@ -101,8 +101,8 @@ characters, <code>all_ordered()</code> captures ordered factors, <code>all_nomin
 captures characters, unordered and ordered factors.</p>
 <p><code>all_integer()</code> captures integers, <code>all_double()</code> captures doubles,
 <code>all_numeric()</code> captures all kinds of numeric.</p>
-<p><code>all_date()</code> captures <code><a href="https://rdrr.io/r/base/Dates.html" class="external-link">Date()</a></code> variables, <code>all_datetime()</code> captures
-<code><a href="https://rdrr.io/r/base/DateTimeClasses.html" class="external-link">POSIXct()</a></code> variables.</p>
+<p><code>all_date()</code> captures <code><a href="https://lubridate.tidyverse.org/reference/date_utils.html" class="external-link">lubridate::Date()</a></code> variables, <code>all_datetime()</code> captures
+<code><a href="https://lubridate.tidyverse.org/reference/posix_utils.html" class="external-link">lubridate::POSIXct()</a></code> variables.</p>
 <p>See <a href="selections.html">selections</a> for more details.</p>
 <p><code>current_info()</code> is an internal function.</p>
 <p>All of these functions have have limited utility outside of column selection
@@ -240,7 +240,7 @@ in step functions.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer></body></html>
