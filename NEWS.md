@@ -1,5 +1,7 @@
 # recipes (development version)
 
+# recipes 1.3.2
+
 * `step_nnmf()` is deprecated. Use `step_nnmf_sparse()` instead. (#1497)
 
 * Fixed bug in `step_pls()` where `bake()` would error when `scale = FALSE` was passed via `options`. (#1512)

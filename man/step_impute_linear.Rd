@@ -121,7 +121,7 @@ ggplot(imputed, aes(x = original, y = imputed)) +
 \references{
 Kuhn, M. and Johnson, K. (2013).
 \emph{Feature Engineering and Selection}
-\url{https://bookdown.org/max/FES/handling-missing-data.html}
+\url{https://feat.engineering/08-Handling_Missing_Data.html}
 }
 \seealso{
 Other imputation steps: 
