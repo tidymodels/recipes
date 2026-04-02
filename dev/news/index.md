@@ -2,6 +2,10 @@
 
 ## recipes (development version)
 
+## recipes 1.3.2
+
+CRAN release: 2026-04-02
+
 - [`step_nnmf()`](https://recipes.tidymodels.org/dev/reference/step_nnmf.md)
   is deprecated. Use
   [`step_nnmf_sparse()`](https://recipes.tidymodels.org/dev/reference/step_nnmf_sparse.md)

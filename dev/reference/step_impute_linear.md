@@ -124,7 +124,7 @@ and the examples on `tidymodels.org`.
 ## References
 
 Kuhn, M. and Johnson, K. (2013). *Feature Engineering and Selection*
-<https://bookdown.org/max/FES/handling-missing-data.html>
+<https://feat.engineering/08-Handling_Missing_Data.html>
 
 ## See also
 

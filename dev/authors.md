@@ -18,13 +18,13 @@ Source:
 [`DESCRIPTION`](https://github.com/tidymodels/recipes/blob/main/DESCRIPTION)
 
 Kuhn M, Wickham H, Hvitfeldt E (2026). *recipes: Preprocessing and
-Feature Engineering Steps for Modeling*. R package version 1.3.1.9000,
+Feature Engineering Steps for Modeling*. R package version 1.3.2.9000,
 <https://github.com/tidymodels/recipes>.
 
     @Manual{,
       title = {recipes: Preprocessing and Feature Engineering Steps for Modeling},
       author = {Max Kuhn and Hadley Wickham and Emil Hvitfeldt},
       year = {2026},
-      note = {R package version 1.3.1.9000},
+      note = {R package version 1.3.2.9000},
       url = {https://github.com/tidymodels/recipes},
     }
