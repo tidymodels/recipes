@@ -37,7 +37,7 @@ lagged for each value in the vector.}
 
 \item{prefix}{A prefix for generated column names, default to \code{"lag_"}.}
 
-\item{default}{Passed to \code{\link[dplyr:lead-lag]{dplyr::lag()}}, determines what fills empty rows
+\item{default}{Passed to \code{\link[dplyr:lag]{dplyr::lag()}}, determines what fills empty rows
 left by lagging (defaults to NA).}
 
 \item{columns}{A character string of the selected variable names. This field
@@ -108,13 +108,13 @@ recipe(~., data = df) |>
   bake(df)
 }
 \seealso{
-Other row operation steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_impute_roll}()},
-\code{\link{step_naomit}()},
-\code{\link{step_sample}()},
-\code{\link{step_shuffle}()},
-\code{\link{step_slice}()}
+Other row operation steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_impute_roll]{step_impute_roll()}},
+\code{\link[=step_naomit]{step_naomit()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_shuffle]{step_shuffle()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{row operation steps}

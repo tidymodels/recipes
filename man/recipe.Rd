@@ -227,7 +227,7 @@ linear_sp_sign_wflow
 }\if{html}{\out{</div>}}
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to \code{\link[parsnip:fit]{fit()}} is used:
+single call to \code{\link[parsnip:fit.model_spec]{fit()}} is used:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 }\if{html}{\out{</div>}}

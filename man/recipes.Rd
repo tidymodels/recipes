@@ -53,6 +53,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Max Kuhn \email{max@posit.co}
   \item Hadley Wickham \email{hadley@posit.co}
   \item Emil Hvitfeldt \email{emil.hvitfeldt@posit.co}
 }

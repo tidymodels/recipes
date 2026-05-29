@@ -96,14 +96,14 @@ car_rec |>
   tidy(number = 1)
 }
 \seealso{
-Other dplyr steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_mutate}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_rename_at}()},
-\code{\link{step_sample}()},
-\code{\link{step_select}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_rename_at]{step_rename_at()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_select]{step_select()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}

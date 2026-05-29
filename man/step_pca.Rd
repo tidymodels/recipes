@@ -50,7 +50,7 @@ value given to \code{num_comp}.}
 Argument defaults are set to \code{retx = FALSE}, \code{center = FALSE}, \code{scale. = FALSE}, and \code{tol = NULL}. \strong{Note} that the argument \code{x} should not be
 passed here (or at all).}
 
-\item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
+\item{res}{The \code{\link[stats:prcomp.default]{stats::prcomp.default()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
@@ -170,21 +170,21 @@ Jolliffe, I. T. (2010). \emph{Principal Component
 Analysis}. Springer.
 }
 \seealso{
-Other multivariate transformation steps: 
-\code{\link{step_classdist}()},
-\code{\link{step_classdist_shrunken}()},
-\code{\link{step_depth}()},
-\code{\link{step_geodist}()},
-\code{\link{step_ica}()},
-\code{\link{step_isomap}()},
-\code{\link{step_kpca}()},
-\code{\link{step_kpca_poly}()},
-\code{\link{step_kpca_rbf}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_nnmf}()},
-\code{\link{step_nnmf_sparse}()},
-\code{\link{step_pls}()},
-\code{\link{step_ratio}()},
-\code{\link{step_spatialsign}()}
+Other multivariate transformation steps:
+\code{\link[=step_classdist]{step_classdist()}},
+\code{\link[=step_classdist_shrunken]{step_classdist_shrunken()}},
+\code{\link[=step_depth]{step_depth()}},
+\code{\link[=step_geodist]{step_geodist()}},
+\code{\link[=step_ica]{step_ica()}},
+\code{\link[=step_isomap]{step_isomap()}},
+\code{\link[=step_kpca]{step_kpca()}},
+\code{\link[=step_kpca_poly]{step_kpca_poly()}},
+\code{\link[=step_kpca_rbf]{step_kpca_rbf()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_nnmf]{step_nnmf()}},
+\code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}},
+\code{\link[=step_pls]{step_pls()}},
+\code{\link[=step_ratio]{step_ratio()}},
+\code{\link[=step_spatialsign]{step_spatialsign()}}
 }
 \concept{multivariate transformation steps}

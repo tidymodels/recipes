@@ -12,7 +12,7 @@ juice(object, ..., composition = "tibble")
 
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details. If no
-selectors are given, the default is to use \code{\link[dplyr:reexports]{dplyr::everything()}}.}
+selectors are given, the default is to use \code{\link[dplyr:everything]{dplyr::everything()}}.}
 
 \item{composition}{Either \code{"tibble"}, \code{"matrix"}, \code{"data.frame"}, or
 \verb{"dgCMatrix"``for the format of the processed data set. Also, note that this argument should be called **after** any selectors and the selectors should only resolve to numeric columns if }composition\verb{is set to}"matrix"\code{or}"dgCMatrix"\verb{. If the data contains sparse columns they will be perseved for }"tibble"\code{and}"data.frame"\verb{, and efficiently used for }"dgCMatrix"`.}

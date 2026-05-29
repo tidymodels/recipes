@@ -109,13 +109,13 @@ tidy(imp_models, number = 1)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other imputation steps: 
-\code{\link{step_impute_bag}()},
-\code{\link{step_impute_knn}()},
-\code{\link{step_impute_linear}()},
-\code{\link{step_impute_lower}()},
-\code{\link{step_impute_mean}()},
-\code{\link{step_impute_median}()},
-\code{\link{step_impute_roll}()}
+Other imputation steps:
+\code{\link[=step_impute_bag]{step_impute_bag()}},
+\code{\link[=step_impute_knn]{step_impute_knn()}},
+\code{\link[=step_impute_linear]{step_impute_linear()}},
+\code{\link[=step_impute_lower]{step_impute_lower()}},
+\code{\link[=step_impute_mean]{step_impute_mean()}},
+\code{\link[=step_impute_median]{step_impute_median()}},
+\code{\link[=step_impute_roll]{step_impute_roll()}}
 }
 \concept{imputation steps}

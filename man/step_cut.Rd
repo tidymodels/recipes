@@ -115,7 +115,7 @@ rec |>
   bake(new_df)
 }
 \seealso{
-Other discretization steps: 
-\code{\link{step_discretize}()}
+Other discretization steps:
+\code{\link[=step_discretize]{step_discretize()}}
 }
 \concept{discretization steps}

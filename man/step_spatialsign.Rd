@@ -117,21 +117,21 @@ estimators. \emph{Journal of Chemical Information and Modeling}, 46(3),
 1402-1409.
 }
 \seealso{
-Other multivariate transformation steps: 
-\code{\link{step_classdist}()},
-\code{\link{step_classdist_shrunken}()},
-\code{\link{step_depth}()},
-\code{\link{step_geodist}()},
-\code{\link{step_ica}()},
-\code{\link{step_isomap}()},
-\code{\link{step_kpca}()},
-\code{\link{step_kpca_poly}()},
-\code{\link{step_kpca_rbf}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_nnmf}()},
-\code{\link{step_nnmf_sparse}()},
-\code{\link{step_pca}()},
-\code{\link{step_pls}()},
-\code{\link{step_ratio}()}
+Other multivariate transformation steps:
+\code{\link[=step_classdist]{step_classdist()}},
+\code{\link[=step_classdist_shrunken]{step_classdist_shrunken()}},
+\code{\link[=step_depth]{step_depth()}},
+\code{\link[=step_geodist]{step_geodist()}},
+\code{\link[=step_ica]{step_ica()}},
+\code{\link[=step_isomap]{step_isomap()}},
+\code{\link[=step_kpca]{step_kpca()}},
+\code{\link[=step_kpca_poly]{step_kpca_poly()}},
+\code{\link[=step_kpca_rbf]{step_kpca_rbf()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_nnmf]{step_nnmf()}},
+\code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}},
+\code{\link[=step_pca]{step_pca()}},
+\code{\link[=step_pls]{step_pls()}},
+\code{\link[=step_ratio]{step_ratio()}}
 }
 \concept{multivariate transformation steps}

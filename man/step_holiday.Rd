@@ -33,7 +33,7 @@ original variables will be used as \emph{predictors} in a model.}
 been estimated.}
 
 \item{holidays}{A character string that includes at least one holiday
-supported by the \code{timeDate} package. See \code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}} for a
+supported by the \code{timeDate} package. See \code{\link[timeDate:listHolidays]{timeDate::listHolidays()}} for a
 complete list.}
 
 \item{columns}{A character string of the selected variable names. This field
@@ -109,27 +109,27 @@ holiday_values <- bake(holiday_rec, new_data = examples)
 holiday_values
 }
 \seealso{
-\code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}}
+\code{\link[timeDate:listHolidays]{timeDate::listHolidays()}}
 
-Other dummy variable and encoding steps: 
-\code{\link{step_bin2factor}()},
-\code{\link{step_count}()},
-\code{\link{step_date}()},
-\code{\link{step_dummy}()},
-\code{\link{step_dummy_extract}()},
-\code{\link{step_dummy_multi_choice}()},
-\code{\link{step_factor2string}()},
-\code{\link{step_indicate_na}()},
-\code{\link{step_integer}()},
-\code{\link{step_novel}()},
-\code{\link{step_num2factor}()},
-\code{\link{step_ordinalscore}()},
-\code{\link{step_other}()},
-\code{\link{step_regex}()},
-\code{\link{step_relevel}()},
-\code{\link{step_string2factor}()},
-\code{\link{step_time}()},
-\code{\link{step_unknown}()},
-\code{\link{step_unorder}()}
+Other dummy variable and encoding steps:
+\code{\link[=step_bin2factor]{step_bin2factor()}},
+\code{\link[=step_count]{step_count()}},
+\code{\link[=step_date]{step_date()}},
+\code{\link[=step_dummy]{step_dummy()}},
+\code{\link[=step_dummy_extract]{step_dummy_extract()}},
+\code{\link[=step_dummy_multi_choice]{step_dummy_multi_choice()}},
+\code{\link[=step_factor2string]{step_factor2string()}},
+\code{\link[=step_indicate_na]{step_indicate_na()}},
+\code{\link[=step_integer]{step_integer()}},
+\code{\link[=step_novel]{step_novel()}},
+\code{\link[=step_num2factor]{step_num2factor()}},
+\code{\link[=step_ordinalscore]{step_ordinalscore()}},
+\code{\link[=step_other]{step_other()}},
+\code{\link[=step_regex]{step_regex()}},
+\code{\link[=step_relevel]{step_relevel()}},
+\code{\link[=step_string2factor]{step_string2factor()}},
+\code{\link[=step_time]{step_time()}},
+\code{\link[=step_unknown]{step_unknown()}},
+\code{\link[=step_unorder]{step_unorder()}}
 }
 \concept{dummy variable and encoding steps}

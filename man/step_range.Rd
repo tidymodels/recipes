@@ -105,9 +105,9 @@ tidy(ranged_obj, number = 1)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other normalization steps: 
-\code{\link{step_center}()},
-\code{\link{step_normalize}()},
-\code{\link{step_scale}()}
+Other normalization steps:
+\code{\link[=step_center]{step_center()}},
+\code{\link[=step_normalize]{step_normalize()}},
+\code{\link[=step_scale]{step_scale()}}
 }
 \concept{normalization steps}

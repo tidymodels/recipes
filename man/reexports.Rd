@@ -21,12 +21,12 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{generics}{\code{\link[generics]{required_pkgs}}, \code{\link[generics]{tidy}}, \code{\link[generics]{tunable}}, \code{\link[generics]{tune_args}}}
+  \item{generics}{\code{\link[generics:required_pkgs]{required_pkgs()}}, \code{\link[generics:tidy]{tidy()}}, \code{\link[generics:tunable]{tunable()}}, \code{\link[generics:tune_args]{tune_args()}}}
 
-  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_time}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}, \code{\link[hardhat]{frequency_weights}}, \code{\link[hardhat]{importance_weights}}}
+  \item{hardhat}{\code{\link[hardhat:extract_fit_time]{extract_fit_time()}}, \code{\link[hardhat:extract_parameter_dials]{extract_parameter_dials()}}, \code{\link[hardhat:extract_parameter_set_dials]{extract_parameter_set_dials()}}, \code{\link[hardhat:frequency_weights]{frequency_weights()}}, \code{\link[hardhat:importance_weights]{importance_weights()}}}
 
-  \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
+  \item{magrittr}{\code{\link[magrittr:\%>\%]{\%>\%}}}
 
-  \item{stats}{\code{\link[stats]{update}}}
+  \item{stats}{\code{\link[stats:update]{update()}}}
 }}
 

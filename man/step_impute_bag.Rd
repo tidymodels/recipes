@@ -44,10 +44,10 @@ to impute itself.}
 
 \item{trees}{An integer for the number of bagged trees to use in each model.}
 
-\item{models}{The \code{\link[ipred:bagging]{ipred::ipredbagg()}} objects are stored here once this
+\item{models}{The \code{\link[ipred:ipredbagg]{ipred::ipredbagg()}} objects are stored here once this
 bagged trees have be trained by \code{\link[=prep]{prep()}}.}
 
-\item{options}{A list of options to \code{\link[ipred:bagging]{ipred::ipredbagg()}}. Defaults are set
+\item{options}{A list of options to \code{\link[ipred:ipredbagg]{ipred::ipredbagg()}}. Defaults are set
 for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \strong{Note}
 that the arguments \code{X} and \code{y} should not be passed here.}
 
@@ -167,13 +167,13 @@ Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}.
 Springer Verlag.
 }
 \seealso{
-Other imputation steps: 
-\code{\link{step_impute_knn}()},
-\code{\link{step_impute_linear}()},
-\code{\link{step_impute_lower}()},
-\code{\link{step_impute_mean}()},
-\code{\link{step_impute_median}()},
-\code{\link{step_impute_mode}()},
-\code{\link{step_impute_roll}()}
+Other imputation steps:
+\code{\link[=step_impute_knn]{step_impute_knn()}},
+\code{\link[=step_impute_linear]{step_impute_linear()}},
+\code{\link[=step_impute_lower]{step_impute_lower()}},
+\code{\link[=step_impute_mean]{step_impute_mean()}},
+\code{\link[=step_impute_median]{step_impute_median()}},
+\code{\link[=step_impute_mode]{step_impute_mode()}},
+\code{\link[=step_impute_roll]{step_impute_roll()}}
 }
 \concept{imputation steps}

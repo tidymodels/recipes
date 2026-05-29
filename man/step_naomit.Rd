@@ -88,13 +88,13 @@ recipe(Ozone ~ ., data = airquality) |>
   bake(new_data = NULL)
 }
 \seealso{
-Other row operation steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_impute_roll}()},
-\code{\link{step_lag}()},
-\code{\link{step_sample}()},
-\code{\link{step_shuffle}()},
-\code{\link{step_slice}()}
+Other row operation steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_impute_roll]{step_impute_roll()}},
+\code{\link[=step_lag]{step_lag()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_shuffle]{step_shuffle()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{row operation steps}

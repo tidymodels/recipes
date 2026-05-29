@@ -260,6 +260,7 @@ print.step_nnmf_sparse <- function(
 
 #' @rdname tidy.recipe
 #' @param x A `step_nnmf_sparse` object.
+#' @exportS3Method
 tidy.step_nnmf_sparse <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {

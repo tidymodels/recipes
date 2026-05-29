@@ -87,20 +87,20 @@ tidy(sqrt_trans, number = 1)
 tidy(sqrt_obj, number = 1)
 }
 \seealso{
-Other individual transformation steps: 
-\code{\link{step_BoxCox}()},
-\code{\link{step_YeoJohnson}()},
-\code{\link{step_bs}()},
-\code{\link{step_harmonic}()},
-\code{\link{step_hyperbolic}()},
-\code{\link{step_inverse}()},
-\code{\link{step_invlogit}()},
-\code{\link{step_log}()},
-\code{\link{step_logit}()},
-\code{\link{step_mutate}()},
-\code{\link{step_ns}()},
-\code{\link{step_percentile}()},
-\code{\link{step_poly}()},
-\code{\link{step_relu}()}
+Other individual transformation steps:
+\code{\link[=step_BoxCox]{step_BoxCox()}},
+\code{\link[=step_YeoJohnson]{step_YeoJohnson()}},
+\code{\link[=step_bs]{step_bs()}},
+\code{\link[=step_harmonic]{step_harmonic()}},
+\code{\link[=step_hyperbolic]{step_hyperbolic()}},
+\code{\link[=step_inverse]{step_inverse()}},
+\code{\link[=step_invlogit]{step_invlogit()}},
+\code{\link[=step_log]{step_log()}},
+\code{\link[=step_logit]{step_logit()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_ns]{step_ns()}},
+\code{\link[=step_percentile]{step_percentile()}},
+\code{\link[=step_poly]{step_poly()}},
+\code{\link[=step_relu]{step_relu()}}
 }
 \concept{individual transformation steps}
