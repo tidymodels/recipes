@@ -55,6 +55,7 @@ Suggests:
     kernlab,
     knitr,
     methods,
+    mixOmics,
     modeldata (>= 0.1.1),
     parsnip (>= 1.2.0),
     RANN,
@@ -71,7 +72,6 @@ VignetteBuilder:
     knitr
 RdMacros: 
     lifecycle
-biocViews: mixOmics
 Config/Needs/website: tidyverse/tidytemplate, rmarkdown
 Config/testthat/edition: 3
 Config/usethis/last-upkeep: 2025-04-23
