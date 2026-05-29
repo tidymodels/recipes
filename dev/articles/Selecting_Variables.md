@@ -18,6 +18,7 @@ have details about the available selection methods.
 To illustrate this, the palmer penguins data will be used:
 
 ``` r
+
 library(recipes)
 library(modeldata)
 
@@ -39,6 +40,7 @@ rec
 Before any steps are used the information on the original variables is:
 
 ``` r
+
 summary(rec, original = TRUE)
 #> # A tibble: 7 × 5
 #>   variable          type      role      source   required_to_bake
@@ -56,6 +58,7 @@ This shows the types and roles. Each variable can have one or more
 types, so we can printing them out seperately
 
 ``` r
+
 summary(rec, original = TRUE)$type
 #> [[1]]
 #> [1] "factor"    "unordered" "nominal"  
@@ -91,6 +94,7 @@ only select integer variables. A full hierarchy of types can be seen in
 We can add a step to normalize numeric data:
 
 ``` r
+
 dummied <- rec |> step_normalize(all_numeric())
 ```
 
@@ -101,6 +105,7 @@ want to keep it as a factor so we can *subtract* that variable out
 either by name or by role:
 
 ``` r
+
 dummied <- rec |> step_normalize(bill_length_mm, bill_depth_mm, 
                                   flipper_length_mm) # or
 dummied <- rec |> step_normalize(all_numeric(), - body_mass_g) # or
@@ -111,6 +116,7 @@ Whenever possible, it is recommended to use the more specific
 `*_predictors()` variants to avoid accidentally selecting the outcomes.
 
 ``` r
+
 rec |>
   step_dummy(sex) |>
   prep() |>
@@ -138,6 +144,7 @@ rec |>
 Using the last definition:
 
 ``` r
+
 dummied <- prep(dummied, training = penguins)
 with_dummy <- bake(dummied, new_data = penguins)
 with_dummy

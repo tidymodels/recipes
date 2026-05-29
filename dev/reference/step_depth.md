@@ -179,6 +179,7 @@ Other multivariate transformation steps:
 ## Examples
 
 ``` r
+
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) |>
   step_depth(all_numeric_predictors(), class = Species)

@@ -109,6 +109,7 @@ defined by recipes. If an object has a class not supported by
 ## Examples
 
 ``` r
+
 data(Sacramento, package = "modeldata")
 lapply(Sacramento, .get_data_types)
 #> $city

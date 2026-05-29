@@ -117,6 +117,7 @@ Other row operation steps:
 ## Examples
 
 ``` r
+
 recipe(Ozone ~ ., data = airquality) |>
   step_naomit(Solar.R) |>
   prep(airquality, verbose = FALSE) |>

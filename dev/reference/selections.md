@@ -11,6 +11,7 @@ combination of these. The selectors are passed as any other argument to
 the step. If the variables are explicitly named in the step function,
 this might look like:
 
+
       recipe( ~ ., data = USArrests) %>%
         step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
 
@@ -54,6 +55,7 @@ likely isn't what you need.
 
 For example:
 
+
       recipe(Species ~ ., data = iris) %>%
         step_center(starts_with("Sepal"), -contains("Width"))
 
@@ -92,11 +94,13 @@ their names.
 
 A selection like this:
 
+
       data(biomass)
       recipe(HHV ~ ., data = biomass) %>%
         step_center(all_numeric(), -all_outcomes())
 
 is equivalent to:
+
 
       data(biomass)
       recipe(HHV ~ ., data = biomass) %>%

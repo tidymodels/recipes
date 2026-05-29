@@ -24,6 +24,7 @@ pay back a bank loan. It has 13 predictor columns and a factor variable
 and test set:
 
 ``` r
+
 library(recipes)
 library(rsample)
 library(modeldata)
@@ -40,6 +41,7 @@ credit_test <- testing(train_test_split)
 Note that there are some missing values in these data:
 
 ``` r
+
 vapply(credit_train, function(x) mean(!is.na(x)), numeric(1))
 #>    Status Seniority      Home      Time       Age   Marital   Records 
 #>     1.000     1.000     0.998     1.000     1.000     1.000     1.000 
@@ -66,6 +68,7 @@ easiest way to create the initial recipe is to use the standard formula
 method:
 
 ``` r
+
 rec_obj <- recipe(Status ~ ., data = credit_train)
 rec_obj
 ```
@@ -132,6 +135,7 @@ are many ways to do this and `recipes` includes a few steps for this
 purpose:
 
 ``` r
+
 grep("impute_", ls("package:recipes"), value = TRUE)
 #> [1] "step_impute_bag"    "step_impute_knn"    "step_impute_linear"
 #> [4] "step_impute_lower"  "step_impute_mean"   "step_impute_median"
@@ -143,6 +147,7 @@ numeric and non-numeric predictors and defaults *K* to five To do this,
 it selects all predictors and then removes those that are numeric:
 
 ``` r
+
 imputed <- rec_obj |>
   step_impute_knn(all_predictors()) 
 imputed
@@ -160,6 +165,7 @@ variables (aka indicator variables) using
 To do this, the step selects all non-numeric predictors:
 
 ``` r
+
 ind_vars <- imputed |>
   step_dummy(all_nominal_predictors()) 
 ind_vars
@@ -169,6 +175,7 @@ At this point in the recipe, all of the predictor should be encoded as
 numeric, we can further add more steps to center and scale them:
 
 ``` r
+
 standardized <- ind_vars |>
   step_center(all_numeric_predictors()) |>
   step_scale(all_numeric_predictors()) 
@@ -180,6 +187,7 @@ estimate the means and standard deviations from the training set. The
 `prep` function is used with a recipe and a data set:
 
 ``` r
+
 trained_rec <- prep(standardized, training = credit_train)
 trained_rec
 ```
@@ -192,6 +200,7 @@ Now that the statistics have been estimated, the preprocessing can be
 *applied* to the training and test set:
 
 ``` r
+
 train_data <- bake(trained_rec, new_data = credit_train)
 test_data  <- bake(trained_rec, new_data = credit_test)
 ```
@@ -199,6 +208,7 @@ test_data  <- bake(trained_rec, new_data = credit_test)
 `bake` returns a tibble that, by default, includes all of the variables:
 
 ``` r
+
 class(test_data)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 test_data
@@ -307,6 +317,7 @@ is prepared as well as when any data are baked. Checks are added in the
 same way as steps:
 
 ``` r
+
 trained_rec <- trained_rec |>
   check_missing(contains("Marital"))
 ```

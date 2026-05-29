@@ -101,6 +101,7 @@ As an example, skipping an operation whose variables are used later
 might be an issue:
 
 ``` r
+
 library(recipes)
 car_recipe <- recipe(mpg ~ ., data = mtcars) |>
   step_log(disp, skip = TRUE) |>

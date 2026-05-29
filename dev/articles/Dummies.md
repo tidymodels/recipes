@@ -13,6 +13,7 @@ and a single factor column with three levels: `'setosa'`,
 outcome:
 
 ``` r
+
 library(recipes)
 
 # make a copy for use below
@@ -43,6 +44,7 @@ factor, there will be *C* - 1 dummy variables created and all but the
 first factor level are made into new columns:
 
 ``` r
+
 ref_cell <- 
   iris_rec |> 
   step_dummy(Species) |>
@@ -90,6 +92,7 @@ global option for the contrasts can be changed and saved.
 picks up on this and makes the correct calculations:
 
 ``` r
+
 # now make dummy variables with new parameterization
 helmert <- 
   iris_rec |> 
@@ -136,6 +139,7 @@ Creating interactions with recipes requires the use of a model formula,
 such as
 
 ``` r
+
 iris_int <- 
   iris_rec |>
   step_interact( ~ Sepal.Width:Sepal.Length) |>
@@ -171,6 +175,7 @@ creation of the dummy variables happens at the same time as the
 interactions are created:
 
 ``` r
+
 model.matrix(~ Species*Sepal.Length, data = iris) |> 
   as.data.frame() |> 
   # show a few specific rows
@@ -191,6 +196,7 @@ have to type out all of the interaction effects by their specific names
 when using dummy variables?
 
 ``` r
+
 # Must I do this?
 iris_rec |>
   step_interact( ~ Species_versicolor:Sepal.Length + 
@@ -205,6 +211,7 @@ is used).
 The solution is to use a selector:
 
 ``` r
+
 iris_int <- 
   iris_rec |> 
   step_dummy(Species) |>
@@ -232,18 +239,21 @@ results of this selector are then translated to an additive function of
 the results. In this case, that means that
 
 ``` r
+
 starts_with("Species")
 ```
 
 becomes
 
 ``` r
+
 (Species_versicolor + Species_virginica)
 ```
 
 The entire interaction formula is shown here:
 
 ``` r
+
 iris_int
 ```
 
@@ -257,6 +267,7 @@ Would it work if I didn’t convert species to a factor and used the
 interactions step?
 
 ``` r
+
 iris_int <- 
   iris_rec |> 
   step_interact( ~ Species:Sepal.Length) |>
@@ -300,6 +311,7 @@ an option called `one_hot` that will make sure that all *C* are
 produced:
 
 ``` r
+
 iris_rec |> 
   step_dummy(Species, one_hot = TRUE) |>
   prep(training = iris) |>
@@ -324,6 +336,7 @@ typical contrast function, it does. It might do some seemingly weird
 (but legitimate) things when used with other contrasts:
 
 ``` r
+
 hot_reference <- 
   iris_rec |> 
   step_dummy(Species, one_hot = TRUE) |>
