@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Specify mixOmics as a suggested package. (#1544)
+
 # recipes 1.3.2
 
 * `step_nnmf()` is deprecated. Use `step_nnmf_sparse()` instead. (#1497)
