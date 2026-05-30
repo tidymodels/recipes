@@ -24,7 +24,7 @@ See \code{\link[=selections]{selections()}} for more details.}
 
 \item{fn}{A function \code{fun}, a quosure style lambda \code{~ fun(.)} or a list of
 either form (but containing only a single function, see
-\code{\link[dplyr:select_all]{dplyr::rename_at()}}).
+\code{\link[dplyr:rename_at]{dplyr::rename_at()}}).
 \strong{Note that this argument must be named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
@@ -51,7 +51,7 @@ sequence of any existing operations.
 \description{
 \code{step_rename_at()} creates a \emph{specification} of a recipe step that will
 rename the selected variables using a common function via
-\code{\link[dplyr:select_all]{dplyr::rename_at()}}.
+\code{\link[dplyr:rename_at]{dplyr::rename_at()}}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
@@ -85,14 +85,14 @@ recipe(~., data = iris) |>
   slice(1:10)
 }
 \seealso{
-Other dplyr steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_mutate}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_rename}()},
-\code{\link{step_sample}()},
-\code{\link{step_select}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_rename]{step_rename()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_select]{step_select()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}

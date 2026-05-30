@@ -98,10 +98,10 @@ recipe(slack_df) |>
 }
 }
 \seealso{
-Other checks: 
-\code{\link{check_class}()},
-\code{\link{check_cols}()},
-\code{\link{check_missing}()},
-\code{\link{check_new_values}()}
+Other checks:
+\code{\link[=check_class]{check_class()}},
+\code{\link[=check_cols]{check_cols()}},
+\code{\link[=check_missing]{check_missing()}},
+\code{\link[=check_new_values]{check_new_values()}}
 }
 \concept{checks}

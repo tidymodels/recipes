@@ -148,31 +148,31 @@ recipe(~., data = iris) |>
   slice(1:10)
 }
 \seealso{
-Other individual transformation steps: 
-\code{\link{step_BoxCox}()},
-\code{\link{step_YeoJohnson}()},
-\code{\link{step_bs}()},
-\code{\link{step_harmonic}()},
-\code{\link{step_hyperbolic}()},
-\code{\link{step_inverse}()},
-\code{\link{step_invlogit}()},
-\code{\link{step_log}()},
-\code{\link{step_logit}()},
-\code{\link{step_ns}()},
-\code{\link{step_percentile}()},
-\code{\link{step_poly}()},
-\code{\link{step_relu}()},
-\code{\link{step_sqrt}()}
+Other individual transformation steps:
+\code{\link[=step_BoxCox]{step_BoxCox()}},
+\code{\link[=step_YeoJohnson]{step_YeoJohnson()}},
+\code{\link[=step_bs]{step_bs()}},
+\code{\link[=step_harmonic]{step_harmonic()}},
+\code{\link[=step_hyperbolic]{step_hyperbolic()}},
+\code{\link[=step_inverse]{step_inverse()}},
+\code{\link[=step_invlogit]{step_invlogit()}},
+\code{\link[=step_log]{step_log()}},
+\code{\link[=step_logit]{step_logit()}},
+\code{\link[=step_ns]{step_ns()}},
+\code{\link[=step_percentile]{step_percentile()}},
+\code{\link[=step_poly]{step_poly()}},
+\code{\link[=step_relu]{step_relu()}},
+\code{\link[=step_sqrt]{step_sqrt()}}
 
-Other dplyr steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_rename}()},
-\code{\link{step_rename_at}()},
-\code{\link{step_sample}()},
-\code{\link{step_select}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_rename]{step_rename()}},
+\code{\link[=step_rename_at]{step_rename_at()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_select]{step_select()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}
 \concept{individual transformation steps}

@@ -37,10 +37,10 @@ variable(s), ignoring role information.
 }
 
 Select helpers from the \code{tidyselect} package can also be used:
-\code{\link[tidyselect:starts_with]{tidyselect::starts_with()}}, \code{\link[tidyselect:starts_with]{tidyselect::ends_with()}},
-\code{\link[tidyselect:starts_with]{tidyselect::contains()}}, \code{\link[tidyselect:starts_with]{tidyselect::matches()}}, \code{\link[tidyselect:starts_with]{tidyselect::num_range()}},
+\code{\link[tidyselect:starts_with]{tidyselect::starts_with()}}, \code{\link[tidyselect:ends_with]{tidyselect::ends_with()}},
+\code{\link[tidyselect:contains]{tidyselect::contains()}}, \code{\link[tidyselect:matches]{tidyselect::matches()}}, \code{\link[tidyselect:num_range]{tidyselect::num_range()}},
 \code{\link[tidyselect:everything]{tidyselect::everything()}}, \code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}},
-and \code{\link[tidyselect:all_of]{tidyselect::any_of()}}
+and \code{\link[tidyselect:any_of]{tidyselect::any_of()}}
 
 Note that using \code{\link[tidyselect:everything]{tidyselect::everything()}} or any of the other \code{tidyselect}
 functions aren't restricted to predictors. They will thus select outcomes,
@@ -113,12 +113,12 @@ When creating variable selections:
 \item If you are using column filtering steps, such as \code{step_corr()}, try to
 avoid hardcoding specific variable names in downstream steps in case
 those columns are removed by the filter. Instead, use
-\code{\link[dplyr:reexports]{dplyr::any_of()}} and
-\code{\link[dplyr:reexports]{dplyr::all_of()}}.
+\code{\link[dplyr:any_of]{dplyr::any_of()}} and
+\code{\link[dplyr:all_of]{dplyr::all_of()}}.
 \itemize{
-\item \code{\link[dplyr:reexports]{dplyr::any_of()}} will be tolerant if a column
+\item \code{\link[dplyr:any_of]{dplyr::any_of()}} will be tolerant if a column
 has been removed.
-\item \code{\link[dplyr:reexports]{dplyr::all_of()}} will fail unless all of the
+\item \code{\link[dplyr:all_of]{dplyr::all_of()}} will fail unless all of the
 columns are present in the data.
 }
 \item For both of these functions, if you are going to save the recipe as a

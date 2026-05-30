@@ -23,7 +23,7 @@ operations for this recipe.}
 See \code{\link[=selections]{selections()}} for more details.}
 
 \item{fn}{A function fun, a quosure style lambda \code{~ fun(.)} or a list of
-either form. (see \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}). \strong{Note that this argument must be
+either form. (see \code{\link[dplyr:mutate_at]{dplyr::mutate_at()}}). \strong{Note that this argument must be
 named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
@@ -55,7 +55,7 @@ sequence of any existing operations.
 
 \code{step_mutate_at()} creates a \emph{specification} of a recipe step that will
 modify the selected variables using a common function via
-\code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
+\code{\link[dplyr:mutate_at]{dplyr::mutate_at()}}.
 }
 \details{
 When using this flexible step, use extra care to avoid data leakage in your
@@ -95,32 +95,32 @@ recipe(~., data = iris) |>
   slice(1:10)
 }
 \seealso{
-Other multivariate transformation steps: 
-\code{\link{step_classdist}()},
-\code{\link{step_classdist_shrunken}()},
-\code{\link{step_depth}()},
-\code{\link{step_geodist}()},
-\code{\link{step_ica}()},
-\code{\link{step_isomap}()},
-\code{\link{step_kpca}()},
-\code{\link{step_kpca_poly}()},
-\code{\link{step_kpca_rbf}()},
-\code{\link{step_nnmf}()},
-\code{\link{step_nnmf_sparse}()},
-\code{\link{step_pca}()},
-\code{\link{step_pls}()},
-\code{\link{step_ratio}()},
-\code{\link{step_spatialsign}()}
+Other multivariate transformation steps:
+\code{\link[=step_classdist]{step_classdist()}},
+\code{\link[=step_classdist_shrunken]{step_classdist_shrunken()}},
+\code{\link[=step_depth]{step_depth()}},
+\code{\link[=step_geodist]{step_geodist()}},
+\code{\link[=step_ica]{step_ica()}},
+\code{\link[=step_isomap]{step_isomap()}},
+\code{\link[=step_kpca]{step_kpca()}},
+\code{\link[=step_kpca_poly]{step_kpca_poly()}},
+\code{\link[=step_kpca_rbf]{step_kpca_rbf()}},
+\code{\link[=step_nnmf]{step_nnmf()}},
+\code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}},
+\code{\link[=step_pca]{step_pca()}},
+\code{\link[=step_pls]{step_pls()}},
+\code{\link[=step_ratio]{step_ratio()}},
+\code{\link[=step_spatialsign]{step_spatialsign()}}
 
-Other dplyr steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_mutate}()},
-\code{\link{step_rename}()},
-\code{\link{step_rename_at}()},
-\code{\link{step_sample}()},
-\code{\link{step_select}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_rename]{step_rename()}},
+\code{\link[=step_rename_at]{step_rename_at()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_select]{step_select()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}
 \concept{multivariate transformation steps}

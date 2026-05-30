@@ -115,8 +115,8 @@ captures characters, unordered and ordered factors.
 \code{all_integer()} captures integers, \code{all_double()} captures doubles,
 \code{all_numeric()} captures all kinds of numeric.
 
-\code{all_date()} captures \code{\link[lubridate:date_utils]{lubridate::Date()}} variables, \code{all_datetime()} captures
-\code{\link[lubridate:posix_utils]{lubridate::POSIXct()}} variables.
+\code{all_date()} captures Date variables, \code{all_datetime()} captures
+\code{\link[base:POSIXct]{base::POSIXct()}} variables.
 
 See \link{selections} for more details.
 

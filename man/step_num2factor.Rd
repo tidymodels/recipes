@@ -27,7 +27,7 @@ See \code{\link[=selections]{selections()}} for more details.}
 
 \item{transform}{A function taking a single argument \code{x} that can be used to
 modify the numeric values prior to determining the levels (perhaps using
-\code{\link[base:integer]{base::as.integer()}} or \code{\link[base:factor]{base::as.factor()}}). The output of a function
+\code{\link[base:as.integer]{base::as.integer()}} or \code{\link[base:as.factor]{base::as.factor()}}). The output of a function
 should be an integer that corresponds to the value of \code{levels} that should
 be assigned. If not an integer, the value will be converted to an integer
 during \code{\link[=bake]{bake()}}.}
@@ -140,25 +140,25 @@ bake(rec, ceo)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other dummy variable and encoding steps: 
-\code{\link{step_bin2factor}()},
-\code{\link{step_count}()},
-\code{\link{step_date}()},
-\code{\link{step_dummy}()},
-\code{\link{step_dummy_extract}()},
-\code{\link{step_dummy_multi_choice}()},
-\code{\link{step_factor2string}()},
-\code{\link{step_holiday}()},
-\code{\link{step_indicate_na}()},
-\code{\link{step_integer}()},
-\code{\link{step_novel}()},
-\code{\link{step_ordinalscore}()},
-\code{\link{step_other}()},
-\code{\link{step_regex}()},
-\code{\link{step_relevel}()},
-\code{\link{step_string2factor}()},
-\code{\link{step_time}()},
-\code{\link{step_unknown}()},
-\code{\link{step_unorder}()}
+Other dummy variable and encoding steps:
+\code{\link[=step_bin2factor]{step_bin2factor()}},
+\code{\link[=step_count]{step_count()}},
+\code{\link[=step_date]{step_date()}},
+\code{\link[=step_dummy]{step_dummy()}},
+\code{\link[=step_dummy_extract]{step_dummy_extract()}},
+\code{\link[=step_dummy_multi_choice]{step_dummy_multi_choice()}},
+\code{\link[=step_factor2string]{step_factor2string()}},
+\code{\link[=step_holiday]{step_holiday()}},
+\code{\link[=step_indicate_na]{step_indicate_na()}},
+\code{\link[=step_integer]{step_integer()}},
+\code{\link[=step_novel]{step_novel()}},
+\code{\link[=step_ordinalscore]{step_ordinalscore()}},
+\code{\link[=step_other]{step_other()}},
+\code{\link[=step_regex]{step_regex()}},
+\code{\link[=step_relevel]{step_relevel()}},
+\code{\link[=step_string2factor]{step_string2factor()}},
+\code{\link[=step_time]{step_time()}},
+\code{\link[=step_unknown]{step_unknown()}},
+\code{\link[=step_unorder]{step_unorder()}}
 }
 \concept{dummy variable and encoding steps}

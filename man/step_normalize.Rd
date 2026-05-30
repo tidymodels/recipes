@@ -118,9 +118,9 @@ keep_orig_te
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other normalization steps: 
-\code{\link{step_center}()},
-\code{\link{step_range}()},
-\code{\link{step_scale}()}
+Other normalization steps:
+\code{\link[=step_center]{step_center()}},
+\code{\link[=step_range]{step_range()}},
+\code{\link[=step_scale]{step_scale()}}
 }
 \concept{normalization steps}

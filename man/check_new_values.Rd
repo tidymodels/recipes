@@ -105,10 +105,10 @@ recipe(credit_data |> dplyr::filter(!is.na(Home))) |>
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other checks: 
-\code{\link{check_class}()},
-\code{\link{check_cols}()},
-\code{\link{check_missing}()},
-\code{\link{check_range}()}
+Other checks:
+\code{\link[=check_class]{check_class()}},
+\code{\link[=check_cols]{check_cols()}},
+\code{\link[=check_missing]{check_missing()}},
+\code{\link[=check_range]{check_range()}}
 }
 \concept{checks}

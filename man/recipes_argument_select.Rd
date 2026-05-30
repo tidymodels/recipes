@@ -15,7 +15,7 @@ recipes_argument_select(
 }
 \arguments{
 \item{quos}{A list of quosures describing the selection. Captured with
-\code{\link[rlang:enquo]{rlang::enquos()}} and stored in the step object corresponding to the
+\code{\link[rlang:enquos]{rlang::enquos()}} and stored in the step object corresponding to the
 argument.}
 
 \item{data}{A data frame to use as the context to evaluate the selection in.

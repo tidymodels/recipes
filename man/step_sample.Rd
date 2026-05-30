@@ -28,7 +28,7 @@ specification functions.}
 been estimated.}
 
 \item{size}{An integer or fraction. If the value is within (0, 1),
-\code{\link[dplyr:sample_n]{dplyr::sample_frac()}} is applied to the data. If an integer value of 1 or
+\code{\link[dplyr:sample_frac]{dplyr::sample_frac()}} is applied to the data. If an integer value of 1 or
 greater is used, \code{\link[dplyr:sample_n]{dplyr::sample_n()}} is applied. The default of \code{NULL} uses
 \code{\link[dplyr:sample_n]{dplyr::sample_n()}} with the size of the training set (or smaller for
 smaller \code{new_data}).}
@@ -49,7 +49,7 @@ sequence of any existing operations.
 }
 \description{
 \code{step_sample()} creates a \emph{specification} of a recipe step that will sample
-rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or \code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
+rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or \code{\link[dplyr:sample_frac]{dplyr::sample_frac()}}.
 }
 \section{Row Filtering}{
 
@@ -117,24 +117,24 @@ bake(smaller_cars, new_data = NULL) |> nrow()
 bake(smaller_cars, new_data = mtcars |> slice(21:32)) |> nrow()
 }
 \seealso{
-Other row operation steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_impute_roll}()},
-\code{\link{step_lag}()},
-\code{\link{step_naomit}()},
-\code{\link{step_shuffle}()},
-\code{\link{step_slice}()}
+Other row operation steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_impute_roll]{step_impute_roll()}},
+\code{\link[=step_lag]{step_lag()}},
+\code{\link[=step_naomit]{step_naomit()}},
+\code{\link[=step_shuffle]{step_shuffle()}},
+\code{\link[=step_slice]{step_slice()}}
 
-Other dplyr steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_mutate}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_rename}()},
-\code{\link{step_rename_at}()},
-\code{\link{step_select}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_rename]{step_rename()}},
+\code{\link[=step_rename_at]{step_rename_at()}},
+\code{\link[=step_select]{step_select()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}
 \concept{row operation steps}

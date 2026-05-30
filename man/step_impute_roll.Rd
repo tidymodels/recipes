@@ -123,23 +123,23 @@ seven_pt <- recipe(~., data = example_data) |>
 bake(seven_pt, new_data = NULL)
 }
 \seealso{
-Other imputation steps: 
-\code{\link{step_impute_bag}()},
-\code{\link{step_impute_knn}()},
-\code{\link{step_impute_linear}()},
-\code{\link{step_impute_lower}()},
-\code{\link{step_impute_mean}()},
-\code{\link{step_impute_median}()},
-\code{\link{step_impute_mode}()}
+Other imputation steps:
+\code{\link[=step_impute_bag]{step_impute_bag()}},
+\code{\link[=step_impute_knn]{step_impute_knn()}},
+\code{\link[=step_impute_linear]{step_impute_linear()}},
+\code{\link[=step_impute_lower]{step_impute_lower()}},
+\code{\link[=step_impute_mean]{step_impute_mean()}},
+\code{\link[=step_impute_median]{step_impute_median()}},
+\code{\link[=step_impute_mode]{step_impute_mode()}}
 
-Other row operation steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_lag}()},
-\code{\link{step_naomit}()},
-\code{\link{step_sample}()},
-\code{\link{step_shuffle}()},
-\code{\link{step_slice}()}
+Other row operation steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_lag]{step_lag()}},
+\code{\link[=step_naomit]{step_naomit()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_shuffle]{step_shuffle()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{imputation steps}
 \concept{row operation steps}

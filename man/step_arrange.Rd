@@ -115,24 +115,24 @@ qq_rec <-
 tidy(qq_rec, number = 1)
 }
 \seealso{
-Other row operation steps: 
-\code{\link{step_filter}()},
-\code{\link{step_impute_roll}()},
-\code{\link{step_lag}()},
-\code{\link{step_naomit}()},
-\code{\link{step_sample}()},
-\code{\link{step_shuffle}()},
-\code{\link{step_slice}()}
+Other row operation steps:
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_impute_roll]{step_impute_roll()}},
+\code{\link[=step_lag]{step_lag()}},
+\code{\link[=step_naomit]{step_naomit()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_shuffle]{step_shuffle()}},
+\code{\link[=step_slice]{step_slice()}}
 
-Other dplyr steps: 
-\code{\link{step_filter}()},
-\code{\link{step_mutate}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_rename}()},
-\code{\link{step_rename_at}()},
-\code{\link{step_sample}()},
-\code{\link{step_select}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_rename]{step_rename()}},
+\code{\link[=step_rename_at]{step_rename_at()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_select]{step_select()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}
 \concept{row operation steps}

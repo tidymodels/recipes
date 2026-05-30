@@ -65,10 +65,10 @@ bake(biomass_rec, biomass[, c("carbon", "HHV")])
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other checks: 
-\code{\link{check_class}()},
-\code{\link{check_missing}()},
-\code{\link{check_new_values}()},
-\code{\link{check_range}()}
+Other checks:
+\code{\link[=check_class]{check_class()}},
+\code{\link[=check_missing]{check_missing()}},
+\code{\link[=check_new_values]{check_new_values()}},
+\code{\link[=check_range]{check_range()}}
 }
 \concept{checks}

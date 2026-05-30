@@ -273,8 +273,8 @@ recipes_eval_select <- function(
 #' `all_integer()` captures integers, `all_double()` captures doubles,
 #' `all_numeric()` captures all kinds of numeric.
 #'
-#' `all_date()` captures [Date()] variables, `all_datetime()` captures
-#' [POSIXct()] variables.
+#' `all_date()` captures Date variables, `all_datetime()` captures
+#' [base::POSIXct()] variables.
 #'
 #' See [selections] for more details.
 #'

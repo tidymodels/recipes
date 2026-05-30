@@ -87,9 +87,5 @@ returns a character vector version for printing.
 }
 \seealso{
 \link{developer_functions}
-
-\link{developer_functions}
-
-\link{developer_functions}
 }
 \keyword{internal}

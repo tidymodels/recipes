@@ -114,7 +114,7 @@ tidy(rec, 1)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other discretization steps: 
-\code{\link{step_cut}()}
+Other discretization steps:
+\code{\link[=step_cut]{step_cut()}}
 }
 \concept{discretization steps}

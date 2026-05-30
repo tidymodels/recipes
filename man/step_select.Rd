@@ -118,23 +118,23 @@ qq_rec <-
 qq_rec
 }
 \seealso{
-Other variable filter steps: 
-\code{\link{step_corr}()},
-\code{\link{step_filter_missing}()},
-\code{\link{step_lincomb}()},
-\code{\link{step_nzv}()},
-\code{\link{step_rm}()},
-\code{\link{step_zv}()}
+Other variable filter steps:
+\code{\link[=step_corr]{step_corr()}},
+\code{\link[=step_filter_missing]{step_filter_missing()}},
+\code{\link[=step_lincomb]{step_lincomb()}},
+\code{\link[=step_nzv]{step_nzv()}},
+\code{\link[=step_rm]{step_rm()}},
+\code{\link[=step_zv]{step_zv()}}
 
-Other dplyr steps: 
-\code{\link{step_arrange}()},
-\code{\link{step_filter}()},
-\code{\link{step_mutate}()},
-\code{\link{step_mutate_at}()},
-\code{\link{step_rename}()},
-\code{\link{step_rename_at}()},
-\code{\link{step_sample}()},
-\code{\link{step_slice}()}
+Other dplyr steps:
+\code{\link[=step_arrange]{step_arrange()}},
+\code{\link[=step_filter]{step_filter()}},
+\code{\link[=step_mutate]{step_mutate()}},
+\code{\link[=step_mutate_at]{step_mutate_at()}},
+\code{\link[=step_rename]{step_rename()}},
+\code{\link[=step_rename_at]{step_rename_at()}},
+\code{\link[=step_sample]{step_sample()}},
+\code{\link[=step_slice]{step_slice()}}
 }
 \concept{dplyr steps}
 \concept{variable filter steps}

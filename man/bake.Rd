@@ -15,7 +15,7 @@ preprocessing operation.}
 
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details. If no
-selectors are given, the default is to use \code{\link[dplyr:reexports]{dplyr::everything()}}.}
+selectors are given, the default is to use \code{\link[dplyr:everything]{dplyr::everything()}}.}
 
 \item{new_data}{A data frame, tibble, or sparse matrix from the \code{Matrix}
 package for whom the preprocessing will be applied. If \code{NULL} is given to
