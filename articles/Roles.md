@@ -14,6 +14,7 @@ roles for all columns of the data set.
 tibble containing information regarding the roles.
 
 ``` r
+
 library(recipes)
 
 recipe(Species ~ ., data = iris) |> summary()
@@ -48,6 +49,7 @@ These roles can be updated despite this initial assignment.
 modify a single existing role:
 
 ``` r
+
 library(modeldata)
 data(biomass)
 
@@ -72,6 +74,7 @@ When you want to get rid of a role for a column, use
 [`remove_role()`](https://recipes.tidymodels.org/reference/roles.md).
 
 ``` r
+
 recipe(HHV ~ ., data = biomass) |> 
   remove_role(sample, old_role = "predictor") |> 
   summary()
@@ -93,6 +96,7 @@ is used in the recipe, but does not yet have a declared role. Setting
 the role manually to `NA` is not allowed:
 
 ``` r
+
 recipe(HHV ~ ., data = biomass) |> 
   update_role(sample, new_role = NA_character_)
 #> Error in `update_role()`:
@@ -105,6 +109,7 @@ context,
 create additional roles:
 
 ``` r
+
 multi_role <- recipe(HHV ~ ., data = biomass) |> 
   update_role(dataset, new_role = "dataset split variable") |> 
   update_role(sample, new_role = "sample ID") |> 
@@ -133,6 +138,7 @@ them, the additional `old_role` argument to
 must be used to resolve any ambiguity.
 
 ``` r
+
 multi_role |>
   update_role(sample, new_role = "flounder", old_role = "jellyfish") |>
   summary()
@@ -161,6 +167,7 @@ when centering
 [`all_predictors()`](https://recipes.tidymodels.org/reference/has_role.md).
 
 ``` r
+
 multi_role |> 
   add_role(HHV, new_role = "nocenter") |> 
   step_center(all_predictors(), -has_role("nocenter")) |> 
@@ -187,6 +194,7 @@ can also be used in place of the compound specification above.
 You can start a recipe without any roles:
 
 ``` r
+
 recipe(biomass) |> 
   summary()
 #> # A tibble: 8 × 4
@@ -205,6 +213,7 @@ recipe(biomass) |>
 and roles can be added in bulk as needed:
 
 ``` r
+
 recipe(biomass) |> 
   update_role(contains("gen"), new_role = "lunchroom") |> 
   update_role(sample, HHV, new_role = "snail") |> 
@@ -245,6 +254,7 @@ has
 So, by default, they are predictors but don’t have to be:
 
 ``` r
+
 recipe( ~ ., data = iris) |> 
   step_dummy(Species) |> 
   prep() |> 

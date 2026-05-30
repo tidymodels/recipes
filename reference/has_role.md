@@ -21,10 +21,8 @@ captures characters, unordered and ordered factors.
 `all_integer()` captures integers, `all_double()` captures doubles,
 `all_numeric()` captures all kinds of numeric.
 
-`all_date()` captures
-[`lubridate::Date()`](https://lubridate.tidyverse.org/reference/date_utils.html)
-variables, `all_datetime()` captures
-[`lubridate::POSIXct()`](https://lubridate.tidyverse.org/reference/posix_utils.html)
+`all_date()` captures Date variables, `all_datetime()` captures
+[`base::POSIXct()`](https://rdrr.io/r/base/DateTimeClasses.html)
 variables.
 
 See [selections](https://recipes.tidymodels.org/reference/selections.md)

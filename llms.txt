@@ -9,6 +9,7 @@ two numeric predictors and then center and scale (“normalize”) the
 predictors:
 
 ``` r
+
 library(recipes)
 data(ad_data, package = "modeldata")
 
@@ -36,6 +37,7 @@ do](https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/).
 There are several ways to install recipes:
 
 ``` r
+
 # The easiest way to get recipes is to install all of tidymodels:
 install.packages("tidymodels")
 

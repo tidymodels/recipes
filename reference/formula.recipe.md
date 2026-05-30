@@ -27,14 +27,15 @@ A formula.
 ## Examples
 
 ``` r
+
 formula(recipe(Species + Sepal.Length ~ ., data = iris) |> prep())
 #> Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#> <environment: 0x55e104ff99a0>
+#> <environment: 0x560f7b025d90>
 
 iris_rec <- recipe(Species ~ ., data = iris) |>
   step_center(all_numeric()) |>
   prep()
 formula(iris_rec)
 #> Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#> <environment: 0x55e1061e5520>
+#> <environment: 0x560f7ba56130>
 ```

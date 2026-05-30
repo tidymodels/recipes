@@ -143,6 +143,7 @@ Other individual transformation steps:
 ## Examples
 
 ``` r
+
 rec <- recipe(~., data = as.data.frame(state.x77))
 
 bc_trans <- step_BoxCox(rec, all_numeric())

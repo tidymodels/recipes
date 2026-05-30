@@ -98,7 +98,3 @@ is thrown.
 ## See also
 
 [developer_functions](https://recipes.tidymodels.org/reference/developer_functions.md)
-
-[developer_functions](https://recipes.tidymodels.org/reference/developer_functions.md)
-
-[developer_functions](https://recipes.tidymodels.org/reference/developer_functions.md)

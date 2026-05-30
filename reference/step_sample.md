@@ -149,6 +149,7 @@ Other dplyr steps:
 ## Examples
 
 ``` r
+
 # Uses `sample_n`
 recipe(~., data = mtcars) |>
   step_sample(size = 1) |>
