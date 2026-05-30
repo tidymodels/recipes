@@ -264,8 +264,8 @@ model and recipe:
     ## Computational engine: lm
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to [`fit()`](https://generics.r-lib.org/reference/fit.html)
-is used:
+single call to
+[`fit()`](https://parsnip.tidymodels.org/reference/fit.html) is used:
 
     linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 

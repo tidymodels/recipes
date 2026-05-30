@@ -54,6 +54,8 @@ Useful links:
 
 Authors:
 
+- Max Kuhn <max@posit.co>
+
 - Hadley Wickham <hadley@posit.co>
 
 - Emil Hvitfeldt <emil.hvitfeldt@posit.co>

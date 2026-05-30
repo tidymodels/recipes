@@ -28,7 +28,7 @@ bake(object, new_data, ..., composition = "tibble")
   returned by the function. See
   [`selections()`](https://recipes.tidymodels.org/dev/reference/selections.md)
   for more details. If no selectors are given, the default is to use
-  [`dplyr::everything()`](https://dplyr.tidyverse.org/reference/reexports.html).
+  [`dplyr::everything()`](https://tidyselect.r-lib.org/reference/everything.html).
 
 - new_data:
 

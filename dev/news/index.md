@@ -2,6 +2,13 @@
 
 ## recipes (development version)
 
+## recipes 1.3.3
+
+CRAN release: 2026-05-30
+
+- Specify mixOmics as a suggested package.
+  ([\#1544](https://github.com/tidymodels/recipes/issues/1544))
+
 ## recipes 1.3.2
 
 CRAN release: 2026-04-02

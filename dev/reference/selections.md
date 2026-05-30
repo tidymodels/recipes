@@ -137,14 +137,14 @@ When creating variable selections:
   [`step_corr()`](https://recipes.tidymodels.org/dev/reference/step_corr.md),
   try to avoid hardcoding specific variable names in downstream steps in
   case those columns are removed by the filter. Instead, use
-  [`dplyr::any_of()`](https://dplyr.tidyverse.org/reference/reexports.html)
+  [`dplyr::any_of()`](https://tidyselect.r-lib.org/reference/all_of.html)
   and
-  [`dplyr::all_of()`](https://dplyr.tidyverse.org/reference/reexports.html).
+  [`dplyr::all_of()`](https://tidyselect.r-lib.org/reference/all_of.html).
 
-  - [`dplyr::any_of()`](https://dplyr.tidyverse.org/reference/reexports.html)
+  - [`dplyr::any_of()`](https://tidyselect.r-lib.org/reference/all_of.html)
     will be tolerant if a column has been removed.
 
-  - [`dplyr::all_of()`](https://dplyr.tidyverse.org/reference/reexports.html)
+  - [`dplyr::all_of()`](https://tidyselect.r-lib.org/reference/all_of.html)
     will fail unless all of the columns are present in the data.
 
 - For both of these functions, if you are going to save the recipe as a
