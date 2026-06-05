@@ -29,6 +29,10 @@
 #' contains terms other than interactions (e.g. `(A+B+C)^3`) only the
 #' interaction terms are retained for the design matrix.
 #'
+#' If the interaction formula is stored in a separate object, unquote it when
+#' passing it to `terms`, e.g. `int_terms <- ~ A:B` followed by
+#' `step_interact(terms = !!int_terms)`.
+#'
 #' The separator between the variables defaults to "`_x_`" so that the three way
 #' interaction shown previously would generate a column named `A_x_B_x_C`. This
 #' can be changed using the `sep` argument.

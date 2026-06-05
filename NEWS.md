@@ -1,5 +1,8 @@
 # recipes (development version)
 
+* `step_interact()` now documents how to pass interaction formulas stored in
+  separate objects (#1530).
+
 # recipes 1.3.3
 
 * Specify mixOmics as a suggested package. (#1544)
