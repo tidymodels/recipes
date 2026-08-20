@@ -2,8 +2,9 @@
 
 `step_sample()` creates a *specification* of a recipe step that will
 sample rows using
-[`dplyr::sample_n()`](https://rdrr.io/pkg/dplyr/man/sample_n.html) or
-[`dplyr::sample_frac()`](https://rdrr.io/pkg/dplyr/man/sample_n.html).
+[`dplyr::sample_n()`](https://dplyr.tidyverse.org/reference/sample_n.html)
+or
+[`dplyr::sample_frac()`](https://dplyr.tidyverse.org/reference/sample_n.html).
 
 ## Usage
 
@@ -44,11 +45,11 @@ step_sample(
 - size:
 
   An integer or fraction. If the value is within (0, 1),
-  [`dplyr::sample_frac()`](https://rdrr.io/pkg/dplyr/man/sample_n.html)
+  [`dplyr::sample_frac()`](https://dplyr.tidyverse.org/reference/sample_n.html)
   is applied to the data. If an integer value of 1 or greater is used,
-  [`dplyr::sample_n()`](https://rdrr.io/pkg/dplyr/man/sample_n.html) is
-  applied. The default of `NULL` uses
-  [`dplyr::sample_n()`](https://rdrr.io/pkg/dplyr/man/sample_n.html)
+  [`dplyr::sample_n()`](https://dplyr.tidyverse.org/reference/sample_n.html)
+  is applied. The default of `NULL` uses
+  [`dplyr::sample_n()`](https://dplyr.tidyverse.org/reference/sample_n.html)
   with the size of the training set (or smaller for smaller `new_data`).
 
 - replace:

@@ -2,7 +2,7 @@
 
 `step_rename()` creates a *specification* of a recipe step that will add
 variables using
-[`dplyr::rename()`](https://rdrr.io/pkg/dplyr/man/rename.html).
+[`dplyr::rename()`](https://dplyr.tidyverse.org/reference/rename.html).
 
 ## Usage
 
@@ -28,8 +28,8 @@ step_rename(
 - ...:
 
   One or more unquoted expressions separated by commas. See
-  [`dplyr::rename()`](https://rdrr.io/pkg/dplyr/man/rename.html) where
-  the convention is **`new_name = old_name`**.
+  [`dplyr::rename()`](https://dplyr.tidyverse.org/reference/rename.html)
+  where the convention is **`new_name = old_name`**.
 
 - role:
 

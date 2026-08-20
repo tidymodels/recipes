@@ -46,7 +46,7 @@ variables using dplyr::rename()."><meta property="og:image" content="https://rec
 
     <div class="ref-description section level2">
     <p><code>step_rename()</code> creates a <em>specification</em> of a recipe step that will add
-variables using <code><a href="https://rdrr.io/pkg/dplyr/man/rename.html" class="external-link">dplyr::rename()</a></code>.</p>
+variables using <code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">dplyr::rename()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -73,7 +73,7 @@ operations for this recipe.</p></dd>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>One or more unquoted expressions separated by commas. See
-<code><a href="https://rdrr.io/pkg/dplyr/man/rename.html" class="external-link">dplyr::rename()</a></code> where the convention is <strong><code>new_name = old_name</code></strong>.</p></dd>
+<code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">dplyr::rename()</a></code> where the convention is <strong><code>new_name = old_name</code></strong>.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
@@ -164,7 +164,7 @@ needs to be done for this to happen as it is done automatically.</p>
 <span class="r-in"><span>  <span class="fu">step_rename</span><span class="op">(</span>Sepal_Width <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length Sepal_Width Petal.Length Petal.Width Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>

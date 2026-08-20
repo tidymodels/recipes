@@ -4,11 +4,12 @@
 
 `step_mutate_at()` is superseded in favor of using
 [`step_mutate()`](https://recipes.tidymodels.org/dev/reference/step_mutate.md)
-with [`dplyr::across()`](https://rdrr.io/pkg/dplyr/man/across.html).
+with
+[`dplyr::across()`](https://dplyr.tidyverse.org/reference/across.html).
 
 `step_mutate_at()` creates a *specification* of a recipe step that will
 modify the selected variables using a common function via
-[`dplyr::mutate_at()`](https://rdrr.io/pkg/dplyr/man/mutate_all.html).
+[`dplyr::mutate_at()`](https://dplyr.tidyverse.org/reference/mutate_all.html).
 
 ## Usage
 
@@ -42,7 +43,7 @@ step_mutate_at(
 
   A function fun, a quosure style lambda `~ fun(.)` or a list of either
   form. (see
-  [`dplyr::mutate_at()`](https://rdrr.io/pkg/dplyr/man/mutate_all.html)).
+  [`dplyr::mutate_at()`](https://dplyr.tidyverse.org/reference/mutate_all.html)).
   **Note that this argument must be named**.
 
 - role:

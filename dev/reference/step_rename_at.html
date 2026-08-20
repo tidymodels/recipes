@@ -49,7 +49,7 @@ dplyr::rename_at()."><meta property="og:image" content="https://recipes.tidymode
     <div class="ref-description section level2">
     <p><code>step_rename_at()</code> creates a <em>specification</em> of a recipe step that will
 rename the selected variables using a common function via
-<code><a href="https://rdrr.io/pkg/dplyr/man/select_all.html" class="external-link">dplyr::rename_at()</a></code>.</p>
+<code><a href="https://dplyr.tidyverse.org/reference/select_all.html" class="external-link">dplyr::rename_at()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -83,7 +83,7 @@ See <code><a href="selections.html">selections()</a></code> for more details.</p
 <dt id="arg-fn">fn<a class="anchor" aria-label="anchor" href="#arg-fn"></a></dt>
 <dd><p>A function <code>fun</code>, a quosure style lambda <code>~ fun(.)</code> or a list of
 either form (but containing only a single function, see
-<code><a href="https://rdrr.io/pkg/dplyr/man/select_all.html" class="external-link">dplyr::rename_at()</a></code>).
+<code><a href="https://dplyr.tidyverse.org/reference/select_all.html" class="external-link">dplyr::rename_at()</a></code>).
 <strong>Note that this argument must be named</strong>.</p></dd>
 
 
@@ -166,7 +166,7 @@ needs to be done for this to happen as it is done automatically.</p>
 <span class="r-in"><span>  <span class="fu">step_rename_at</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>, fn <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"_"</span>, <span class="va">.</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal_Length Sepal_Width Petal_Length Petal_Width Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>

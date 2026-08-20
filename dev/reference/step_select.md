@@ -2,7 +2,7 @@
 
 `step_select()` creates a *specification* of a recipe step that will
 select variables using
-[`dplyr::select()`](https://rdrr.io/pkg/dplyr/man/select.html).
+[`dplyr::select()`](https://dplyr.tidyverse.org/reference/select.html).
 
 **\[deprecated\]**
 
@@ -13,8 +13,9 @@ we no longer recommend the usage of this step.If you are using
 and use
 [`step_rm()`](https://recipes.tidymodels.org/dev/reference/step_rm.md)
 instead. All other uses of `step_select()` could be replaced by a call
-to [`dplyr::select()`](https://rdrr.io/pkg/dplyr/man/select.html) on the
-data before it is passed to
+to
+[`dplyr::select()`](https://dplyr.tidyverse.org/reference/select.html)
+on the data before it is passed to
 [`recipe()`](https://recipes.tidymodels.org/dev/reference/recipe.md).
 
 ## Usage

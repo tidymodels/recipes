@@ -2,7 +2,7 @@
 
 `step_slice()` creates a *specification* of a recipe step that will
 filter rows using
-[`dplyr::slice()`](https://rdrr.io/pkg/dplyr/man/slice.html).
+[`dplyr::slice()`](https://dplyr.tidyverse.org/reference/slice.html).
 
 ## Usage
 
@@ -28,8 +28,8 @@ step_slice(
 - ...:
 
   Integer row values. See
-  [`dplyr::slice()`](https://rdrr.io/pkg/dplyr/man/slice.html) for more
-  details.
+  [`dplyr::slice()`](https://dplyr.tidyverse.org/reference/slice.html)
+  for more details.
 
 - role:
 

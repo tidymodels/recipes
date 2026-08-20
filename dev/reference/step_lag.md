@@ -61,7 +61,7 @@ step_lag(
 - default:
 
   Passed to
-  [`dplyr::lag()`](https://rdrr.io/pkg/dplyr/man/lead-lag.html),
+  [`dplyr::lag()`](https://dplyr.tidyverse.org/reference/lead-lag.html),
   determines what fills empty rows left by lagging (defaults to NA).
 
 - columns:

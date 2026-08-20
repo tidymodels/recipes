@@ -212,7 +212,7 @@ contain 2 rows for every `step` or `check` contained in the recipe.
   long each step took to apply.
 
 This element is used by
-[`extract_fit_time()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html).
+[`extract_fit_time()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html).
 
 ## last_term_info
 

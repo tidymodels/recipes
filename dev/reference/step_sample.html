@@ -46,7 +46,7 @@ rows using dplyr::sample_n() or dplyr::sample_frac()."><meta property="og:image"
 
     <div class="ref-description section level2">
     <p><code>step_sample()</code> creates a <em>specification</em> of a recipe step that will sample
-rows using <code><a href="https://rdrr.io/pkg/dplyr/man/sample_n.html" class="external-link">dplyr::sample_n()</a></code> or <code><a href="https://rdrr.io/pkg/dplyr/man/sample_n.html" class="external-link">dplyr::sample_frac()</a></code>.</p>
+rows using <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_n()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_frac()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -88,9 +88,9 @@ been estimated.</p></dd>
 
 <dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
 <dd><p>An integer or fraction. If the value is within (0, 1),
-<code><a href="https://rdrr.io/pkg/dplyr/man/sample_n.html" class="external-link">dplyr::sample_frac()</a></code> is applied to the data. If an integer value of 1 or
-greater is used, <code><a href="https://rdrr.io/pkg/dplyr/man/sample_n.html" class="external-link">dplyr::sample_n()</a></code> is applied. The default of <code>NULL</code> uses
-<code><a href="https://rdrr.io/pkg/dplyr/man/sample_n.html" class="external-link">dplyr::sample_n()</a></code> with the size of the training set (or smaller for
+<code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_frac()</a></code> is applied to the data. If an integer value of 1 or
+greater is used, <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_n()</a></code> is applied. The default of <code>NULL</code> uses
+<code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_n()</a></code> with the size of the training set (or smaller for
 smaller <code>new_data</code>).</p></dd>
 
 
@@ -208,11 +208,11 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 <span class="r-in"><span><span class="va">smaller_cars</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_sample</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">smaller_cars</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20</span>
-<span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">smaller_cars</span>, new_data <span class="op">=</span> <span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">21</span><span class="op">:</span><span class="fl">32</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">smaller_cars</span>, new_data <span class="op">=</span> <span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">21</span><span class="op">:</span><span class="fl">32</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 12</span>
 </code></pre></div>
     </div>

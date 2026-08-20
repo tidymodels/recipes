@@ -2,7 +2,7 @@
 
 `step_rename_at()` creates a *specification* of a recipe step that will
 rename the selected variables using a common function via
-[`dplyr::rename_at()`](https://rdrr.io/pkg/dplyr/man/select_all.html).
+[`dplyr::rename_at()`](https://dplyr.tidyverse.org/reference/select_all.html).
 
 ## Usage
 
@@ -36,7 +36,7 @@ step_rename_at(
 
   A function `fun`, a quosure style lambda `~ fun(.)` or a list of
   either form (but containing only a single function, see
-  [`dplyr::rename_at()`](https://rdrr.io/pkg/dplyr/man/select_all.html)).
+  [`dplyr::rename_at()`](https://dplyr.tidyverse.org/reference/select_all.html)).
   **Note that this argument must be named**.
 
 - role:

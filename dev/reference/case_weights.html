@@ -62,8 +62,8 @@ preprocessing data, model fitting, performance calculations, etc.</p>
 vector class that reflects how these should be used. For example, there are
 some situations where the weights should not affect operations such as
 centering and scaling or other preprocessing operations.</p>
-<p>The types of weights allowed in tidymodels are:</p><ul><li><p>Frequency weights via <code><a href="https://rdrr.io/pkg/hardhat/man/frequency_weights.html" class="external-link">hardhat::frequency_weights()</a></code></p></li>
-<li><p>Importance weights via <code><a href="https://rdrr.io/pkg/hardhat/man/importance_weights.html" class="external-link">hardhat::importance_weights()</a></code></p></li>
+<p>The types of weights allowed in tidymodels are:</p><ul><li><p>Frequency weights via <code><a href="https://hardhat.tidymodels.org/reference/frequency_weights.html" class="external-link">hardhat::frequency_weights()</a></code></p></li>
+<li><p>Importance weights via <code><a href="https://hardhat.tidymodels.org/reference/importance_weights.html" class="external-link">hardhat::importance_weights()</a></code></p></li>
 </ul><p>More types can be added by request.</p>
 <p>For recipes, we distinguish between supervised and unsupervised steps.
 Supervised steps use the outcome in the calculations, this type of steps will
@@ -72,7 +72,7 @@ outcome and will only use frequency weights.</p>
 <p>There are 3 main principles about how case weights are used within recipes.
 First, the data set that is passed to the <code><a href="recipe.html">recipe()</a></code> function should already
 have a case weights column in it. This column can be created beforehand using
-<code><a href="https://rdrr.io/pkg/hardhat/man/frequency_weights.html" class="external-link">hardhat::frequency_weights()</a></code> or <code><a href="https://rdrr.io/pkg/hardhat/man/importance_weights.html" class="external-link">hardhat::importance_weights()</a></code>. Second,
+<code><a href="https://hardhat.tidymodels.org/reference/frequency_weights.html" class="external-link">hardhat::frequency_weights()</a></code> or <code><a href="https://hardhat.tidymodels.org/reference/importance_weights.html" class="external-link">hardhat::importance_weights()</a></code>. Second,
 There can only be 1 case weights column in a recipe at any given time. Third,
 You can not modify the case weights column with most of the steps or using
 the <code><a href="roles.html">update_role()</a></code> and <code><a href="roles.html">add_role()</a></code> functions.</p>
@@ -84,7 +84,7 @@ incompatible type.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/hardhat/man/frequency_weights.html" class="external-link">frequency_weights()</a></code>, <code><a href="https://rdrr.io/pkg/hardhat/man/importance_weights.html" class="external-link">importance_weights()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://hardhat.tidymodels.org/reference/frequency_weights.html" class="external-link">frequency_weights()</a></code>, <code><a href="https://hardhat.tidymodels.org/reference/importance_weights.html" class="external-link">importance_weights()</a></code></p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

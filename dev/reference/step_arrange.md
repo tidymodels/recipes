@@ -2,7 +2,7 @@
 
 `step_arrange()` creates a *specification* of a recipe step that will
 sort rows using
-[`dplyr::arrange()`](https://rdrr.io/pkg/dplyr/man/arrange.html).
+[`dplyr::arrange()`](https://dplyr.tidyverse.org/reference/arrange.html).
 
 ## Usage
 
@@ -29,8 +29,8 @@ step_arrange(
 
   Comma separated list of unquoted variable names. Use \`desc()“ to sort
   a variable in descending order. See
-  [`dplyr::arrange()`](https://rdrr.io/pkg/dplyr/man/arrange.html) for
-  more details.
+  [`dplyr::arrange()`](https://dplyr.tidyverse.org/reference/arrange.html)
+  for more details.
 
 - role:
 

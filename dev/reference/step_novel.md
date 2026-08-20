@@ -90,7 +90,7 @@ When fitting a model that can deal with new factor levels, consider
 using
 [`workflows::add_recipe()`](https://workflows.tidymodels.org/reference/add_recipe.html)
 with `allow_novel_levels = TRUE` set in
-[`hardhat::default_recipe_blueprint()`](https://rdrr.io/pkg/hardhat/man/default_recipe_blueprint.html).
+[`hardhat::default_recipe_blueprint()`](https://hardhat.tidymodels.org/reference/default_recipe_blueprint.html).
 This will allow your model to handle new levels at prediction time,
 instead of throwing warnings or errors.
 
