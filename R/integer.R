@@ -176,14 +176,20 @@ bake.step_integer <- function(object, new_data, ...) {
   col_names <- names(object$key)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- map_key_to_int(
-      new_data[[col_name]],
-      key = object$key[[col_name]],
-      strict = object$strict,
-      zero = object$zero_based
-    )
-  }
+  keys <- object$key[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) {
+      map_key_to_int(
+        x,
+        key = keys[[i]],
+        strict = object$strict,
+        zero = object$zero_based
+      )
+    }
+  )
 
   new_data
 }

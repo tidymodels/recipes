@@ -95,9 +95,7 @@ bake.step_shuffle <- function(object, new_data, ...) {
     return(new_data)
   }
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- sample(new_data[[col_name]])
-  }
+  new_data <- recipes_map_cols(new_data, col_names, \(x) sample(x))
 
   new_data
 }
