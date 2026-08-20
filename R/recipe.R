@@ -892,16 +892,22 @@ resolve_stop_at <- function(stop_at, object, call = caller_env()) {
     )
   }
 
-  if (is.character(stop_at)) {
-    check_string(stop_at, arg = "stop_at", call = call)
+  if (length(stop_at) != 1 || is.na(stop_at)) {
+    cli::cli_abort(
+      "{.arg stop_at} must be a single step number or step id, \\
+      not {.obj_type_friendly {stop_at}}.",
+      call = call
+    )
+  }
 
+  if (is.character(stop_at)) {
     ids <- map_chr(object$steps, \(x) x$id)
     loc <- which(ids == stop_at)
 
     if (length(loc) == 0) {
       cli::cli_abort(
         c(
-          "x" = "{.arg stop_at} must be a step number or step id, \\
+          "x" = "{.arg stop_at} must be a single step number or step id, \\
                  not {.val {stop_at}}.",
           "i" = "The step ids of {.arg object} are {.or {.val {ids}}}."
         ),
@@ -914,20 +920,23 @@ resolve_stop_at <- function(stop_at, object, call = caller_env()) {
 
   if (!is.numeric(stop_at)) {
     cli::cli_abort(
-      "{.arg stop_at} must be a whole number or a string, \\
+      "{.arg stop_at} must be a single step number or step id, \\
       not {.obj_type_friendly {stop_at}}.",
       call = call
     )
   }
 
-  check_number_whole(stop_at, min = 1, arg = "stop_at", call = call)
-
-  if (stop_at > n_steps) {
+  if (!is.finite(stop_at) || stop_at != trunc(stop_at)) {
     cli::cli_abort(
-      c(
-        "x" = "{.arg stop_at} must be a step number, not {stop_at}.",
-        "i" = "{.arg object} has {n_steps} step{?s}."
-      ),
+      "{.arg stop_at} must be a whole step number, not {stop_at}.",
+      call = call
+    )
+  }
+
+  if (stop_at < 1 || stop_at > n_steps) {
+    cli::cli_abort(
+      "{.arg stop_at} must be a step number between 1 and {n_steps}, \\
+      not {stop_at}.",
       call = call
     )
   }

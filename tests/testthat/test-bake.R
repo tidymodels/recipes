@@ -111,6 +111,8 @@ test_that("bake() errors on bad stop_at", {
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = "nope"))
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = TRUE))
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = c(1, 1)))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = NA))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = integer(0)))
   expect_snapshot(error = TRUE, bake(car_rec, new_data = NULL, stop_at = 1))
   expect_snapshot(
     error = TRUE,
