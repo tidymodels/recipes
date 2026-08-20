@@ -46,7 +46,7 @@ rows using dplyr::slice()."><meta property="og:image" content="https://recipes.t
 
     <div class="ref-description section level2">
     <p><code>step_slice()</code> creates a <em>specification</em> of a recipe step that will filter
-rows using <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice()</a></code>.</p>
+rows using <code><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">dplyr::slice()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -72,7 +72,7 @@ operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Integer row values. See <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice()</a></code> for more details.</p></dd>
+<dd><p>Integer row values. See <code><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">dplyr::slice()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
@@ -178,7 +178,7 @@ needs to be done for this to happen as it is done automatically.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">prepped</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms id         </span>
@@ -190,8 +190,8 @@ needs to be done for this to happen as it is done automatically.</p>
 <span class="r-in"><span><span class="va">dplyr_train</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rec_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">prepped</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/all.equal-methods.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">dplyr_train</span>, <span class="va">rec_train</span><span class="op">)</span></span></span>
@@ -200,9 +200,9 @@ needs to be done for this to happen as it is done automatically.</p>
 <span class="r-in"><span><span class="va">dplyr_test</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rec_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">prepped</span>, <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rec_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">prepped</span>, <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/all.equal-methods.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">dplyr_test</span>, <span class="va">rec_test</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>

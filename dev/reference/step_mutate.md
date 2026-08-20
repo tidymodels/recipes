@@ -2,7 +2,7 @@
 
 `step_mutate()` creates a *specification* of a recipe step that will add
 variables using
-[`dplyr::mutate()`](https://dplyr.tidyverse.org/reference/mutate.html).
+[`dplyr::mutate()`](https://rdrr.io/pkg/dplyr/man/mutate.html).
 
 ## Usage
 
@@ -29,7 +29,7 @@ step_mutate(
 - ...:
 
   Name-value pairs of expressions. See
-  [`dplyr::mutate()`](https://dplyr.tidyverse.org/reference/mutate.html).
+  [`dplyr::mutate()`](https://rdrr.io/pkg/dplyr/man/mutate.html).
 
 - .pkgs:
 
@@ -102,7 +102,7 @@ this step, a tibble is returned with columns `terms`, `value` , and
 - value:
 
   character, expression passed to
-  [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)
+  [`mutate()`](https://rdrr.io/pkg/dplyr/man/mutate.html)
 
 - id:
 

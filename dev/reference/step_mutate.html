@@ -46,7 +46,7 @@ variables using dplyr::mutate()."><meta property="og:image" content="https://rec
 
     <div class="ref-description section level2">
     <p><code>step_mutate()</code> creates a <em>specification</em> of a recipe step that will add
-variables using <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>.</p>
+variables using <code><a href="https://rdrr.io/pkg/dplyr/man/mutate.html" class="external-link">dplyr::mutate()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -73,7 +73,7 @@ operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Name-value pairs of expressions. See <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>.</p></dd>
+<dd><p>Name-value pairs of expressions. See <code><a href="https://rdrr.io/pkg/dplyr/man/mutate.html" class="external-link">dplyr::mutate()</a></code>.</p></dd>
 
 
 <dt id="arg--pkgs">.pkgs<a class="anchor" aria-label="anchor" href="#arg--pkgs"></a></dt>
@@ -134,7 +134,7 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <dd><p>character, the selectors or variables selected</p></dd>
 
 <dt>value</dt>
-<dd><p>character, expression passed to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code></p></dd>
+<dd><p>character, expression passed to <code><a href="https://rdrr.io/pkg/dplyr/man/mutate.html" class="external-link">mutate()</a></code></p></dd>
 
 <dt>id</dt>
 <dd><p>character, id of this step</p></dd>
@@ -185,15 +185,15 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <span class="r-in"><span>    half_length <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">/</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">prepped</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dplyr_train</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    dbl_width <span class="op">=</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>    half_length <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">/</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
@@ -205,12 +205,12 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <span class="r-in"><span><span class="va">dplyr_test</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    dbl_width <span class="op">=</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>    half_length <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">/</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">rec_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">prepped</span>, <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rec_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">prepped</span>, <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">76</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">dplyr_test</span>, <span class="va">rec_test</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
@@ -225,7 +225,7 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">qq_rec</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"appro"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">qq_rec</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"appro"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bad_approach best_approach</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -244,10 +244,10 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using across()</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">step_mutate</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Length"</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">step_mutate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Length"</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
@@ -265,11 +265,11 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="co"># leads to more columns being created.</span></span></span>
 <span class="r-in"><span>  <span class="fu">step_mutate</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Length"</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>log <span class="op">=</span> <span class="va">log</span>, sqrt <span class="op">=</span> <span class="va">sqrt</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Length"</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>log <span class="op">=</span> <span class="va">log</span>, sqrt <span class="op">=</span> <span class="va">sqrt</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>

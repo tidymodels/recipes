@@ -60,7 +60,7 @@ CRAN release: 2025-04-17
   has been superceded in favor of
   [`step_mutate()`](https://recipes.tidymodels.org/dev/reference/step_mutate.md)
   when used with
-  [`across()`](https://dplyr.tidyverse.org/reference/across.html).
+  [`across()`](https://rdrr.io/pkg/dplyr/man/across.html).
   ([\#662](https://github.com/tidymodels/recipes/issues/662))
 
 ### Improvements
@@ -75,7 +75,7 @@ CRAN release: 2025-04-17
 
 - The following arguments in steps can now take bare names as input
   instead of strings, calls to
-  [`vars()`](https://dplyr.tidyverse.org/reference/vars.html),
+  [`vars()`](https://rdrr.io/pkg/dplyr/man/vars.html),
   [`imp_vars()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md),
   and
   [`denom_vars()`](https://recipes.tidymodels.org/dev/reference/step_ratio.md).
@@ -124,7 +124,7 @@ CRAN release: 2025-04-17
   ([\#1423](https://github.com/tidymodels/recipes/issues/1423))
 
 - Fixed bug where
-  [`extract_fit_time()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html)
+  [`extract_fit_time()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html)
   would throw warning for when recipe didn’t have any steps.
   ([\#1475](https://github.com/tidymodels/recipes/issues/1475))
 
@@ -323,7 +323,7 @@ CRAN release: 2024-07-04
   ([\#1259](https://github.com/tidymodels/recipes/issues/1259))
 
 - New
-  [`extract_fit_time()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html)
+  [`extract_fit_time()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html)
   method has been added that returns the time it took to train the
   recipe. ([\#1071](https://github.com/tidymodels/recipes/issues/1071))
 
@@ -1085,9 +1085,9 @@ CRAN release: 2022-02-18
   ([\#869](https://github.com/tidymodels/recipes/issues/869)).
 
 - New
-  [`extract_parameter_set_dials()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html)
+  [`extract_parameter_set_dials()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html)
   and
-  [`extract_parameter_dials()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html)
+  [`extract_parameter_dials()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html)
   methods to extract parameter sets and single parameters from `recipe`
   objects.
 
@@ -1570,9 +1570,9 @@ Release driven by changes in `tidyr` (v 1.0.0).
 - The use of
   [`varying()`](https://parsnip.tidymodels.org/reference/varying.html)
   will be deprecated in favor of an upcoming function
-  [`tune()`](https://hardhat.tidymodels.org/reference/tune.html). No
-  changes are need in this version, but subsequent versions will work
-  with [`tune()`](https://hardhat.tidymodels.org/reference/tune.html).
+  [`tune()`](https://rdrr.io/pkg/hardhat/man/tune.html). No changes are
+  need in this version, but subsequent versions will work with
+  [`tune()`](https://rdrr.io/pkg/hardhat/man/tune.html).
 
 - [`format_ch_vec()`](https://recipes.tidymodels.org/dev/reference/format_ch_vec.md)
   and `format_selector()` are now exported

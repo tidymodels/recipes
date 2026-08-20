@@ -12,11 +12,11 @@ to see their documentation.
 
 - hardhat:
 
-  [`extract_fit_time()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html),
-  [`extract_parameter_dials()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html),
-  [`extract_parameter_set_dials()`](https://hardhat.tidymodels.org/reference/hardhat-extract.html),
-  [`frequency_weights()`](https://hardhat.tidymodels.org/reference/frequency_weights.html),
-  [`importance_weights()`](https://hardhat.tidymodels.org/reference/importance_weights.html)
+  [`extract_fit_time()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html),
+  [`extract_parameter_dials()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html),
+  [`extract_parameter_set_dials()`](https://rdrr.io/pkg/hardhat/man/hardhat-extract.html),
+  [`frequency_weights()`](https://rdrr.io/pkg/hardhat/man/frequency_weights.html),
+  [`importance_weights()`](https://rdrr.io/pkg/hardhat/man/importance_weights.html)
 
 - magrittr:
 

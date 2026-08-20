@@ -65,8 +65,7 @@ step_pls(
 - outcome:
 
   When a single outcome is available, bare name, character strings or
-  call to
-  [`dplyr::vars()`](https://dplyr.tidyverse.org/reference/vars.html) can
+  call to [`dplyr::vars()`](https://rdrr.io/pkg/dplyr/man/vars.html) can
   be used to specify a single outcome variable.
 
 - options:

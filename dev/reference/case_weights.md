@@ -18,10 +18,10 @@ such as centering and scaling or other preprocessing operations.
 The types of weights allowed in tidymodels are:
 
 - Frequency weights via
-  [`hardhat::frequency_weights()`](https://hardhat.tidymodels.org/reference/frequency_weights.html)
+  [`hardhat::frequency_weights()`](https://rdrr.io/pkg/hardhat/man/frequency_weights.html)
 
 - Importance weights via
-  [`hardhat::importance_weights()`](https://hardhat.tidymodels.org/reference/importance_weights.html)
+  [`hardhat::importance_weights()`](https://rdrr.io/pkg/hardhat/man/importance_weights.html)
 
 More types can be added by request.
 
@@ -35,9 +35,9 @@ recipes. First, the data set that is passed to the
 [`recipe()`](https://recipes.tidymodels.org/dev/reference/recipe.md)
 function should already have a case weights column in it. This column
 can be created beforehand using
-[`hardhat::frequency_weights()`](https://hardhat.tidymodels.org/reference/frequency_weights.html)
+[`hardhat::frequency_weights()`](https://rdrr.io/pkg/hardhat/man/frequency_weights.html)
 or
-[`hardhat::importance_weights()`](https://hardhat.tidymodels.org/reference/importance_weights.html).
+[`hardhat::importance_weights()`](https://rdrr.io/pkg/hardhat/man/importance_weights.html).
 Second, There can only be 1 case weights column in a recipe at any given
 time. Third, You can not modify the case weights column with most of the
 steps or using the
@@ -54,5 +54,5 @@ an incompatible type.
 
 ## See also
 
-[`frequency_weights()`](https://hardhat.tidymodels.org/reference/frequency_weights.html),
-[`importance_weights()`](https://hardhat.tidymodels.org/reference/importance_weights.html)
+[`frequency_weights()`](https://rdrr.io/pkg/hardhat/man/frequency_weights.html),
+[`importance_weights()`](https://rdrr.io/pkg/hardhat/man/importance_weights.html)

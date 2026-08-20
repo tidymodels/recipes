@@ -55,10 +55,10 @@ dplyr::mutate_at()."><meta property="og:image" content="https://recipes.tidymode
     <div class="ref-description section level2">
     <p><a href="https://lifecycle.r-lib.org/articles/stages.html#superseded" class="external-link"><img src="figures/lifecycle-superseded.svg" alt="[Superseded]"></a></p>
 <p><code>step_mutate_at()</code> is superseded in favor of using <code><a href="step_mutate.html">step_mutate()</a></code> with
-<code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">dplyr::across()</a></code>.</p>
+<code><a href="https://rdrr.io/pkg/dplyr/man/across.html" class="external-link">dplyr::across()</a></code>.</p>
 <p><code>step_mutate_at()</code> creates a <em>specification</em> of a recipe step that will
 modify the selected variables using a common function via
-<code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">dplyr::mutate_at()</a></code>.</p>
+<code><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html" class="external-link">dplyr::mutate_at()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -91,7 +91,7 @@ See <code><a href="selections.html">selections()</a></code> for more details.</p
 
 <dt id="arg-fn">fn<a class="anchor" aria-label="anchor" href="#arg-fn"></a></dt>
 <dd><p>A function fun, a quosure style lambda <code>~ fun(.)</code> or a list of
-either form. (see <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">dplyr::mutate_at()</a></code>). <strong>Note that this argument must be
+either form. (see <code><a href="https://rdrr.io/pkg/dplyr/man/mutate_all.html" class="external-link">dplyr::mutate_at()</a></code>). <strong>Note that this argument must be
 named</strong>.</p></dd>
 
 
@@ -189,7 +189,7 @@ columns <code>terms</code> and <code>id</code>:</p>
 <span class="r-in"><span>  <span class="fu">step_mutate_at</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Length"</span><span class="op">)</span>, fn <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">.</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
@@ -209,7 +209,7 @@ columns <code>terms</code> and <code>id</code>:</p>
 <span class="r-in"><span>  <span class="fu">step_mutate_at</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Length"</span><span class="op">)</span>, fn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>log <span class="op">=</span> <span class="va">log</span>, sqrt <span class="op">=</span> <span class="va">sqrt</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>

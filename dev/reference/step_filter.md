@@ -2,7 +2,7 @@
 
 `step_filter()` creates a *specification* of a recipe step that will
 remove rows using
-[`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html).
+[`dplyr::filter()`](https://rdrr.io/pkg/dplyr/man/filter.html).
 
 ## Usage
 
@@ -30,8 +30,8 @@ step_filter(
   Logical predicates defined in terms of the variables in the data.
   Multiple conditions are combined with `&`. Only rows where the
   condition evaluates to `TRUE` are kept. See
-  [`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html)
-  for more details.
+  [`dplyr::filter()`](https://rdrr.io/pkg/dplyr/man/filter.html) for
+  more details.
 
 - role:
 

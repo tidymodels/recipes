@@ -43,11 +43,10 @@ step_zv(
 - group:
 
   An optional character string or call to
-  [`dplyr::vars()`](https://dplyr.tidyverse.org/reference/vars.html)
-  that can be used to specify a group(s) within which to identify
-  variables that contain only a single value. If the grouping variables
-  are contained in terms selector, they will not be considered for
-  removal.
+  [`dplyr::vars()`](https://rdrr.io/pkg/dplyr/man/vars.html) that can be
+  used to specify a group(s) within which to identify variables that
+  contain only a single value. If the grouping variables are contained
+  in terms selector, they will not be considered for removal.
 
 - removals:
 
