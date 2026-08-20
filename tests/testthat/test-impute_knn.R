@@ -246,6 +246,23 @@ test_that("step_impute_knn() can prep with character vectors (#926)", {
   )
 })
 
+test_that("step_impute_knn() works with survival outcomes (#1542)", {
+  skip_if_not_installed("survival")
+
+  dat <- tibble(
+    outcome = survival::Surv(1:20, rep(0:1, 10)),
+    x = c(NA, 2:20),
+    y = 1:20
+  )
+
+  res <- recipe(outcome ~ ., data = dat) |>
+    step_impute_knn(all_predictors()) |>
+    prep() |>
+    bake(new_data = NULL)
+
+  expect_equal(sum(is.na(res$x)), 0)
+})
+
 test_that("check_options() is used", {
   expect_snapshot(
     error = TRUE,
