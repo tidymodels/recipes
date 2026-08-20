@@ -184,13 +184,13 @@ bake.step_percentile <- function(object, new_data, ...) {
   col_names <- names(object$ref_dist)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- pctl_by_approx(
-      x = new_data[[col_name]],
-      ref = object$ref_dist[[col_name]],
-      outside = object$outside
-    )
-  }
+  ref_dist <- object$ref_dist[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) pctl_by_approx(x = x, ref = ref_dist[[i]], outside = object$outside)
+  )
 
   new_data
 }
