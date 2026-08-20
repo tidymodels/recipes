@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `bake()` gained a `stop_at` argument, which takes a step number or step id and applies only the steps up to and including that step. This is useful for diagnostics such as visualizing the effect of each step. (#1551)
+
 # recipes 1.3.3
 
 * Specify mixOmics as a suggested package. (#1544)
