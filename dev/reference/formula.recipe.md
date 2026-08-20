@@ -30,12 +30,12 @@ A formula.
 
 formula(recipe(Species + Sepal.Length ~ ., data = iris) |> prep())
 #> Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
-#> <environment: 0x55b3308e9850>
+#> <environment: 0x55b3a828f088>
 
 iris_rec <- recipe(Species ~ ., data = iris) |>
   step_center(all_numeric()) |>
   prep()
 formula(iris_rec)
 #> Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
-#> <environment: 0x55b331a91478>
+#> <environment: 0x55b3a63fbfc0>
 ```
