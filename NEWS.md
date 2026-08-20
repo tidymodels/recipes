@@ -2,6 +2,8 @@
 
 * `bake()` gained a `stop_at` argument, which takes a step number or step id and applies only the steps up to and including that step. This is useful for diagnostics such as visualizing the effect of each step. (#1551)
 
+* `step_impute_bag()`, `step_impute_knn()`, and `step_impute_linear()` no longer error with "C stack usage is too close to the limit" when the data contains a survival outcome column. (#1517, #1542)
+
 # recipes 1.3.3
 
 * Specify mixOmics as a suggested package. (#1544)

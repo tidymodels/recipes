@@ -202,7 +202,7 @@ bake.step_impute_linear <- function(object, new_data, ...) {
   col_names <- names(object$models)
   check_new_data(col_names, object, new_data)
 
-  missing_rows <- !vec_detect_complete(new_data)
+  missing_rows <- !vec_detect_complete(new_data[, col_names])
   if (!any(missing_rows)) {
     return(new_data)
   }

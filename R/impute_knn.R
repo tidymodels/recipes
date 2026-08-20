@@ -225,7 +225,7 @@ bake.step_impute_knn <- function(object, new_data, ...) {
   all_cols <- unique(unlist(object$columns, recursive = TRUE))
   check_new_data(all_cols, object, new_data)
 
-  missing_rows <- !vec_detect_complete(new_data)
+  missing_rows <- !vec_detect_complete(new_data[, col_names])
   if (!any(missing_rows)) {
     return(new_data)
   }

@@ -177,6 +177,23 @@ test_that("errors if there are no rows without missing values", {
   )
 })
 
+test_that("step_impute_linear() works with survival outcomes (#1542)", {
+  skip_if_not_installed("survival")
+
+  dat <- tibble(
+    outcome = survival::Surv(1:20, rep(0:1, 10)),
+    x = c(NA, 2:20),
+    y = 1:20
+  )
+
+  res <- recipe(outcome ~ ., data = dat) |>
+    step_impute_linear(x, impute_with = y) |>
+    prep() |>
+    bake(new_data = NULL)
+
+  expect_equal(res$x, as.numeric(1:20))
+})
+
 test_that("recipes_argument_select() is used", {
   expect_snapshot(
     error = TRUE,
