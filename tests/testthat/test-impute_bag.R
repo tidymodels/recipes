@@ -126,6 +126,21 @@ test_that("non-factor imputation", {
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 
+test_that("step_impute_bag() works with survival outcomes (#1542)", {
+  skip_if_not_installed("survival")
+
+  dat <- mtcars
+  dat$mpg[1] <- NA
+  dat$outcome <- survival::Surv(seq_len(nrow(dat)), rep(0:1, 16))
+
+  res <- recipe(outcome ~ ., data = dat) |>
+    step_impute_bag(mpg, impute_with = c(disp, hp, drat)) |>
+    prep() |>
+    bake(new_data = NULL)
+
+  expect_equal(sum(is.na(res$mpg)), 0)
+})
+
 test_that("impute_with errors with nothing selected", {
   expect_snapshot(
     error = TRUE,

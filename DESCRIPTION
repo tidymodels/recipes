@@ -65,6 +65,7 @@ Suggests:
     rsample,
     RSpectra,
     splines2,
+    survival,
     testthat (>= 3.3.0),
     workflows,
     xml2
