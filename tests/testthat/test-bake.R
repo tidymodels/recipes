@@ -108,6 +108,14 @@ test_that("bake() errors on bad stop_at", {
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = 2))
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = 0))
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = 1.5))
+
+  multi_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    step_scale(all_predictors()) |>
+    prep()
+
+  expect_snapshot(error = TRUE, bake(multi_rec, mtcars, stop_at = 9))
+
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = "nope"))
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = TRUE))
   expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = c(1, 1)))

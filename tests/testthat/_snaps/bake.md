@@ -4,7 +4,8 @@
       bake(car_rec, mtcars, stop_at = 2)
     Condition
       Error in `bake()`:
-      ! `stop_at` must be a step number between 1 and 1, not 2.
+      x `stop_at` must be a step number, not 2.
+      i `object` has 1 step, so `stop_at` must be 1.
 
 ---
 
@@ -12,7 +13,8 @@
       bake(car_rec, mtcars, stop_at = 0)
     Condition
       Error in `bake()`:
-      ! `stop_at` must be a step number between 1 and 1, not 0.
+      x `stop_at` must be a step number, not 0.
+      i `object` has 1 step, so `stop_at` must be 1.
 
 ---
 
@@ -21,6 +23,15 @@
     Condition
       Error in `bake()`:
       ! `stop_at` must be a whole step number, not 1.5.
+
+---
+
+    Code
+      bake(multi_rec, mtcars, stop_at = 9)
+    Condition
+      Error in `bake()`:
+      x `stop_at` must be a step number, not 9.
+      i `object` has 2 steps, so `stop_at` must be between 1 and 2.
 
 ---
 
