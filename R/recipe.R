@@ -934,13 +934,11 @@ resolve_stop_at <- function(stop_at, object, call = caller_env()) {
   }
 
   if (stop_at < 1 || stop_at > n_steps) {
-    allowed <- if (n_steps == 1) "1" else paste0("between 1 and ", n_steps)
-
     cli::cli_abort(
       c(
         "x" = "{.arg stop_at} must be a step number, not {stop_at}.",
         "i" = "{.arg object} has {n_steps} step{?s}, so {.arg stop_at} must \\
-               be {allowed}."
+               be {cli::qty(n_steps)}{?/between 1 and }{n_steps}."
       ),
       call = call
     )
