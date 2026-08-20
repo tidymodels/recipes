@@ -130,20 +130,23 @@ bake.step_impute_median <- function(object, new_data, ...) {
   col_names <- names(object$medians)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    median <- object$medians[[col_name]]
-    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
-      new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
-        new_data[[col_name]],
-        median
-      )
-    } else {
-      if (anyNA(new_data[[col_name]])) {
-        new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
+  medians <- object$medians[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      median <- medians[[i]]
+      if (sparsevctrs::is_sparse_vector(x)) {
+        return(sparsevctrs::sparse_replace_na(x, median))
       }
-      new_data[is.na(new_data[[col_name]]), col_name] <- median
+      if (anyNA(x)) {
+        x <- vctrs::vec_cast(x, median)
+        x[is.na(x)] <- median
+      }
+      x
     }
-  }
+  )
 
   new_data
 }

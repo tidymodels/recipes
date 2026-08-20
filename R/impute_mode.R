@@ -131,27 +131,31 @@ bake.step_impute_mode <- function(object, new_data, ...) {
   col_names <- names(object$modes)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    if (!anyNA(new_data[[col_name]])) {
-      next
-    }
-    if (is.null(object$ptype)) {
-      cli::cli_warn(
-        c(
-          "!" = "{.arg ptype} was added to {.fn step_impute_mode} after this \\
-              recipe was created.",
-          "i" = "Regenerate your recipe to avoid this warning."
+  modes <- object$modes[col_names]
+  ptypes <- object$ptype[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      if (!anyNA(x)) {
+        return(x)
+      }
+      if (is.null(object$ptype)) {
+        cli::cli_warn(
+          c(
+            "!" = "{.arg ptype} was added to {.fn step_impute_mode} after this \\
+                recipe was created.",
+            "i" = "Regenerate your recipe to avoid this warning."
+          )
         )
-      )
-    } else {
-      new_data[[col_name]] <- vctrs::vec_cast(
-        new_data[[col_name]],
-        object$ptype[[col_name]]
-      )
+      } else {
+        x <- vctrs::vec_cast(x, ptypes[[i]])
+      }
+      x[is.na(x)] <- cast(modes[[i]], x)
+      x
     }
-    mode_val <- cast(object$modes[[col_name]], new_data[[col_name]])
-    new_data[is.na(new_data[[col_name]]), col_name] <- mode_val
-  }
+  )
 
   new_data
 }
