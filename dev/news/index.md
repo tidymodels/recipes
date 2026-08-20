@@ -2,6 +2,12 @@
 
 ## recipes (development version)
 
+- [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)
+  gained a `stop_at` argument, which takes a step number or step id and
+  applies only the steps up to and including that step. This is useful
+  for diagnostics such as visualizing the effect of each step.
+  ([\#1551](https://github.com/tidymodels/recipes/issues/1551))
+
 - [`step_impute_bag()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md),
   [`step_impute_knn()`](https://recipes.tidymodels.org/dev/reference/step_impute_knn.md),
   and

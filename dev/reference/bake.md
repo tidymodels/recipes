@@ -11,7 +11,7 @@ the computations to new data.
 bake(object, ...)
 
 # S3 method for class 'recipe'
-bake(object, new_data, ..., composition = "tibble")
+bake(object, new_data, ..., stop_at = NULL, composition = "tibble")
 ```
 
 ## Arguments
@@ -38,6 +38,14 @@ bake(object, new_data, ..., composition = "tibble")
   (assuming that `prep(retain = TRUE)` was used). See
   [sparse_data](https://recipes.tidymodels.org/dev/reference/sparse_data.md)
   for more information about use of sparse data.
+
+- stop_at:
+
+  A single step number or step `id` (as returned by
+  [`tidy.recipe()`](https://recipes.tidymodels.org/dev/reference/tidy.recipe.md)).
+  If supplied, only the steps up to and including that step are applied
+  to `new_data`. The default, `NULL`, applies all steps. Cannot be used
+  with `new_data = NULL`.
 
 - composition:
 
@@ -67,6 +75,14 @@ Also, any steps with `skip = TRUE` will not be applied to the data when
 `bake()` is invoked with a data set in `new_data`.
 `bake(object, new_data = NULL)` will always have all of the steps
 applied.
+
+The `stop_at` argument returns the data as it exists partway through the
+recipe, which is useful for diagnostics such as visualizing the effect
+of each step. It cannot be used with `new_data = NULL` since the
+intermediate versions of the training set are not retained by
+[`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md); pass
+the training data to `new_data` instead. Steps with `skip = TRUE` are
+still skipped, but they are counted when numbering steps.
 
 ## See also
 
@@ -159,4 +175,23 @@ bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
 #> 4          0.563        0.0212          0.496         0.301
 #> 5          0.562       -0.212           0.405         0.634
 #> 6          0.562       -0.212           0.407         0.630
+
+# only apply the first two steps:
+bake(ames_rec, new_data = head(ames), stop_at = 2)
+#> # A tibble: 6 × 257
+#>   Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area
+#>          <dbl>    <int>      <int>          <int>        <dbl>
+#> 1          141    31770       1960           1960          112
+#> 2           80    11622       1961           1961            0
+#> 3           81    14267       1958           1958          108
+#> 4           93    11160       1968           1968            0
+#> 5           74    13830       1997           1998            0
+#> 6           78     9978       1998           1998           20
+#> # ℹ 252 more variables: BsmtFin_SF_1 <dbl>, BsmtFin_SF_2 <dbl>,
+#> #   Bsmt_Unf_SF <dbl>, Total_Bsmt_SF <dbl>, First_Flr_SF <int>,
+#> #   Second_Flr_SF <int>, Gr_Liv_Area <int>, Bsmt_Full_Bath <dbl>,
+#> #   Bsmt_Half_Bath <dbl>, Full_Bath <int>, Half_Bath <int>,
+#> #   Bedroom_AbvGr <int>, Kitchen_AbvGr <int>, TotRms_AbvGrd <int>,
+#> #   Fireplaces <int>, Garage_Cars <dbl>, Garage_Area <dbl>,
+#> #   Wood_Deck_SF <int>, Open_Porch_SF <int>, Enclosed_Porch <int>, …
 ```

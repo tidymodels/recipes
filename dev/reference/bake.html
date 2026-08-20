@@ -54,7 +54,7 @@ by <code><a href="prep.html">prep()</a></code>, apply the computations to new da
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bake</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'recipe'</span></span>
-<span><span class="fu">bake</span><span class="op">(</span><span class="va">object</span>, <span class="va">new_data</span>, <span class="va">...</span>, composition <span class="op">=</span> <span class="st">"tibble"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">bake</span><span class="op">(</span><span class="va">object</span>, <span class="va">new_data</span>, <span class="va">...</span>, stop_at <span class="op">=</span> <span class="cn">NULL</span>, composition <span class="op">=</span> <span class="st">"tibble"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,6 +80,13 @@ that <code>prep(retain = TRUE)</code> was used). See <a href="sparse_data.html">
 information about use of sparse data.</p></dd>
 
 
+<dt id="arg-stop-at">stop_at<a class="anchor" aria-label="anchor" href="#arg-stop-at"></a></dt>
+<dd><p>A single step number or step <code>id</code> (as returned by
+<code><a href="tidy.recipe.html">tidy.recipe()</a></code>). If supplied, only the steps up to and including that
+step are applied to <code>new_data</code>. The default, <code>NULL</code>, applies all steps.
+Cannot be used with <code>new_data = NULL</code>.</p></dd>
+
+
 <dt id="arg-composition">composition<a class="anchor" aria-label="anchor" href="#arg-composition"></a></dt>
 <dd><p>Either <code>"tibble"</code>, <code>"matrix"</code>, <code>"data.frame"</code>, or
 <code>"dgCMatrix"``for the format of the processed data set. Also, note that this argument should be called **after** any selectors and the selectors should only resolve to numeric columns if </code>composition<code>is set to</code>"matrix"<code>or</code>"dgCMatrix"<code>. If the data contains sparse columns they will be perseved for </code>"tibble"<code>and</code>"data.frame"<code>, and efficiently used for </code>"dgCMatrix"`.</p></dd>
@@ -101,6 +108,12 @@ set. With this option set, <code>bake(object, new_data = NULL)</code> will retur
 free.</p>
 <p>Also, any steps with <code>skip = TRUE</code> will not be applied to the data when
 <code>bake()</code> is invoked with a data set in <code>new_data</code>. <code>bake(object, new_data = NULL)</code> will always have all of the steps applied.</p>
+<p>The <code>stop_at</code> argument returns the data as it exists partway through the
+recipe, which is useful for diagnostics such as visualizing the effect of
+each step. It cannot be used with <code>new_data = NULL</code> since the intermediate
+versions of the training set are not retained by <code><a href="prep.html">prep()</a></code>; pass the training
+data to <code>new_data</code> instead. Steps with <code>skip = TRUE</code> are still skipped, but
+they are counted when numbering steps.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -192,6 +205,25 @@ free.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>          0.563        0.021<span style="text-decoration: underline;">2</span>          0.496         0.301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>          0.562       -<span style="color: #BB0000;">0.212</span>           0.405         0.634</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>          0.562       -<span style="color: #BB0000;">0.212</span>           0.407         0.630</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># only apply the first two steps:</span></span></span>
+<span class="r-in"><span><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span>, stop_at <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 257</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>          141    <span style="text-decoration: underline;">31</span>770       <span style="text-decoration: underline;">1</span>960           <span style="text-decoration: underline;">1</span>960          112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>           80    <span style="text-decoration: underline;">11</span>622       <span style="text-decoration: underline;">1</span>961           <span style="text-decoration: underline;">1</span>961            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>           81    <span style="text-decoration: underline;">14</span>267       <span style="text-decoration: underline;">1</span>958           <span style="text-decoration: underline;">1</span>958          108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>           93    <span style="text-decoration: underline;">11</span>160       <span style="text-decoration: underline;">1</span>968           <span style="text-decoration: underline;">1</span>968            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>           74    <span style="text-decoration: underline;">13</span>830       <span style="text-decoration: underline;">1</span>997           <span style="text-decoration: underline;">1</span>998            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>           78     <span style="text-decoration: underline;">9</span>978       <span style="text-decoration: underline;">1</span>998           <span style="text-decoration: underline;">1</span>998           20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 252 more variables: BsmtFin_SF_1 &lt;dbl&gt;, BsmtFin_SF_2 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bsmt_Unf_SF &lt;dbl&gt;, Total_Bsmt_SF &lt;dbl&gt;, First_Flr_SF &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Second_Flr_SF &lt;int&gt;, Gr_Liv_Area &lt;int&gt;, Bsmt_Full_Bath &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bsmt_Half_Bath &lt;dbl&gt;, Full_Bath &lt;int&gt;, Half_Bath &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Bedroom_AbvGr &lt;int&gt;, Kitchen_AbvGr &lt;int&gt;, TotRms_AbvGrd &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Fireplaces &lt;int&gt;, Garage_Cars &lt;dbl&gt;, Garage_Area &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Wood_Deck_SF &lt;int&gt;, Open_Porch_SF &lt;int&gt;, Enclosed_Porch &lt;int&gt;, …</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
