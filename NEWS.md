@@ -2,7 +2,7 @@
 
 * New `recipes_map_cols()` helper for use in `bake()` methods of steps that transform columns in place. It applies a function to the selected columns and assigns the results in bulk, avoiding the quadratic cost of assigning one column at a time. (#1543)
 
-* `step_bin2factor()`, `step_BoxCox()`, `step_center()`, `step_cut()`, `step_discretize()`, `step_factor2string()`, `step_hyperbolic()`, `step_impute_mean()`, `step_impute_median()`, `step_impute_mode()`, `step_integer()`, `step_inverse()`, `step_invlogit()`, `step_log()`, `step_logit()`, `step_normalize()`, `step_num2factor()`, `step_ordinalscore()`, `step_percentile()`, `step_range()`, `step_relevel()`, `step_scale()`, `step_shuffle()`, `step_sqrt()`, `step_string2factor()`, `step_unorder()`, and `step_YeoJohnson()` are now dramatically faster when baking data with many columns. (#1543)
+* `check_new_values()`, `check_range()`, `step_bin2factor()`, `step_BoxCox()`, `step_center()`, `step_cut()`, `step_discretize()`, `step_factor2string()`, `step_hyperbolic()`, `step_impute_bag()`, `step_impute_knn()`, `step_impute_linear()`, `step_impute_lower()`, `step_impute_mean()`, `step_impute_median()`, `step_impute_mode()`, `step_impute_roll()`, `step_integer()`, `step_inverse()`, `step_invlogit()`, `step_log()`, `step_logit()`, `step_normalize()`, `step_novel()`, `step_num2factor()`, `step_ordinalscore()`, `step_other()`, `step_percentile()`, `step_range()`, `step_relevel()`, `step_scale()`, `step_shuffle()`, `step_sqrt()`, `step_string2factor()`, `step_unknown()`, `step_unorder()`, `step_window()`, and `step_YeoJohnson()` are now dramatically faster when baking data with many columns. (#1543)
 
 * `step_num2factor()` no longer errors when more than one column is selected. (#1543)
 
