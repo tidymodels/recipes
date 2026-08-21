@@ -386,7 +386,14 @@ bake.step_dummy <- function(object, new_data, ...) {
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
 
-  for (col_name in col_names) {
+  # Accumulated and combined once after the loop; combining inside the loop
+  # copies the whole data set on every column.
+  recoded <- vector("list", length(col_names))
+  new_cols <- vector("list", length(col_names))
+  names(recoded) <- col_names
+
+  for (i in seq_along(col_names)) {
+    col_name <- col_names[[i]]
     levels <- object$levels[[col_name]]
     levels_values <- attr(levels, "values")
 
@@ -407,10 +414,14 @@ bake.step_dummy <- function(object, new_data, ...) {
       step = "step_dummy"
     )
 
-    new_data[, col_name] <- factor(
+    recoded[[col_name]] <- factor(
       new_data[[col_name]],
       levels = levels_values,
       ordered = is_ordered
+    )
+    col_data <- tibble::new_tibble(
+      recoded[col_name],
+      nrow = nrow(new_data)
     )
 
     object$contrasts <- object$contrasts[c("unordered", "ordered")]
@@ -431,7 +442,7 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     if (sparse_is_yes(object$sparse)) {
       indicators <- sparsevctrs::sparse_dummy(
-        x = new_data[[col_name]],
+        x = recoded[[col_name]],
         one_hot = object$one_hot
       )
 
@@ -441,7 +452,7 @@ bake.step_dummy <- function(object, new_data, ...) {
       indicators <-
         model.frame(
           rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
-          data = new_data[, col_name],
+          data = col_data,
           xlev = levels_values,
           na.action = na.pass
         )
@@ -480,13 +491,30 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     new_names <- object$naming(col_name, used_lvl, is_ordered)
     colnames(indicators) <- new_names
-    indicators <- check_name(indicators, new_data, object, new_names)
-
-    new_data <- vec_cbind(new_data, indicators, .name_repair = "minimal")
+    new_cols[[i]] <- check_name(indicators, new_data, object, new_names)
   }
 
   options(na.action = old_opt)
   on.exit(expr = NULL)
+
+  # The re-levelled factors are visible in the output when the original
+  # columns are kept.
+  new_data[col_names] <- recoded
+
+  # Previously caught by `check_name()`, since `new_data` grew inside the loop.
+  generated_names <- unlist(lapply(new_cols, colnames), use.names = FALSE)
+  duplicates <- unique(generated_names[duplicated(generated_names)])
+  if (length(duplicates) > 0) {
+    cli::cli_abort(
+      c(
+        "Name collision occurred. The following variable names already exist:",
+        "*" = "{.var {duplicates}}"
+      )
+    )
+  }
+
+  new_cols <- vec_cbind(!!!new_cols, .name_repair = "minimal")
+  new_data <- vec_cbind(new_data, new_cols, .name_repair = "minimal")
 
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
