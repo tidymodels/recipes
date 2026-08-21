@@ -140,29 +140,29 @@ bake.step_lag <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
+  cols <- list()
+
   for (col_name in col_names) {
+    column <- new_data[[col_name]]
+
     new_values <- lapply(
       object$lag,
       function(x) {
-        if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
-          sparsevctrs::sparse_lag(
-            new_data[[col_name]],
-            x,
-            default = object$default
-          )
+        if (sparsevctrs::is_sparse_vector(column)) {
+          sparsevctrs::sparse_lag(column, x, default = object$default)
         } else {
-          dplyr::lag(new_data[[col_name]], x, default = object$default)
+          dplyr::lag(column, x, default = object$default)
         }
       }
     )
 
-    new_names <- glue::glue("{object$prefix}{object$lag}_{col_name}")
-    names(new_values) <- new_names
-
-    new_values <- tibble::new_tibble(new_values)
-    new_values <- check_name(new_values, new_data, object, new_names)
-    new_data <- vctrs::vec_cbind(new_data, new_values, .name_repair = "minimal")
+    names(new_values) <- glue::glue("{object$prefix}{object$lag}_{col_name}")
+    cols <- c(cols, new_values)
   }
+
+  cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
+  cols <- check_name(cols, new_data, object, names(cols))
+  new_data <- vctrs::vec_cbind(new_data, cols, .name_repair = "minimal")
 
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
