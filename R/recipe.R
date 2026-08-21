@@ -634,18 +634,27 @@ prep.recipe <-
     # captures every variable originally in the data or that was
     # created along the way. `number` will be the last step where
     # that variable was available.
-    x$last_term_info <-
-      running_info |>
-      group_by(variable) |>
-      arrange(desc(number)) |>
-      summarise(
-        type = list(dplyr::first(type)),
-        role = list(unique(unlist(role))),
-        source = dplyr::first(source),
-        number = dplyr::first(number),
-        skip = dplyr::first(skip),
-        .groups = "keep"
-      )
+    # Equivalent to a grouped `summarise()` over `variable`, but `running_info`
+    # has one row per column per step, so grouping it is the single most
+    # expensive part of `prep()` on wide data.
+    ord <- order(running_info$variable, -running_info$number)
+    ordered_info <- vctrs::vec_slice(running_info, ord)
+    # `ordered_info` is sorted by descending `number` within each variable, so
+    # the first row of each group is the last step where it was available.
+    last <- which(!duplicated(ordered_info$variable))
+    groups <- vctrs::vec_group_loc(ordered_info$variable)$loc
+
+    x$last_term_info <- dplyr::group_by(
+      tibble(
+        variable = ordered_info$variable[last],
+        type = ordered_info$type[last],
+        role = lapply(groups, \(i) unique(unlist(ordered_info$role[i]))),
+        source = ordered_info$source[last],
+        number = ordered_info$number[last],
+        skip = ordered_info$skip[last]
+      ),
+      variable
+    )
     x
   }
 
