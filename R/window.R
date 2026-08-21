@@ -274,9 +274,11 @@ bake.step_window <- function(object, new_data, ...) {
   }
 
   if (is.null(object$names)) {
-    for (col_name in col_names) {
-      new_data[[col_name]] <- new_values[[col_name]]
-    }
+    new_data <- recipes_map_cols(
+      new_data,
+      col_names,
+      \(x, i) new_values[[i]]
+    )
   } else {
     names(new_values) <- object$names
     new_values <- tibble::new_tibble(new_values)
