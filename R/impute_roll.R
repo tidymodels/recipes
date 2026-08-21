@@ -190,14 +190,24 @@ bake.step_impute_roll <- function(object, new_data, ...) {
   missing_ind <- missing_ind[has_missing]
   roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
 
-  for (col_name in col_names) {
-    estimates <- impute_rolling(
-      roll_ind[[col_name]],
-      new_data[[col_name]],
-      object$statistic
-    )
-    new_data[missing_ind[[col_name]], col_name] <- estimates
-  }
+  # `missing_ind` and `roll_ind` only hold the columns that have missing values
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i, col_name) {
+      rows <- missing_ind[[col_name]]
+      if (is.null(rows)) {
+        return(x)
+      }
+
+      x[rows] <- impute_rolling(
+        roll_ind[[col_name]],
+        x,
+        object$statistic
+      )
+      x
+    }
+  )
 
   new_data
 }

@@ -302,39 +302,49 @@ bake.step_impute_bag <- function(object, new_data, ...) {
     return(new_data)
   }
 
-  old_data <- new_data
-  for (col_name in col_names) {
-    missing_rows <- !vec_detect_complete(new_data[[col_name]])
-    if (!any(missing_rows)) {
-      next
-    }
-    preds <- object$models[[col_name]]$..imp_vars
-    imp_data <- old_data[missing_rows, preds, drop = FALSE]
+  models <- object$models[col_names]
 
-    imp_data_all_missing <- vctrs::vec_detect_missing(imp_data)
-
-    if (any(imp_data_all_missing)) {
-      offenders <- which(missing_rows)[imp_data_all_missing]
-      missing_rows[offenders] <- FALSE
-
-      cli::cli_warn(
-        "The {.arg impute_with} variables for {.col {col_name}} only contains
-        missing values for row: {offenders}. Cannot impute for those rows.",
-      )
-
-      imp_data <- imp_data[!imp_data_all_missing, , drop = FALSE]
-
-      if (nrow(imp_data) == 0) {
-        next
+  # `new_data` is not modified while mapping, so the predictors are always read
+  # from the unimputed data.
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i, col_name) {
+      missing_rows <- !vec_detect_complete(x)
+      if (!any(missing_rows)) {
+        return(x)
       }
+
+      preds <- models[[i]]$..imp_vars
+      imp_data <- new_data[missing_rows, preds, drop = FALSE]
+
+      imp_data_all_missing <- vctrs::vec_detect_missing(imp_data)
+
+      if (any(imp_data_all_missing)) {
+        offenders <- which(missing_rows)[imp_data_all_missing]
+        missing_rows[offenders] <- FALSE
+
+        cli::cli_warn(
+          "The {.arg impute_with} variables for {.col {col_name}} only contains
+          missing values for row: {offenders}. Cannot impute for those rows.",
+        )
+
+        imp_data <- imp_data[!imp_data_all_missing, , drop = FALSE]
+
+        if (nrow(imp_data) == 0) {
+          return(x)
+        }
+      }
+
+      pred_vals <- predict(models[[i]], imp_data)
+
+      # For an ipred bug reported on 2021-09-14:
+      pred_vals <- cast(pred_vals, models[[i]]$y)
+      x[missing_rows] <- pred_vals
+      x
     }
+  )
 
-    pred_vals <- predict(object$models[[col_name]], imp_data)
-
-    # For an ipred bug reported on 2021-09-14:
-    pred_vals <- cast(pred_vals, object$models[[col_name]]$y)
-    new_data[missing_rows, col_name] <- pred_vals
-  }
   new_data
 }
 
