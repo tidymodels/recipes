@@ -74,6 +74,12 @@
   are now dramatically faster when baking data with many columns.
   ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
 
+- [`step_count()`](https://recipes.tidymodels.org/dev/reference/step_count.md)
+  now accepts selectors that resolve to more than one column. When more
+  than one column is selected, the new columns are named
+  `{column}_{result}`.
+  ([\#1384](https://github.com/tidymodels/recipes/issues/1384))
+
 - [`step_impute_bag()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md),
   [`step_impute_knn()`](https://recipes.tidymodels.org/dev/reference/step_impute_knn.md),
   and
@@ -86,6 +92,12 @@
 - [`step_num2factor()`](https://recipes.tidymodels.org/dev/reference/step_num2factor.md)
   no longer errors when more than one column is selected.
   ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
+
+- [`step_regex()`](https://recipes.tidymodels.org/dev/reference/step_regex.md)
+  now accepts selectors that resolve to more than one column. When more
+  than one column is selected, the new columns are named
+  `{column}_{result}`.
+  ([\#1384](https://github.com/tidymodels/recipes/issues/1384))
 
 ## recipes 1.3.3
 

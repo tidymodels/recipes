@@ -217,13 +217,13 @@ tidy(rec, number = 1)
 #> # A tibble: 1 × 3
 #>   terms                    class id         
 #>   <chr>                    <chr> <chr>      
-#> 1 all_numeric_predictors() NA    depth_eCCL8
+#> 1 all_numeric_predictors() NA    depth_hhrhR
 tidy(rec_dists, number = 1)
 #> # A tibble: 4 × 3
 #>   terms        class   id         
 #>   <chr>        <chr>   <chr>      
-#> 1 Sepal.Length Species depth_eCCL8
-#> 2 Sepal.Width  Species depth_eCCL8
-#> 3 Petal.Length Species depth_eCCL8
-#> 4 Petal.Width  Species depth_eCCL8
+#> 1 Sepal.Length Species depth_hhrhR
+#> 2 Sepal.Width  Species depth_hhrhR
+#> 3 Petal.Length Species depth_hhrhR
+#> 4 Petal.Width  Species depth_hhrhR
 ```

@@ -234,11 +234,11 @@ tidy(dummy_multi_choice_rec, number = 1)
 #> # A tibble: 5 × 3
 #>   terms  columns  id                      
 #>   <chr>  <chr>    <chr>                   
-#> 1 lang_1 Armenian dummy_multi_choice_Cb4Qi
-#> 2 lang_1 English  dummy_multi_choice_Cb4Qi
-#> 3 lang_1 French   dummy_multi_choice_Cb4Qi
-#> 4 lang_1 Italian  dummy_multi_choice_Cb4Qi
-#> 5 lang_1 Spanish  dummy_multi_choice_Cb4Qi
+#> 1 lang_1 Armenian dummy_multi_choice_z73sI
+#> 2 lang_1 English  dummy_multi_choice_z73sI
+#> 3 lang_1 French   dummy_multi_choice_z73sI
+#> 4 lang_1 Italian  dummy_multi_choice_z73sI
+#> 5 lang_1 Spanish  dummy_multi_choice_z73sI
 
 dummy_multi_choice_rec2 <- recipe(~., data = languages) |>
   step_dummy_multi_choice(starts_with("lang"),
@@ -259,6 +259,6 @@ tidy(dummy_multi_choice_rec2, number = 1)
 #> # A tibble: 2 × 3
 #>   terms  columns id                      
 #>   <chr>  <chr>   <chr>                   
-#> 1 lang_1 English dummy_multi_choice_z73sI
-#> 2 lang_1 other   dummy_multi_choice_z73sI
+#> 1 lang_1 English dummy_multi_choice_d6h30
+#> 2 lang_1 other   dummy_multi_choice_d6h30
 ```

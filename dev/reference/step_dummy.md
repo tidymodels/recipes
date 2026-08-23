@@ -405,45 +405,45 @@ tidy(dummies, number = 1)
 #> # A tibble: 36 × 3
 #>    terms columns         id         
 #>    <chr> <chr>           <chr>      
-#>  1 city  AUBURN          dummy_ypfCg
-#>  2 city  CAMERON_PARK    dummy_ypfCg
-#>  3 city  CARMICHAEL      dummy_ypfCg
-#>  4 city  CITRUS_HEIGHTS  dummy_ypfCg
-#>  5 city  COOL            dummy_ypfCg
-#>  6 city  DIAMOND_SPRINGS dummy_ypfCg
-#>  7 city  EL_DORADO       dummy_ypfCg
-#>  8 city  EL_DORADO_HILLS dummy_ypfCg
-#>  9 city  ELK_GROVE       dummy_ypfCg
-#> 10 city  ELVERTA         dummy_ypfCg
+#>  1 city  AUBURN          dummy_ONQD4
+#>  2 city  CAMERON_PARK    dummy_ONQD4
+#>  3 city  CARMICHAEL      dummy_ONQD4
+#>  4 city  CITRUS_HEIGHTS  dummy_ONQD4
+#>  5 city  COOL            dummy_ONQD4
+#>  6 city  DIAMOND_SPRINGS dummy_ONQD4
+#>  7 city  EL_DORADO       dummy_ONQD4
+#>  8 city  EL_DORADO_HILLS dummy_ONQD4
+#>  9 city  ELK_GROVE       dummy_ONQD4
+#> 10 city  ELVERTA         dummy_ONQD4
 #> # ℹ 26 more rows
 tidy(dummies_one_hot, number = 1)
 #> # A tibble: 37 × 3
 #>    terms columns         id         
 #>    <chr> <chr>           <chr>      
-#>  1 city  ANTELOPE        dummy_ONQD4
-#>  2 city  AUBURN          dummy_ONQD4
-#>  3 city  CAMERON_PARK    dummy_ONQD4
-#>  4 city  CARMICHAEL      dummy_ONQD4
-#>  5 city  CITRUS_HEIGHTS  dummy_ONQD4
-#>  6 city  COOL            dummy_ONQD4
-#>  7 city  DIAMOND_SPRINGS dummy_ONQD4
-#>  8 city  EL_DORADO       dummy_ONQD4
-#>  9 city  EL_DORADO_HILLS dummy_ONQD4
-#> 10 city  ELK_GROVE       dummy_ONQD4
+#>  1 city  ANTELOPE        dummy_mbqAp
+#>  2 city  AUBURN          dummy_mbqAp
+#>  3 city  CAMERON_PARK    dummy_mbqAp
+#>  4 city  CARMICHAEL      dummy_mbqAp
+#>  5 city  CITRUS_HEIGHTS  dummy_mbqAp
+#>  6 city  COOL            dummy_mbqAp
+#>  7 city  DIAMOND_SPRINGS dummy_mbqAp
+#>  8 city  EL_DORADO       dummy_mbqAp
+#>  9 city  EL_DORADO_HILLS dummy_mbqAp
+#> 10 city  ELK_GROVE       dummy_mbqAp
 #> # ℹ 27 more rows
 tidy(dummies_helmert, number = 1)
 #> # A tibble: 36 × 3
 #>    terms columns         id         
 #>    <chr> <chr>           <chr>      
-#>  1 city  AUBURN          dummy_mbqAp
-#>  2 city  CAMERON_PARK    dummy_mbqAp
-#>  3 city  CARMICHAEL      dummy_mbqAp
-#>  4 city  CITRUS_HEIGHTS  dummy_mbqAp
-#>  5 city  COOL            dummy_mbqAp
-#>  6 city  DIAMOND_SPRINGS dummy_mbqAp
-#>  7 city  EL_DORADO       dummy_mbqAp
-#>  8 city  EL_DORADO_HILLS dummy_mbqAp
-#>  9 city  ELK_GROVE       dummy_mbqAp
-#> 10 city  ELVERTA         dummy_mbqAp
+#>  1 city  AUBURN          dummy_oEGyP
+#>  2 city  CAMERON_PARK    dummy_oEGyP
+#>  3 city  CARMICHAEL      dummy_oEGyP
+#>  4 city  CITRUS_HEIGHTS  dummy_oEGyP
+#>  5 city  COOL            dummy_oEGyP
+#>  6 city  DIAMOND_SPRINGS dummy_oEGyP
+#>  7 city  EL_DORADO       dummy_oEGyP
+#>  8 city  EL_DORADO_HILLS dummy_oEGyP
+#>  9 city  ELK_GROVE       dummy_oEGyP
+#> 10 city  ELVERTA         dummy_oEGyP
 #> # ℹ 26 more rows
 ```

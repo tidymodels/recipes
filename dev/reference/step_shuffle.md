@@ -135,12 +135,12 @@ tidy(rec, number = 1)
 #> # A tibble: 2 × 2
 #>   terms id           
 #>   <chr> <chr>        
-#> 1 A     shuffle_j0rp7
-#> 2 B     shuffle_j0rp7
+#> 1 A     shuffle_5ahuU
+#> 2 B     shuffle_5ahuU
 tidy(rand_set, number = 1)
 #> # A tibble: 2 × 2
 #>   terms id           
 #>   <chr> <chr>        
-#> 1 A     shuffle_j0rp7
-#> 2 B     shuffle_j0rp7
+#> 1 A     shuffle_5ahuU
+#> 2 B     shuffle_5ahuU
 ```

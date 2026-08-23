@@ -77,9 +77,8 @@ operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>A single selector function to choose which variable will be
-searched for the regex pattern. The selector should resolve to a single
-variable. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose which variables will be
+searched for the regex pattern. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
@@ -106,12 +105,13 @@ vector. Coerced by <code>as.character</code> to a character string if possible.<
 
 <dt id="arg-result">result<a class="anchor" aria-label="anchor" href="#arg-result"></a></dt>
 <dd><p>A single character value for the name of the new variable. It
-should be a valid column name.</p></dd>
+should be a valid column name. If the selection resolves to more than one
+variable, the new variables are named <code>{variable}_{result}</code> instead.</p></dd>
 
 
 <dt id="arg-input">input<a class="anchor" aria-label="anchor" href="#arg-input"></a></dt>
-<dd><p>A single character value for the name of the variable being
-searched. This is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>The names of the variables being searched. This is <code>NULL</code> until
+computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
@@ -252,6 +252,29 @@ and there will be times when you want to manually overwrite by setting
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms       result id         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> description rocks  regex_0cUH6</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># When more than one variable is selected, the new variables are named</span></span></span>
+<span class="r-in"><span><span class="co"># `{variable}_{result}`</span></span></span>
+<span class="r-in"><span><span class="va">covers</span><span class="op">$</span><span class="va">description2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">covers</span><span class="op">$</span><span class="va">description</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>, <span class="va">covers</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">step_regex</span><span class="op">(</span><span class="va">description</span>, <span class="va">description2</span>, pattern <span class="op">=</span> <span class="st">"rock"</span>, result <span class="op">=</span> <span class="st">"rocks"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 40 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    description        description2 description_rocks description2_rocks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1,cathedral famil… 40,moran fa…                 1                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2,vanet,ratake fa… 39,moran fa…                 0                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 3,haploborolis,ro… 38,leighcan…                 1                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 4,ratake family,r… 37,rock out…                 1                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 5,vanet family,ro… 36,bross fa…                 1                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 6,vanet,wetmore f… 35,cryumbre…                 1                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 7,gothic family    34,cryorthe…                 0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 8,supervisor,limb… 33,leighcan…                 0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 9,troutville fami… 32,catamoun…                 0                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 10,bullwark,catam… 31,leighcan…                 1                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 30 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -196,9 +196,9 @@ tidy(date_rec, number = 1)
 #> # A tibble: 3 × 4
 #>   terms            value ordinal id        
 #>   <chr>            <chr> <lgl>   <chr>     
-#> 1 all_predictors() dow   FALSE   date_vUNsj
-#> 2 all_predictors() month FALSE   date_vUNsj
-#> 3 all_predictors() year  FALSE   date_vUNsj
+#> 1 all_predictors() dow   FALSE   date_V2jjS
+#> 2 all_predictors() month FALSE   date_V2jjS
+#> 3 all_predictors() year  FALSE   date_V2jjS
 
 date_rec <- prep(date_rec, training = examples)
 
@@ -223,10 +223,10 @@ tidy(date_rec, number = 1)
 #> # A tibble: 6 × 4
 #>   terms  value ordinal id        
 #>   <chr>  <chr> <lgl>   <chr>     
-#> 1 Dan    dow   FALSE   date_vUNsj
-#> 2 Dan    month FALSE   date_vUNsj
-#> 3 Dan    year  FALSE   date_vUNsj
-#> 4 Stefan dow   FALSE   date_vUNsj
-#> 5 Stefan month FALSE   date_vUNsj
-#> 6 Stefan year  FALSE   date_vUNsj
+#> 1 Dan    dow   FALSE   date_V2jjS
+#> 2 Dan    month FALSE   date_V2jjS
+#> 3 Dan    year  FALSE   date_V2jjS
+#> 4 Stefan dow   FALSE   date_V2jjS
+#> 5 Stefan month FALSE   date_V2jjS
+#> 6 Stefan year  FALSE   date_V2jjS
 ```

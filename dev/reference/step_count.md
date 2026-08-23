@@ -33,9 +33,8 @@ step_count(
 
 - ...:
 
-  A single selector function to choose which variable will be searched
-  for the regex pattern. The selector should resolve to a single
-  variable. See
+  One or more selector functions to choose which variables will be
+  searched for the regex pattern. See
   [`selections()`](https://recipes.tidymodels.org/dev/reference/selections.md)
   for more details.
 
@@ -69,12 +68,13 @@ step_count(
 - result:
 
   A single character value for the name of the new variable. It should
-  be a valid column name.
+  be a valid column name. If the selection resolves to more than one
+  variable, the new variables are named `{variable}_{result}` instead.
 
 - input:
 
-  A single character value for the name of the variable being searched.
-  This is `NULL` until computed by
+  The names of the variables being searched. This is `NULL` until
+  computed by
   [`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md).
 
 - sparse:
@@ -221,4 +221,27 @@ tidy(rec2, number = 1)
 #>   terms       result id         
 #>   <chr>       <chr>  <chr>      
 #> 1 description rocks  count_HX7KJ
+
+# When more than one variable is selected, the new variables are named
+# `{variable}_{result}`
+covers$description2 <- rev(covers$description)
+
+recipe(~., covers) |>
+  step_count(description, description2, pattern = "rock", result = "rocks") |>
+  prep() |>
+  bake(new_data = NULL)
+#> # A tibble: 40 × 4
+#>    description        description2 description_rocks description2_rocks
+#>    <fct>              <fct>                    <int>              <int>
+#>  1 1,cathedral famil… 40,moran fa…                 1                  1
+#>  2 2,vanet,ratake fa… 39,moran fa…                 0                  0
+#>  3 3,haploborolis,ro… 38,leighcan…                 1                  0
+#>  4 4,ratake family,r… 37,rock out…                 1                  1
+#>  5 5,vanet family,ro… 36,bross fa…                 1                  1
+#>  6 6,vanet,wetmore f… 35,cryumbre…                 1                  1
+#>  7 7,gothic family    34,cryorthe…                 0                  1
+#>  8 8,supervisor,limb… 33,leighcan…                 0                  1
+#>  9 9,troutville fami… 32,catamoun…                 0                  1
+#> 10 10,bullwark,catam… 31,leighcan…                 1                  0
+#> # ℹ 30 more rows
 ```
