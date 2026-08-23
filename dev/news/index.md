@@ -2,6 +2,10 @@
 
 ## recipes (development version)
 
+- [`prep()`](https://recipes.tidymodels.org/dev/reference/prep.md) is
+  now faster on recipes with many columns or many steps.
+  ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
+
 - [`step_bs()`](https://recipes.tidymodels.org/dev/reference/step_bs.md),
   [`step_dummy()`](https://recipes.tidymodels.org/dev/reference/step_dummy.md),
   [`step_harmonic()`](https://recipes.tidymodels.org/dev/reference/step_harmonic.md),
