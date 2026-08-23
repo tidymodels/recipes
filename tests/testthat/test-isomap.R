@@ -27,7 +27,7 @@ exp_res <- structure(
       1.53770327701819
     )
   ),
-  .Names = c("Isomap1", "Isomap2", "Isomap3"),
+  names = c("Isomap1", "Isomap2", "Isomap3"),
   class = c("tbl_df", "tbl", "data.frame"),
   row.names = c(NA, -5L)
 )

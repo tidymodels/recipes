@@ -108,7 +108,7 @@ exp_dat <- structure(
       0.300608495427594
     )
   ),
-  .Names = c("x1", "x2", "x3", "x4"),
+  names = c("x1", "x2", "x3", "x4"),
   row.names = c(
     NA,
     -20L
