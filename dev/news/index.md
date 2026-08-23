@@ -2,6 +2,17 @@
 
 ## recipes (development version)
 
+- [`step_bs()`](https://recipes.tidymodels.org/dev/reference/step_bs.md),
+  [`step_dummy()`](https://recipes.tidymodels.org/dev/reference/step_dummy.md),
+  [`step_harmonic()`](https://recipes.tidymodels.org/dev/reference/step_harmonic.md),
+  [`step_holiday()`](https://recipes.tidymodels.org/dev/reference/step_holiday.md),
+  [`step_lag()`](https://recipes.tidymodels.org/dev/reference/step_lag.md),
+  and
+  [`step_ns()`](https://recipes.tidymodels.org/dev/reference/step_ns.md)
+  are now faster when applied to many columns, as they no longer copy
+  the whole data set once per column.
+  ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
+
 - [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)
   gained a `stop_at` argument, which takes a step number or step id and
   applies only the steps up to and including that step. This is useful
