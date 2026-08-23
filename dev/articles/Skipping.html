@@ -17,15 +17,9 @@
 <link href="../deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="On skipping steps">
-<meta name="description" content="In recipes, steps are usually applied to both the training and testing sets.
-However, in some situations we only want to only apply a step to the training
-data and we want to skip that step on testing data.
-">
-<meta property="og:description" content="In recipes, steps are usually applied to both the training and testing sets.
-However, in some situations we only want to only apply a step to the training
-data and we want to skip that step on testing data.
-">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="Skipping_files/libs/quarto-html/popper.min.js"></script><script src="Skipping_files/libs/quarto-html/tippy.umd.min.js"></script><link href="Skipping_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Skipping_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="On skipping steps">
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <meta name="robots" content="noindex">
 <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
@@ -72,127 +66,70 @@ data and we want to skip that step on testing data.
 
 
   </div>
-</nav><div class="container template-article" id="container">
-
-
-
-
+</nav><div class="container template-quarto" id="container">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>On skipping steps</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/vignettes/Skipping.Rmd" class="external-link"><code>vignettes/Skipping.Rmd</code></a></small>
-      <div class="d-none name"><code>Skipping.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/vignettes/Skipping.qmd" class="external-link"><code>vignettes/Skipping.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>When steps are created in a recipe, they can be applied to data
-(i.e. baked) at two distinct times:</p>
-<ol style="list-style-type: decimal">
-<li>During the process of preparing the recipe, each step is estimated
-via <code>prep</code> and then applied to the training set using
-<code>bake</code> before proceeding to the next step.</li>
-<li>After the recipe has been prepared, <code>bake</code> can be used
-with any data set to apply the preprocessing to those data.</li>
+
+
+
+
+
+    <p>When steps are created in a recipe, they can be applied to data (i.e. baked) at two distinct times:</p>
+<ol type="1">
+<li>During the process of preparing the recipe, each step is estimated via <code>prep</code> and then applied to the training set using <code>bake</code> before proceeding to the next step.</li>
+<li>After the recipe has been prepared, <code>bake</code> can be used with any data set to apply the preprocessing to those data.</li>
 </ol>
-<p>There are times where we would like to circumvent baking on a new
-data set (i.e., #2 above). For example:</p>
+<p>There are times where we would like to circumvent baking on a new data set (i.e., #2 above). For example:</p>
 <ul>
-<li>There are outcomes in the recipe that won’t be available when a
-recipe is baked in the future. For predictive modeling, this is common
-when you receive <em>new</em> data to be predicted.</li>
-<li>When doing resampling or a training/test split, certain operations
-make sense for the data to be used for modeling but are problematic for
-new samples or the test set.</li>
+<li>There are outcomes in the recipe that won’t be available when a recipe is baked in the future. For predictive modeling, this is common when you receive <em>new</em> data to be predicted.</li>
+<li>When doing resampling or a training/test split, certain operations make sense for the data to be used for modeling but are problematic for new samples or the test set.</li>
 </ul>
-<div class="section level2">
-<h2 id="example-class-imbalance-sampling-and-skipping-steps">Example: Class Imbalance Sampling and Skipping Steps<a class="anchor" aria-label="anchor" href="#example-class-imbalance-sampling-and-skipping-steps"></a>
+<section class="section level2"><h2 id="example-class-imbalance-sampling-and-skipping-steps">Example: Class Imbalance Sampling and Skipping Steps<a class="anchor" aria-label="anchor" href="#example-class-imbalance-sampling-and-skipping-steps"></a>
 </h2>
-<p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016" class="external-link">severe class imbalance</a>.
-Suppose that there are two classes to be predicted and the event of
-interest occurs in only 5% of the time. Many models will quickly
-optimize accuracy by overfitting to the majority class by predicting
-everything to be a non-event. One method to compensate for this is to
-<em>down-sample</em> the <strong>training set</strong> so that the class
-frequencies are about equal. Although somewhat counter-intuitive, this
-can often lead to better models.</p>
-<p>The important consideration is that this preprocessing is <em>only
-applied to the training set</em> so that it can impact the model fit.
-The test set should be unaffected by this operation. If the recipe is
-used to create the design matrix for the model, down-sampling would
-remove rows. This would be a bad idea for the test set since these data
-should represent what the population of samples looks like “in the
-wild.”. Based on this, a recipe that included down-sample should
-<em>skip</em> this step when data are baked for the test set.</p>
-</div>
-<div class="section level2">
-<h2 id="other-examples">Other Examples<a class="anchor" aria-label="anchor" href="#other-examples"></a>
+<p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016" class="external-link">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
+<p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
+</section><section class="section level2"><h2 id="other-examples">Other Examples<a class="anchor" aria-label="anchor" href="#other-examples"></a>
 </h2>
-<p>There are other steps that have a default value of
-<code>skip = TRUE</code>:</p>
+<p>There are other steps that have a default value of <code>skip = TRUE</code>:</p>
 <ul>
 <li>
-<code><a href="../reference/step_filter.html">step_filter()</a></code> allows for arbitrary filtering of
-rows.</li>
+<code><a href="../reference/step_filter.html">step_filter()</a></code> allows for arbitrary filtering of rows.</li>
 <li>
-<code><a href="../reference/step_slice.html">step_slice()</a></code> also removes (or adds) rows to the
-data.</li>
+<code><a href="../reference/step_slice.html">step_slice()</a></code> also removes (or adds) rows to the data.</li>
 <li>
-<code><a href="../reference/step_sample.html">step_sample()</a></code> enables random sampling of the data
-set.</li>
+<code><a href="../reference/step_sample.html">step_sample()</a></code> enables random sampling of the data set.</li>
 <li>
-<code><a href="../reference/step_naomit.html">step_naomit()</a></code> will remove rows with missing values in
-certain columns.</li>
+<code><a href="../reference/step_naomit.html">step_naomit()</a></code> will remove rows with missing values in certain columns.</li>
 </ul>
-<p>The main issue with these steps being applied to new data (i.e. after
-the recipe has been trained) is that the non-outcome rows can become
-out-of-sync with the outcome data.</p>
-<p>For example, when <code><a href="../reference/bake.html">bake()</a></code> is run with
-<code>step_naomit(skip = FALSE)</code> and there are missing values, the
-predictors will have fewer rows than the outcome vector. When model
-predictions are produced and merged with the other data, their will be
-discordant rows. In this case, it would be better to have missing values
-in the predictions and a full data set than a subset of predictions from
-the complete data. The <a href="https://tidymodels.github.io/model-implementation-principles/model-predictions.html" class="external-link">general
-rule</a> in tidymodels is that, for models,</p>
+<p>The main issue with these steps being applied to new data (i.e. after the recipe has been trained) is that the non-outcome rows can become out-of-sync with the outcome data.</p>
+<p>For example, when <code><a href="../reference/bake.html">bake()</a></code> is run with <code>step_naomit(skip = FALSE)</code> and there are missing values, the predictors will have fewer rows than the outcome vector. When model predictions are produced and merged with the other data, their will be discordant rows. In this case, it would be better to have missing values in the predictions and a full data set than a subset of predictions from the complete data. The <a href="https://tidymodels.github.io/model-implementation-principles/model-predictions.html" class="external-link">general rule</a> in tidymodels is that, for models,</p>
 <blockquote>
-<p>The return value is a tibble with the <strong>same number of
-rows</strong> as the data being predicted and in the same order.</p>
+<p>The return value is a tibble with the <strong>same number of rows</strong> as the data being predicted and in the same order.</p>
 </blockquote>
-</div>
-<div class="section level2">
-<h2 id="how-to-skip-steps">How To Skip Steps<a class="anchor" aria-label="anchor" href="#how-to-skip-steps"></a>
+</section><section class="section level2"><h2 id="how-to-skip-steps">How To Skip Steps<a class="anchor" aria-label="anchor" href="#how-to-skip-steps"></a>
 </h2>
-<p>As of version recipes 0.1.2, each step has an optional logical
-argument called <code>skip</code>. In almost every case, the default is
-<code>FALSE</code>. When using this option:</p>
+<p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>FALSE</code>. When using this option:</p>
 <ul>
 <li>No steps are skipped during <code><a href="../reference/prep.html">prep()</a></code>
 </li>
-<li>Steps with <code>skip = TRUE</code> are not applied to the data when
-<code><a href="../reference/bake.html">bake()</a></code> is called</li>
+<li>Steps with <code>skip = TRUE</code> are not applied to the data when <code><a href="../reference/bake.html">bake()</a></code> is called</li>
 </ul>
-<p>Recall that there are two ways of getting the results for the
-training set with recipes. First, <code><a href="../reference/bake.html">bake()</a></code> can be used as
-usual. Second, <code>bake(new_data = NULL)</code> is a shortcut that
-will use the already processed data that is contained in the recipe when
-<code>prep(recipe, retain = TRUE)</code> is used.
-<code>bake(new_data = NULL)</code> is much faster and would be the way
-to get the training set <em>with all of the steps applied to the
-data</em>. For this reason, you should almost always used
-<code>retain = TRUE</code> if any steps are skipped (and a warning is
-produced otherwise).</p>
-</div>
-<div class="section level2">
-<h2 id="be-careful">Be Careful!<a class="anchor" aria-label="anchor" href="#be-careful"></a>
+<p>Recall that there are two ways of getting the results for the training set with recipes. First, <code><a href="../reference/bake.html">bake()</a></code> can be used as usual. Second, <code>bake(new_data = NULL)</code> is a shortcut that will use the already processed data that is contained in the recipe when <code>prep(recipe, retain = TRUE)</code> is used. <code>bake(new_data = NULL)</code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
+</section><section class="section level2"><h2 id="be-careful">Be Careful!<a class="anchor" aria-label="anchor" href="#be-careful"></a>
 </h2>
-<p>Skipping is a necessary feature but can be dangerous if used
-carelessly.</p>
-<p>As an example, skipping an operation whose variables are used later
-might be an issue:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>Skipping is a necessary feature but can be dangerous if used carelessly.</p>
+<p>As an example, skipping an operation whose variables are used later might be an issue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
 <span><span class="va">car_recipe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_log.html">step_log</a></span><span class="op">(</span><span class="va">disp</span>, skip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -200,33 +137,113 @@ might be an issue:</p>
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># These *should* produce the same results (as they do for `hp`)</span></span>
-<span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>   <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
+<span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 2</span></span>
 <span><span class="co">#&gt;     disp    hp</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> -<span style="color: #BB0000;">0.210</span> -<span style="color: #BB0000;">36.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> -<span style="color: #BB0000;">0.210</span> -<span style="color: #BB0000;">36.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> -<span style="color: #BB0000;">0.603</span> -<span style="color: #BB0000;">53.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  0.268 -<span style="color: #BB0000;">36.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  0.601  28.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  0.131 -<span style="color: #BB0000;">41.7</span></span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 -0.210 -36.7</span></span>
+<span><span class="co">#&gt; 2 -0.210 -36.7</span></span>
+<span><span class="co">#&gt; 3 -0.603 -53.7</span></span>
+<span><span class="co">#&gt; 4  0.268 -36.7</span></span>
+<span><span class="co">#&gt; 5  0.601  28.3</span></span>
+<span><span class="co">#&gt; 6  0.131 -41.7</span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 2</span></span>
 <span><span class="co">#&gt;    disp    hp</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  155. -<span style="color: #BB0000;">36.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  155. -<span style="color: #BB0000;">36.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  103. -<span style="color: #BB0000;">53.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  253. -<span style="color: #BB0000;">36.7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  355.  28.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  220. -<span style="color: #BB0000;">41.7</span></span></span></code></pre></div>
-<p>This should emphasize that <code>bake(new_data = NULL)</code> should
-be used to get the training set values whenever a step is skipped.</p>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  155. -36.7</span></span>
+<span><span class="co">#&gt; 2  155. -36.7</span></span>
+<span><span class="co">#&gt; 3  103. -53.7</span></span>
+<span><span class="co">#&gt; 4  253. -36.7</span></span>
+<span><span class="co">#&gt; 5  355.  28.3</span></span>
+<span><span class="co">#&gt; 6  220. -41.7</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
+<p>This should emphasize that <code>bake(new_data = NULL)</code> should be used to get the training set values whenever a step is skipped.</p>
+</section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main>
 </div>
-
 
 
    </div>
