@@ -23,9 +23,8 @@ step_regex(
 \item{recipe}{A recipe object. The step will be added to the sequence of
 operations for this recipe.}
 
-\item{...}{A single selector function to choose which variable will be
-searched for the regex pattern. The selector should resolve to a single
-variable. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose which variables will be
+searched for the regex pattern. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from the
@@ -42,10 +41,11 @@ vector. Coerced by \code{as.character} to a character string if possible.}
 \code{pattern}.}
 
 \item{result}{A single character value for the name of the new variable. It
-should be a valid column name.}
+should be a valid column name. If the selection resolves to more than one
+variable, the new variables are named \verb{\{variable\}_\{result\}} instead.}
 
-\item{input}{A single character value for the name of the variable being
-searched. This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{input}{The names of the variables being searched. This is \code{NULL} until
+computed by \code{\link[=prep]{prep()}}.}
 
 \item{sparse}{A single string. Should the columns produced be sparse vectors.
 Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
@@ -116,6 +116,15 @@ with_dummies <- bake(rec2, new_data = covers)
 with_dummies
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
+
+# When more than one variable is selected, the new variables are named
+# `{variable}_{result}`
+covers$description2 <- rev(covers$description)
+
+recipe(~., covers) |>
+  step_regex(description, description2, pattern = "rock", result = "rocks") |>
+  prep() |>
+  bake(new_data = NULL)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -125,6 +125,17 @@ dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   nms
 }
 
+# Used by step_count() and step_regex(), which create a single new column per
+# selected column. A single selection keeps the bare `result` name for
+# backwards compatibility.
+multi_result_names <- function(col_names, result) {
+  if (length(col_names) == 1L) {
+    result
+  } else {
+    paste0(col_names, "_", result)
+  }
+}
+
 #' @export
 #' @rdname names0
 dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {

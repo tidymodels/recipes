@@ -10,9 +10,13 @@
 
 * `check_new_values()`, `check_range()`, `step_bin2factor()`, `step_BoxCox()`, `step_center()`, `step_cut()`, `step_discretize()`, `step_factor2string()`, `step_hyperbolic()`, `step_impute_bag()`, `step_impute_knn()`, `step_impute_linear()`, `step_impute_lower()`, `step_impute_mean()`, `step_impute_median()`, `step_impute_mode()`, `step_impute_roll()`, `step_integer()`, `step_inverse()`, `step_invlogit()`, `step_log()`, `step_logit()`, `step_normalize()`, `step_novel()`, `step_num2factor()`, `step_ordinalscore()`, `step_other()`, `step_percentile()`, `step_range()`, `step_relevel()`, `step_scale()`, `step_shuffle()`, `step_sqrt()`, `step_string2factor()`, `step_unknown()`, `step_unorder()`, `step_window()`, and `step_YeoJohnson()` are now dramatically faster when baking data with many columns. (#1543)
 
+* `step_count()` now accepts selectors that resolve to more than one column. When more than one column is selected, the new columns are named `{column}_{result}`. (#1384)
+
 * `step_impute_bag()`, `step_impute_knn()`, and `step_impute_linear()` no longer error with "C stack usage is too close to the limit" when the data contains a survival outcome column. (#1517, #1542)
 
 * `step_num2factor()` no longer errors when more than one column is selected. (#1543)
+
+* `step_regex()` now accepts selectors that resolve to more than one column. When more than one column is selected, the new columns are named `{column}_{result}`. (#1384)
 
 # recipes 1.3.3
 
