@@ -8,8 +8,12 @@ covers$ch_rows <- paste(1:nrow(covers))
 
 rec <- recipe(~ description + rows + ch_rows, covers)
 
-counts <- gregexpr(pattern = "(rock|stony)", text = covers$description)
-counts <- vapply(counts, function(x) length(x[x > 0]), integer(1))
+count_pattern <- function(text, pattern) {
+  matches <- gregexpr(pattern = pattern, text = text)
+  vapply(matches, function(x) length(x[x > 0]), integer(1))
+}
+
+counts <- count_pattern(covers$description, "(rock|stony)")
 chars <- nchar(covers$description)
 
 test_that("default options", {
@@ -47,12 +51,121 @@ test_that("nondefault options", {
 })
 
 test_that("bad selector(s)", {
-  expect_snapshot(
-    error = TRUE,
-    rec |> step_count(description, rows, pattern = "(rock|stony)")
-  )
   rec2 <- rec |> step_count(rows, pattern = "(rock|stony)")
   expect_snapshot(error = TRUE, prep(rec2, training = covers))
+})
+
+test_that("multiple selections work", {
+  res <- rec |>
+    step_count(description, ch_rows, pattern = "1", result = "ones") |>
+    prep(training = covers) |>
+    bake(new_data = covers)
+
+  expect_equal(res$description_ones, count_pattern(covers$description, "1"))
+  expect_equal(res$ch_rows_ones, count_pattern(covers$ch_rows, "1"))
+})
+
+test_that("a single selection is named with `result` alone", {
+  res <- rec |>
+    step_count(description, pattern = "1", result = "ones") |>
+    prep(training = covers) |>
+    bake(new_data = covers)
+
+  expect_equal(res$ones, count_pattern(covers$description, "1"))
+})
+
+test_that("a selector resolving to multiple columns works", {
+  res <- recipe(~ description + ch_rows, covers) |>
+    step_count(all_string_predictors(), pattern = "1", result = "ones") |>
+    prep(training = covers) |>
+    bake(new_data = covers)
+
+  expect_named(
+    res,
+    c("description", "ch_rows", "description_ones", "ch_rows_ones")
+  )
+})
+
+test_that("normalize works with multiple selections", {
+  res <- rec |>
+    step_count(
+      description,
+      ch_rows,
+      pattern = "1",
+      result = "ones",
+      normalize = TRUE
+    ) |>
+    prep(training = covers) |>
+    bake(new_data = covers)
+
+  expect_equal(
+    res$description_ones,
+    count_pattern(covers$description, "1") / nchar(covers$description)
+  )
+  expect_equal(
+    res$ch_rows_ones,
+    count_pattern(covers$ch_rows, "1") / nchar(covers$ch_rows)
+  )
+})
+
+test_that("tidy method works with multiple selections", {
+  rec1 <- rec |>
+    step_count(description, ch_rows, pattern = "1", result = "ones") |>
+    prep(training = covers)
+
+  expect_identical(
+    tidy(rec1, number = 1),
+    tibble(
+      terms = c("description", "ch_rows"),
+      result = c("description_ones", "ch_rows_ones"),
+      id = rec1$steps[[1]]$id
+    )
+  )
+})
+
+test_that("keep_original_cols works with multiple selections", {
+  res <- rec |>
+    step_count(
+      description,
+      ch_rows,
+      pattern = "1",
+      result = "ones",
+      keep_original_cols = FALSE
+    ) |>
+    prep(training = covers) |>
+    bake(new_data = covers)
+
+  expect_named(res, c("rows", "description_ones", "ch_rows_ones"))
+})
+
+test_that("sparse = 'yes' works with multiple selections", {
+  rec1 <- recipe(~ description + ch_rows, covers)
+
+  suppressWarnings({
+    dense <- rec1 |>
+      step_count(
+        description,
+        ch_rows,
+        pattern = "stony",
+        sparse = "no",
+        keep_original_cols = FALSE
+      ) |>
+      prep() |>
+      bake(NULL)
+    sparse <- rec1 |>
+      step_count(
+        description,
+        ch_rows,
+        pattern = "stony",
+        sparse = "yes",
+        keep_original_cols = FALSE
+      ) |>
+      prep() |>
+      bake(NULL)
+  })
+
+  expect_identical(dense, sparse)
+  expect_all_true(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1)))
 })
 
 test_that("check_name() is used", {

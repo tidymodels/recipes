@@ -1,15 +1,6 @@
 # bad selector(s)
 
     Code
-      step_regex(rec, description, rows, pattern = "(rock|stony)")
-    Condition
-      Error in `step_regex()`:
-      x For this step, only a single selector can be used.
-      i The following 2 selectors were used: `~description` and `~rows`.
-
----
-
-    Code
       prep(rec4, training = covers)
     Condition
       Error in `step_regex()`:
@@ -26,15 +17,6 @@
       Caused by error in `bake()`:
       ! Name collision occurred. The following variable names already exist:
       * `Sepal.Width`
-
-# error on multiple selections
-
-    Code
-      step_regex(recipe(~., data = mtcars), vs, am)
-    Condition
-      Error in `step_regex()`:
-      x For this step, only a single selector can be used.
-      i The following 2 selectors were used: `~vs` and `~am`.
 
 # checks for grepl arguments
 
