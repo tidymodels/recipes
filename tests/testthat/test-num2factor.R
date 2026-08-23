@@ -34,6 +34,21 @@ test_that("basic functionality", {
   expect_equal(levels(ex_1$z), rev(LETTERS[1:10]))
 })
 
+test_that("multiple columns can be selected (#1543)", {
+  res <- recipe(~., data = data.frame(a = 1:3, b = 3:1)) |>
+    step_num2factor(a, b, levels = c("one", "two", "three")) |>
+    prep() |>
+    bake(new_data = NULL)
+
+  expect_identical(
+    res,
+    tibble(
+      a = factor(c("one", "two", "three"), levels = c("one", "two", "three")),
+      b = factor(c("three", "two", "one"), levels = c("one", "two", "three"))
+    )
+  )
+})
+
 test_that("bad args", {
   expect_snapshot(
     error = TRUE,

@@ -106,9 +106,7 @@ bake.step_factor2string <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- as.character(new_data[[col_name]])
-  }
+  new_data <- recipes_map_cols(new_data, col_names, \(x) as.character(x))
 
   new_data
 }

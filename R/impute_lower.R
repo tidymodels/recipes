@@ -134,17 +134,22 @@ bake.step_impute_lower <- function(object, new_data, ...) {
   col_names <- names(object$threshold)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    threshold <- object$threshold[[col_name]]
-    affected <- which(new_data[[col_name]] <= threshold)
+  thresholds <- object$threshold[col_names]
 
-    if (length(affected) > 0) {
-      new_data[[col_name]][affected] <- runif(
-        length(affected),
-        max = threshold
-      )
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      threshold <- thresholds[[i]]
+      affected <- which(x <= threshold)
+
+      if (length(affected) > 0) {
+        x[affected] <- runif(length(affected), max = threshold)
+      }
+
+      x
     }
-  }
+  )
 
   new_data
 }

@@ -200,33 +200,30 @@ bake.step_other <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    if (!object$objects[[col_name]]$collapse) {
-      next
-    }
-    tmp <- new_data[[col_name]]
+  objects <- object$objects[col_names]
 
-    if (!is.character(tmp)) {
-      tmp <- as.character(tmp)
-    }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      if (!objects[[i]]$collapse) {
+        return(x)
+      }
 
-    tmp <- ifelse(
-      !(tmp %in% object$objects[[col_name]]$keep) & !is.na(tmp),
-      object$objects[[col_name]]$other,
-      tmp
-    )
+      if (!is.character(x)) {
+        x <- as.character(x)
+      }
 
-    # assign other factor levels other here too.
-    tmp <- factor(
-      tmp,
-      levels = c(
-        object$objects[[col_name]]$keep,
-        object$objects[[col_name]]$other
+      x <- ifelse(
+        !(x %in% objects[[i]]$keep) & !is.na(x),
+        objects[[i]]$other,
+        x
       )
-    )
 
-    new_data[[col_name]] <- tmp
-  }
+      # assign other factor levels other here too.
+      factor(x, levels = c(objects[[i]]$keep, objects[[i]]$other))
+    }
+  )
 
   new_data
 }

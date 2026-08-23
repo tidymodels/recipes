@@ -194,13 +194,13 @@ bake.step_cut <- function(object, new_data, ...) {
   col_names <- names(object$breaks)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- cut_var(
-      new_data[[col_name]],
-      object$breaks[[col_name]],
-      object$include_outside_range
-    )
-  }
+  breaks <- object$breaks[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) cut_var(x, breaks[[i]], object$include_outside_range)
+  )
 
   new_data
 }

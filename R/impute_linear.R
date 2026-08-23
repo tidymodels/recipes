@@ -207,28 +207,38 @@ bake.step_impute_linear <- function(object, new_data, ...) {
     return(new_data)
   }
 
-  old_data <- new_data
-  for (col_name in col_names) {
-    missing_rows <- !vec_detect_complete(new_data[[col_name]])
-    if (!any(missing_rows)) {
-      next
-    }
+  models <- object$models[col_names]
 
-    preds <- object$models[[col_name]]$..imp_vars
-    pred_data <- old_data[missing_rows, preds, drop = FALSE]
-    ## do a better job of checking this:
-    if (anyNA(pred_data)) {
-      cli::cli_warn(
-        "There were missing values in the predictor(s) used to impute; \\
-        imputation did not occur."
-      )
-    } else {
-      pred_vals <- predict(object$models[[col_name]], pred_data)
-      pred_vals <- cast(pred_vals, new_data[[col_name]])
-      new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
-      new_data[missing_rows, col_name] <- pred_vals
+  # `new_data` is not modified while mapping, so the predictors are always read
+  # from the unimputed data.
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      missing_rows <- !vec_detect_complete(x)
+      if (!any(missing_rows)) {
+        return(x)
+      }
+
+      preds <- models[[i]]$..imp_vars
+      pred_data <- new_data[missing_rows, preds, drop = FALSE]
+      ## do a better job of checking this:
+      if (anyNA(pred_data)) {
+        cli::cli_warn(
+          "There were missing values in the predictor(s) used to impute; \\
+          imputation did not occur."
+        )
+        return(x)
+      }
+
+      pred_vals <- predict(models[[i]], pred_data)
+      pred_vals <- cast(pred_vals, x)
+      x <- vec_cast(x, pred_vals)
+      x[missing_rows] <- pred_vals
+      x
     }
-  }
+  )
+
   new_data
 }
 

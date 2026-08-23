@@ -25,6 +25,109 @@ test_that("can use tidyselect ops in bake() and juice() column selection", {
   expect_named(y, "carb")
 })
 
+test_that("bake() can stop after a given step number", {
+  car_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    step_pca(all_predictors(), num_comp = 2) |>
+    prep()
+
+  first_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    prep()
+
+  expect_identical(
+    bake(car_rec, mtcars, stop_at = 1),
+    bake(first_rec, mtcars)
+  )
+  expect_identical(
+    bake(car_rec, mtcars, stop_at = 2),
+    bake(car_rec, mtcars)
+  )
+})
+
+test_that("bake() can stop after a given step id", {
+  car_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    step_pca(all_predictors(), num_comp = 2) |>
+    prep()
+
+  expect_identical(
+    bake(car_rec, mtcars, stop_at = car_rec$steps[[1]]$id),
+    bake(car_rec, mtcars, stop_at = 1)
+  )
+})
+
+test_that("bake() with stop_at works with selectors and composition", {
+  car_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    step_pca(all_predictors(), num_comp = 2) |>
+    prep()
+
+  expect_named(
+    bake(car_rec, mtcars, all_numeric_predictors(), stop_at = 2),
+    c("PC1", "PC2")
+  )
+  expect_named(
+    bake(car_rec, mtcars, starts_with("d"), stop_at = 1),
+    c("disp", "drat")
+  )
+  expect_s4_class(
+    bake(
+      car_rec,
+      mtcars,
+      all_predictors(),
+      stop_at = 1,
+      composition = "dgCMatrix"
+    ),
+    "dgCMatrix"
+  )
+})
+
+test_that("bake() with stop_at still skips steps with skip = TRUE", {
+  car_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    step_filter(mpg > 0, skip = TRUE) |>
+    step_scale(all_predictors()) |>
+    prep()
+
+  expect_identical(
+    bake(car_rec, mtcars, stop_at = 2),
+    bake(car_rec, mtcars, stop_at = 1)
+  )
+  expect_identical(
+    bake(car_rec, mtcars, stop_at = 3),
+    bake(car_rec, mtcars)
+  )
+})
+
+test_that("bake() errors on bad stop_at", {
+  car_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors(), id = "center") |>
+    prep()
+
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = 2))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = 0))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = 1.5))
+
+  multi_rec <- recipe(cyl ~ ., mtcars) |>
+    step_center(all_predictors()) |>
+    step_scale(all_predictors()) |>
+    prep()
+
+  expect_snapshot(error = TRUE, bake(multi_rec, mtcars, stop_at = 9))
+
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = "nope"))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = TRUE))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = c(1, 1)))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = NA))
+  expect_snapshot(error = TRUE, bake(car_rec, mtcars, stop_at = integer(0)))
+  expect_snapshot(error = TRUE, bake(car_rec, new_data = NULL, stop_at = 1))
+  expect_snapshot(
+    error = TRUE,
+    bake(prep(recipe(cyl ~ ., mtcars)), mtcars, stop_at = 1)
+  )
+})
+
 test_that("bake() and juice() doens't turn strings into factors #317", {
   exp_data <- tibble(f1 = factor(1), f2 = "1", c1 = "1")
 

@@ -154,12 +154,13 @@ bake.step_YeoJohnson <- function(object, new_data, ...) {
   col_names <- names(object$lambdas)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- yj_transform(
-      new_data[[col_name]],
-      lambda = object$lambdas[col_name]
-    )
-  }
+  lambdas <- object$lambdas[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) yj_transform(x, lambda = lambdas[[i]])
+  )
 
   new_data
 }

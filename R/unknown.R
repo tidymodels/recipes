@@ -125,32 +125,34 @@ bake.step_unknown <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- ifelse(
-      is.na(new_data[[col_name]]),
-      object$new_level,
-      as.character(new_data[[col_name]])
-    )
+  objects <- object$object[col_names]
 
-    new_levels <- c(object$object[[col_name]], object$new_level)
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i, col_name) {
+      x <- ifelse(is.na(x), object$new_level, as.character(x))
 
-    if (!all(new_data[[col_name]] %in% new_levels)) {
-      warn_new_levels(
-        new_data[[col_name]],
-        new_levels,
-        column = col_name,
-        step = "step_unknown",
-        c("*" = "New levels will be coerced to `NA` by {.fn step_unknown}.")
+      new_levels <- c(objects[[i]], object$new_level)
+
+      if (!all(x %in% new_levels)) {
+        warn_new_levels(
+          x,
+          new_levels,
+          column = col_name,
+          step = "step_unknown",
+          c("*" = "New levels will be coerced to `NA` by {.fn step_unknown}.")
+        )
+      }
+
+      factor(
+        x,
+        levels = new_levels,
+        ordered = attributes(objects[[i]])$is_ordered
       )
     }
+  )
 
-    new_data[[col_name]] <-
-      factor(
-        new_data[[col_name]],
-        levels = new_levels,
-        ordered = attributes(object$object[[col_name]])$is_ordered
-      )
-  }
   new_data
 }
 

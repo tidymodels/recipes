@@ -190,14 +190,18 @@ bake.step_num2factor <- function(object, new_data, ...) {
 
   lvls <- object$levels[names(object$levels) == "..levels"]
 
-  for (col_name in col_names) {
-    new_data[[col_names]] <- make_factor_num(
-      new_data[[col_name]],
-      lvl = lvls[[1]],
-      ord = object$ordered[1],
-      foo = object$transform
-    )
-  }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x) {
+      make_factor_num(
+        x,
+        lvl = lvls[[1]],
+        ord = object$ordered[1],
+        foo = object$transform
+      )
+    }
+  )
 
   new_data
 }

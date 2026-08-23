@@ -192,16 +192,22 @@ bake.check_range <- function(object, new_data, ...) {
     return(new_data)
   }
 
-  for (col_name in col_names) {
+  # Subset once rather than looking up each column by name in turn
+  columns <- unclass(new_data)[col_names]
+  lower <- object$lower[col_names]
+  upper <- object$upper[col_names]
+
+  for (i in seq_along(col_names)) {
     range_check_func(
-      new_data[[col_name]],
-      object$lower[col_name],
-      object$upper[col_name],
+      columns[[i]],
+      lower[[i]],
+      upper[[i]],
       object$slack_prop,
       object$warn,
-      col_name
+      col_names[[i]]
     )
   }
+
   new_data
 }
 

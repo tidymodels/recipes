@@ -145,11 +145,15 @@ bake.check_new_values <- function(object, new_data, ...) {
   col_names <- names(object$values)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
+  # Subset once rather than looking up each column by name in turn
+  columns <- unclass(new_data)[col_names]
+  values <- object$values[col_names]
+
+  for (i in seq_along(col_names)) {
     new_values_func(
-      new_data[[col_name]],
-      object$values[[col_name]],
-      col_name,
+      columns[[i]],
+      values[[i]],
+      col_names[[i]],
       ignore_NA = object$ignore_NA
     )
   }

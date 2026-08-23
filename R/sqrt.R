@@ -96,13 +96,17 @@ bake.step_sqrt <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
-      new_data[[col_name]] <- sparsevctrs::sparse_sqrt(new_data[[col_name]])
-    } else {
-      new_data[[col_name]] <- sqrt(new_data[[col_name]])
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x) {
+      if (sparsevctrs::is_sparse_vector(x)) {
+        sparsevctrs::sparse_sqrt(x)
+      } else {
+        sqrt(x)
+      }
     }
-  }
+  )
 
   new_data
 }

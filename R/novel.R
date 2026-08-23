@@ -152,22 +152,27 @@ bake.step_novel <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- ifelse(
-      # Preserve NA values by adding them to the list of existing
-      # possible values
-      !(new_data[[col_name]] %in% c(object$object[[col_name]], NA)),
-      object$new_level,
-      as.character(new_data[[col_name]])
-    )
+  objects <- object$object[col_names]
 
-    new_data[[col_name]] <-
-      factor(
-        new_data[[col_name]],
-        levels = c(object$object[[col_name]], object$new_level),
-        ordered = attributes(object$object[[col_name]])$is_ordered
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      x <- ifelse(
+        # Preserve NA values by adding them to the list of existing
+        # possible values
+        !(x %in% c(objects[[i]], NA)),
+        object$new_level,
+        as.character(x)
       )
-  }
+
+      factor(
+        x,
+        levels = c(objects[[i]], object$new_level),
+        ordered = attributes(objects[[i]])$is_ordered
+      )
+    }
+  )
 
   new_data
 }

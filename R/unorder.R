@@ -102,13 +102,12 @@ bake.step_unorder <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <-
-      factor(
-        x = as.character(new_data[[col_name]]),
-        levels = levels(new_data[[col_name]])
-      )
-  }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x) factor(x = as.character(x), levels = levels(x))
+  )
+
   new_data
 }
 
