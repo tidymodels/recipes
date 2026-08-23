@@ -119,12 +119,11 @@ bake.step_relevel <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- stats::relevel(
-      as.factor(new_data[[col_name]]),
-      ref = object$ref_level
-    )
-  }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x) stats::relevel(as.factor(x), ref = object$ref_level)
+  )
 
   new_data
 }

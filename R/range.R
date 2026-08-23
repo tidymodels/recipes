@@ -148,20 +148,27 @@ bake.step_range <- function(object, new_data, ...) {
   col_names <- colnames(object$ranges)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    min <- object$ranges["mins", col_name]
-    max <- object$ranges["maxs", col_name]
+  mins <- object$ranges["mins", col_names]
+  maxs <- object$ranges["maxs", col_names]
+  clipping <- is.null(object$clipping) || isTRUE(object$clipping)
 
-    new_data[[col_name]] <- (new_data[[col_name]] - min) *
-      (object$max - object$min) /
-      (max - min) +
-      object$min
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      x <- (x - mins[[i]]) *
+        (object$max - object$min) /
+        (maxs[[i]] - mins[[i]]) +
+        object$min
 
-    if (is.null(object$clipping) || isTRUE(object$clipping)) {
-      new_data[[col_name]] <- pmax(new_data[[col_name]], object$min)
-      new_data[[col_name]] <- pmin(new_data[[col_name]], object$max)
+      if (clipping) {
+        x <- pmax(x, object$min)
+        x <- pmin(x, object$max)
+      }
+
+      x
     }
-  }
+  )
 
   new_data
 }

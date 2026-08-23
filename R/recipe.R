@@ -664,6 +664,10 @@ prep.recipe <-
 #'   `new_data`, the pre-processed _training data_ will be returned (assuming
 #'   that `prep(retain = TRUE)` was used). See [sparse_data] for more
 #'   information about use of sparse data.
+#' @param stop_at A single step number or step `id` (as returned by
+#'   [tidy.recipe()]). If supplied, only the steps up to and including that
+#'   step are applied to `new_data`. The default, `NULL`, applies all steps.
+#'   Cannot be used with `new_data = NULL`.
 #' @param composition Either `"tibble"`, `"matrix"`, `"data.frame"`, or
 #'   `"dgCMatrix"``for the format of the processed data set. Also, note that
 #'   this argument should be called **after** any selectors and the selectors
@@ -687,6 +691,13 @@ prep.recipe <-
 #' Also, any steps with `skip = TRUE` will not be applied to the data when
 #' [bake()] is invoked with a data set in `new_data`. `bake(object, new_data =
 #' NULL)` will always have all of the steps applied.
+#'
+#' The `stop_at` argument returns the data as it exists partway through the
+#' recipe, which is useful for diagnostics such as visualizing the effect of
+#' each step. It cannot be used with `new_data = NULL` since the intermediate
+#' versions of the training set are not retained by [prep()]; pass the training
+#' data to `new_data` instead. Steps with `skip = TRUE` are still skipped, but
+#' they are counted when numbering steps.
 #'
 #' @return
 #'
@@ -718,6 +729,9 @@ prep.recipe <-
 #' # only return selected variables:
 #' bake(ames_rec, new_data = head(ames), all_numeric_predictors())
 #' bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
+#'
+#' # only apply the first two steps:
+#' bake(ames_rec, new_data = head(ames), stop_at = 2)
 #' @export
 bake <- function(object, ...) {
   UseMethod("bake")
@@ -725,7 +739,13 @@ bake <- function(object, ...) {
 
 #' @rdname bake
 #' @export
-bake.recipe <- function(object, new_data, ..., composition = "tibble") {
+bake.recipe <- function(
+  object,
+  new_data,
+  ...,
+  stop_at = NULL,
+  composition = "tibble"
+) {
   if (rlang::is_missing(new_data)) {
     cli::cli_abort(
       "{.arg new_data} must be either a data frame or NULL. \\
@@ -734,6 +754,17 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   if (is.null(new_data)) {
+    if (!is.null(stop_at)) {
+      cli::cli_abort(
+        c(
+          "x" = "{.arg stop_at} cannot be used with {.code new_data = NULL}.",
+          "i" = "Intermediate versions of the training set are not retained \\
+                 by {.fun prep}; pass the training data to {.arg new_data} \\
+                 instead."
+        )
+      )
+    }
+
     return(juice(object, ..., composition = composition))
   }
 
@@ -782,7 +813,16 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   bakeable_names <- intersect(original_training_names, original_names)
   new_data <- new_data[, bakeable_names]
 
-  n_steps <- length(object$steps)
+  n_steps <- resolve_stop_at(stop_at, object)
+
+  # `last_term_info` describes the data after *all* steps, so it cannot be used
+  # when only some of the steps are applied. Instead, the term information is
+  # tracked as each step is applied, mirroring what `prep()` does.
+  partial <- !is.null(stop_at)
+  if (partial) {
+    info <- object$var_info
+    seen_vars <- info$variable
+  }
 
   for (i in seq_len(n_steps)) {
     step <- object$steps[[i]]
@@ -804,13 +844,16 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
         )
       )
     }
+
+    if (partial) {
+      info <- update_term_info(info, new_data, step, seen_vars)
+      seen_vars <- union(seen_vars, info$variable)
+    }
   }
 
-  # Use `last_term_info`, which maintains info on all columns that got added
-  # and removed from the training data. This is important for skipped steps
-  # which might have resulted in columns not being added/removed in the test
-  # set.
-  info <- object$last_term_info
+  if (!partial) {
+    info <- object$last_term_info
+  }
 
   # Handle old grouped data.frames
   if (!is.null(attr(info, "vars"))) {
@@ -833,6 +876,93 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   new_data <- hardhat::recompose(new_data, composition = composition)
 
   new_data
+}
+
+resolve_stop_at <- function(stop_at, object, call = caller_env()) {
+  n_steps <- length(object$steps)
+
+  if (is.null(stop_at)) {
+    return(n_steps)
+  }
+
+  if (n_steps == 0) {
+    cli::cli_abort(
+      "{.arg stop_at} cannot be used with a recipe that has no steps.",
+      call = call
+    )
+  }
+
+  if (length(stop_at) != 1 || is.na(stop_at)) {
+    cli::cli_abort(
+      "{.arg stop_at} must be a single step number or step id, \\
+      not {.obj_type_friendly {stop_at}}.",
+      call = call
+    )
+  }
+
+  if (is.character(stop_at)) {
+    ids <- map_chr(object$steps, \(x) x$id)
+    loc <- which(ids == stop_at)
+
+    if (length(loc) == 0) {
+      cli::cli_abort(
+        c(
+          "x" = "{.arg stop_at} must be a single step number or step id, \\
+                 not {.val {stop_at}}.",
+          "i" = "The step ids of {.arg object} are {.or {.val {ids}}}."
+        ),
+        call = call
+      )
+    }
+
+    return(loc[[1]])
+  }
+
+  if (!is.numeric(stop_at)) {
+    cli::cli_abort(
+      "{.arg stop_at} must be a single step number or step id, \\
+      not {.obj_type_friendly {stop_at}}.",
+      call = call
+    )
+  }
+
+  if (!is.finite(stop_at) || stop_at != trunc(stop_at)) {
+    cli::cli_abort(
+      "{.arg stop_at} must be a whole step number, not {stop_at}.",
+      call = call
+    )
+  }
+
+  if (stop_at < 1 || stop_at > n_steps) {
+    cli::cli_abort(
+      c(
+        "x" = "{.arg stop_at} must be a step number, not {stop_at}.",
+        "i" = "{.arg object} has {n_steps} step{?s}, so {.arg stop_at} must \\
+               be {cli::qty(n_steps)}{?/between 1 and }{n_steps}."
+      ),
+      call = call
+    )
+  }
+
+  as.integer(stop_at)
+}
+
+# Update the term information after a single step has been applied, using the
+# same rules as `prep()`. `seen_vars` are all of the variables that have been
+# seen up to this point, so that newly created columns can be identified.
+update_term_info <- function(info, new_data, step, seen_vars) {
+  info <- merge_term_info(get_types(new_data), info)
+
+  if (!is.na(step$role)) {
+    pos_new_var <- !info$variable %in% seen_vars
+    pos_new_and_na_role <- pos_new_var & is.na(info$role)
+    pos_new_and_na_source <- pos_new_var & is.na(info$source)
+
+    info$role[pos_new_and_na_role] <- step$role
+    info$source[pos_new_and_na_source] <- "derived"
+  }
+
+  info
 }
 
 turn_strings_to_factors <- function(object, new_data) {

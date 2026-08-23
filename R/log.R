@@ -142,21 +142,21 @@ bake.step_log <- function(object, new_data, ...) {
     cli::cli_warn("When {.arg signed} is TRUE, {.arg offset} will be ignored.")
   }
 
-  for (col_name in col_names) {
-    tmp <- new_data[[col_name]]
-
-    if (object$signed) {
-      tmp <- ifelse(
-        abs(tmp) < 1,
-        0,
-        sign(tmp) * log(abs(tmp), base = object$base)
-      )
-    } else {
-      tmp <- log(tmp + object$offset, base = object$base)
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x) {
+      if (object$signed) {
+        ifelse(
+          abs(x) < 1,
+          0,
+          sign(x) * log(abs(x), base = object$base)
+        )
+      } else {
+        log(x + object$offset, base = object$base)
+      }
     }
-
-    new_data[[col_name]] <- tmp
-  }
+  )
 
   new_data
 }

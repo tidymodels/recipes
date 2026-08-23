@@ -129,6 +129,33 @@ once and when possible should be put outside \code{for} loops.
 used to remove columns from the data set, either by using the
 \code{object$removals} field or by using the \code{col_names} argument.
 
+\code{\link[=recipes_map_cols]{recipes_map_cols()}} should be used in \verb{bake.step_*()} functions for steps
+that transform columns in place. Assigning to \code{new_data[[col_name]]} inside a
+\code{for} loop is quadratic in the number of columns, so steps written that way
+become unusably slow on wide data. \code{\link[=recipes_map_cols]{recipes_map_cols()}} computes all the
+replacement columns and assigns them at once instead.
+
+It should be used like so:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{means <- object$means[col_names]
+
+new_data <- recipes_map_cols(
+  new_data,
+  col_names,
+  \\(x, i) x - means[[i]]
+)
+}\if{html}{\out{</div>}}
+
+Note that the per-column value is looked up by position with \code{means[[i]]},
+having aligned \code{means} to \code{col_names} once beforehand. Indexing by name
+inside the function (\code{means[col_name]}) reintroduces the same quadratic cost
+the helper exists to avoid.
+
+Only the arguments the function accepts are passed, so a step that needs
+neither the position nor the name can be written as \verb{\\(x) x * 2}, and one
+that reports the offending column in an error message can take a third
+\code{col_name} argument.
+
 \code{\link[=recipes_names_predictors]{recipes_names_predictors()}} and \code{\link[=recipes_names_outcomes]{recipes_names_outcomes()}} should be used in
 \verb{prep.step_*()} functions, and are used to get names of predictors and
 outcomes.

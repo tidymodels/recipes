@@ -116,11 +116,12 @@ bake.step_logit <- function(object, new_data, ...) {
     return(new_data)
   }
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- binomial()$linkfun(
-      pre_logit(new_data[[col_name]], object$offset)
-    )
-  }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x) binomial()$linkfun(pre_logit(x, object$offset))
+  )
+
   new_data
 }
 

@@ -142,6 +142,34 @@
 #' used to remove columns from the data set, either by using the
 #' `object$removals` field or by using the `col_names` argument.
 #'
+#' [recipes_map_cols()] should be used in `bake.step_*()` functions for steps
+#' that transform columns in place. Assigning to `new_data[[col_name]]` inside a
+#' `for` loop is quadratic in the number of columns, so steps written that way
+#' become unusably slow on wide data. [recipes_map_cols()] computes all the
+#' replacement columns and assigns them at once instead.
+#'
+#' It should be used like so:
+#'
+#' ```r
+#' means <- object$means[col_names]
+#'
+#' new_data <- recipes_map_cols(
+#'   new_data,
+#'   col_names,
+#'   \(x, i) x - means[[i]]
+#' )
+#' ```
+#'
+#' Note that the per-column value is looked up by position with `means[[i]]`,
+#' having aligned `means` to `col_names` once beforehand. Indexing by name
+#' inside the function (`means[col_name]`) reintroduces the same quadratic cost
+#' the helper exists to avoid.
+#'
+#' Only the arguments the function accepts are passed, so a step that needs
+#' neither the position nor the name can be written as `\(x) x * 2`, and one
+#' that reports the offending column in an error message can take a third
+#' `col_name` argument.
+#'
 #' [recipes_names_predictors()] and [recipes_names_outcomes()] should be used in
 #' `prep.step_*()` functions, and are used to get names of predictors and
 #' outcomes.

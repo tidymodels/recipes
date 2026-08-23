@@ -134,16 +134,16 @@ bake.step_bin2factor <- function(object, new_data, ...) {
 
   levs <- if (object$ref_first) object$levels else rev(object$levels)
 
-  for (col_name in col_names) {
-    tmp <- ifelse(
-      new_data[[col_name]] == 1,
-      object$levels[1],
-      object$levels[2]
-    )
-    tmp <- factor(tmp, levels = levs)
-
-    new_data[[col_name]] <- tmp
-  }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x) {
+      factor(
+        ifelse(x == 1, object$levels[1], object$levels[2]),
+        levels = levs
+      )
+    }
+  )
 
   new_data
 }

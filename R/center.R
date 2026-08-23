@@ -147,10 +147,13 @@ bake.step_center <- function(object, new_data, ...) {
   col_names <- names(object$means)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    mean <- object$means[col_name]
-    new_data[[col_name]] <- new_data[[col_name]] - mean
-  }
+  means <- object$means[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) x - means[[i]]
+  )
 
   new_data
 }

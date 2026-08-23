@@ -147,17 +147,20 @@ bake.step_scale <- function(object, new_data, ...) {
   col_names <- names(object$sds)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    sd <- object$sds[col_name]
-    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
-      new_data[[col_name]] <- sparsevctrs::sparse_division_scalar(
-        new_data[[col_name]],
-        sd
-      )
-    } else {
-      new_data[[col_name]] <- new_data[[col_name]] / sd
+  sds <- object$sds[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      if (sparsevctrs::is_sparse_vector(x)) {
+        sparsevctrs::sparse_division_scalar(x, sds[[i]])
+      } else {
+        x / sds[[i]]
+      }
     }
-  }
+  )
+
   new_data
 }
 

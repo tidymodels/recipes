@@ -7,7 +7,7 @@
 \usage{
 bake(object, ...)
 
-\method{bake}{recipe}(object, new_data, ..., composition = "tibble")
+\method{bake}{recipe}(object, new_data, ..., stop_at = NULL, composition = "tibble")
 }
 \arguments{
 \item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least one
@@ -22,6 +22,11 @@ package for whom the preprocessing will be applied. If \code{NULL} is given to
 \code{new_data}, the pre-processed \emph{training data} will be returned (assuming
 that \code{prep(retain = TRUE)} was used). See \link{sparse_data} for more
 information about use of sparse data.}
+
+\item{stop_at}{A single step number or step \code{id} (as returned by
+\code{\link[=tidy.recipe]{tidy.recipe()}}). If supplied, only the steps up to and including that
+step are applied to \code{new_data}. The default, \code{NULL}, applies all steps.
+Cannot be used with \code{new_data = NULL}.}
 
 \item{composition}{Either \code{"tibble"}, \code{"matrix"}, \code{"data.frame"}, or
 \verb{"dgCMatrix"``for the format of the processed data set. Also, note that this argument should be called **after** any selectors and the selectors should only resolve to numeric columns if }composition\verb{is set to}"matrix"\code{or}"dgCMatrix"\verb{. If the data contains sparse columns they will be perseved for }"tibble"\code{and}"data.frame"\verb{, and efficiently used for }"dgCMatrix"`.}
@@ -46,6 +51,13 @@ free.
 
 Also, any steps with \code{skip = TRUE} will not be applied to the data when
 \code{\link[=bake]{bake()}} is invoked with a data set in \code{new_data}. \code{bake(object, new_data = NULL)} will always have all of the steps applied.
+
+The \code{stop_at} argument returns the data as it exists partway through the
+recipe, which is useful for diagnostics such as visualizing the effect of
+each step. It cannot be used with \code{new_data = NULL} since the intermediate
+versions of the training set are not retained by \code{\link[=prep]{prep()}}; pass the training
+data to \code{new_data} instead. Steps with \code{skip = TRUE} are still skipped, but
+they are counted when numbering steps.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
@@ -71,6 +83,9 @@ bake(ames_rec, new_data = head(ames))
 # only return selected variables:
 bake(ames_rec, new_data = head(ames), all_numeric_predictors())
 bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
+
+# only apply the first two steps:
+bake(ames_rec, new_data = head(ames), stop_at = 2)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -127,9 +127,7 @@ bake.step_hyperbolic <- function(object, new_data, ...) {
     get(object$func)
   }
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- func(new_data[[col_name]])
-  }
+  new_data <- recipes_map_cols(new_data, col_names, \(x) func(x))
 
   new_data
 }

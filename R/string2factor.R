@@ -159,19 +159,18 @@ bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    if (is.list(object$levels)) {
-      levels <- object$levels[[col_name]]
-    } else {
-      levels <- object$levels
-    }
-
-    new_data[[col_name]] <- make_factor(
-      new_data[[col_name]],
-      lvl = levels,
-      ord = object$ordered[[col_name]]
-    )
+  if (is.list(object$levels)) {
+    levels <- object$levels[col_names]
+  } else {
+    levels <- rep(list(object$levels), length(col_names))
   }
+  ordered <- object$ordered[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) make_factor(x, lvl = levels[[i]], ord = ordered[[i]])
+  )
 
   new_data
 }
