@@ -8,6 +8,57 @@
   for diagnostics such as visualizing the effect of each step.
   ([\#1551](https://github.com/tidymodels/recipes/issues/1551))
 
+- New
+  [`recipes_map_cols()`](https://recipes.tidymodels.org/dev/reference/recipes_map_cols.md)
+  helper for use in
+  [`bake()`](https://recipes.tidymodels.org/dev/reference/bake.md)
+  methods of steps that transform columns in place. It applies a
+  function to the selected columns and assigns the results in bulk,
+  avoiding the quadratic cost of assigning one column at a time.
+  ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
+
+- [`check_new_values()`](https://recipes.tidymodels.org/dev/reference/check_new_values.md),
+  [`check_range()`](https://recipes.tidymodels.org/dev/reference/check_range.md),
+  [`step_bin2factor()`](https://recipes.tidymodels.org/dev/reference/step_bin2factor.md),
+  [`step_BoxCox()`](https://recipes.tidymodels.org/dev/reference/step_BoxCox.md),
+  [`step_center()`](https://recipes.tidymodels.org/dev/reference/step_center.md),
+  [`step_cut()`](https://recipes.tidymodels.org/dev/reference/step_cut.md),
+  [`step_discretize()`](https://recipes.tidymodels.org/dev/reference/step_discretize.md),
+  [`step_factor2string()`](https://recipes.tidymodels.org/dev/reference/step_factor2string.md),
+  [`step_hyperbolic()`](https://recipes.tidymodels.org/dev/reference/step_hyperbolic.md),
+  [`step_impute_bag()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md),
+  [`step_impute_knn()`](https://recipes.tidymodels.org/dev/reference/step_impute_knn.md),
+  [`step_impute_linear()`](https://recipes.tidymodels.org/dev/reference/step_impute_linear.md),
+  [`step_impute_lower()`](https://recipes.tidymodels.org/dev/reference/step_impute_lower.md),
+  [`step_impute_mean()`](https://recipes.tidymodels.org/dev/reference/step_impute_mean.md),
+  [`step_impute_median()`](https://recipes.tidymodels.org/dev/reference/step_impute_median.md),
+  [`step_impute_mode()`](https://recipes.tidymodels.org/dev/reference/step_impute_mode.md),
+  [`step_impute_roll()`](https://recipes.tidymodels.org/dev/reference/step_impute_roll.md),
+  [`step_integer()`](https://recipes.tidymodels.org/dev/reference/step_integer.md),
+  [`step_inverse()`](https://recipes.tidymodels.org/dev/reference/step_inverse.md),
+  [`step_invlogit()`](https://recipes.tidymodels.org/dev/reference/step_invlogit.md),
+  [`step_log()`](https://recipes.tidymodels.org/dev/reference/step_log.md),
+  [`step_logit()`](https://recipes.tidymodels.org/dev/reference/step_logit.md),
+  [`step_normalize()`](https://recipes.tidymodels.org/dev/reference/step_normalize.md),
+  [`step_novel()`](https://recipes.tidymodels.org/dev/reference/step_novel.md),
+  [`step_num2factor()`](https://recipes.tidymodels.org/dev/reference/step_num2factor.md),
+  [`step_ordinalscore()`](https://recipes.tidymodels.org/dev/reference/step_ordinalscore.md),
+  [`step_other()`](https://recipes.tidymodels.org/dev/reference/step_other.md),
+  [`step_percentile()`](https://recipes.tidymodels.org/dev/reference/step_percentile.md),
+  [`step_range()`](https://recipes.tidymodels.org/dev/reference/step_range.md),
+  [`step_relevel()`](https://recipes.tidymodels.org/dev/reference/step_relevel.md),
+  [`step_scale()`](https://recipes.tidymodels.org/dev/reference/step_scale.md),
+  [`step_shuffle()`](https://recipes.tidymodels.org/dev/reference/step_shuffle.md),
+  [`step_sqrt()`](https://recipes.tidymodels.org/dev/reference/step_sqrt.md),
+  [`step_string2factor()`](https://recipes.tidymodels.org/dev/reference/step_string2factor.md),
+  [`step_unknown()`](https://recipes.tidymodels.org/dev/reference/step_unknown.md),
+  [`step_unorder()`](https://recipes.tidymodels.org/dev/reference/step_unorder.md),
+  [`step_window()`](https://recipes.tidymodels.org/dev/reference/step_window.md),
+  and
+  [`step_YeoJohnson()`](https://recipes.tidymodels.org/dev/reference/step_YeoJohnson.md)
+  are now dramatically faster when baking data with many columns.
+  ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
+
 - [`step_impute_bag()`](https://recipes.tidymodels.org/dev/reference/step_impute_bag.md),
   [`step_impute_knn()`](https://recipes.tidymodels.org/dev/reference/step_impute_knn.md),
   and
@@ -16,6 +67,10 @@
   the data contains a survival outcome column.
   ([\#1517](https://github.com/tidymodels/recipes/issues/1517),
   [\#1542](https://github.com/tidymodels/recipes/issues/1542))
+
+- [`step_num2factor()`](https://recipes.tidymodels.org/dev/reference/step_num2factor.md)
+  no longer errors when more than one column is selected.
+  ([\#1543](https://github.com/tidymodels/recipes/issues/1543))
 
 ## recipes 1.3.3
 
