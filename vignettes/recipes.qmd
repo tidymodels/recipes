@@ -1,12 +1,10 @@
 ---
 title: "Introduction to recipes"
-output: rmarkdown::html_vignette
 description: |
   Start here if this is your first time using recipes! You will learn about 
   basic usage, steps, selectors, and checks.
 vignette: >
   %\VignetteIndexEntry{Introduction to recipes}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:

@@ -1,12 +1,10 @@
 ---
 title: "Handling categorical predictors"
-output: rmarkdown::html_vignette
 description: |
   This vignette describes different methods for encoding categorical 
   predictors, with special attention to interaction terms and contrasts.
 vignette: >
   %\VignetteIndexEntry{Handling categorical predictors}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:

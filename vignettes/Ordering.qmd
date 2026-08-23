@@ -1,12 +1,10 @@
 ---
 title: "Ordering of steps"
-output: rmarkdown::html_vignette
 description: |
   The order in which recipe steps are specified matters, and this vignette gives
   some general suggestions that you should consider.
 vignette: >
   %\VignetteIndexEntry{Ordering of steps}
-  %\VignetteEncoding{UTF-8}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 knitr:
