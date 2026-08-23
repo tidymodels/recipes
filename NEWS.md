@@ -2,6 +2,8 @@
 
 * `prep()` is now faster on recipes with many columns or many steps. (#1543)
 
+* `step_bs()`, `step_dummy()`, `step_harmonic()`, `step_holiday()`, `step_lag()`, and `step_ns()` are now faster when applied to many columns, as they no longer copy the whole data set once per column. (#1543)
+
 * `bake()` gained a `stop_at` argument, which takes a step number or step id and applies only the steps up to and including that step. This is useful for diagnostics such as visualizing the effect of each step. (#1551)
 
 * New `recipes_map_cols()` helper for use in `bake()` methods of steps that transform columns in place. It applies a function to the selected columns and assigns the results in bulk, avoiding the quadratic cost of assigning one column at a time. (#1543)

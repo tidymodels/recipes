@@ -201,16 +201,29 @@ bake.step_bs <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
 
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+
+  new_cols <- list()
+
   for (col_name in col_names) {
     new_values <- bs_predict(object$objects[[col_name]], new_data[[col_name]])
 
-    new_names <- paste(col_name, "bs", names0(ncol(new_values), ""), sep = "_")
-    colnames(new_values) <- new_names
+    colnames(new_values) <- paste(
+      col_name,
+      "bs",
+      names0(ncol(new_values), ""),
+      sep = "_"
+    )
 
-    new_values <- check_name(new_values, new_data, object, new_names)
-    new_data <- vctrs::vec_cbind(new_data, new_values, .name_repair = "minimal")
+    new_cols[[col_name]] <- new_values
   }
 
+  new_cols <- vctrs::vec_cbind(!!!unname(new_cols), .name_repair = "minimal")
+  new_cols <- check_name(new_cols, new_data, object, names(new_cols))
+
+  new_data <- vctrs::vec_cbind(new_data, new_cols, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }

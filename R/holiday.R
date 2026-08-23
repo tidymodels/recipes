@@ -177,6 +177,8 @@ bake.step_holiday <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
+  cols <- list()
+
   for (col_name in col_names) {
     tmp <- get_holiday_features(
       dt = new_data[[col_name]],
@@ -187,12 +189,14 @@ bake.step_holiday <- function(object, new_data, ...) {
     names(tmp) <- paste(col_name, names(tmp), sep = "_")
     if (!sparse_is_yes(object$sparse)) {
       tmp <- purrr::map(tmp, vec_cast, integer())
-      tmp <- tibble::new_tibble(tmp)
     }
 
-    tmp <- check_name(tmp, new_data, object, names(tmp))
-    new_data <- vec_cbind(new_data, tmp, .name_repair = "minimal")
+    cols <- c(cols, as.list(tmp))
   }
+
+  cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
+  cols <- check_name(cols, new_data, object, names(cols))
+  new_data <- vec_cbind(new_data, cols, .name_repair = "minimal")
 
   new_data <- remove_original_cols(new_data, object, col_names)
 

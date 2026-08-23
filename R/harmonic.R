@@ -335,6 +335,8 @@ bake.step_harmonic <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   # calculate sin and cos columns
+  cols <- list()
+
   for (col_name in col_names) {
     n_frequency <- length(object$frequency)
     res <- sin_cos(
@@ -348,12 +350,13 @@ bake.step_harmonic <- function(object, new_data, ...) {
       rep(c("_sin_", "_cos_"), each = n_frequency),
       seq_len(n_frequency)
     )
-    res <- as_tibble(res)
 
-    res <- check_name(res, new_data, object, names(res))
-
-    new_data <- vec_cbind(new_data, res, .name_repair = "minimal")
+    cols <- c(cols, as.list(as_tibble(res)))
   }
+
+  cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
+  cols <- check_name(cols, new_data, object, names(cols))
+  new_data <- vec_cbind(new_data, cols, .name_repair = "minimal")
 
   new_data <- remove_original_cols(new_data, object, col_names)
 
