@@ -395,12 +395,13 @@ bake.step_discretize <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- predict(
-      object$objects[[col_name]],
-      new_data[[col_name]]
-    )
-  }
+  objects <- object$objects[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i) predict(objects[[i]], x)
+  )
 
   new_data
 }

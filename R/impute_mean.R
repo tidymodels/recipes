@@ -167,20 +167,23 @@ bake.step_impute_mean <- function(object, new_data, ...) {
   col_names <- names(object$means)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    mean <- object$means[[col_name]]
-    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
-      new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
-        new_data[[col_name]],
-        mean
-      )
-    } else {
-      if (anyNA(new_data[[col_name]])) {
-        new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
+  means <- object$means[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    function(x, i) {
+      mean <- means[[i]]
+      if (sparsevctrs::is_sparse_vector(x)) {
+        return(sparsevctrs::sparse_replace_na(x, mean))
       }
-      new_data[is.na(new_data[[col_name]]), col_name] <- mean
+      if (anyNA(x)) {
+        x <- vctrs::vec_cast(x, mean)
+        x[is.na(x)] <- mean
+      }
+      x
     }
-  }
+  )
 
   new_data
 }

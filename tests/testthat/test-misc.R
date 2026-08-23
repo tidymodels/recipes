@@ -15,6 +15,100 @@ test_that("check_new_data works", {
   expect_snapshot(bake(log_obj, examples[, 4, drop = FALSE]), error = TRUE)
 })
 
+test_that("recipes_map_cols() transforms the selected columns", {
+  data <- tibble(a = 1:3, b = 4:6, c = 7:9)
+  offsets <- c(10L, 20L)
+
+  expect_identical(
+    recipes_map_cols(data, c("a", "c"), \(x, i, col_name) x + offsets[[i]]),
+    tibble(a = 11:13, b = 4:6, c = 27:29)
+  )
+})
+
+test_that("recipes_map_cols() passes position and name to `fn`", {
+  data <- tibble(a = 1, b = 2, c = 3)
+  seen <- list()
+
+  recipes_map_cols(data, c("c", "a"), function(x, i, col_name) {
+    seen[[length(seen) + 1]] <<- list(i = i, col_name = col_name)
+    x
+  })
+
+  expect_identical(
+    seen,
+    list(list(i = 1L, col_name = "c"), list(i = 2L, col_name = "a"))
+  )
+})
+
+test_that("recipes_map_cols() only passes the arguments `fn` accepts", {
+  data <- tibble(a = 1, b = 2)
+
+  expect_identical(
+    recipes_map_cols(data, c("a", "b"), \(x) x * 10),
+    tibble(a = 10, b = 20)
+  )
+  expect_identical(
+    recipes_map_cols(data, c("a", "b"), \(x, i) x + i),
+    tibble(a = 2, b = 4)
+  )
+  expect_identical(
+    recipes_map_cols(data, c("a", "b"), \(x, i, col_name) x + nchar(col_name)),
+    tibble(a = 2, b = 3)
+  )
+  # dots absorb the optional arguments
+  expect_identical(
+    recipes_map_cols(data, c("a", "b"), \(x, ...) x * 10),
+    tibble(a = 10, b = 20)
+  )
+  # primitives have no formals but still take the column
+  expect_identical(
+    recipes_map_cols(tibble(a = 4, b = 9), c("a", "b"), sqrt),
+    tibble(a = 2, b = 3)
+  )
+})
+
+test_that("recipes_map_cols() is a no-op for empty selections", {
+  data <- tibble(a = 1:3, b = 4:6)
+
+  expect_identical(recipes_map_cols(data, character(), \(x, i, nm) x + 1), data)
+  expect_identical(recipes_map_cols(data, NULL, \(x, i, nm) x + 1), data)
+})
+
+test_that("recipes_map_cols() preserves the class of `new_data`", {
+  double_it <- \(x, i, col_name) x * 2
+
+  expect_s3_class(
+    recipes_map_cols(tibble(a = 1:3), "a", double_it),
+    class(tibble(a = 1:3)),
+    exact = TRUE
+  )
+  expect_s3_class(
+    recipes_map_cols(data.frame(a = 1:3), "a", double_it),
+    "data.frame",
+    exact = TRUE
+  )
+})
+
+test_that("recipes_map_cols() leaves column types alone", {
+  data <- tibble(fct = factor(c("a", "b")), chr = c("x", "y"))
+
+  expect_identical(
+    recipes_map_cols(data, "chr", \(x, i, col_name) toupper(x)),
+    tibble(fct = factor(c("a", "b")), chr = c("X", "Y"))
+  )
+})
+
+test_that("recipes_map_cols() works with sparse vectors", {
+  data <- tibble(x = sparsevctrs::as_sparse_double(c(0, 0, 4)))
+
+  res <- recipes_map_cols(data, "x", function(x, i, col_name) {
+    sparsevctrs::sparse_division_scalar(x, 2)
+  })
+
+  expect_true(sparsevctrs::is_sparse_double(res$x))
+  expect_identical(as.double(res$x), c(0, 0, 2))
+})
+
 test_that("conditionMessage method for recipes errors works", {
   res <-
     try(

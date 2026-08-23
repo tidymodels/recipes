@@ -981,6 +981,66 @@ recipes_remove_cols <- function(new_data, object, col_names = character()) {
   new_data
 }
 
+#' Transform columns in place
+#'
+#' This helper function applies `fn` to each of `col_names` and assigns the
+#' results back into `new_data` in bulk. It should be used in `bake.step_*()`
+#' functions instead of assigning to `new_data[[col_name]]` inside a `for` loop,
+#' which is quadratic in the number of columns and becomes prohibitively slow
+#' for wide data.
+#'
+#' @param new_data A tibble.
+#' @param col_names A character vector, denoting columns to transform.
+#' @param fn A function taking one to three arguments: the column to transform,
+#'   the position of that column within `col_names`, and its name. Only the
+#'   arguments that `fn` accepts are passed, so `\(x) x * 2`, `\(x, i) x -
+#'   means[[i]]`, and `\(x, i, col_name) ...` are all valid. It must return a
+#'   vector the same length as the column it is given.
+#'
+#' @details
+#' Use the position `i` to look up per-column values estimated during `prep()`,
+#' after aligning them to `col_names` once outside of `fn`. Do not use
+#' `col_name` to index a named vector with one element per selected column, as
+#' the repeated name matching is what makes the naive approach slow. `col_name`
+#' is intended for error messages and for lookups into small objects.
+#'
+#' @return `new_data` with `col_names` transformed by `fn`.
+#' @keywords internal
+#'
+#' @seealso [developer_functions]
+#'
+#' @export
+recipes_map_cols <- function(new_data, col_names, fn) {
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+
+  # `i` and `col_name` are only passed if `fn` has somewhere to put them, so
+  # that steps needing neither aren't forced to declare unused arguments.
+  fn <- rlang::as_function(fn)
+  fmls <- names(formals(fn))
+  n_args <- if ("..." %in% fmls) 3L else max(1L, min(length(fmls), 3L))
+  call_fn <- switch(
+    n_args,
+    function(x, i) fn(x),
+    function(x, i) fn(x, i),
+    function(x, i) fn(x, i, col_names[[i]])
+  )
+
+  # Working on a bare list, indexed by position, avoids both the per-column
+  # tibble restore and the linear name lookup that `new_data[[col_name]]` pays
+  # on every iteration.
+  out <- unclass(new_data)
+  idx <- match(col_names, names(out))
+
+  for (i in seq_along(idx)) {
+    out[[idx[i]]] <- call_fn(out[[idx[i]]], i)
+  }
+
+  attributes(out) <- attributes(new_data)
+  out
+}
+
 #' Role indicators
 #'
 #' This helper function is meant to be used in `prep()` methods to identify

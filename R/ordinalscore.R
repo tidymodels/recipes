@@ -130,11 +130,11 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
   col_names <- object$columns
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    score <- object$convert(new_data[[col_name]])
-    score <- vctrs::vec_cast(score, integer())
-    new_data[[col_name]] <- score
-  }
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x) vctrs::vec_cast(object$convert(x), integer())
+  )
 
   new_data
 }

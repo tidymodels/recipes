@@ -139,12 +139,13 @@ bake.step_BoxCox <- function(object, new_data, ...) {
   col_names <- names(object$lambdas)
   check_new_data(col_names, object, new_data)
 
-  for (col_name in col_names) {
-    new_data[[col_name]] <- bc_trans(
-      new_data[[col_name]],
-      lambda = object$lambdas[col_name]
-    )
-  }
+  lambdas <- object$lambdas[col_names]
+
+  new_data <- recipes_map_cols(
+    new_data,
+    col_names,
+    \(x, i, col_name) bc_trans(x, lambda = lambdas[[i]], col_name = col_name)
+  )
 
   new_data
 }
@@ -158,11 +159,11 @@ print.step_BoxCox <-
   }
 
 ## computes the new data
-bc_trans <- function(x, lambda, eps = .001) {
+bc_trans <- function(x, lambda, col_name = names(lambda), eps = .001) {
   if (any(x <= 0)) {
     cli::cli_warn(
       "Applying Box-Cox transformation to non-positive data in column \\
-      {.field {names(lambda)}}."
+      {.field {col_name}}."
     )
   }
 
