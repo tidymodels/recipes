@@ -3,7 +3,7 @@
 #
 # NOTE: This workflow only directly installs "hard" dependencies, i.e. Depends,
 # Imports, and LinkingTo dependencies. Notably, Suggests dependencies are never
-# installed, with the exception of testthat, knitr, and rmarkdown. The cache is
+# installed, with the exception of testthat, knitr, rmarkdown, and quarto. The cache is
 # never used to avoid accidentally restoring a cache containing a suggested
 # dependency.
 on:
@@ -35,6 +35,8 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - uses: quarto-dev/quarto-actions/setup@v2
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
@@ -50,6 +52,7 @@ jobs:
             any::testthat
             any::knitr
             any::rmarkdown
+            any::quarto
           needs: check
           pak-version: devel
 

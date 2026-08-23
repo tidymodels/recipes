@@ -26,3 +26,5 @@ tests/testthat/NMF*
 ^[\.]?air\.toml$
 ^[.]?air[.]toml$
 ^\.claude$
+^vignettes/\.quarto$
+^vignettes/.*_files$
