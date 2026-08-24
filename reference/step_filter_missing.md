@@ -147,15 +147,15 @@ tidy(rec, number = 1)
 #> # A tibble: 1 × 2
 #>   terms            id                  
 #>   <chr>            <chr>               
-#> 1 all_predictors() filter_missing_RJOKO
+#> 1 all_predictors() filter_missing_GL47P
 tidy(filter_obj, number = 1)
 #> # A tibble: 6 × 2
 #>   terms   id                  
 #>   <chr>   <chr>               
-#> 1 Home    filter_missing_RJOKO
-#> 2 Marital filter_missing_RJOKO
-#> 3 Job     filter_missing_RJOKO
-#> 4 Income  filter_missing_RJOKO
-#> 5 Assets  filter_missing_RJOKO
-#> 6 Debt    filter_missing_RJOKO
+#> 1 Home    filter_missing_GL47P
+#> 2 Marital filter_missing_GL47P
+#> 3 Job     filter_missing_GL47P
+#> 4 Income  filter_missing_GL47P
+#> 5 Assets  filter_missing_GL47P
+#> 6 Debt    filter_missing_GL47P
 ```

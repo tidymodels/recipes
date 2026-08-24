@@ -19,7 +19,7 @@ library(recipes)
 # make a copy for use below
 iris <- iris |> mutate(original = Species)
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 summary(iris_rec)
 #> # A tibble: 6 × 4
 #>   variable     type      role      source  
@@ -45,8 +45,8 @@ first factor level are made into new columns:
 
 ``` r
 
-ref_cell <- 
-  iris_rec |> 
+ref_cell <-
+  iris_rec |>
   step_dummy(Species) |>
   prep(training = iris)
 summary(ref_cell)
@@ -94,8 +94,8 @@ picks up on this and makes the correct calculations:
 ``` r
 
 # now make dummy variables with new parameterization
-helmert <- 
-  iris_rec |> 
+helmert <-
+  iris_rec |>
   step_dummy(Species, contrasts = "contr.helmert") |>
   prep(training = iris)
 summary(helmert)
@@ -140,9 +140,9 @@ such as
 
 ``` r
 
-iris_int <- 
+iris_int <-
   iris_rec |>
-  step_interact( ~ Sepal.Width:Sepal.Length) |>
+  step_interact(~ Sepal.Width:Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 #> # A tibble: 7 × 4
@@ -176,10 +176,10 @@ interactions are created:
 
 ``` r
 
-model.matrix(~ Species*Sepal.Length, data = iris) |> 
-  as.data.frame() |> 
+model.matrix(~ Species * Sepal.Length, data = iris) |>
+  as.data.frame() |>
   # show a few specific rows
-  slice(c(1, 51, 101)) |> 
+  slice(c(1, 51, 101)) |>
   as.data.frame()
 #>     (Intercept) Speciesversicolor Speciesvirginica Sepal.Length
 #> 1             1                 0                0          5.1
@@ -199,8 +199,10 @@ when using dummy variables?
 
 # Must I do this?
 iris_rec |>
-  step_interact( ~ Species_versicolor:Sepal.Length + 
-                   Species_virginica:Sepal.Length) 
+  step_interact(
+    ~ Species_versicolor:Sepal.Length +
+      Species_virginica:Sepal.Length
+  )
 ```
 
 Not only is this a pain, but it may not be obvious what dummy variables
@@ -212,10 +214,10 @@ The solution is to use a selector:
 
 ``` r
 
-iris_int <- 
-  iris_rec |> 
+iris_int <-
+  iris_rec |>
   step_dummy(Species) |>
-  step_interact( ~ starts_with("Species"):Sepal.Length) |>
+  step_interact(~ starts_with("Species"):Sepal.Length) |>
   prep(training = iris)
 summary(iris_int)
 #> # A tibble: 9 × 4
@@ -268,14 +270,14 @@ interactions step?
 
 ``` r
 
-iris_int <- 
-  iris_rec |> 
-  step_interact( ~ Species:Sepal.Length) |>
+iris_int <-
+  iris_rec |>
+  step_interact(~ Species:Sepal.Length) |>
   prep(training = iris)
-#> Warning: Categorical variables used in `step_interact()` should probably be
-#> avoided; This can lead to differences in dummy variable values that
-#> are produced by ?step_dummy (`?recipes::step_dummy()`). Please convert
-#> all involved variables to dummy variables first.
+#> Warning: Categorical variables used in `step_interact()` should probably be avoided;
+#> This can lead to differences in dummy variable values that are produced by
+#> ?step_dummy (`?recipes::step_dummy()`). Please convert all involved variables
+#> to dummy variables first.
 summary(iris_int)
 #> # A tibble: 8 × 4
 #>   variable                         type      role      source  
@@ -312,7 +314,7 @@ produced:
 
 ``` r
 
-iris_rec |> 
+iris_rec |>
   step_dummy(Species, one_hot = TRUE) |>
   prep(training = iris) |>
   bake(original, new_data = NULL, starts_with("Species")) |>
@@ -337,8 +339,8 @@ typical contrast function, it does. It might do some seemingly weird
 
 ``` r
 
-hot_reference <- 
-  iris_rec |> 
+hot_reference <-
+  iris_rec |>
   step_dummy(Species, one_hot = TRUE) |>
   prep(training = iris) |>
   bake(original, new_data = NULL, starts_with("Species")) |>
@@ -352,8 +354,8 @@ hot_reference
 #> 2 versicolor              0                  1                 0
 #> 3 virginica               0                  0                 1
 
-hot_helmert <- 
-  iris_rec |> 
+hot_helmert <-
+  iris_rec |>
   step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") |>
   prep(training = iris) |>
   bake(original, new_data = NULL, starts_with("Species")) |>

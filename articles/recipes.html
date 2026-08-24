@@ -17,13 +17,9 @@
 <link href="../deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to recipes">
-<meta name="description" content="Start here if this is your first time using recipes! You will learn about
-basic usage, steps, selectors, and checks.
-">
-<meta property="og:description" content="Start here if this is your first time using recipes! You will learn about
-basic usage, steps, selectors, and checks.
-">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="recipes_files/libs/quarto-html/popper.min.js"></script><script src="recipes_files/libs/quarto-html/tippy.umd.min.js"></script><link href="recipes_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="recipes_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to recipes">
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
 <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -35,7 +31,7 @@ basic usage, steps, selectors, and checks.
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,52 +65,37 @@ basic usage, steps, selectors, and checks.
 
 
   </div>
-</nav><div class="container template-article" id="container">
-
-
-
-
+</nav><div class="container template-quarto" id="container">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Introduction to recipes</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/vignettes/recipes.Rmd" class="external-link"><code>vignettes/recipes.Rmd</code></a></small>
-      <div class="d-none name"><code>recipes.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/vignettes/recipes.qmd" class="external-link"><code>vignettes/recipes.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>This document demonstrates some basic uses of recipes. First, some
-definitions are required:</p>
+
+
+
+
+
+    <p>This document demonstrates some basic uses of recipes. First, some definitions are required:</p>
 <ul>
 <li>
-<strong>variables</strong> are the original (raw) data columns in a
-data frame or tibble. For example, in a traditional formula
-<code>Y ~ A + B + A:B</code>, the variables are <code>A</code>,
-<code>B</code>, and <code>Y</code>.</li>
+<strong>variables</strong> are the original (raw) data columns in a data frame or tibble. For example, in a traditional formula <code>Y ~ A + B + A:B</code>, the variables are <code>A</code>, <code>B</code>, and <code>Y</code>.</li>
 <li>
-<strong>roles</strong> define how variables will be used in the
-model. Examples are: <code>predictor</code> (independent variables),
-<code>response</code>, and <code>case weight</code>. This is meant to be
-open-ended and extensible.</li>
+<strong>roles</strong> define how variables will be used in the model. Examples are: <code>predictor</code> (independent variables), <code>response</code>, and <code>case weight</code>. This is meant to be open-ended and extensible.</li>
 <li>
-<strong>terms</strong> are columns in a design matrix such as
-<code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other
-derived entities that are grouped, such as a set of principal components
-or a set of columns, that define a basis function for a variable. These
-are synonymous with features in machine learning. Variables that have
-<code>predictor</code> roles would automatically be main effect
-terms.</li>
+<strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other derived entities that are grouped, such as a set of principal components or a set of columns, that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms.</li>
 </ul>
-<div class="section level2">
-<h2 id="an-example">An Example<a class="anchor" aria-label="anchor" href="#an-example"></a>
+<section class="level2"><h2 id="an-example">An Example<a class="anchor" aria-label="anchor" href="#an-example"></a>
 </h2>
-<p>The packages contains a data set used to predict whether a person
-will pay back a bank loan. It has 13 predictor columns and a factor
-variable <code>Status</code> (the outcome). We will first separate the
-data into a training and test set:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org" class="external-link">rsample</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
@@ -126,239 +107,286 @@ data into a training and test set:</p>
 <span></span>
 <span><span class="va">credit_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">training</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></span>
 <span><span class="va">credit_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">testing</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></span></code></pre></div>
-<p>Note that there are some missing values in these data:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></span>
-<span><span class="co">#&gt;     1.000     1.000     0.998     1.000     1.000     1.000     1.000 </span></span>
-<span><span class="co">#&gt;       Job  Expenses    Income    Assets      Debt    Amount     Price </span></span>
-<span><span class="co">#&gt;     0.999     1.000     0.910     0.989     0.996     1.000     1.000</span></span></code></pre></div>
-<p>Rather than remove these, their values will be imputed.</p>
-<p>The idea is that the preprocessing operations will all be created
-using the training set and then these steps will be applied to both the
-training and test set.</p>
 </div>
-<div class="section level2">
-<h2 id="an-initial-recipe">An Initial Recipe<a class="anchor" aria-label="anchor" href="#an-initial-recipe"></a>
+<p>Note that there are some missing values in these data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records       Job </span></span>
+<span><span class="co">#&gt;     1.000     1.000     0.998     1.000     1.000     1.000     1.000     0.999 </span></span>
+<span><span class="co">#&gt;  Expenses    Income    Assets      Debt    Amount     Price </span></span>
+<span><span class="co">#&gt;     1.000     0.910     0.989     0.996     1.000     1.000</span></span></code></pre></div>
+</div>
+<p>Rather than remove these, their values will be imputed.</p>
+<p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
+</section><section class="level2"><h2 id="an-initial-recipe">An Initial Recipe<a class="anchor" aria-label="anchor" href="#an-initial-recipe"></a>
 </h2>
-<p>First, we will create a recipe object from the original data and then
-specify the processing steps.</p>
-<p>Recipes can be created manually by sequentially adding roles to
-variables in a data set.</p>
-<p>If the analysis only requires <strong>outcomes</strong> and
-<strong>predictors</strong>, the easiest way to create the initial
-recipe is to use the standard formula method:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
+<p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
+<p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
 <span><span class="va">rec_obj</span></span></code></pre></div>
-<p>The data contained in the <code>data</code> argument need not be the
-training set; this data is only used to catalog the names of the
-variables and their types (e.g. numeric, etc.).</p>
-<p>(Note that the formula method is used here to declare the variables,
-their roles and nothing else. If you use inline functions
-(e.g. <code>log</code>) it will complain. These types of operations can
-be added later.)</p>
 </div>
-<div class="section level2">
-<h2 id="preprocessing-steps">Preprocessing Steps<a class="anchor" aria-label="anchor" href="#preprocessing-steps"></a>
+<p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
+<p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
+</section><section class="level2"><h2 id="preprocessing-steps">Preprocessing Steps<a class="anchor" aria-label="anchor" href="#preprocessing-steps"></a>
 </h2>
-<p>From here, preprocessing steps for some step <em>X</em> can be added
-sequentially in one of two ways:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> step_{X}(rec_obj, arguments)    <span class="do">## or</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> rec_obj <span class="sc">|&gt;</span> step_{X}(arguments)</span></code></pre></div>
-<p><code>step_dummy</code> and the other functions will always return
-updated recipes.</p>
-<p>One other important facet of the code is the method for specifying
-which variables should be used in different steps. The manual page
-<code><a href="../reference/selections.html">?selections</a></code> has more details but <a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a>-like
-selector functions can be used:</p>
+<p>From here, preprocessing steps for some step <em>X</em> can be added sequentially in one of two ways:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> step_{X}(rec_obj, arguments)    <span class="do">## or</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rec_obj <span class="ot">&lt;-</span> rec_obj <span class="sc">|&gt;</span> step_{X}(arguments)</span></code></pre></div>
+</div>
+<p><code>step_dummy</code> and the other functions will always return updated recipes.</p>
+<p>One other important facet of the code is the method for specifying which variables should be used in different steps. The manual page <code><a href="../reference/selections.html">?selections</a></code> has more details but <a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a>-like selector functions can be used:</p>
 <ul>
 <li>use basic variable names (e.g. <code>x1, x2</code>),</li>
 <li>
-<a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a>
-functions for selecting variables: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,</li>
-<li>functions that subset on the role of the variables that have been
-specified so far: <code><a href="../reference/has_role.html">all_outcomes()</a></code>,
-<code><a href="../reference/has_role.html">all_predictors()</a></code>, <code><a href="../reference/has_role.html">has_role()</a></code>,<br>
+<a href="https://cran.r-project.org/package=dplyr" class="external-link"><code>dplyr</code></a> functions for selecting variables: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,</li>
+<li>functions that subset on the role of the variables that have been specified so far: <code><a href="../reference/has_role.html">all_outcomes()</a></code>, <code><a href="../reference/has_role.html">all_predictors()</a></code>, <code><a href="../reference/has_role.html">has_role()</a></code>,<br>
 </li>
-<li>similar functions for the type of data: <code><a href="../reference/has_role.html">all_nominal()</a></code>,
-<code><a href="../reference/has_role.html">all_numeric()</a></code>, and <code><a href="../reference/has_role.html">has_type()</a></code>, or</li>
-<li>compound selectors such as <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code> or
-<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>.</li>
+<li>similar functions for the type of data: <code><a href="../reference/has_role.html">all_nominal()</a></code>, <code><a href="../reference/has_role.html">all_numeric()</a></code>, and <code><a href="../reference/has_role.html">has_type()</a></code>, or</li>
+<li>compound selectors such as <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code> or <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>.</li>
 </ul>
-<p>Note that the methods listed above are the only ones that can be used
-to select variables inside the steps. Also, minus signs can be used to
-deselect variables.</p>
-<p>For our data, we can add an operation to impute the predictors. There
-are many ways to do this and <code>recipes</code> includes a few steps
-for this purpose:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables.</p>
+<p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"impute_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="st">"package:recipes"</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "step_impute_bag"    "step_impute_knn"    "step_impute_linear"</span></span>
 <span><span class="co">#&gt; [4] "step_impute_lower"  "step_impute_mean"   "step_impute_median"</span></span>
 <span><span class="co">#&gt; [7] "step_impute_mode"   "step_impute_roll"</span></span></code></pre></div>
-<p>Here, <em>K</em>-nearest neighbor imputation will be used. This works
-for both numeric and non-numeric predictors and defaults <em>K</em> to
-five To do this, it selects all predictors and then removes those that
-are numeric:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</div>
+<p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_impute_knn.html">step_impute_knn</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">imputed</span></span></code></pre></div>
-<p>It is important to realize that the <em>specific</em> variables have
-not been declared yet (as shown when the recipe is printed above). In
-some preprocessing steps, variables will be added or removed from the
-current list of possible variables.</p>
-<p>Since some predictors are categorical in nature (i.e. nominal), it
-would make sense to convert these factor predictors into numeric dummy
-variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To
-do this, the step selects all non-numeric predictors:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+</div>
+<p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
+<p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To do this, the step selects all non-numeric predictors:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">ind_vars</span></span></code></pre></div>
-<p>At this point in the recipe, all of the predictor should be encoded
-as numeric, we can further add more steps to center and scale them:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+</div>
+<p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">standardized</span></span></code></pre></div>
-<p>If these are the only preprocessing steps for the predictors, we can
-now estimate the means and standard deviations from the training set.
-The <code>prep</code> function is used with a recipe and a data set:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+</div>
+<p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
 <span><span class="va">trained_rec</span></span></code></pre></div>
-<p>Note that the real variables are listed (e.g. <code>Home</code> etc.)
-instead of the selectors (<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>).</p>
-<p>Now that the statistics have been estimated, the preprocessing can be
-<em>applied</em> to the training and test set:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+</div>
+<p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>).</p>
+<p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
 <span><span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_test</span><span class="op">)</span></span></code></pre></div>
-<p><code>bake</code> returns a tibble that, by default, includes all of
-the variables:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+</div>
+<p><code>bake</code> returns a tibble that, by default, includes all of the variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span>
 <span><span class="va">test_data</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,114 × 23</span></span></span>
-<span><span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount</span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1.09   0.924  1.88    -<span style="color: #BB0000;">0.385</span> -<span style="color: #BB0000;">0.131</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    -<span style="color: #BB0000;">0.977</span>  0.924 -<span style="color: #BB0000;">0.459</span>    1.77  -<span style="color: #BB0000;">0.437</span>   0.845 -<span style="color: #BB0000;">0.295</span>  0.333 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    -<span style="color: #BB0000;">0.977</span>  0.103  0.349    1.77  -<span style="color: #BB0000;">0.783</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.333 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    -<span style="color: #BB0000;">0.247</span>  0.103 -<span style="color: #BB0000;">0.280</span>    0.231 -<span style="color: #BB0000;">0.207</span>  -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  0.229 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    -<span style="color: #BB0000;">0.125</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">0.729</span>    0.231 -<span style="color: #BB0000;">0.258</span>  -<span style="color: #BB0000;">0.222</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.807</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    -<span style="color: #BB0000;">0.855</span>  0.924 -<span style="color: #BB0000;">0.549</span>   -<span style="color: #BB0000;">1.05</span>  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">9</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.436 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     2.31   0.924  0.349    0.949 -<span style="color: #BB0000;">0.015</span><span style="color: #BB0000; text-decoration: underline;">5</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.848 -<span style="color: #BB0000;">0.718</span>  0.529    1.00   1.40   -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  1.58  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    -<span style="color: #BB0000;">0.977</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">1.27</span>    -<span style="color: #BB0000;">0.538</span> -<span style="color: #BB0000;">0.246</span>  -<span style="color: #BB0000;">0.266</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">1.32</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    -<span style="color: #BB0000;">0.855</span>  0.514 -<span style="color: #BB0000;">0.100</span>    0.744 -<span style="color: #BB0000;">0.540</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,104 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 15 more variables: Price &lt;dbl&gt;, Status &lt;fct&gt;, Home_other &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;, Records_yes &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;, Job_partime &lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; # A tibble: 1,114 × 23</span></span>
+<span><span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span></span>
+<span><span class="co">#&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1     1.09   0.924  1.88    -0.385 -0.131  -0.488 -0.295 -0.0817  0.297  </span></span>
+<span><span class="co">#&gt;  2    -0.977  0.924 -0.459    1.77  -0.437   0.845 -0.295  0.333   0.760  </span></span>
+<span><span class="co">#&gt;  3    -0.977  0.103  0.349    1.77  -0.783  -0.488 -0.295  0.333   0.00254</span></span>
+<span><span class="co">#&gt;  4    -0.247  0.103 -0.280    0.231 -0.207  -0.133 -0.295  0.229   0.171  </span></span>
+<span><span class="co">#&gt;  5    -0.125 -0.718 -0.729    0.231 -0.258  -0.222 -0.295 -0.807  -0.854  </span></span>
+<span><span class="co">#&gt;  6    -0.855  0.924 -0.549   -1.05  -0.0539 -0.488 -0.295  0.436  -0.331  </span></span>
+<span><span class="co">#&gt;  7     2.31   0.924  0.349    0.949 -0.0155 -0.488 -0.295 -0.185   0.0475 </span></span>
+<span><span class="co">#&gt;  8     0.848 -0.718  0.529    1.00   1.40   -0.133 -0.295  1.58    1.69   </span></span>
+<span><span class="co">#&gt;  9    -0.977 -0.718 -1.27    -0.538 -0.246  -0.266 -0.295 -1.32   -1.65   </span></span>
+<span><span class="co">#&gt; 10    -0.855  0.514 -0.100    0.744 -0.540  -0.488 -0.295 -0.185  -0.800  </span></span>
+<span><span class="co">#&gt; # ℹ 1,104 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 14 more variables: Status &lt;fct&gt;, Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Marital_widow &lt;dbl&gt;, Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   Job_others &lt;dbl&gt;, Job_partime &lt;dbl&gt;</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">test_data</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         Seniority              Time               Age </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;          Expenses            Income            Assets </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;              Debt            Amount             Price </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;            Status        Home_other        Home_owner </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;      Home_parents         Home_priv         Home_rent </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;   Marital_married Marital_separated    Marital_single </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;     Marital_widow       Records_yes     Job_freelance </span></span>
-<span><span class="co">#&gt;                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;        Job_others       Job_partime </span></span>
-<span><span class="co">#&gt;                 1                 1</span></span></code></pre></div>
-<p>Selectors can also be used. For example, if only the predictors are
-needed, you can use
-<code>bake(object, new_data, all_predictors())</code>.</p>
+<span><span class="co">#&gt;         Seniority              Time               Age          Expenses </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;            Income            Assets              Debt            Amount </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;             Price            Status        Home_other        Home_owner </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;      Home_parents         Home_priv         Home_rent   Marital_married </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt; Marital_separated    Marital_single     Marital_widow       Records_yes </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span></span>
+<span><span class="co">#&gt;                 1                 1                 1</span></span></code></pre></div>
+</div>
+<p>Selectors can also be used. For example, if only the predictors are needed, you can use <code>bake(object, new_data, all_predictors())</code>.</p>
 <p>There are a number of other steps included in the package:</p>
-<pre><code><span><span class="co">#&gt;  [1] "step_arrange"            "step_bagimpute"         </span></span>
-<span><span class="co">#&gt;  [3] "step_bin2factor"         "step_BoxCox"            </span></span>
-<span><span class="co">#&gt;  [5] "step_bs"                 "step_center"            </span></span>
+<div class="cell">
+<pre><code><span><span class="co">#&gt;  [1] "step_arrange"            "step_bagimpute"</span></span>
+<span><span class="co">#&gt;  [3] "step_bin2factor"         "step_BoxCox"</span></span>
+<span><span class="co">#&gt;  [5] "step_bs"                 "step_center"</span></span>
 <span><span class="co">#&gt;  [7] "step_classdist"          "step_classdist_shrunken"</span></span>
-<span><span class="co">#&gt;  [9] "step_corr"               "step_count"             </span></span>
-<span><span class="co">#&gt; [11] "step_cut"                "step_date"              </span></span>
-<span><span class="co">#&gt; [13] "step_depth"              "step_discretize"        </span></span>
-<span><span class="co">#&gt; [15] "step_dummy"              "step_dummy_extract"     </span></span>
-<span><span class="co">#&gt; [17] "step_dummy_multi_choice" "step_factor2string"     </span></span>
-<span><span class="co">#&gt; [19] "step_filter"             "step_filter_missing"    </span></span>
-<span><span class="co">#&gt; [21] "step_geodist"            "step_harmonic"          </span></span>
-<span><span class="co">#&gt; [23] "step_holiday"            "step_hyperbolic"        </span></span>
-<span><span class="co">#&gt; [25] "step_ica"                "step_impute_bag"        </span></span>
-<span><span class="co">#&gt; [27] "step_impute_knn"         "step_impute_linear"     </span></span>
-<span><span class="co">#&gt; [29] "step_impute_lower"       "step_impute_mean"       </span></span>
-<span><span class="co">#&gt; [31] "step_impute_median"      "step_impute_mode"       </span></span>
-<span><span class="co">#&gt; [33] "step_impute_roll"        "step_indicate_na"       </span></span>
-<span><span class="co">#&gt; [35] "step_integer"            "step_interact"          </span></span>
-<span><span class="co">#&gt; [37] "step_intercept"          "step_inverse"           </span></span>
-<span><span class="co">#&gt; [39] "step_invlogit"           "step_isomap"            </span></span>
-<span><span class="co">#&gt; [41] "step_knnimpute"          "step_kpca"              </span></span>
-<span><span class="co">#&gt; [43] "step_kpca_poly"          "step_kpca_rbf"          </span></span>
-<span><span class="co">#&gt; [45] "step_lag"                "step_lincomb"           </span></span>
-<span><span class="co">#&gt; [47] "step_log"                "step_logit"             </span></span>
-<span><span class="co">#&gt; [49] "step_lowerimpute"        "step_meanimpute"        </span></span>
-<span><span class="co">#&gt; [51] "step_medianimpute"       "step_modeimpute"        </span></span>
-<span><span class="co">#&gt; [53] "step_mutate"             "step_mutate_at"         </span></span>
-<span><span class="co">#&gt; [55] "step_naomit"             "step_nnmf"              </span></span>
-<span><span class="co">#&gt; [57] "step_nnmf_sparse"        "step_normalize"         </span></span>
-<span><span class="co">#&gt; [59] "step_novel"              "step_ns"                </span></span>
-<span><span class="co">#&gt; [61] "step_num2factor"         "step_nzv"               </span></span>
-<span><span class="co">#&gt; [63] "step_ordinalscore"       "step_other"             </span></span>
-<span><span class="co">#&gt; [65] "step_pca"                "step_percentile"        </span></span>
-<span><span class="co">#&gt; [67] "step_pls"                "step_poly"              </span></span>
-<span><span class="co">#&gt; [69] "step_poly_bernstein"     "step_profile"           </span></span>
-<span><span class="co">#&gt; [71] "step_range"              "step_ratio"             </span></span>
-<span><span class="co">#&gt; [73] "step_regex"              "step_relevel"           </span></span>
-<span><span class="co">#&gt; [75] "step_relu"               "step_rename"            </span></span>
-<span><span class="co">#&gt; [77] "step_rename_at"          "step_rm"                </span></span>
-<span><span class="co">#&gt; [79] "step_rollimpute"         "step_sample"            </span></span>
-<span><span class="co">#&gt; [81] "step_scale"              "step_select"            </span></span>
-<span><span class="co">#&gt; [83] "step_shuffle"            "step_slice"             </span></span>
-<span><span class="co">#&gt; [85] "step_spatialsign"        "step_spline_b"          </span></span>
-<span><span class="co">#&gt; [87] "step_spline_convex"      "step_spline_monotone"   </span></span>
+<span><span class="co">#&gt;  [9] "step_corr"               "step_count"</span></span>
+<span><span class="co">#&gt; [11] "step_cut"                "step_date"</span></span>
+<span><span class="co">#&gt; [13] "step_depth"              "step_discretize"</span></span>
+<span><span class="co">#&gt; [15] "step_dummy"              "step_dummy_extract"</span></span>
+<span><span class="co">#&gt; [17] "step_dummy_multi_choice" "step_factor2string"</span></span>
+<span><span class="co">#&gt; [19] "step_filter"             "step_filter_missing"</span></span>
+<span><span class="co">#&gt; [21] "step_geodist"            "step_harmonic"</span></span>
+<span><span class="co">#&gt; [23] "step_holiday"            "step_hyperbolic"</span></span>
+<span><span class="co">#&gt; [25] "step_ica"                "step_impute_bag"</span></span>
+<span><span class="co">#&gt; [27] "step_impute_knn"         "step_impute_linear"</span></span>
+<span><span class="co">#&gt; [29] "step_impute_lower"       "step_impute_mean"</span></span>
+<span><span class="co">#&gt; [31] "step_impute_median"      "step_impute_mode"</span></span>
+<span><span class="co">#&gt; [33] "step_impute_roll"        "step_indicate_na"</span></span>
+<span><span class="co">#&gt; [35] "step_integer"            "step_interact"</span></span>
+<span><span class="co">#&gt; [37] "step_intercept"          "step_inverse"</span></span>
+<span><span class="co">#&gt; [39] "step_invlogit"           "step_isomap"</span></span>
+<span><span class="co">#&gt; [41] "step_knnimpute"          "step_kpca"</span></span>
+<span><span class="co">#&gt; [43] "step_kpca_poly"          "step_kpca_rbf"</span></span>
+<span><span class="co">#&gt; [45] "step_lag"                "step_lincomb"</span></span>
+<span><span class="co">#&gt; [47] "step_log"                "step_logit"</span></span>
+<span><span class="co">#&gt; [49] "step_lowerimpute"        "step_meanimpute"</span></span>
+<span><span class="co">#&gt; [51] "step_medianimpute"       "step_modeimpute"</span></span>
+<span><span class="co">#&gt; [53] "step_mutate"             "step_mutate_at"</span></span>
+<span><span class="co">#&gt; [55] "step_naomit"             "step_nnmf"</span></span>
+<span><span class="co">#&gt; [57] "step_nnmf_sparse"        "step_normalize"</span></span>
+<span><span class="co">#&gt; [59] "step_novel"              "step_ns"</span></span>
+<span><span class="co">#&gt; [61] "step_num2factor"         "step_nzv"</span></span>
+<span><span class="co">#&gt; [63] "step_ordinalscore"       "step_other"</span></span>
+<span><span class="co">#&gt; [65] "step_pca"                "step_percentile"</span></span>
+<span><span class="co">#&gt; [67] "step_pls"                "step_poly"</span></span>
+<span><span class="co">#&gt; [69] "step_poly_bernstein"     "step_profile"</span></span>
+<span><span class="co">#&gt; [71] "step_range"              "step_ratio"</span></span>
+<span><span class="co">#&gt; [73] "step_regex"              "step_relevel"</span></span>
+<span><span class="co">#&gt; [75] "step_relu"               "step_rename"</span></span>
+<span><span class="co">#&gt; [77] "step_rename_at"          "step_rm"</span></span>
+<span><span class="co">#&gt; [79] "step_rollimpute"         "step_sample"</span></span>
+<span><span class="co">#&gt; [81] "step_scale"              "step_select"</span></span>
+<span><span class="co">#&gt; [83] "step_shuffle"            "step_slice"</span></span>
+<span><span class="co">#&gt; [85] "step_spatialsign"        "step_spline_b"</span></span>
+<span><span class="co">#&gt; [87] "step_spline_convex"      "step_spline_monotone"</span></span>
 <span><span class="co">#&gt; [89] "step_spline_natural"     "step_spline_nonnegative"</span></span>
-<span><span class="co">#&gt; [91] "step_sqrt"               "step_string2factor"     </span></span>
-<span><span class="co">#&gt; [93] "step_time"               "step_unknown"           </span></span>
-<span><span class="co">#&gt; [95] "step_unorder"            "step_window"            </span></span>
+<span><span class="co">#&gt; [91] "step_sqrt"               "step_string2factor"</span></span>
+<span><span class="co">#&gt; [93] "step_time"               "step_unknown"</span></span>
+<span><span class="co">#&gt; [95] "step_unorder"            "step_window"</span></span>
 <span><span class="co">#&gt; [97] "step_YeoJohnson"         "step_zv"</span></span></code></pre>
 </div>
-<div class="section level2">
-<h2 id="checks">Checks<a class="anchor" aria-label="anchor" href="#checks"></a>
+</section><section class="level2"><h2 id="checks">Checks<a class="anchor" aria-label="anchor" href="#checks"></a>
 </h2>
-<p>Another type of operation that can be added to a recipes is a
-<em>check</em>. Checks conduct some sort of data validation and, if no
-issue is found, returns the data as-is; otherwise, an error is
-thrown.</p>
-<p>For example, <code>check_missing</code> will fail if any of the
-variables selected for validation have missing values. This check is
-done when the recipe is prepared as well as when any data are baked.
-Checks are added in the same way as steps:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p>Another type of operation that can be added to a recipes is a <em>check</em>. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown.</p>
+<p>For example, <code>check_missing</code> will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Currently, <code>recipes</code> includes:</p>
-<pre><code><span><span class="co">#&gt; [1] "check_class"      "check_cols"       "check_missing"   </span></span>
-<span><span class="co">#&gt; [4] "check_name"       "check_new_data"   "check_new_values"</span></span>
-<span><span class="co">#&gt; [7] "check_options"    "check_range"      "check_type"</span></span></code></pre>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+<p>Currently, <code>recipes</code> includes:</p>
+<div class="cell">
+<pre><code><span><span class="co">#&gt; [1] "check_class"      "check_cols"       "check_missing"    "check_name"</span></span>
+<span><span class="co">#&gt; [5] "check_new_data"   "check_new_values" "check_options"    "check_range"</span></span>
+<span><span class="co">#&gt; [9] "check_type"</span></span></code></pre>
+</div>
+</section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
    </div>
@@ -368,7 +396,7 @@ Checks are added in the same way as steps:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
   </div></footer>

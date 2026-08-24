@@ -14,7 +14,7 @@ Copy these checklists into the corresponding GitHub issue.
 
     * [ ] Add argument to `step_name_new()` and make sure it is passed to `step()`.
 
-    * [ ] Make sure argument is passed to `step_umap_new()` in `prep.step_name()`.
+    * [ ] Make sure argument is passed to `step_name_new()` in `prep.step_name()`.
 
     * [ ] Add the following code to `prep.step_name()`. This will prevent older recipes from breaking.
         ```

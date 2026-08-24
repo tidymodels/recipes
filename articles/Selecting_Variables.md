@@ -124,20 +124,20 @@ rec |>
 #> ℹ Consider using step_unknown() (`?recipes::step_unknown()`) before
 #>   `step_dummy()` to handle missing values.
 #> # A tibble: 344 × 7
-#>    species island    bill_length_mm bill_depth_mm flipper_length_mm
-#>    <fct>   <fct>              <dbl>         <dbl>             <int>
-#>  1 Adelie  Torgersen           39.1          18.7               181
-#>  2 Adelie  Torgersen           39.5          17.4               186
-#>  3 Adelie  Torgersen           40.3          18                 195
-#>  4 Adelie  Torgersen           NA            NA                  NA
-#>  5 Adelie  Torgersen           36.7          19.3               193
-#>  6 Adelie  Torgersen           39.3          20.6               190
-#>  7 Adelie  Torgersen           38.9          17.8               181
-#>  8 Adelie  Torgersen           39.2          19.6               195
-#>  9 Adelie  Torgersen           34.1          18.1               193
-#> 10 Adelie  Torgersen           42            20.2               190
+#>    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+#>    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+#>  1 Adelie  Torgersen           39.1          18.7               181        3750
+#>  2 Adelie  Torgersen           39.5          17.4               186        3800
+#>  3 Adelie  Torgersen           40.3          18                 195        3250
+#>  4 Adelie  Torgersen           NA            NA                  NA          NA
+#>  5 Adelie  Torgersen           36.7          19.3               193        3450
+#>  6 Adelie  Torgersen           39.3          20.6               190        3650
+#>  7 Adelie  Torgersen           38.9          17.8               181        3625
+#>  8 Adelie  Torgersen           39.2          19.6               195        4675
+#>  9 Adelie  Torgersen           34.1          18.1               193        3475
+#> 10 Adelie  Torgersen           42            20.2               190        4250
 #> # ℹ 334 more rows
-#> # ℹ 2 more variables: body_mass_g <int>, sex_male <dbl>
+#> # ℹ 1 more variable: sex_male <dbl>
 ```
 
 Using the last definition:
@@ -148,18 +148,18 @@ dummied <- prep(dummied, training = penguins)
 with_dummy <- bake(dummied, new_data = penguins)
 with_dummy
 #> # A tibble: 344 × 7
-#>    species island  bill_length_mm bill_depth_mm flipper_length_mm sex  
-#>    <fct>   <fct>            <dbl>         <dbl>             <dbl> <fct>
-#>  1 Adelie  Torger…         -0.883         0.784            -1.42  male 
-#>  2 Adelie  Torger…         -0.810         0.126            -1.06  fema…
-#>  3 Adelie  Torger…         -0.663         0.430            -0.421 fema…
-#>  4 Adelie  Torger…         NA            NA                NA     NA   
-#>  5 Adelie  Torger…         -1.32          1.09             -0.563 fema…
-#>  6 Adelie  Torger…         -0.847         1.75             -0.776 male 
-#>  7 Adelie  Torger…         -0.920         0.329            -1.42  fema…
-#>  8 Adelie  Torger…         -0.865         1.24             -0.421 male 
-#>  9 Adelie  Torger…         -1.80          0.480            -0.563 NA   
-#> 10 Adelie  Torger…         -0.352         1.54             -0.776 NA   
+#>    species island    bill_length_mm bill_depth_mm flipper_length_mm sex   
+#>    <fct>   <fct>              <dbl>         <dbl>             <dbl> <fct> 
+#>  1 Adelie  Torgersen         -0.883         0.784            -1.42  male  
+#>  2 Adelie  Torgersen         -0.810         0.126            -1.06  female
+#>  3 Adelie  Torgersen         -0.663         0.430            -0.421 female
+#>  4 Adelie  Torgersen         NA            NA                NA     <NA>  
+#>  5 Adelie  Torgersen         -1.32          1.09             -0.563 female
+#>  6 Adelie  Torgersen         -0.847         1.75             -0.776 male  
+#>  7 Adelie  Torgersen         -0.920         0.329            -1.42  female
+#>  8 Adelie  Torgersen         -0.865         1.24             -0.421 male  
+#>  9 Adelie  Torgersen         -1.80          0.480            -0.563 <NA>  
+#> 10 Adelie  Torgersen         -0.352         1.54             -0.776 <NA>  
 #> # ℹ 334 more rows
 #> # ℹ 1 more variable: body_mass_g <int>
 ```

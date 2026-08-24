@@ -108,7 +108,7 @@ car_recipe <- recipe(mpg ~ ., data = mtcars) |>
   prep(training = mtcars)
 
 # These *should* produce the same results (as they do for `hp`)
-bake(car_recipe, new_data = NULL)   |> head() |> select(disp, hp)
+bake(car_recipe, new_data = NULL) |> head() |> select(disp, hp)
 #> # A tibble: 6 × 2
 #>     disp    hp
 #>    <dbl> <dbl>

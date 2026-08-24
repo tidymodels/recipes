@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/checklists: checklists.html
@@ -10,7 +10,7 @@ articles:
   Roles: Roles.html
   Selecting_Variables: Selecting_Variables.html
   Skipping: Skipping.html
-last_built: 2026-05-30T21:05Z
+last_built: 2026-08-24T12:00Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles

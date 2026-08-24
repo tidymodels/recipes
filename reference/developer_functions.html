@@ -9,7 +9,7 @@ creating recipes steps and guidance on how to use them."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,6 +138,27 @@ once and when possible should be put outside <code>for</code> loops.</p>
 <p><code><a href="recipes_remove_cols.html">recipes_remove_cols()</a></code> should be used in <code>prep.step_*()</code> functions, and is
 used to remove columns from the data set, either by using the
 <code>object$removals</code> field or by using the <code>col_names</code> argument.</p>
+<p><code><a href="recipes_map_cols.html">recipes_map_cols()</a></code> should be used in <code>bake.step_*()</code> functions for steps
+that transform columns in place. Assigning to <code>new_data[[col_name]]</code> inside a
+<code>for</code> loop is quadratic in the number of columns, so steps written that way
+become unusably slow on wide data. <code><a href="recipes_map_cols.html">recipes_map_cols()</a></code> computes all the
+replacement columns and assigns them at once instead.</p>
+<p>It should be used like so:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">means</span> <span class="op">&lt;-</span> <span class="va">object</span><span class="op">$</span><span class="va">means</span><span class="op">[</span><span class="va">col_names</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipes_map_cols.html">recipes_map_cols</a></span><span class="op">(</span></span>
+<span>  <span class="va">new_data</span>,</span>
+<span>  <span class="va">col_names</span>,</span>
+<span>  \<span class="op">(</span><span class="va">x</span>, <span class="va">i</span><span class="op">)</span> <span class="va">x</span> <span class="op">-</span> <span class="va">means</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
+<p>Note that the per-column value is looked up by position with <code>means[[i]]</code>,
+having aligned <code>means</code> to <code>col_names</code> once beforehand. Indexing by name
+inside the function (<code>means[col_name]</code>) reintroduces the same quadratic cost
+the helper exists to avoid.</p>
+<p>Only the arguments the function accepts are passed, so a step that needs
+neither the position nor the name can be written as <code>\(x) x * 2</code>, and one
+that reports the offending column in an error message can take a third
+<code>col_name</code> argument.</p>
 <p><code><a href="recipes-role-indicator.html">recipes_names_predictors()</a></code> and <code><a href="recipes-role-indicator.html">recipes_names_outcomes()</a></code> should be used in
 <code>prep.step_*()</code> functions, and are used to get names of predictors and
 outcomes.</p>
@@ -195,7 +216,7 @@ should be used as a test, preferably like this:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
   </div></footer></body></html>

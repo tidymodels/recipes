@@ -81,7 +81,7 @@ recipe(HHV ~ ., data = biomass) |>
 #> # A tibble: 8 × 4
 #>   variable type      role      source  
 #>   <chr>    <list>    <chr>     <chr>   
-#> 1 sample   <chr [3]> NA        original
+#> 1 sample   <chr [3]> <NA>      original
 #> 2 dataset  <chr [3]> predictor original
 #> 3 carbon   <chr [2]> predictor original
 #> 4 hydrogen <chr [2]> predictor original
@@ -175,14 +175,14 @@ multi_role |>
   bake(new_data = NULL) |> 
   head()
 #> # A tibble: 6 × 8
-#>   sample          dataset carbon hydrogen oxygen nitrogen  sulfur   HHV
-#>   <chr>           <chr>    <dbl>    <dbl>  <dbl>    <dbl>   <dbl> <dbl>
-#> 1 Akhrot Shell    Traini…  1.52    0.181    4.37  -0.667  -0.234   20.0
-#> 2 Alabama Oak Wo… Traini…  1.21    0.241    2.73  -0.877  -0.234   19.2
-#> 3 Alder           Traini… -0.475   0.341    7.68  -0.967  -0.214   18.3
-#> 4 Alfalfa         Traini… -3.19   -0.489   -2.97   2.22   -0.0736  18.2
-#> 5 Alfalfa Seed S… Traini… -1.53   -0.0586   2.15  -0.0772 -0.214   18.4
-#> 6 Alfalfa Stalks  Traini… -2.89    0.291    1.63   0.963  -0.134   18.5
+#>   sample                 dataset  carbon hydrogen oxygen nitrogen  sulfur   HHV
+#>   <chr>                  <chr>     <dbl>    <dbl>  <dbl>    <dbl>   <dbl> <dbl>
+#> 1 Akhrot Shell           Training  1.52    0.181    4.37  -0.667  -0.234   20.0
+#> 2 Alabama Oak Wood Waste Training  1.21    0.241    2.73  -0.877  -0.234   19.2
+#> 3 Alder                  Training -0.475   0.341    7.68  -0.967  -0.214   18.3
+#> 4 Alfalfa                Training -3.19   -0.489   -2.97   2.22   -0.0736  18.2
+#> 5 Alfalfa Seed Straw     Training -1.53   -0.0586   2.15  -0.0772 -0.214   18.4
+#> 6 Alfalfa Stalks         Training -2.89    0.291    1.63   0.963  -0.134   18.5
 ```
 
 The selector
@@ -200,14 +200,14 @@ recipe(biomass) |>
 #> # A tibble: 8 × 4
 #>   variable type      role  source  
 #>   <chr>    <list>    <chr> <chr>   
-#> 1 sample   <chr [3]> NA    original
-#> 2 dataset  <chr [3]> NA    original
-#> 3 carbon   <chr [2]> NA    original
-#> 4 hydrogen <chr [2]> NA    original
-#> 5 oxygen   <chr [2]> NA    original
-#> 6 nitrogen <chr [2]> NA    original
-#> 7 sulfur   <chr [2]> NA    original
-#> 8 HHV      <chr [2]> NA    original
+#> 1 sample   <chr [3]> <NA>  original
+#> 2 dataset  <chr [3]> <NA>  original
+#> 3 carbon   <chr [2]> <NA>  original
+#> 4 hydrogen <chr [2]> <NA>  original
+#> 5 oxygen   <chr [2]> <NA>  original
+#> 6 nitrogen <chr [2]> <NA>  original
+#> 7 sulfur   <chr [2]> <NA>  original
+#> 8 HHV      <chr [2]> <NA>  original
 ```
 
 and roles can be added in bulk as needed:
@@ -222,12 +222,12 @@ recipe(biomass) |>
 #>   variable type      role      source  
 #>   <chr>    <list>    <chr>     <chr>   
 #> 1 sample   <chr [3]> snail     original
-#> 2 dataset  <chr [3]> NA        original
-#> 3 carbon   <chr [2]> NA        original
+#> 2 dataset  <chr [3]> <NA>      original
+#> 3 carbon   <chr [2]> <NA>      original
 #> 4 hydrogen <chr [2]> lunchroom original
 #> 5 oxygen   <chr [2]> lunchroom original
 #> 6 nitrogen <chr [2]> lunchroom original
-#> 7 sulfur   <chr [2]> NA        original
+#> 7 sulfur   <chr [2]> <NA>      original
 #> 8 HHV      <chr [2]> snail     original
 ```
 

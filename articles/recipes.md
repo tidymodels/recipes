@@ -43,10 +43,10 @@ Note that there are some missing values in these data:
 ``` r
 
 vapply(credit_train, function(x) mean(!is.na(x)), numeric(1))
-#>    Status Seniority      Home      Time       Age   Marital   Records 
-#>     1.000     1.000     0.998     1.000     1.000     1.000     1.000 
-#>       Job  Expenses    Income    Assets      Debt    Amount     Price 
-#>     0.999     1.000     0.910     0.989     0.996     1.000     1.000
+#>    Status Seniority      Home      Time       Age   Marital   Records       Job 
+#>     1.000     1.000     0.998     1.000     1.000     1.000     1.000     0.999 
+#>  Expenses    Income    Assets      Debt    Amount     Price 
+#>     1.000     0.910     0.989     0.996     1.000     1.000
 ```
 
 Rather than remove these, their values will be imputed.
@@ -213,41 +213,37 @@ class(test_data)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 test_data
 #> # A tibble: 1,114 × 23
-#>    Seniority   Time    Age Expenses  Income Assets   Debt  Amount
-#>        <dbl>  <dbl>  <dbl>    <dbl>   <dbl>  <dbl>  <dbl>   <dbl>
-#>  1     1.09   0.924  1.88    -0.385 -0.131  -0.488 -0.295 -0.0817
-#>  2    -0.977  0.924 -0.459    1.77  -0.437   0.845 -0.295  0.333 
-#>  3    -0.977  0.103  0.349    1.77  -0.783  -0.488 -0.295  0.333 
-#>  4    -0.247  0.103 -0.280    0.231 -0.207  -0.133 -0.295  0.229 
-#>  5    -0.125 -0.718 -0.729    0.231 -0.258  -0.222 -0.295 -0.807 
-#>  6    -0.855  0.924 -0.549   -1.05  -0.0539 -0.488 -0.295  0.436 
-#>  7     2.31   0.924  0.349    0.949 -0.0155 -0.488 -0.295 -0.185 
-#>  8     0.848 -0.718  0.529    1.00   1.40   -0.133 -0.295  1.58  
-#>  9    -0.977 -0.718 -1.27    -0.538 -0.246  -0.266 -0.295 -1.32  
-#> 10    -0.855  0.514 -0.100    0.744 -0.540  -0.488 -0.295 -0.185 
+#>    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price
+#>        <dbl>  <dbl>  <dbl>    <dbl>   <dbl>  <dbl>  <dbl>   <dbl>    <dbl>
+#>  1     1.09   0.924  1.88    -0.385 -0.131  -0.488 -0.295 -0.0817  0.297  
+#>  2    -0.977  0.924 -0.459    1.77  -0.437   0.845 -0.295  0.333   0.760  
+#>  3    -0.977  0.103  0.349    1.77  -0.783  -0.488 -0.295  0.333   0.00254
+#>  4    -0.247  0.103 -0.280    0.231 -0.207  -0.133 -0.295  0.229   0.171  
+#>  5    -0.125 -0.718 -0.729    0.231 -0.258  -0.222 -0.295 -0.807  -0.854  
+#>  6    -0.855  0.924 -0.549   -1.05  -0.0539 -0.488 -0.295  0.436  -0.331  
+#>  7     2.31   0.924  0.349    0.949 -0.0155 -0.488 -0.295 -0.185   0.0475 
+#>  8     0.848 -0.718  0.529    1.00   1.40   -0.133 -0.295  1.58    1.69   
+#>  9    -0.977 -0.718 -1.27    -0.538 -0.246  -0.266 -0.295 -1.32   -1.65   
+#> 10    -0.855  0.514 -0.100    0.744 -0.540  -0.488 -0.295 -0.185  -0.800  
 #> # ℹ 1,104 more rows
-#> # ℹ 15 more variables: Price <dbl>, Status <fct>, Home_other <dbl>,
-#> #   Home_owner <dbl>, Home_parents <dbl>, Home_priv <dbl>,
-#> #   Home_rent <dbl>, Marital_married <dbl>, Marital_separated <dbl>,
-#> #   Marital_single <dbl>, Marital_widow <dbl>, Records_yes <dbl>,
-#> #   Job_freelance <dbl>, Job_others <dbl>, Job_partime <dbl>
+#> # ℹ 14 more variables: Status <fct>, Home_other <dbl>, Home_owner <dbl>,
+#> #   Home_parents <dbl>, Home_priv <dbl>, Home_rent <dbl>,
+#> #   Marital_married <dbl>, Marital_separated <dbl>, Marital_single <dbl>,
+#> #   Marital_widow <dbl>, Records_yes <dbl>, Job_freelance <dbl>,
+#> #   Job_others <dbl>, Job_partime <dbl>
 vapply(test_data, function(x) mean(!is.na(x)), numeric(1))
-#>         Seniority              Time               Age 
-#>                 1                 1                 1 
-#>          Expenses            Income            Assets 
-#>                 1                 1                 1 
-#>              Debt            Amount             Price 
-#>                 1                 1                 1 
-#>            Status        Home_other        Home_owner 
-#>                 1                 1                 1 
-#>      Home_parents         Home_priv         Home_rent 
-#>                 1                 1                 1 
-#>   Marital_married Marital_separated    Marital_single 
-#>                 1                 1                 1 
-#>     Marital_widow       Records_yes     Job_freelance 
-#>                 1                 1                 1 
-#>        Job_others       Job_partime 
-#>                 1                 1
+#>         Seniority              Time               Age          Expenses 
+#>                 1                 1                 1                 1 
+#>            Income            Assets              Debt            Amount 
+#>                 1                 1                 1                 1 
+#>             Price            Status        Home_other        Home_owner 
+#>                 1                 1                 1                 1 
+#>      Home_parents         Home_priv         Home_rent   Marital_married 
+#>                 1                 1                 1                 1 
+#> Marital_separated    Marital_single     Marital_widow       Records_yes 
+#>                 1                 1                 1                 1 
+#>     Job_freelance        Job_others       Job_partime 
+#>                 1                 1                 1
 ```
 
 Selectors can also be used. For example, if only the predictors are
@@ -255,54 +251,54 @@ needed, you can use `bake(object, new_data, all_predictors())`.
 
 There are a number of other steps included in the package:
 
-    #>  [1] "step_arrange"            "step_bagimpute"         
-    #>  [3] "step_bin2factor"         "step_BoxCox"            
-    #>  [5] "step_bs"                 "step_center"            
+    #>  [1] "step_arrange"            "step_bagimpute"
+    #>  [3] "step_bin2factor"         "step_BoxCox"
+    #>  [5] "step_bs"                 "step_center"
     #>  [7] "step_classdist"          "step_classdist_shrunken"
-    #>  [9] "step_corr"               "step_count"             
-    #> [11] "step_cut"                "step_date"              
-    #> [13] "step_depth"              "step_discretize"        
-    #> [15] "step_dummy"              "step_dummy_extract"     
-    #> [17] "step_dummy_multi_choice" "step_factor2string"     
-    #> [19] "step_filter"             "step_filter_missing"    
-    #> [21] "step_geodist"            "step_harmonic"          
-    #> [23] "step_holiday"            "step_hyperbolic"        
-    #> [25] "step_ica"                "step_impute_bag"        
-    #> [27] "step_impute_knn"         "step_impute_linear"     
-    #> [29] "step_impute_lower"       "step_impute_mean"       
-    #> [31] "step_impute_median"      "step_impute_mode"       
-    #> [33] "step_impute_roll"        "step_indicate_na"       
-    #> [35] "step_integer"            "step_interact"          
-    #> [37] "step_intercept"          "step_inverse"           
-    #> [39] "step_invlogit"           "step_isomap"            
-    #> [41] "step_knnimpute"          "step_kpca"              
-    #> [43] "step_kpca_poly"          "step_kpca_rbf"          
-    #> [45] "step_lag"                "step_lincomb"           
-    #> [47] "step_log"                "step_logit"             
-    #> [49] "step_lowerimpute"        "step_meanimpute"        
-    #> [51] "step_medianimpute"       "step_modeimpute"        
-    #> [53] "step_mutate"             "step_mutate_at"         
-    #> [55] "step_naomit"             "step_nnmf"              
-    #> [57] "step_nnmf_sparse"        "step_normalize"         
-    #> [59] "step_novel"              "step_ns"                
-    #> [61] "step_num2factor"         "step_nzv"               
-    #> [63] "step_ordinalscore"       "step_other"             
-    #> [65] "step_pca"                "step_percentile"        
-    #> [67] "step_pls"                "step_poly"              
-    #> [69] "step_poly_bernstein"     "step_profile"           
-    #> [71] "step_range"              "step_ratio"             
-    #> [73] "step_regex"              "step_relevel"           
-    #> [75] "step_relu"               "step_rename"            
-    #> [77] "step_rename_at"          "step_rm"                
-    #> [79] "step_rollimpute"         "step_sample"            
-    #> [81] "step_scale"              "step_select"            
-    #> [83] "step_shuffle"            "step_slice"             
-    #> [85] "step_spatialsign"        "step_spline_b"          
-    #> [87] "step_spline_convex"      "step_spline_monotone"   
+    #>  [9] "step_corr"               "step_count"
+    #> [11] "step_cut"                "step_date"
+    #> [13] "step_depth"              "step_discretize"
+    #> [15] "step_dummy"              "step_dummy_extract"
+    #> [17] "step_dummy_multi_choice" "step_factor2string"
+    #> [19] "step_filter"             "step_filter_missing"
+    #> [21] "step_geodist"            "step_harmonic"
+    #> [23] "step_holiday"            "step_hyperbolic"
+    #> [25] "step_ica"                "step_impute_bag"
+    #> [27] "step_impute_knn"         "step_impute_linear"
+    #> [29] "step_impute_lower"       "step_impute_mean"
+    #> [31] "step_impute_median"      "step_impute_mode"
+    #> [33] "step_impute_roll"        "step_indicate_na"
+    #> [35] "step_integer"            "step_interact"
+    #> [37] "step_intercept"          "step_inverse"
+    #> [39] "step_invlogit"           "step_isomap"
+    #> [41] "step_knnimpute"          "step_kpca"
+    #> [43] "step_kpca_poly"          "step_kpca_rbf"
+    #> [45] "step_lag"                "step_lincomb"
+    #> [47] "step_log"                "step_logit"
+    #> [49] "step_lowerimpute"        "step_meanimpute"
+    #> [51] "step_medianimpute"       "step_modeimpute"
+    #> [53] "step_mutate"             "step_mutate_at"
+    #> [55] "step_naomit"             "step_nnmf"
+    #> [57] "step_nnmf_sparse"        "step_normalize"
+    #> [59] "step_novel"              "step_ns"
+    #> [61] "step_num2factor"         "step_nzv"
+    #> [63] "step_ordinalscore"       "step_other"
+    #> [65] "step_pca"                "step_percentile"
+    #> [67] "step_pls"                "step_poly"
+    #> [69] "step_poly_bernstein"     "step_profile"
+    #> [71] "step_range"              "step_ratio"
+    #> [73] "step_regex"              "step_relevel"
+    #> [75] "step_relu"               "step_rename"
+    #> [77] "step_rename_at"          "step_rm"
+    #> [79] "step_rollimpute"         "step_sample"
+    #> [81] "step_scale"              "step_select"
+    #> [83] "step_shuffle"            "step_slice"
+    #> [85] "step_spatialsign"        "step_spline_b"
+    #> [87] "step_spline_convex"      "step_spline_monotone"
     #> [89] "step_spline_natural"     "step_spline_nonnegative"
-    #> [91] "step_sqrt"               "step_string2factor"     
-    #> [93] "step_time"               "step_unknown"           
-    #> [95] "step_unorder"            "step_window"            
+    #> [91] "step_sqrt"               "step_string2factor"
+    #> [93] "step_time"               "step_unknown"
+    #> [95] "step_unorder"            "step_window"
     #> [97] "step_YeoJohnson"         "step_zv"
 
 ## Checks
@@ -324,6 +320,6 @@ trained_rec <- trained_rec |>
 
 Currently, `recipes` includes:
 
-    #> [1] "check_class"      "check_cols"       "check_missing"   
-    #> [4] "check_name"       "check_new_data"   "check_new_values"
-    #> [7] "check_options"    "check_range"      "check_type"
+    #> [1] "check_class"      "check_cols"       "check_missing"    "check_name"
+    #> [5] "check_new_data"   "check_new_values" "check_options"    "check_range"
+    #> [9] "check_type"
