@@ -30,8 +30,8 @@ exp_comp <-
       0.274166588383082,
       -0.429295233592478
     ),
-    .Dim = c(6L, 2L),
-    .Dimnames = list(NULL, c("IC1", "IC2"))
+    dim = c(6L, 2L),
+    dimnames = list(NULL, c("IC1", "IC2"))
   )
 
 exp_load <-
@@ -48,7 +48,7 @@ exp_load <-
       -0.656590943491334,
       -0.519748239614668
     ),
-    .Dim = c(5L, 2L)
+    dim = c(5L, 2L)
   )
 colnames(exp_load) <- c("IC1", "IC2")
 
