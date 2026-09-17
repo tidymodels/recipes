@@ -26,6 +26,15 @@
       Caused by error in `prep()`:
       ! `ref_level` must be a single string, not an empty character vector.
 
+# error reports only the columns missing the reference level (#1567)
+
+    Code
+      prep(step_relevel(rec, city, zip, ref_level = "z95838"))
+    Condition
+      Error in `step_relevel()`:
+      Caused by error in `prep()`:
+      ! The following column doesn't include required reference level "z95838": `city`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
