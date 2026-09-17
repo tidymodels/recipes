@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `step_holiday()` no longer shifts the calendar date of POSIXct timestamps with a non-UTC timezone before checking for holidays, which caused wrong holiday indicators near local midnight. (#1564)
+
 # recipes 1.4.0
 
 ## Improvements

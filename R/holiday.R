@@ -164,7 +164,7 @@ is_holiday <- function(hol, dt, sparse) {
 
 get_holiday_features <- function(dt, hdays, sparse) {
   if (!is.Date(dt)) {
-    dt <- as.Date(dt)
+    dt <- as_date(dt)
   }
   hdays <- as.list(hdays)
   hfeat <- lapply(hdays, is_holiday, dt = dt, sparse = sparse)
