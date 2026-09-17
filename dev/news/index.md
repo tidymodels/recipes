@@ -2,6 +2,13 @@
 
 ## recipes (development version)
 
+### Bug Fixes
+
+- [`step_relevel()`](https://recipes.tidymodels.org/dev/reference/step_relevel.md)
+  now reports the correct columns in its error message when the
+  reference level is missing from some of the selected columns.
+  ([\#1567](https://github.com/tidymodels/recipes/issues/1567))
+
 ## recipes 1.4.0
 
 CRAN release: 2026-08-24
