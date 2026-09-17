@@ -1,6 +1,6 @@
 # recipes (development version)
 
-* `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `step_spline_nonnegative()` now report the correct `complete_set` value in the error message when `degree` is too large relative to `deg_free`. (#1568)
+* `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `step_spline_nonnegative()` now report the correct `complete_set` value in the error message when `degree` is too large relative to `deg_free`. (@bjornkallerud, #1568)
 
 # recipes 1.4.0
 
