@@ -316,8 +316,14 @@ list_to_dummies <- function(x, dict, other = "other", sparse = FALSE) {
   i <- rep(seq_along(x), lengths(x))
   j <- match(unlist(x), dict)
 
-  dict <- c(dict, other)
-  j[is.na(j)] <- length(dict)
+  if (is.null(other)) {
+    index_keep <- which(!is.na(j))
+    i <- i[index_keep]
+    j <- j[index_keep]
+  } else {
+    dict <- c(dict, other)
+    j[is.na(j)] <- length(dict)
+  }
 
   out <- Matrix::sparseMatrix(
     i = i,

@@ -1,5 +1,9 @@
 # recipes (development version)
 
+## Bug Fixes
+
+* `step_dummy_extract()` no longer mixes unseen labels in new data into the column for the last known label.
+
 # recipes 1.4.0
 
 ## Improvements

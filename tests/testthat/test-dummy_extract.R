@@ -75,6 +75,25 @@ test_that("other argument", {
   dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
 
   expect_identical(names(dummy_pred)[length(dummy_pred)], "medium_cake")
+
+  # `other = NULL` drops unseen values in new data
+  train <- tibble(x = c("a,c", "b"))
+  new <- tibble(x = c("a", "c,z", "q"))
+
+  rec <- recipe(~x, data = train) |>
+    step_dummy_extract(x, sep = ",", other = NULL) |>
+    prep()
+
+  rec_prepped <- bake(rec, new_data = new)
+
+  expect_identical(
+    rec_prepped,
+    tibble(
+      x_a = c(1L, 0L, 0L),
+      x_b = c(0L, 0L, 0L),
+      x_c = c(0L, 1L, 0L)
+    )
+  )
 })
 
 test_that("error when neither sep or pattern is specified", {
