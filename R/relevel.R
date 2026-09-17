@@ -96,7 +96,7 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   # Check to make sure that the reference level exists in the factor
   ref_check <- map_lgl(objects, function(x, y) !y %in% x, y = x$ref_level)
   if (any(ref_check)) {
-    offenders <- names(order_check)[!order_check]
+    offenders <- names(ref_check)[ref_check]
     cli::cli_abort(
       "{cli::qty(length(offenders))}The following column{?s} doesn't include \\
       required reference level {.val {x$ref_level}}: {.var {offenders}}."

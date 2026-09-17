@@ -42,6 +42,17 @@ test_that("bad args", {
   )
 })
 
+test_that("error reports only the columns missing the reference level (#1567)", {
+  # "z95838" is a valid `zip` level but not a `city` level, so only `city`
+  # should be reported as an offender.
+  expect_snapshot(
+    error = TRUE,
+    rec |>
+      step_relevel(city, zip, ref_level = "z95838") |>
+      prep()
+  )
+})
+
 test_that("tidy methods", {
   rec_raw <- rec |> step_relevel(zip, ref_level = "z95838", id = "city")
   expect_equal(
