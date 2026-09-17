@@ -6,7 +6,7 @@
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
-      ! `degree` (3) must be less than to `deg_free` (3) when `complete_set = FALSE`.
+      ! `degree` (3) must be less than `deg_free` (3) when `complete_set = TRUE`.
 
 ---
 
@@ -16,7 +16,7 @@
     Condition
       Error in `step_spline_b()`:
       Caused by error in `prep()`:
-      ! `degree` (4) must be less than or equal to `deg_free` (3) when `complete_set = TRUE`.
+      ! `degree` (4) must be less than or equal to `deg_free` (3) when `complete_set = FALSE`.
 
 # check_name() is used
 
