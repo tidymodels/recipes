@@ -22,14 +22,14 @@ spline2_create <- function(
   if (.fn != "bernsteinPoly" && isTRUE(degree > (df - complete_set))) {
     if (complete_set) {
       cli::cli_abort(
-        "{.arg degree} ({degree}) must be less than to {.arg deg_free} \\
-        ({df}) when {.code complete_set = FALSE}.",
+        "{.arg degree} ({degree}) must be less than {.arg deg_free} \\
+        ({df}) when {.code complete_set = TRUE}.",
         call = call
       )
     } else {
       cli::cli_abort(
         "{.arg degree} ({degree}) must be less than or equal to {.arg deg_free} \\
-        ({df}) when {.code complete_set = TRUE}.",
+        ({df}) when {.code complete_set = FALSE}.",
         call = call
       )
     }
@@ -51,7 +51,7 @@ spline2_create <- function(
   res$class <- NULL
   res$dimnames <- NULL
   res$.fn <- .fn
-  res$.ns = "splines2"
+  res$.ns <- "splines2"
   res$nm <- nm
   res
 }
