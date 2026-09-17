@@ -172,6 +172,23 @@ test_that("works with no missing values - POSIXct class", {
   )
 })
 
+test_that("respects timezones - POSIXct class", {
+  test_data <- data.frame(
+    day = as.POSIXct(
+      c("2017-12-25 23:00:00", "2017-12-26 01:00:00"),
+      tz = "US/Pacific"
+    )
+  )
+
+  holiday_rec <- recipe(~day, test_data) |>
+    step_holiday(all_predictors(), holidays = "ChristmasDay")
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+  holiday_ind <- bake(holiday_rec, test_data)
+
+  expect_identical(holiday_ind$day_ChristmasDay, c(1L, 0L))
+})
+
 test_that("check_name() is used", {
   dat <- test_data
   dat$day_Easter <- dat$day

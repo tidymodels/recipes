@@ -53,6 +53,7 @@
 #' @importFrom ipred ipredbagg
 #' @importFrom lifecycle deprecated
 #' @importFrom lubridate am
+#' @importFrom lubridate as_date
 #' @importFrom lubridate decimal_date
 #' @importFrom lubridate hour
 #' @importFrom lubridate is.Date
