@@ -105,7 +105,7 @@ prep.step_filter_missing <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-  if (length(col_names) > 1) {
+  if (length(col_names) > 0) {
     filter <- filter_missing_fun(
       x = training[, col_names],
       threshold = x$threshold,

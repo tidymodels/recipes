@@ -45,6 +45,16 @@ test_that("Remove all columns with missing data", {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
 
+test_that("single column selection is still filtered (#1566)", {
+  rec <- recipe(~dbl2, data = dat)
+  filtering <- rec |>
+    step_filter_missing(all_predictors(), threshold = .2)
+
+  filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
+
+  expect_equal(filtering_trained$steps[[1]]$removals, "dbl2")
+})
+
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) |>

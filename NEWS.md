@@ -2,6 +2,8 @@
 
 ## Bug Fixes
 
+* `step_filter_missing()` now filters a single selected column instead of silently skipping it. (#1566)
+
 * `step_relevel()` now reports the correct columns in its error message when the reference level is missing from some of the selected columns. (#1567)
 
 # recipes 1.4.0
