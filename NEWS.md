@@ -2,6 +2,8 @@
 
 ## Bug Fixes
 
+* `step_holiday()` now converts POSIXct inputs in their own time zone before extracting dates, so observations near local midnight are assigned the correct holiday (#1564, @LeonidasZhak).
+
 * `step_relevel()` now reports the correct columns in its error message when the reference level is missing from some of the selected columns. (#1567)
 
 # recipes 1.4.0

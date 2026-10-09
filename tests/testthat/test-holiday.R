@@ -15,6 +15,19 @@ is_equal_1 <- function(x) {
   x == 1 & !is.na(x)
 }
 
+test_that("POSIXct inputs use their own time zone", {
+  test_data <- data.frame(
+    day = as.POSIXct("2020-01-01 23:00:00", tz = "US/Pacific")
+  )
+  holiday_rec <- recipe(~day, test_data) |>
+    step_holiday(day, holidays = "NewYearsDay") |>
+    prep(training = test_data)
+
+  holiday_ind <- bake(holiday_rec, new_data = test_data)
+
+  expect_equal(holiday_ind$day_NewYearsDay, 1L)
+})
+
 test_that("Date class", {
   holiday_rec <- recipe(~day, test_data) |>
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
